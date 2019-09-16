@@ -1,0 +1,53 @@
+site_name: Embarcados Avançados
+theme: 
+  name: 'material'
+  palette:
+      primary: 'pink'
+      accent: 'pink'
+
+docs_dir: docs-src
+site_dir: docs
+
+nav:
+- Home: index.md
+- Sobre: Sobre.md
+- Extra:
+    - 'info-FPGA-e-Softwares.md'
+    - 'info-VHDL.md'
+    - 'info-SDcard-img-Detalhes.md'
+    - 'info-SDcard.md'
+- 'Projeto-Overview.md'
+- 'Projeto-Entrega-1.md'
+- 'Tutorial-FPGA-RTL.md'
+- 'Entrega-1.md'
+- 'Tutorial-FPGA-NIOS.md'
+- 'Entrega-2.md'
+- 'Tutorial-FPGA-NIOS-IP.md'
+- 'Entrega-3.md'
+- 'Tutorial-HPS.md'
+- 'Tutorial-HPS-Running.md'
+- 'Tutorial-HPS-BuildSystem.md'
+- 'Tutorial-HPS-Kernel.md'
+
+
+repo_name: 'Insper/Embarcados-Avancados'
+repo_url: 'https://github.com/insper/Embarcados-Avancados'
+
+markdown_extensions:
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences
+    - pymdownx.smartsymbols
+    - pymdownx.mark
+    - pymdownx.emoji
+    - pymdownx.keys
+    - pymdownx.magiclink
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - toc:
+        permalink: True
+
+plugins:
+    - search
+    - pdf-export
+

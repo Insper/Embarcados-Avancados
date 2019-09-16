@@ -1,0 +1,451 @@
+
+<!DOCTYPE doctype html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="ie=edge" http-equiv="x-ua-compatible"/>
+<meta content="Copy to clipboard" name="lang:clipboard.copy"/>
+<meta content="Copied to clipboard" name="lang:clipboard.copied"/>
+<meta content="en" name="lang:search.language"/>
+<meta content="True" name="lang:search.pipeline.stopwords"/>
+<meta content="True" name="lang:search.pipeline.trimmer"/>
+<meta content="No matching documents" name="lang:search.result.none"/>
+<meta content="1 matching document" name="lang:search.result.one"/>
+<meta content="# matching documents" name="lang:search.result.other"/>
+<meta content="[\s\-]+" name="lang:search.tokenizer"/>
+<link href="../assets/images/favicon.png" rel="shortcut icon"/>
+<meta content="mkdocs-1.0.4, mkdocs-material-4.4.1" name="generator"/>
+<title>Executando o Linux - Embarcados Avançados</title>
+<link href="../assets/stylesheets/application.30686662.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/application-palette.a8b3c06d.css" rel="stylesheet"/>
+<meta content="#e91e63" name="theme-color"/>
+<script src="../assets/javascripts/modernizr.74668098.js"></script>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+<link href="../assets/fonts/material-icons.css" rel="stylesheet"/>
+</head>
+<body data-md-color-accent="pink" data-md-color-primary="pink" dir="ltr">
+<svg class="md-svg">
+<defs>
+<svg height="448" id="__github" viewbox="0 0 416 448" width="416" xmlns="http://www.w3.org/2000/svg"><path d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z" fill="currentColor"></path></svg>
+</defs>
+</svg>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+<a class="md-skip" href="#executando-o-linux" tabindex="1">
+        Skip to content
+      </a>
+<header class="md-header" data-md-component="header">
+<nav class="md-header-nav md-grid">
+<div class="md-flex">
+<div class="md-flex__cell md-flex__cell--shrink">
+<a class="md-header-nav__button md-logo" href=".." title="Embarcados Avançados">
+<i class="md-icon"></i>
+</a>
+</div>
+<div class="md-flex__cell md-flex__cell--shrink">
+<label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+</div>
+<div class="md-flex__cell md-flex__cell--stretch">
+<div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+<span class="md-header-nav__topic">
+              Embarcados Avançados
+            </span>
+<span class="md-header-nav__topic">
+              
+                Executando o Linux
+              
+            </span>
+</div>
+</div>
+<div class="md-flex__cell md-flex__cell--shrink">
+<label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="query" data-md-state="active" name="query" placeholder="Search" spellcheck="false" type="text"/>
+<label class="md-icon md-search__icon" for="__search"></label>
+<button class="md-icon md-search__icon" data-md-component="reset" tabindex="-1" type="reset">
+        
+      </button>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="result">
+<div class="md-search-result__meta">
+            Type to start searching
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-flex__cell md-flex__cell--shrink">
+<div class="md-header-nav__source">
+<a class="md-source" data-md-source="github" href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository">
+<div class="md-source__icon">
+<svg height="24" viewbox="0 0 24 24" width="24">
+<use height="24" width="24" xlink:href="#__github"></use>
+</svg>
+</div>
+<div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container">
+<main class="md-main">
+<div class="md-main__inner md-grid" data-md-component="container">
+<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title md-nav__title--site" for="__drawer">
+<a class="md-nav__button md-logo" href=".." title="Embarcados Avançados">
+<i class="md-icon"></i>
+</a>
+    Embarcados Avançados
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-source="github" href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository">
+<div class="md-source__icon">
+<svg height="24" viewbox="0 0 24 24" width="24">
+<use height="24" width="24" xlink:href="#__github"></use>
+</svg>
+</div>
+<div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href=".." title="Home">
+      Home
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Sobre/" title="Sobre">
+      Sobre
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" id="nav-3" type="checkbox"/>
+<label class="md-nav__link" for="nav-3">
+      Extra
+    </label>
+<nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+<label class="md-nav__title" for="nav-3">
+        Extra
+      </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../info-FPGA-e-Softwares/" title="Infraestrutura / FPGA e SWs">
+      Infraestrutura / FPGA e SWs
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../info-VHDL/" title="VHDL">
+      VHDL
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../info-SDcard-img-Detalhes/" title="info SDcard img Detalhes">
+      info SDcard img Detalhes
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../info-SDcard/" title="Atualizando o SDCARD">
+      Atualizando o SDCARD
+    </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Projeto-Overview/" title="Projeto Overview">
+      Projeto Overview
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Projeto-Entrega-1/" title="Projeto Entrega 1">
+      Projeto Entrega 1
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Tutorial-FPGA-RTL/" title="Tutorial 1 - FPGA - RTL">
+      Tutorial 1 - FPGA - RTL
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Entrega-1/" title="Entrega 1">
+      Entrega 1
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Tutorial-FPGA-NIOS/" title="Tutorial 2 - FPGA - NIOS">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Entrega-2/" title="Entrega 2">
+      Entrega 2
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Tutorial-FPGA-NIOS-IP/" title="Tutorial 3 - FPGA - IP">
+      Tutorial 3 - FPGA - IP
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Entrega-3/" title="Entrega 3">
+      Entrega 3
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Tutorial-HPS/" title="Tutorial HPS">
+      Tutorial HPS
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-toggle md-nav__toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        Executando o Linux
+      </label>
+<a class="md-nav__link md-nav__link--active" href="./" title="Executando o Linux">
+      Executando o Linux
+    </a>
+<nav class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">Table of contents</label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#imagem-padrao-sdcard" title="Imagem padrão (sdcard)">
+    Imagem padrão (sdcard)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usb-uart" title="USB - UART">
+    USB - UART
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#linux" title="Linux">
+    Linux
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Tutorial-HPS-BuildSystem/" title="Ferramental">
+      Ferramental
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Tutorial-HPS-Kernel/" title="Tutorial HPS Kernel">
+      Tutorial HPS Kernel
+    </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">Table of contents</label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#imagem-padrao-sdcard" title="Imagem padrão (sdcard)">
+    Imagem padrão (sdcard)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usb-uart" title="USB - UART">
+    USB - UART
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#linux" title="Linux">
+    Linux
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content">
+<article class="md-content__inner md-typeset"><a class="md-icon md-content__icon" download href="Tutorial-HPS-Running.pdf" title="PDF Export"></a>
+<a class="md-icon md-content__icon" href="https://github.com/insper/Embarcados-Avancados/edit/master/docs/Tutorial-HPS-Running.md" title="Edit this page"></a>
+<h1 id="executando-o-linux">Executando o Linux<a class="headerlink" href="#executando-o-linux" title="Permanent link">¶</a></h1>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>Nesse tutorial mexemos com gravação de disco, se errar o dispositivo pode corromper seus arquivos!!!</p>
+</div>
+<p>Vamos nessa etapa executar um linux de exemplo fornecido pela Terasic, para isso, será necessário programarmos um SDcard com a imagem. Esse Linux é um ubuntu para sistemas embarcados. Vamos executar os seguintes passos:</p>
+<ol>
+<li>Download e gravar a Imagem padrão (iso) no SDcard</li>
+<li>Insira o SDCard na FPGA</li>
+<li>Conecte o USB na porta UART (perto da porta Ethernet)</li>
+<li>Conecte a alimentação</li>
+<li>Conecte-se ao terminal via UART</li>
+</ol>
+<h2 id="imagem-padrao-sdcard">Imagem padrão (sdcard)<a class="headerlink" href="#imagem-padrao-sdcard" title="Permanent link">¶</a></h2>
+<p>Utilizaremos uma imagem (.iso) já gerado com as especificações e que já possui todo o sistema necessário para executar o linux no HPS (incluindo boot loader, kernel e filesystem), essa imagem é um ubuntu para ARM com algumas configurações específicas para FPGA Cyclone V (vamos ver isso mais para frente).</p>
+<div class="admonition note">
+<p class="admonition-title">Download</p>
+<p>Faça o download da imagem <strong>Linux Console (Kernel 4.5)</strong> do site da terasic:
+- <a href="https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&amp;CategoryNo=205&amp;No=1081&amp;PartNo=4">"Linux BSP (Board Support Package): MicroSD Card Image"</a></p>
+</div>
+<p>Extraia o arquio <code>de10_standard_linux_console.img</code> do arquivo zipado, esse <code>.img</code> é uma cópia bit a bit do que deve ser salvo no SDCard. Agora temos que copiar o <code>img</code> para o cartão de memória.</p>
+<div class="admonition note">
+<p>Insira o cartão de memória no computador</p>
+</div>
+<p>Quando inserirmos um disco externo no linux o mesmo o associa a um 'device' na pasta '/dev/', para sabermos qual o nome do device que foi atribuído ao SDcard, podemos usar o comando <code>dmesg</code>, que exibe o log do sistema operacional e nele podemos ver qual foi o último hardware detectado e qual device foi atribuído:</p>
+<div class="admonition warning">
+<p>Cuidado, estou assumindo que nenhum dispositivo foi inserido após o SDcard</p>
+</div>
+<div class="highlight"><pre><span></span>$ dmesg <span class="p">|</span> tail
+ <span class="m">4789</span>.207972<span class="o">]</span> mmc0: new ultra high speed SDR50 SDHC card at address aaaa
+<span class="o">[</span> <span class="m">4789</span>.211680<span class="o">]</span> mmcblk0: mmc0:aaaa SL16G <span class="m">14</span>.8 GiB 
+<span class="o">[</span> <span class="m">4789</span>.215857<span class="o">]</span>  mmcblk0: p1 p2 p3
+<span class="o">[</span> <span class="m">4988</span>.443942<span class="o">]</span>  mmcblk0: p1 p2 p3
+</pre></div>
+<p>O <code>dmesg</code> possui o log que o meu SDCARD foi alocado ao: <code>/dev/mmclk0</code>, no seu linux pode ser outro nome!</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Isso pode mudar de PC para PC! </p>
+</div>
+<p>Agora vamos salvar a .iso no SDcard.</p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>Cuidado, se errar o dispositivo (no meu caso: of=/dev/mmcblk0) pode acontecer coisas muito ruins com os seus dados</p>
+</div>
+<div class="highlight"><pre><span></span>$ sudo dd <span class="nv">bs</span><span class="o">=</span>4M <span class="k">if</span><span class="o">=</span>de10_standard_linux_console.img <span class="nv">of</span><span class="o">=</span>/dev/mmcblk0 <span class="nv">conv</span><span class="o">=</span>fsync <span class="nv">status</span><span class="o">=</span>progress
+$ sync
+</pre></div>
+<details class="note"><summary>dd</summary><p>O comando <code>dd</code> executa uma cópia bit a bit de um arquivo de entrada <strong>input file: if</strong> para um <strong>output file: of</strong> </p>
+</details>
+<p>O sync é necessário para que o kernel faça um flush do cashe escrevendo realmente no SDCard todos os dados que foram endereçados a ele. Essa etapa pode ser um pouco demorada.</p>
+<p>Agora basta montar no seu linux o SDCard recém escrito e devemos ter duas partições visíveis: </p>
+<ul>
+<li>524 MiB: FAT32<ul>
+<li>Script de configuração do uboot; Kernel comprimido;  Device Tree Blob file  </li>
+<li>u-boot.scr; zImage; socfpga.dtb</li>
+</ul>
+</li>
+<li>3,3 GiB:  <ul>
+<li>Filesystem (/)</li>
+</ul>
+</li>
+</ul>
+<p>E outra partição que não é visível (contém o preloader e o uboot), para visualizar :</p>
+<div class="highlight"><pre><span></span>$ sudo fdisk -l /dev/mmcblk0 
+...
+Device         Boot   Start     End Sectors  Size Id Type
+/dev/mmcblk0p1         <span class="m">4096</span> <span class="m">1028095</span> <span class="m">1024000</span>  500M  b W95 FAT32
+/dev/mmcblk0p2      <span class="m">1028096</span> <span class="m">7376895</span> <span class="m">6348800</span>    3G <span class="m">83</span> Linux
+/dev/mmcblk0p3         <span class="m">2048</span>    <span class="m">4095</span>    <span class="m">2048</span>    1M a2 unknown
+...
+</pre></div>
+<p>Note que a partição 3 (mmcblk0p3) é do tipo <em>unknown</em> (a2) e possui 1M de espaço. É nela que temos salvo o <strong>preloader</strong> e o <strong>uboot</strong>.</p>
+<div class="admonition success">
+<p class="admonition-title">Success</p>
+<p>Agora remova o SDCard e o coloque na FPGA</p>
+</div>
+<h2 id="usb-uart">USB - UART<a class="headerlink" href="#usb-uart" title="Permanent link">¶</a></h2>
+<p>O USB UART é um conector que possibilita acessar a saída serial do HPS via porta serial. No linux o driver é reconhecido automaticamente, no Windows será necessário instalar manualmente o driver da serial.. </p>
+<p><img alt="" src="Tutorial-HPS-Running-uart.png"/></p>
+<p>Uma vez conectado no linux host, verificamos que o mesmo foi mapeado para um dispositivo do tipo serial ( no meu caso com nome <strong>ttyUSB0</strong>):</p>
+<div class="highlight"><pre><span></span>$ dmesg | tail 
+....
+[80473.426308] ftdi_sio 1-2:1.0: FTDI USB Serial Device converter detected
+[80473.426333] usb 1-2: Detected FT232RL
+[80473.426456] usb 1-2: FTDI USB Serial Device converter now attached to ttyUSB0
+...
+</pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Isso pode mudar de PC para PC! </p>
+</div>
+<p>Para conectarmos nessa porta, precisamos usar um programa do tipo: emulador de terminal. No caso iremos utilizar o <strong>screen</strong> (verificar se possui instalado). Note que o comando a seguir deve ser modificado para o device (<code>/dev/ttyxxx</code>) na qual o seu linux associou a porta USB-Serial, extraído do dmesg.</p>
+<div class="highlight"><pre><span></span>$ screen /dev/ttyUSB0 115200,cs8
+</pre></div>
+<p>Para sair do terminal:</p>
+<div class="highlight"><pre><span></span>ctrl+A : quit
+</pre></div>
+<h2 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">¶</a></h2>
+<p>Logue no linux com o usuário: <code>root</code>, sem senha. No linux verifique que existem um executável chamado <code>HPS_FPGA_LED</code> na pasta <code>/home/root/</code>. Esse programa faz com que os LEDs da FPGA pisquem.</p>
+<details class="note"><summary>user e password</summary><ul>
+<li>user: <code>root</code></li>
+<li>pass: ``</li>
+</ul>
+</details>
+<p>Legal! Vamos agora descobrir como executar um kernel compilado por nós!</p>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-nav">
+<nav class="md-footer-nav__inner md-grid">
+<a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="../Tutorial-HPS/" rel="prev" title="Tutorial HPS">
+<div class="md-flex__cell md-flex__cell--shrink">
+<i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+</div>
+<div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+<span class="md-flex__ellipsis">
+<span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Tutorial HPS
+              </span>
+</div>
+</a>
+<a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="../Tutorial-HPS-BuildSystem/" rel="next" title="Ferramental">
+<div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+<span class="md-flex__ellipsis">
+<span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Ferramental
+              </span>
+</div>
+<div class="md-flex__cell md-flex__cell--shrink">
+<i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+</div>
+</a>
+</nav>
+</div>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<script src="../assets/javascripts/application.c648116f.js"></script>
+<script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+</body>
+</html>
