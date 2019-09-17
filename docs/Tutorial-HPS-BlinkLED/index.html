@@ -18,7 +18,7 @@
 <meta content="[\s\-]+" name="lang:search.tokenizer"/>
 <link href="../assets/images/favicon.png" rel="shortcut icon"/>
 <meta content="mkdocs-1.0.4, mkdocs-material-4.4.1" name="generator"/>
-<title>Embarcados Avançados - FPGA RTL</title>
+<title>Blink LED</title>
 <link href="../assets/stylesheets/application.30686662.css" rel="stylesheet"/>
 <link href="../assets/stylesheets/application-palette.a8b3c06d.css" rel="stylesheet"/>
 <meta content="#e91e63" name="theme-color"/>
@@ -58,7 +58,7 @@
             </span>
 <span class="md-header-nav__topic">
               
-                Embarcados Avançados - FPGA RTL
+                Blink LED
               
             </span>
 </div>
@@ -231,13 +231,13 @@
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-toggle md-nav__toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<a class="md-nav__link md-nav__link--active" href="./" title="Embarcados Avançados - FPGA RTL">
-      Embarcados Avançados - FPGA RTL
+<a class="md-nav__link md-nav__link--active" href="./" title="Blink LED">
+      Blink LED
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Tutorial-HPS-Kernel/" title="Tutorial HPS Kernel">
-      Tutorial HPS Kernel
+<a class="md-nav__link" href="../Tutorial-HPS-Kernel/" title="Kernel">
+      Kernel
     </a>
 </li>
 </ul>
@@ -257,20 +257,20 @@
 <article class="md-content__inner md-typeset"><a class="md-icon md-content__icon" download href="Tutorial-HPS-BlinkLED.pdf" title="PDF Export"></a>
 <a class="md-icon md-content__icon" href="https://github.com/insper/Embarcados-Avancados/edit/master/docs/Tutorial-HPS-BlinkLED.md" title="Edit this page"></a>
 <p>Nesse tutorial iremos compilar um programa para o HPS (Arm Cortex A) que será capaz de controlar os LEDs e ler os botões da placa que estão conectados ao HPS.</p>
-<p><img alt="" src="figs/DE10-Nano_Blockdiagram-leds.jpg"/></p>
-<p>Note pelo diagrama anterior extraído do manual do usuário, existem LEDs e botões conectados diretamente ao HPS, e outros conectados a FPGA. </p>
-<p>Duas são as possíveis abordagens para programarmos o HPS: </p>
+<p><img alt="" src="../figs/DE10-Standard-blockdiagram.jpg"/></p>
+<p>Note pelo diagrama anterior extraído do manual do usuário, existem LEDs e botões conectados diretamente ao HPS, e outros conectados a FPGA. Duas são as possíveis abordagens para programarmos o HPS: </p>
 <h2 id="baremetal">baremetal<a class="headerlink" href="#baremetal" title="Permanent link">¶</a></h2>
 <p>Faríamos um programa que seria executado no ARM HPS sem nenhum sistema operacional. Como detalhado no diagrama :</p>
-<p><img alt="" src="figs/Altera-BaremetalVsOS.jpg"/></p>
+<p><img alt="" src="../figs/Tutorial-HPS-BlinkLed-baremetal.jpg"/></p>
+<div class="admonition note">
 <ul>
-<li>ref: <a href="https://www.intel.com/content/www/us/en/programmable/documentation/lro1424280108409.html">Altera Bare Metal User Guide</a></li>
+<li><a href="https://www.intel.com/content/www/us/en/programmable/documentation/lro1424280108409.html">Altera Bare Metal User Guide</a></li>
 </ul>
-<p>Nessa maneira, a aplicação deve ser capaz de realizar toda a inicialização de HW necessária para que o processador rode corretamente. Se a aplicação for executada sobre um sistema operacional, toda essa etapa é de compilação é responsabilidade do SO.</p>
-<p>Para isso, utiliza-se a IDE da ARM chamada de <a href="">DS-5</a></p>
+</div>
+<p>Nessa maneira, a aplicação deve ser capaz de realizar toda a inicialização de HW necessária para que o processador rode corretamente. Se a aplicação for executada sobre um sistema operacional, toda essa etapa é de compilação é responsabilidade do SO. Para isso é aconselhável utilizar a IDE da ARM chamada de <a href="https://developer.arm.com/tools-and-software/embedded/legacy-tools/ds-5-development-studio">DS-5</a></p>
 <h2 id="sistema-operacional">Sistema operacional<a class="headerlink" href="#sistema-operacional" title="Permanent link">¶</a></h2>
-<p>Duas são as opções: Real Time ou Linux (existe outros sistemas operacionais para ARM que não o linux: BSD,...), a escolha dependerá da aplicação.</p>
-<p>Com o uso de um sistema operacional a parte referente ao HW é responsabilidade do kernel (ou dos desenvolvedores que estão adequando o kernel ao HW, que é o caso de vocês). Diversos são os ganhos de utilizar um sistema operacional do tipo Linux (as perdas também são grandes: maior ocupação de memória, maior latências,...) tais como:</p>
+<p>Diversas são as alternativas de sistema operacional para embarcado, tudo irá depender da especificação da aplicação. É necessário saber se existem requisitos de tempo real, se sim, deve-se considerar utilizar um RTOS ou algum sistema operacional com essa funcionalidade (existe um patch no kernel do linux que o torna mais ou menos real time). Se é uma aplicação que demanda rede, vídeo, processamento de dados, é de se considerar utilizar um Linux da vida (ou BSD, Androuid), já que a facilidade de desenvolvimento de aplicações nessa plataforma é mais fácil (já tem muita coisa pronta e uma comunidade gigantesca).</p>
+<p>Com o uso de um sistema operacional a parte referente ao HW é responsabilidade do kernel (ou dos desenvolvedores que estão adequando o kernel ao HW, que é o caso de vocês). Diversos são os ganhos de utilizar um sistema operacional do tipo Linux (as perdas também são grandes: maior ocupação de memória, maior latências, <strong>boot lento</strong>...) tais como:</p>
 <ul>
 <li>Device drivers </li>
 <li>Portabilidade</li>
@@ -278,164 +278,38 @@
 <li>Rede</li>
 </ul>
 <h1 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">¶</a></h1>
-<p>Nesse tutorial iremos compilar um programa e executar no Linux e esse programa que será executado no <a href="http://www.linfo.org/kernel_space.html">user space</a>. Para isso iremos utilizar a toolchain definida no <a href="https://github.com/Insper/Embarcados-Avancados/wiki/Tutorial---HPS---BuildSystem">tutorial passado</a>.</p>
-<p>Iremos utilizar como base o código: <code>Tutoriais/HPS-BlinkLED/main.c</code> e crosscopilar esse código para o nosso HPS. Iremos seguir as etapas a seguir:</p>
-<ol>
-<li>Instale o <a href="https://github.com/Insper/Embarcados-Avancados/wiki/Tutorial---HPS---BuildSystem">toolchain</a></li>
-<li><a href="https://github.com/Insper/EmbarcadosAvancados/wiki/Tutorial---HPS---SDCard">Grave o SDcard</a> com a imagem padrão fornecida</li>
-<li>Compile o código</li>
-<li>Passe o código para o HPS<ul>
-<li>via SDCard</li>
-</ul>
-</li>
-<li>Execute o linux no sistema emabarcado</li>
-<li>Conecte-se ao terminal do target (ssh ou terminal)</li>
-<li>Execute o código no HPS e veja os LEDs piscarem !</li>
-</ol>
-<h2 id="compilando">Compilando<a class="headerlink" href="#compilando" title="Permanent link">¶</a></h2>
-<p>Crie uma pasta para essa entrega, digamos: <code>HPS-Hello</code>, nela insira:</p>
-<ul>
-<li>um arquivo <code>main.c</code> com o conteúdo a seguir:</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;fcntl.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;sys/mman.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">"hwlib.h"</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">"socal/socal.h"</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">"socal/hps.h"</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">"socal/alt_gpio.h"</span><span class="cp"></span>
-
-<span class="cp">#define HW_REGS_BASE ( ALT_STM_OFST )</span>
-<span class="cp">#define HW_REGS_SPAN ( 0x04000000 )</span>
-<span class="cp">#define HW_REGS_MASK ( HW_REGS_SPAN - 1 )</span>
-
-<span class="cp">#define USER_IO_DIR     (0x01000000)</span>
-<span class="cp">#define BIT_LED         (0x01000000)</span>
-<span class="cp">#define BUTTON_MASK     (0x02000000)</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> 
-<span class="p">{</span>
-  <span class="kt">void</span> <span class="o">*</span><span class="n">virtual_base</span><span class="p">;</span>
-  <span class="kt">int</span> <span class="n">fd</span><span class="p">;</span>
-  <span class="kt">uint32_t</span> <span class="n">scan_input</span><span class="p">;</span>
-  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-
-  <span class="c1">// map the address space for the LED registers into user space so we can interact with them.</span>
-  <span class="c1">// we'll actually map in the entire CSR span of the HPS since we want to access various registers within that span</span>
-  <span class="k">if</span><span class="p">(</span> <span class="p">(</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span> <span class="s">"/dev/mem"</span><span class="p">,</span> <span class="p">(</span> <span class="n">O_RDWR</span> <span class="o">|</span> <span class="n">O_SYNC</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="n">printf</span><span class="p">(</span> <span class="s">"ERROR: could not open </span><span class="se">\"</span><span class="s">/dev/mem</span><span class="se">\"</span><span class="s">...</span><span class="se">\n</span><span class="s">"</span> <span class="p">);</span>
-    <span class="k">return</span><span class="p">(</span> <span class="mi">1</span> <span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="n">virtual_base</span> <span class="o">=</span> <span class="n">mmap</span><span class="p">(</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">HW_REGS_SPAN</span><span class="p">,</span> <span class="p">(</span> <span class="n">PROT_READ</span> <span class="o">|</span> <span class="n">PROT_WRITE</span> <span class="p">),</span> <span class="n">MAP_SHARED</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">HW_REGS_BASE</span> <span class="p">);</span>
-
-  <span class="k">if</span><span class="p">(</span> <span class="n">virtual_base</span> <span class="o">==</span> <span class="n">MAP_FAILED</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="n">printf</span><span class="p">(</span> <span class="s">"ERROR: mmap() failed...</span><span class="se">\n</span><span class="s">"</span> <span class="p">);</span>
-    <span class="n">close</span><span class="p">(</span> <span class="n">fd</span> <span class="p">);</span>
-    <span class="k">return</span><span class="p">(</span> <span class="mi">1</span> <span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="c1">// GPIO</span>
-  <span class="c1">// gpio register absolut address</span>
-  <span class="c1">// </span>
-  <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">gpio1_swporta_ddr_addr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">virtual_base</span> <span class="o">+</span> <span class="p">((</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">ALT_GPIO1_SWPORTA_DDR_ADDR</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">HW_REGS_MASK</span><span class="p">)));</span>
-  <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">gpio1_swporta_dr_addr</span>  <span class="o">=</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">virtual_base</span> <span class="o">+</span> <span class="p">((</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">ALT_GPIO1_SWPORTA_DR_ADDR</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">HW_REGS_MASK</span> <span class="p">)));</span>
-  <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">gpio1_porta_ext_addr</span>   <span class="o">=</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="o">*</span><span class="p">)(</span><span class="n">virtual_base</span> <span class="o">+</span> <span class="p">((</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">ALT_GPIO1_EXT_PORTA_ADDR</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">HW_REGS_MASK</span><span class="p">)</span> <span class="p">));</span>
-
-  <span class="c1">// initialize the pio controller</span>
-  <span class="c1">// led: set the direction of the HPS GPIO1 bits attached to LEDs to output</span>
-  <span class="n">alt_setbits_word</span><span class="p">(</span> <span class="n">gpio1_swporta_ddr_addr</span> <span class="p">,</span> <span class="n">USER_IO_DIR</span> <span class="p">);</span>
-
-  <span class="n">printf</span><span class="p">(</span><span class="s">"led test</span><span class="se">\r\n</span><span class="s">"</span><span class="p">);</span>
-  <span class="n">printf</span><span class="p">(</span><span class="s">"the led flash 2 times</span><span class="se">\r\n</span><span class="s">"</span><span class="p">);</span>
-
-  <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-  <span class="p">{</span>
-    <span class="n">alt_setbits_word</span><span class="p">(</span> <span class="n">gpio1_swporta_dr_addr</span><span class="p">,</span> <span class="n">BIT_LED</span> <span class="p">);</span>
-    <span class="n">usleep</span><span class="p">(</span><span class="mi">500</span><span class="o">*</span><span class="mi">1000</span><span class="p">);</span>
-    <span class="n">alt_clrbits_word</span><span class="p">(</span> <span class="n">gpio1_swporta_dr_addr</span><span class="p">,</span> <span class="n">BIT_LED</span> <span class="p">);</span>
-    <span class="n">usleep</span><span class="p">(</span><span class="mi">500</span><span class="o">*</span><span class="mi">1000</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="n">printf</span><span class="p">(</span><span class="s">"user key test </span><span class="se">\r\n</span><span class="s">"</span><span class="p">);</span>
-  <span class="n">printf</span><span class="p">(</span><span class="s">"press key to control led</span><span class="se">\r\n</span><span class="s">"</span><span class="p">);</span>
-
-  <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-    <span class="n">scan_input</span> <span class="o">=</span> <span class="n">alt_read_word</span><span class="p">(</span><span class="n">gpio1_porta_ext_addr</span><span class="p">);</span>
-    <span class="k">if</span><span class="p">(</span><span class="o">~</span><span class="n">scan_input</span><span class="o">&amp;</span><span class="n">BUTTON_MASK</span><span class="p">)</span>
-      <span class="n">alt_setbits_word</span><span class="p">(</span> <span class="n">gpio1_swporta_dr_addr</span><span class="p">,</span> <span class="n">BIT_LED</span> <span class="p">);</span>
-    <span class="k">else</span>
-      <span class="n">alt_clrbits_word</span><span class="p">(</span> <span class="n">gpio1_swporta_dr_addr</span><span class="p">,</span> <span class="n">BIT_LED</span> <span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="c1">// clean up our memory mapping and exit</span>
-  <span class="k">if</span><span class="p">(</span> <span class="n">munmap</span><span class="p">(</span> <span class="n">virtual_base</span><span class="p">,</span> <span class="n">HW_REGS_SPAN</span> <span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="n">printf</span><span class="p">(</span> <span class="s">"ERROR: munmap() failed...</span><span class="se">\n</span><span class="s">"</span> <span class="p">);</span>
-    <span class="n">close</span><span class="p">(</span> <span class="n">fd</span> <span class="p">);</span>
-    <span class="k">return</span><span class="p">(</span> <span class="mi">1</span> <span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="n">close</span><span class="p">(</span> <span class="n">fd</span> <span class="p">);</span>
-  <span class="k">return</span><span class="p">(</span> <span class="mi">0</span> <span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<ul>
-<li>um arquivo <code>Makefile</code> com o conteúdo a seguir:</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="nv">TARGET</span> <span class="o">=</span> hps_gpio
-
-<span class="nv">ALT_DEVICE_FAMILY</span> <span class="o">?=</span> soc_cv_av
-
-<span class="nv">HWLIBS_ROOT</span> <span class="o">=</span> <span class="k">$(</span>SOCEDS_HWLIB<span class="k">)</span>
-
-<span class="nv">CFLAGS</span> <span class="o">=</span> -g -Wall -Werror -I<span class="k">$(</span>HWLIBS_ROOT<span class="k">)</span>/include -I<span class="k">$(</span>HWLIBS_ROOT<span class="k">)</span>/include/<span class="k">$(</span>ALT_DEVICE_FAMILY<span class="k">)</span> -D<span class="k">$(</span>ALT_DEVICE_FAMILY<span class="k">)</span>
-<span class="nv">LDFLAGS</span> <span class="o">=</span> -g -Wall -Werror
-
-<span class="nv">CROSS_COMPILE</span> <span class="o">=</span> <span class="k">$(</span>GCC_Linaro<span class="k">)</span>/arm-linux-gnueabihf-
-<span class="nv">CC</span> <span class="o">=</span> <span class="k">$(</span>CROSS_COMPILE<span class="k">)</span>gcc
-<span class="nv">LD</span> <span class="o">=</span> <span class="k">$(</span>CROSS_COMPILE<span class="k">)</span>gcc
-<span class="nv">ARCH</span> <span class="o">=</span> arm
-
-<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">build</span>
-<span class="nf">build</span><span class="o">:</span> <span class="k">$(</span><span class="nv">TARGET</span><span class="k">)</span>
-
-<span class="nf">$(TARGET)</span><span class="o">:</span> <span class="n">main</span>.<span class="n">o</span>
-    <span class="k">$(</span>LD<span class="k">)</span> <span class="k">$(</span>LDFLAGS<span class="k">)</span>   $^ -o <span class="nv">$@</span>
-
-<span class="nf">%.o </span><span class="o">:</span> %.<span class="n">c</span>
-    <span class="k">$(</span>CC<span class="k">)</span> <span class="k">$(</span>CFLAGS<span class="k">)</span> -c $&lt; -o <span class="nv">$@</span>
-
-<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>
-<span class="nf">clean</span><span class="o">:</span>
-    rm -f <span class="k">$(</span>TARGET<span class="k">)</span> *.a *.o *~
-</pre></div>
-<p>E compile o projeto:</p>
-<div class="highlight"><pre><span></span>$ make
-</pre></div>
-<h2 id="copiando-para-o-target">Copiando para o <code>target</code><a class="headerlink" href="#copiando-para-o-target" title="Permanent link">¶</a></h2>
-<p>Com o cartão de memória ainda no <code>host</code>, copie o arquivo binário: <code>hps_gpio</code> para a pasta: <code>/root/</code> do cartão de memória.</p>
+<p>Nesse tutorial iremos compilar um programa e executar no Linux Embarcado. esse programa será executado no <a href="http://www.linfo.org/kernel_space.html">user space</a>. Para isso iremos utilizar a toolchain definida no <a href="Tutorial-HPS-BuildSystem">tutorial anterior</a>.</p>
+<p>Iremos utilizar como base o código exemplo da Terasic que está localizado no CD do kit: <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/my_first_hps">DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC/my_first_hps</a></p>
+<p>E crosscopilar esse código para o nosso HPS utilizando o Makefile da pasta.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Esse Makefile só funciona porque configuramos o nosso bashrc com as variáveis de sistemas que ele utiliza.
+Por exemplo, a linha <code>SOCEDS_ROOT ?= $(SOCEDS_DEST_ROOT)</code> usa a variável <code>SOCEDS_DEST_ROOT</code> que foi configurara no tutorial anterior, assim como o <code>arm-linux-gnueabihf-</code>...</p>
+</div>
+<h2 id="executando-no-target">Executando no <code>target</code><a class="headerlink" href="#executando-no-target" title="Permanent link">¶</a></h2>
+<p>Agora basta  copiar o binário criado pela compilação para o cartão de memória e testar o nosso programa no <code>target</code> (HPS).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Com o cartão de memória no <code>host</code> copie o arquivo binário: <code>hps_gpio</code> para a pasta: <code>/root/</code> do cartão de memória.</p>
 <p>Sempre que manipular um dispositivo de memória externo, será necessário fazer um flush do cache para forçar o linux alterar o dispositivo externo, caso contrário a alteração poderá ficar só local ao PC.</p>
 <div class="highlight"><pre><span></span>$ sync
 </pre></div>
 <blockquote>
 <p>A função sync é blocante, ficará travada enquanto o linux faz o flush dos dados.</p>
 </blockquote>
-<h2 id="executando-no-target">Executando no <code>target</code><a class="headerlink" href="#executando-no-target" title="Permanent link">¶</a></h2>
-<ol>
-<li>Executar o linux no <code>target</code></li>
-<li>Conectar <code>host</code> no <code>target</code> via <a href="Tutorial---HPS---Acessando---Target#uart">terminal</a></li>
-</ol>
-<p>Faça login no linux via terminal (user: root, ps: 1234) e execute o arquivo compilado:</p>
-<div class="highlight"><pre><span></span>$ /root/hps_gpio
-</pre></div>
-<p>E veja os LEDs piscarem ! Na verdade os LEDs piscam 2 vezes e depois o código fica verificando quando um botão (KEY2) é pressionado. <strong>Cuidado para não apertar os botões do lado que são de reset !</strong></p>
-<h2 id="modificando-o-codigo">Modificando o código !<a class="headerlink" href="#modificando-o-codigo" title="Permanent link">¶</a></h2>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Modificando o código</p>
 <p>Faça o programa ler apenas duas vezes o botão, e depois disso termina a aplicação !</p>
-<h1 id="entrega-4">Entrega 4<a class="headerlink" href="#entrega-4" title="Permanent link">¶</a></h1>
-<p>Vamos melhorar esse nosso sistema de compilação e deploy !</p>
+</div>
+<h2 id="fluxo-de-desenvolvimento">Fluxo de desenvolvimento<a class="headerlink" href="#fluxo-de-desenvolvimento" title="Permanent link">¶</a></h2>
+<p>Esse fluxo de desenvolvimento não é dos melhores né? É bom programar no <code>host</code>, mas esse esquema de ter que ficar tirando e colocando cartão de memória, esperar o linux do target subir, logar e testar não faz bem para ninguém. Existem várias soluções para melhorar isso, cada qual com sua vantagem/desvantagem:</p>
 <ul>
-<li><a href="Entrega---4">Entrega 4</a></li>
+<li>build no próprio target (ruim para o programador, ótimo para dependências, fácil de debugar, lento)</li>
+<li>criar uma vmw arm e compilar nela (bom para o programador, ótimo para dependências, +- fácil de debugar, rápido)</li>
+<li>crosscompilar (bom para o programador, ruim para dependências, difícil de debugar, rápido)</li>
 </ul>
+<p>Na entrega 4 vamos aprimorar nosso sistema de compilação e testes. </p>
 </article>
 </div>
 </div>
@@ -456,13 +330,13 @@
               </span>
 </div>
 </a>
-<a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="../Tutorial-HPS-Kernel/" rel="next" title="Tutorial HPS Kernel">
+<a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="../Tutorial-HPS-Kernel/" rel="next" title="Kernel">
 <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
 <span class="md-flex__ellipsis">
 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Tutorial HPS Kernel
+                Kernel
               </span>
 </div>
 <div class="md-flex__cell md-flex__cell--shrink">

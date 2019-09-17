@@ -17,7 +17,7 @@
 <meta content="[\s\-]+" name="lang:search.tokenizer"/>
 <link href="../assets/images/favicon.png" rel="shortcut icon"/>
 <meta content="mkdocs-1.0.4, mkdocs-material-4.4.1" name="generator"/>
-<title>Tutorial HPS Kernel - Embarcados Avançados</title>
+<title>Kernel - Embarcados Avançados</title>
 <link href="../assets/stylesheets/application.30686662.css" rel="stylesheet"/>
 <link href="../assets/stylesheets/application-palette.a8b3c06d.css" rel="stylesheet"/>
 <meta content="#e91e63" name="theme-color"/>
@@ -57,7 +57,7 @@
             </span>
 <span class="md-header-nav__topic">
               
-                Tutorial HPS Kernel
+                Kernel
               
             </span>
 </div>
@@ -229,49 +229,83 @@
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Tutorial-HPS-BlinkLED/" title="Embarcados Avançados - FPGA RTL">
-      Embarcados Avançados - FPGA RTL
+<a class="md-nav__link" href="../Tutorial-HPS-BlinkLED/" title="Blink LED">
+      Blink LED
     </a>
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-toggle md-nav__toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-        Tutorial HPS Kernel
+        Kernel
       </label>
-<a class="md-nav__link md-nav__link--active" href="./" title="Tutorial HPS Kernel">
-      Tutorial HPS Kernel
+<a class="md-nav__link md-nav__link--active" href="./" title="Kernel">
+      Kernel
     </a>
 <nav class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">Table of contents</label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#kernel" title="Kernel">
-    Kernel
-  </a>
-<nav class="md-nav">
-<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#kernel-44" title="Kernel 4.4">
     Kernel 4.4
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#configurando-o-kernel" title="Configurando o kernel">
+    Configurando o kernel
+  </a>
+<nav class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
 <a class="md-nav__link" href="#configurando" title="Configurando">
     Configurando
   </a>
+<nav class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enable-loadable-module-support" title="Enable loadable module support">
+    Enable loadable module support
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#support-for-large-2tb-block-devices-and-files" title="Support for large (2TB+) block devices and files">
+    Support for large (2TB+) block devices and files
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-extended-4-ext4-filesystem" title="The Extended 4 (ext4) filesystem">
+    The Extended 4 (ext4) filesystem
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#altera-socfpga-family" title="Altera SOCFPGA family">
+    Altera SOCFPGA family
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#symmetric-multi-processing" title="Symmetric Multi-Processing">
+    Symmetric Multi-Processing
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#device-drivers" title="Device Drivers">
+    Device Drivers
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#salvando" title="Salvando">
     Salvando
   </a>
 </li>
+</ul>
+</nav>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#compilando" title="Compilando">
     Compilando
   </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#testando" title="Testando">
@@ -298,33 +332,67 @@
 <label class="md-nav__title" for="__toc">Table of contents</label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#kernel" title="Kernel">
-    Kernel
-  </a>
-<nav class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
 <a class="md-nav__link" href="#kernel-44" title="Kernel 4.4">
     Kernel 4.4
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#configurando-o-kernel" title="Configurando o kernel">
+    Configurando o kernel
+  </a>
+<nav class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
 <a class="md-nav__link" href="#configurando" title="Configurando">
     Configurando
   </a>
+<nav class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enable-loadable-module-support" title="Enable loadable module support">
+    Enable loadable module support
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#support-for-large-2tb-block-devices-and-files" title="Support for large (2TB+) block devices and files">
+    Support for large (2TB+) block devices and files
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-extended-4-ext4-filesystem" title="The Extended 4 (ext4) filesystem">
+    The Extended 4 (ext4) filesystem
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#altera-socfpga-family" title="Altera SOCFPGA family">
+    Altera SOCFPGA family
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#symmetric-multi-processing" title="Symmetric Multi-Processing">
+    Symmetric Multi-Processing
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#device-drivers" title="Device Drivers">
+    Device Drivers
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#salvando" title="Salvando">
     Salvando
   </a>
 </li>
+</ul>
+</nav>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#compilando" title="Compilando">
     Compilando
   </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#testando" title="Testando">
@@ -344,21 +412,24 @@
 <div class="md-content">
 <article class="md-content__inner md-typeset"><a class="md-icon md-content__icon" download href="Tutorial-HPS-Kernel.pdf" title="PDF Export"></a>
 <a class="md-icon md-content__icon" href="https://github.com/insper/Embarcados-Avancados/edit/master/docs/Tutorial-HPS-Kernel.md" title="Edit this page"></a>
-<h1>Tutorial HPS Kernel</h1>
-<p>e executando o kernel do Linux</p>
-<p>Nesse tutorial iremos compilar o kernel do Linux para o ARM na nossa FPGA, usando o toolchain que já temos configurado.</p>
-<h2 id="kernel">Kernel<a class="headerlink" href="#kernel" title="Permanent link">¶</a></h2>
-<p>Clone o kernel do linux fornecido pela altera/intel para a nossa pasta <code>work</code>:</p>
+<h1 id="kernel">Kernel<a class="headerlink" href="#kernel" title="Permanent link">¶</a></h1>
+<p>Nesse tutorial iremos compilar o kernel do Linux para o ARM do nosso SoC usando o toolchain que já temos configurado.</p>
+<h2 id="kernel-44">Kernel 4.4<a class="headerlink" href="#kernel-44" title="Permanent link">¶</a></h2>
+<p>Clone o kernel do linux :</p>
 <div class="highlight"><pre><span></span>$ git clone https://git.kernel.org
-$ <span class="nb">cd</span> 
-</pre></div>
-<h3 id="kernel-44">Kernel 4.4<a class="headerlink" href="#kernel-44" title="Permanent link">¶</a></h3>
-<p>Vamos trabalhar com a versão <code>4.4</code> do kernel que é uma versão com: <code>Long Time Suport</code> (LTS), ou seja, será mantida por muito mais tempo que as outras versões. A versão 4.4 foi lançada em 10 de Janeiro e será mantida oficialmente até 2021, ela é também a versão Super LTS, com suporte estendido até 2036. </p>
-<details class="linux kernel wikipidia - versões"><summary>Linux</summary><p><iframe height="300" src="https://en.wikipedia.org/wiki/Linux_kernel§ion=30" title="Linux Kernel" width="100%"> </iframe></p>
-</details>
-<p>Pense que um desenvolvedor de um sistema embarcado, que vai criar toda uma infra dedicada não quer ficar ter que ajustando e validando tudo novamente só para ter a versão mais nova do kenrel. A ideia de usar uma com maior suporte é minimizar esforços.</p>
-<p>O kernel utiliza o sistema de <code>tag</code> do git:</p>
-<div class="highlight"><pre><span></span>$ git tag
+$ <span class="nb">cd</span> linux
+
+Vamos trabalhar com a versão <span class="sb">`</span><span class="m">4</span>.4<span class="sb">`</span> <span class="k">do</span> kernel que é uma versão com: <span class="sb">`</span>Long Time Suport<span class="sb">`</span> <span class="o">(</span>LTS<span class="o">)</span>, ou seja, será mantida por muito mais tempo que as outras versões. A versão <span class="m">4</span>.4 foi lançada em <span class="m">10</span> de Janeiro e será mantida oficialmente até <span class="m">2021</span>, ela é também a versão Super LTS, com suporte estendido até <span class="m">2036</span>. 
+
+??? Linux Kernel wikipidia - Versões
+    &lt;iframe <span class="nv">src</span><span class="o">=</span><span class="s2">"https://en.wikipedia.org/wiki/Linux_kernel"</span> <span class="nv">title</span><span class="o">=</span><span class="s2">"Linux Kernel"</span> <span class="nv">width</span><span class="o">=</span><span class="s2">"100%"</span> <span class="nv">height</span><span class="o">=</span><span class="s2">"300"</span>&gt; &lt;/iframe&gt;
+
+Pense que um desenvolvedor de um sistema embarcado, que vai criar toda uma infra dedicada não quer ficar ter que ajustando e validando tudo novamente só para ter a versão mais nova <span class="k">do</span> kenrel. A ideia de usar uma com maior suporte é minimizar esforços.
+
+O kernel utiliza o sistema de <span class="sb">`</span>tag<span class="sb">`</span> <span class="k">do</span> git:
+
+<span class="sb">```</span>bash
+$ git tag
 ...
 v2.6.11
 v2.6.11-tree
@@ -384,11 +455,16 @@ v2.6.14-rc3
 <div class="highlight"><pre><span></span>$ git checkout v4.4
 $ git checkout -b <span class="m">4</span>.4-SoC
 </pre></div>
+<h2 id="configurando-o-kernel">Configurando o kernel<a class="headerlink" href="#configurando-o-kernel" title="Permanent link">¶</a></h2>
 <p>Uma vez no branch <code>4.4-SoC</code> precisamos configurar o kernel para nosso processador (ARM) e fazer as configurações necessárias no kernel. Primeiramente iremos gerar um arquivo de configuração <code>.config</code> padrão para SoCs ARM Altera:</p>
 <div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">ARCH</span><span class="o">=</span>arm        <span class="c1"># indica a arquitetura do Kernel</span>
-$ make socfpga_defconfig <span class="c1"># gera o arquivo padrão de configuração para soc</span>
+$ make socfpga_defconfig <span class="c1"># gera o arquivo padrão de configuração para SoC</span>
 </pre></div>
-<p>Agora vamos configurar o Kernel do Linux para a nossa aplicação :</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As configuração do kernel ficam salvos no arquivo: <code>.config</code> na raiz do repositório. Quando executamos o comando <code>make socfpga_defconfig</code>, o mesmo é inicializado com algumas configurações padrões. Você pode dar uma olhada na pasta: <a href="https://github.com/torvalds/linux/blob/master/arch/arm/configs/socfpga_defconfig">linux/arch/arm/configs/socfpga_defconfig</a>.</p>
+</div>
+<p>Agora vamos configurar alguns parâmetros específicos do Kernel para a nossa aplicação:</p>
 <div class="highlight"><pre><span></span>$ make <span class="nv">ARCH</span><span class="o">=</span>arm menuconfig 
 </pre></div>
 <div class="admonition note">
@@ -412,6 +488,15 @@ $ make socfpga_defconfig <span class="c1"># gera o arquivo padrão de configura�
 </li>
 </ol>
 <div class="admonition note">
+<p class="admonition-title">Exclude/ Include</p>
+<p>Para <strong>Desativar</strong> utilize a letra <code>N</code> do teclado, para incluir a letra <code>Y</code></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Dúvidas?</p>
+<p>A maioria dos parâmetros possui uma explicação, basta apertar <code>?</code> para ler a respeito.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <ul>
 <li>ref :  <a href="https://rocketboards.org/foswiki/Documentation/EmbeddedLinuxBeginnerSGuide#8">https://rocketboards.org/foswiki/Documentation/EmbeddedLinuxBeginnerSGuide#8</a>
 Go into the “General Setup” menu. Uncheck “Automatically append version information to the version string”. This will prevent the kernel from adding extra “version” information to the kernel. Whenever we try to dynamically load a driver (also called kernel modules, as discussed in a later section) the kernel will check to see if the driver was built with the same version of the source code as itself. If it isn’t, it will reject to load that driver. For development, it’s useful to disable these options to make it easier to test out different versions of drivers. In a production system however, it’s recommend to keep this option enabled and only use drivers that were compiled with the correct version of the kernel.
@@ -420,101 +505,81 @@ I encourage you to peruse the options in the General Setup menu and see what’s
 </ul>
 </div>
 <hr/>
-<ol>
-<li>
-<p><em>Enable loadable module support</em> </p>
-</li>
-<li>
-<p>Volte para o menu principal (ESC ESC) <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/></p>
+<h4 id="enable-loadable-module-support">Enable loadable module support<a class="headerlink" href="#enable-loadable-module-support" title="Permanent link">¶</a></h4>
 <ul>
+<li>Volte para o menu principal (<code>&lt;ESC&gt;</code> <code>&lt;ESC&gt;</code>) <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/><ul>
 <li>Note que o <em>Enable loadable module support</em> está ativado.</li>
 </ul>
 </li>
-</ol>
+</ul>
 <div class="admonition note">
 <p>Isso permite que o kernel seja modificado (pelo carregamento de drivers) após a sua execução. Isso será útil quando formos desenvolver nosso próprio device driver, sem a necessidade de recompilarmos o kernel toda vez que desejamos testar uma modificação no código. É essa configuração que permite utilizarmos USBs, SSDs, placas de rede via a possibilidade do carregamento de drivers de forma dinâmica pelo sistema operacional.</p>
 </div>
 <hr/>
-<ol>
-<li>
-<p>Support for large (2TB+) block devices and files**</p>
-</li>
-<li>
-<p>No menu principal <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/> Enable the block layer </p>
+<h4 id="support-for-large-2tb-block-devices-and-files">Support for large (2TB+) block devices and files<a class="headerlink" href="#support-for-large-2tb-block-devices-and-files" title="Permanent link">¶</a></h4>
 <ul>
+<li>No menu principal <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/> Enable the block layer <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/><ul>
 <li><strong>Ative</strong> : Support for large (2TB+) block devices and files</li>
 </ul>
 </li>
-</ol>
+</ul>
 <div class="admonition note">
 <p>Essa opção irá permitir a utilização de partições do tipo EXT4. Se esquecer essa opção e o kernel tiver em uma partição EXT4 a mesma será montada como READ-ONLY.</p>
 </div>
 <hr/>
-<ol>
-<li>
-<p>The Extended 4 (ext4) filesystem </p>
-</li>
-<li>
-<p>Menu principal <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/> File systems </p>
+<h4 id="the-extended-4-ext4-filesystem">The Extended 4 (ext4) filesystem<a class="headerlink" href="#the-extended-4-ext4-filesystem" title="Permanent link">¶</a></h4>
 <ul>
+<li>Menu principal <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/> File systems <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/> <ul>
 <li><strong>Ative</strong> : The Extended 4 (ext4) filesystem</li>
 </ul>
 </li>
-</ol>
+</ul>
 <div class="admonition note">
 <p>Essa opção irá possibilitar que o kernel monte dispositivos formatados em EXT4. Pretendemos usar isso no SDCARD.</p>
 </div>
 <hr/>
-<ol>
-<li>
-<p>Altera SOCFPGA family</p>
-</li>
-<li>
-<p>Menu principal <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/> System Type</p>
+<h4 id="altera-socfpga-family">Altera SOCFPGA family<a class="headerlink" href="#altera-socfpga-family" title="Permanent link">¶</a></h4>
 <ul>
+<li>Menu principal <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/> System Type <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/><ul>
 <li><strong>Ative</strong> : Altera SOCFGPA family</li>
 </ul>
 </li>
-</ol>
+</ul>
 <div class="admonition note">
 <p>Isso indica para o kernel qual será o dispositivo que o mesmo será executado, note que esssa opção possui um novo menu onde podemos ativar ou não a suspensão para RAM.</p>
 </div>
 <hr/>
-<ol>
-<li>
-<p>Symmetric Multi-Processing</p>
-</li>
-<li>
-<p>Menu principal <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/> Kernel Features </p>
+<h4 id="symmetric-multi-processing">Symmetric Multi-Processing<a class="headerlink" href="#symmetric-multi-processing" title="Permanent link">¶</a></h4>
 <ul>
+<li>Menu principal <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/> Kernel Features <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/><ul>
 <li><strong>Ative</strong>: Symmmetric Multi-Processing</li>
 </ul>
 </li>
-</ol>
+</ul>
 <div class="admonition note">
 <p>Essa opção indica para o kernel que ele deve utilizar os dois cores presente no ARM HPS da FPGA. </p>
 </div>
 <hr/>
-<ol>
-<li>
-<p>Device Drivers</p>
-</li>
-<li>
-<p>Menu principal <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/> Device Drivers</p>
-</li>
-</ol>
+<h4 id="device-drivers">Device Drivers<a class="headerlink" href="#device-drivers" title="Permanent link">¶</a></h4>
+<ul>
+<li>Menu principal <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/> Device Drivers <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/27a1.png" title=":arrow_right:"/> </li>
+</ul>
 <div class="admonition note">
 <p>Indica quais drivers serão compilados junto com o kernel, note que já temos configurado drivers de rede (Network device support); GPIO (GPIO Support); RTC; DMA; ... . Lembre que já inicializamos o <code>.config</code> com uma configuração padrão para SoCs Altera.</p>
 </div>
 <h3 id="salvando">Salvando<a class="headerlink" href="#salvando" title="Permanent link">¶</a></h3>
 <p>Aperte ESC duas vezes (ESC ESC) e salve as configurações no arquivo <code>.config</code></p>
-<h3 id="compilando">Compilando<a class="headerlink" href="#compilando" title="Permanent link">¶</a></h3>
+<h2 id="compilando">Compilando<a class="headerlink" href="#compilando" title="Permanent link">¶</a></h2>
 <p>O makefile utiliza a variável <code>CROSS_COMPILE</code> para definir o toolchain que irá fazer a compilação do kernel, vamos definir como sendo o GCC do Linaro baixado recentemente:</p>
 <div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span><span class="nv">$GCC_Linaro</span>/arm-linux-gnueabihf-
 </pre></div>
 <p>Para compilarmos o kernel :</p>
 <div class="highlight"><pre><span></span>make <span class="nv">ARCH</span><span class="o">=</span>arm <span class="nv">LOCALVERSION</span><span class="o">=</span> zImage -j <span class="m">4</span>
 </pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Caso aconteça algum erro de build, deve-se verificar o path do <code>CROSS_COMPILE</code></p>
+</div>
 <p>Esse comando faz com que o kernel do linux seja compilado em uma versão compactada que é auto-extraída. Outras opções seriam :</p>
 <ul>
 <li>Image : Binário do kernel</li>
@@ -522,7 +587,7 @@ I encourage you to peruse the options in the General Setup menu and see what’s
 <li>uImage: uma versão que já possui o bootloader uboot</li>
 </ul>
 <p>1^: <a href="https://stackoverflow.com/questions/22322304/image-vs-zimage-vs-uimage">https://stackoverflow.com/questions/22322304/image-vs-zimage-vs-uimage</a> </p>
-<p>o zImage é salvo em :</p>
+<p>o zImage é salvo em:</p>
 <ul>
 <li><code>arch/arm/boot/zImage</code></li>
 </ul>
@@ -540,7 +605,7 @@ Linux buildroot <span class="m">4</span>.14.0 <span class="c1">#1 SMP Mon Jul 16
 <footer class="md-footer">
 <div class="md-footer-nav">
 <nav class="md-footer-nav__inner md-grid">
-<a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="../Tutorial-HPS-BlinkLED/" rel="prev" title="Embarcados Avançados - FPGA RTL">
+<a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="../Tutorial-HPS-BlinkLED/" rel="prev" title="Blink LED">
 <div class="md-flex__cell md-flex__cell--shrink">
 <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
 </div>
@@ -549,7 +614,7 @@ Linux buildroot <span class="m">4</span>.14.0 <span class="c1">#1 SMP Mon Jul 16
 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Embarcados Avançados - FPGA RTL
+                Blink LED
               </span>
 </div>
 </a>

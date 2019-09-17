@@ -252,13 +252,13 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Tutorial-HPS-BlinkLED/" title="Embarcados Avançados - FPGA RTL">
-      Embarcados Avançados - FPGA RTL
+<a class="md-nav__link" href="../Tutorial-HPS-BlinkLED/" title="Blink LED">
+      Blink LED
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Tutorial-HPS-Kernel/" title="Tutorial HPS Kernel">
-      Tutorial HPS Kernel
+<a class="md-nav__link" href="../Tutorial-HPS-Kernel/" title="Kernel">
+      Kernel
     </a>
 </li>
 </ul>
@@ -297,19 +297,31 @@
 <h1 id="ferramental">Ferramental<a class="headerlink" href="#ferramental" title="Permanent link">¶</a></h1>
 <p>Vamos instalar o ferramental (compiladores) que será utilizado para compilar o kernel e o filesystem. Deveremos instalar o <code>socdes</code> e o <code>linaro-gcc</code> .</p>
 <h2 id="intel-socdes">Intel SOCDES<a class="headerlink" href="#intel-socdes" title="Permanent link">¶</a></h2>
-<p>Você irá precisar ter o software instalado (mesmas versões!):
-   - Quartus
-   - <a href="http://fpgasoftware.intel.com/soceds/">Intel SoC FPGA Embedded Development Suite</a></p>
+<p>Você irá precisar ter o software <code>SOCEDS</code> instalado, e ele precisa ser a mesma versão do Quartus. Link para download:</p>
+<ul>
+<li><a href="http://fpgasoftware.intel.com/soceds/">Intel SoC FPGA Embedded Development Suite</a></li>
+</ul>
 <p>Vamos precisar inserir no path do bash referência para uma série de softwares a serem usados, modifique seu <code>.bashrc</code> inserindo: </p>
 <div class="admonition note"></div>
 <p>Ao fazer o download do <code>soced</code> deve-se verificar para ser a mesma versão do Quartus.</p>
 <div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">ALTERAPATH</span><span class="o">=</span>~/intelFPGA/18.1/
+
+<span class="nb">export</span> <span class="nv">ALTERAPATH</span><span class="o">=</span>/home/corsi/opt/intelFPGA/18.1
+<span class="nb">export</span> <span class="nv">QUARTUS_ROOTDIR</span><span class="o">=</span><span class="nv">$ALTERAPATH</span>/quartus/
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/quartus/bin
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/modelsim_ase/linuxaloem/
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/quartus/sopc_builder/bin/
+
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/embedded/
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/embedded/host_tools/altera/preloadergen/
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/quartus/embedded/
+
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/hls/bin/
+<span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/hls/host/linux64/lib/
+
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/nios2eds/
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/nios2eds/sdk2/bin/
+
+<span class="nb">export</span> <span class="nv">SOCEDS_DEST_ROOT</span><span class="o">=</span><span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/embedded
 <span class="nb">export</span> <span class="nv">SOCEDS_HWLIB</span><span class="o">=</span><span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/embedded/ip/altera/hps/altera_hps/hwlib/
 </pre></div>
 <div class="admonition note">
@@ -337,13 +349,24 @@ $ <span class="nb">exit</span>
 </div>
 <h1 id="gcc-toolchain">GCC toolchain<a class="headerlink" href="#gcc-toolchain" title="Permanent link">¶</a></h1>
 <p>Iremos utilizar o GCC cross compile fornecido pelo Linaro, esse mesmo GCC será utilizado para compilar o Kernel, gerar o file system e compilar os programas que executarão no Linux. Para facilitar a organização, iremos manter o toolchain na pasta <code>~/work/</code>.</p>
-<div class="highlight"><pre><span></span>$ mkdir ~/work/
-$ <span class="nb">cd</span> ~/work
-$ wget https://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/arm-linux-gnueabihf/gcc-linaro-7.3.1-2018.05-i686_arm-linux-gnueabihf.tar.xz
-$ tar xvf gcc-linaro-7.3.1-2018.05-i686_arm-linux-gnueabihf.tar.xz
+<div class="admonition note">
+<p class="admonition-title">Wikipidia Linaro</p>
+<p><em>Linaro is an engineering organization that works on free and open-source software such as the Linux kernel, the GNU Compiler Collection, power management, graphics and multimedia interfaces for the ARM family of instruction sets and implementations thereof as well as for the Heterogeneous System Architecture.</em></p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Linaro">https://en.wikipedia.org/wiki/Linaro</a></li>
+</ul>
+</div>
+<p>Do site de <a href="https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-linux-gnueabihf/">binários do Linaro</a> abaixe a versão <code>gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz</code> e extraía para alguma pasta no seu Linux.</p>
+<div class="admonition note">
+<p class="admonition-title">Quer baixar via terminal?</p>
+<p>Meus projetos ficam todos dentro da pasta: <code>/home/corsi/work</code>, por isso eu extraí para lá. Você pode escolher outro local.</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/work
+$ wget https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-linux-gnueabihf/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz
+$ tar xvf gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz
 </pre></div>
+</div>
 <p>De uma olhada na pasta recém extraída: </p>
-<div class="highlight"><pre><span></span>$ cd gcc-linaro-7.3.1-2018.05-i686_arm-linux-gnueabihf
+<div class="highlight"><pre><span></span>$ cd gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf 
 $ tree -L 1
 ...
 + arm-linux-gnueabihf
@@ -368,7 +391,8 @@ $ tree -L 1
 <h2 id="criando-um-atalho-no-bash">Criando um atalho no bash<a class="headerlink" href="#criando-um-atalho-no-bash" title="Permanent link">¶</a></h2>
 <p>Vamos criar um atalho para essa pasta no bash. Edite o arquivo <code>~/.bashrc</code> para incluir a pasta <code>~/work/gcc-linaro.../bin/</code> na variável do sistema: <strong>GCC_Linaro</strong>.</p>
 <div class="highlight"><pre><span></span><span class="c1"># GCC Linaro on path</span>
-$ <span class="nb">export</span> <span class="nv">GCC_Linaro</span><span class="o">=</span>/home/corsi/work/gcc-linaro-7.2.1-2017.11-x86_64_arm-linux-gnueabihf/bin
+<span class="nb">export</span> <span class="nv">GCC_Linaro</span><span class="o">=</span>/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="si">${</span><span class="nv">GCC_Linaro</span><span class="si">}</span>
 </pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -377,8 +401,54 @@ $ <span class="nb">export</span> <span class="nv">GCC_Linaro</span><span class="
 <p>Agora temos um atalho para o gcc-arm, vamos testar :</p>
 <div class="highlight"><pre><span></span>$ <span class="nv">$GCC_Linaro</span>/arm-linux-gnueabihf-gcc -v
 ...
-gcc version <span class="m">7</span>.2.1 <span class="m">20171011</span> <span class="o">(</span>Linaro GCC <span class="m">7</span>.2-2017.11<span class="o">)</span> 
+Using built-in specs.
+<span class="nv">COLLECT_GCC</span><span class="o">=</span>/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc
+<span class="nv">COLLECT_LTO_WRAPPER</span><span class="o">=</span>/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin/../libexec/gcc/arm-linux-gnueabihf/7.4.1/lto-wrapper
 </pre></div>
+<p>E ele também deve estar no path, como <code>arm-linux-*</code>:</p>
+<p><img alt="" src="../figs/Tutorial-HLS-BuildSystem-armgcc.png"/></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>É possível instalar o <code>arm-linux</code> via <code>apt install</code>, mas não vamos fazer isso pois queremos ter controle da versão do compilador que estamos utilizando.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">bashrc ao final</p>
+<p>Eu não modifico meu <code>bashrc</code>, o que eu faço é criar um arquivo com o nome: <code>Quartus18.sh</code> 
+ e coloco toda essa configuração nele, e quando eu quero trabalhar em embarcados avançados eu só
+ preciso dar <code>source Quartus18.sh</code> e tenho meu ambiente configurado. Com isso, eu tenho
+ a vantagem de ter 'várias' versões instaladas e selecionar a que eu quero trabalhar. </p>
+<p>Isso também funciona pois eu tenho ambientes diferentes, com base nas disciplinas: Elementos tem um
+ e Avançados outro.</p>
+<p>Meu <code>Quartus18.sh</code> é o seguinte:</p>
+<div class="highlight"><pre><span></span>echo "INTEL FPGA QUARTUS 18.1"
+
+export MGLS_LICENSE_FILE=/home/corsi/opt/intelFPGA/1-MBTRJ3_License.dat
+export LM_LICENSE_FILE=/home/corsi/opt/intelFPGA/1-MBTRJ3_License.dat
+#export MGLS_LICENSE_FILE=27001@35.172.191.36
+#export LM_LICENSE_FILE=27001@35.172.191.3
+
+export ALTERAPATH=/home/corsi/opt/intelFPGA/18.1
+export QUARTUS_ROOTDIR=$ALTERAPATH/quartus/
+export PATH=$PATH:${ALTERAPATH}/quartus/bin
+export PATH=$PATH:${ALTERAPATH}/modelsim_ase/linuxaloem/
+export PATH=$PATH:${ALTERAPATH}/quartus/sopc_builder/bin/
+
+export PATH=$PATH:${ALTERAPATH}/embedded/
+export PATH=$PATH:${ALTERAPATH}/embedded/host_tools/altera/preloadergen/
+
+export PATH=$PATH:${ALTERAPATH}/hls/bin/
+export LD_LIBRARY_PATH=${ALTERAPATH}/hls/host/linux64/lib/
+
+export PATH=$PATH:${ALTERAPATH}/nios2eds/
+export PATH=$PATH:${ALTERAPATH}/nios2eds/sdk2/bin/
+
+export SOCEDS_DEST_ROOT=${ALTERAPATH}/embedded
+export SOCEDS_HWLIB=${ALTERAPATH}/embedded/ip/altera/hps/altera_hps/hwlib/
+
+export GCC_Linaro=/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin
+export PATH=$PATH:${GCC_Linaro}
+</pre></div>
+</div>
 </article>
 </div>
 </div>
@@ -399,13 +469,13 @@ gcc version <span class="m">7</span>.2.1 <span class="m">20171011</span> <span c
               </span>
 </div>
 </a>
-<a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="../Tutorial-HPS-BlinkLED/" rel="next" title="Embarcados Avançados - FPGA RTL">
+<a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="../Tutorial-HPS-BlinkLED/" rel="next" title="Blink LED">
 <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
 <span class="md-flex__ellipsis">
 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Embarcados Avançados - FPGA RTL
+                Blink LED
               </span>
 </div>
 <div class="md-flex__cell md-flex__cell--shrink">
