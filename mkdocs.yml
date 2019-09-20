@@ -37,7 +37,7 @@ nav:
 
 repo_name: 'Insper/Embarcados-Avancados'
 repo_url: 'https://github.com/insper/Embarcados-Avancados'
-
+edit_uri: 'https://github.com/insper/Embarcados-Avancados/docs-src/'
 #markdown_extensions:
 #    - admonition
 #    - pymdownx.details
