@@ -6,7 +6,6 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
-<meta content="R" name="author"/>
 <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
 <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
 <meta content="en" name="lang:search.language"/>
@@ -18,7 +17,7 @@
 <meta content="[\s\-]+" name="lang:search.tokenizer"/>
 <link href="../assets/images/favicon.png" rel="shortcut icon"/>
 <meta content="mkdocs-1.0.4, mkdocs-material-4.4.1" name="generator"/>
-<title>Blink LED</title>
+<title>Tutorial-HPS-BlinkLED - Embarcados Avançados</title>
 <link href="../assets/stylesheets/application.30686662.css" rel="stylesheet"/>
 <link href="../assets/stylesheets/application-palette.a8b3c06d.css" rel="stylesheet"/>
 <meta content="#e91e63" name="theme-color"/>
@@ -37,7 +36,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
-<a class="md-skip" href="#baremetal" tabindex="1">
+<a class="md-skip" href="#tutorial-hps-blinkled" tabindex="1">
         Skip to content
       </a>
 <header class="md-header" data-md-component="header">
@@ -58,7 +57,7 @@
             </span>
 <span class="md-header-nav__topic">
               
-                Blink LED
+                Tutorial-HPS-BlinkLED
               
             </span>
 </div>
@@ -225,19 +224,47 @@
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Tutorial-HPS-BuildSystem/" title="Ferramental">
-      Ferramental
+<a class="md-nav__link" href="../Tutorial-HPS-BuildSystem/" title="Tutorial-HPS-Ferramental">
+      Tutorial-HPS-Ferramental
     </a>
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-toggle md-nav__toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<a class="md-nav__link md-nav__link--active" href="./" title="Blink LED">
-      Blink LED
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        Tutorial-HPS-BlinkLED
+      </label>
+<a class="md-nav__link md-nav__link--active" href="./" title="Tutorial-HPS-BlinkLED">
+      Tutorial-HPS-BlinkLED
+    </a>
+<nav class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">Table of contents</label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#baremetal" title="baremetal">
+    baremetal
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sistema-operacional" title="Sistema operacional">
+    Sistema operacional
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Entrega-4/" title="Entrega 4">
+      Entrega 4
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Tutorial-HPS-Kernel/" title="Kernel">
-      Kernel
+<a class="md-nav__link" href="../Tutorial-HPS-Kernel/" title="Tutorial - HPS - Kernel">
+      Tutorial - HPS - Kernel
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Tutorial-HPS-Buildroot/" title="Tutorial-HPS-Buildroot">
+      Tutorial-HPS-Buildroot
     </a>
 </li>
 </ul>
@@ -249,6 +276,19 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">Table of contents</label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#baremetal" title="baremetal">
+    baremetal
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sistema-operacional" title="Sistema operacional">
+    Sistema operacional
+  </a>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -256,6 +296,7 @@
 <div class="md-content">
 <article class="md-content__inner md-typeset"><a class="md-icon md-content__icon" download href="Tutorial-HPS-BlinkLED.pdf" title="PDF Export"></a>
 <a class="md-icon md-content__icon" href="https://github.com/insper/Embarcados-Avancados/edit/master/docs/Tutorial-HPS-BlinkLED.md" title="Edit this page"></a>
+<h1 id="tutorial-hps-blinkled">Tutorial-HPS-BlinkLED<a class="headerlink" href="#tutorial-hps-blinkled" title="Permanent link">¶</a></h1>
 <p>Nesse tutorial iremos compilar um programa para o HPS (Arm Cortex A) que será capaz de controlar os LEDs e ler os botões da placa que estão conectados ao HPS.</p>
 <p><img alt="" src="../figs/DE10-Standard-blockdiagram.jpg"/></p>
 <p>Note pelo diagrama anterior extraído do manual do usuário, existem LEDs e botões conectados diretamente ao HPS, e outros conectados a FPGA. Duas são as possíveis abordagens para programarmos o HPS: </p>
@@ -317,7 +358,7 @@ Por exemplo, a linha <code>SOCEDS_ROOT ?= $(SOCEDS_DEST_ROOT)</code> usa a vari�
 <footer class="md-footer">
 <div class="md-footer-nav">
 <nav class="md-footer-nav__inner md-grid">
-<a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="../Tutorial-HPS-BuildSystem/" rel="prev" title="Ferramental">
+<a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="../Tutorial-HPS-BuildSystem/" rel="prev" title="Tutorial-HPS-Ferramental">
 <div class="md-flex__cell md-flex__cell--shrink">
 <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
 </div>
@@ -326,17 +367,17 @@ Por exemplo, a linha <code>SOCEDS_ROOT ?= $(SOCEDS_DEST_ROOT)</code> usa a vari�
 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Ferramental
+                Tutorial-HPS-Ferramental
               </span>
 </div>
 </a>
-<a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="../Tutorial-HPS-Kernel/" rel="next" title="Kernel">
+<a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="../Entrega-4/" rel="next" title="Entrega 4">
 <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
 <span class="md-flex__ellipsis">
 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Kernel
+                Entrega 4
               </span>
 </div>
 <div class="md-flex__cell md-flex__cell--shrink">

@@ -224,18 +224,28 @@
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Tutorial-HPS-BuildSystem/" title="Ferramental">
-      Ferramental
+<a class="md-nav__link" href="../Tutorial-HPS-BuildSystem/" title="Tutorial-HPS-Ferramental">
+      Tutorial-HPS-Ferramental
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Tutorial-HPS-BlinkLED/" title="Blink LED">
-      Blink LED
+<a class="md-nav__link" href="../Tutorial-HPS-BlinkLED/" title="Tutorial-HPS-BlinkLED">
+      Tutorial-HPS-BlinkLED
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Tutorial-HPS-Kernel/" title="Kernel">
-      Kernel
+<a class="md-nav__link" href="../Entrega-4/" title="Entrega 4">
+      Entrega 4
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Tutorial-HPS-Kernel/" title="Tutorial - HPS - Kernel">
+      Tutorial - HPS - Kernel
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Tutorial-HPS-Buildroot/" title="Tutorial-HPS-Buildroot">
+      Tutorial-HPS-Buildroot
     </a>
 </li>
 </ul>
@@ -250,14 +260,37 @@
 <label class="md-nav__title" for="__toc">Table of contents</label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#atualizando-o-preload" title="Atualizando o preload">
+    Atualizando o preload
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#atualizando-o-uboot" title="Atualizando o uboot">
+    Atualizando o uboot
+  </a>
+<nav class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#uboot-script" title="uboot script">
+    uboot script
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#atualizando-kernel" title="Atualizando Kernel">
     Atualizando Kernel
   </a>
-</li>
+<nav class="md-nav">
+<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#atualizando-o-dts" title="Atualizando o dts">
     Atualizando o dts
   </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#filesystem" title="FileSystem">
@@ -278,6 +311,14 @@
 <article class="md-content__inner md-typeset"><a class="md-icon md-content__icon" download href="Tutorial-HPS-SDcard.pdf" title="PDF Export"></a>
 <a class="md-icon md-content__icon" href="https://github.com/insper/Embarcados-Avancados/edit/master/docs/Tutorial-HPS-SDcard.md" title="Edit this page"></a>
 <h1 id="atualizando-o-sdcard">Atualizando o SDCARD<a class="headerlink" href="#atualizando-o-sdcard" title="Permanent link">¶</a></h1>
+<p>Premissas</p>
+<h2 id="atualizando-o-preload">Atualizando o preload<a class="headerlink" href="#atualizando-o-preload" title="Permanent link">¶</a></h2>
+<p>TBD</p>
+<h2 id="atualizando-o-uboot">Atualizando o uboot<a class="headerlink" href="#atualizando-o-uboot" title="Permanent link">¶</a></h2>
+<p>TBD</p>
+<h3 id="uboot-script">uboot script<a class="headerlink" href="#uboot-script" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span>$ cp u-boot.scr /run/media/corsi/B0DA-B234/
+</pre></div>
 <h2 id="atualizando-kernel">Atualizando Kernel<a class="headerlink" href="#atualizando-kernel" title="Permanent link">¶</a></h2>
 <p>Para atualizar o kernel basta montar a partição 1 (819,2 M). No meu caso o path é: <code>/run/media/corsi/B0DA-B234/</code> e copiar o arquivo <code>zImage</code> para ela.</p>
 <p>O arquivo <code>zImage</code> fica localizado (dentro do repositório do kernel) em: <code>/arch/arm/boot/zImage</code></p>
@@ -289,25 +330,28 @@
 $ sync
 </pre></div>
 <p>Quando fizer isso, irá reparar que a versão do kernel do Linux é a que foi gerada na etapa de compilação do kernel.</p>
-<h2 id="atualizando-o-dts">Atualizando o dts<a class="headerlink" href="#atualizando-o-dts" title="Permanent link">¶</a></h2>
+<h3 id="atualizando-o-dts">Atualizando o dts<a class="headerlink" href="#atualizando-o-dts" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span>$ cp socfpga.dtb /run/media/corsi/B0DA-B234/
+</pre></div>
 <h2 id="filesystem">FileSystem<a class="headerlink" href="#filesystem" title="Permanent link">¶</a></h2>
-<p>Para insierirmos nosso fileSystem no SDCARD, primeiramente deve montar a partição. no meu caso : <code>/run/media/corsi/9cb79fd9-69b8-43e3-bcfe-fa4582579e2c/</code>. Uma vez montada, devemos primeiramente excluir os arquivos ali salvo (apagar o fileSystem antigo) e então extrair o que foi gerado pelo buildroot.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<p>Para insierirmos nosso fileSystem no SDCARD, primeiramente deve montar a partição. no meu caso : <code>/media/corsi/9cb79fd9-69b8-43e3-bcfe-fa4582579e2c/</code>. Uma vez montada, devemos primeiramente excluir os arquivos ali salvo (apagar o fileSystem antigo) e então extrair o que foi gerado pelo buildroot.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>Você irá ter que editar para o caminho que a partição foi montada no seu linux.</p>
 </div>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>Se errar, pode ser destrutivo (para seus arquivos)</p>
+</div>
 <div class="highlight"><pre><span></span><span class="c1"># Limpando fs antigo</span>
-$ sudo rm -r /run/media/corsi/9cb79fd9-69b8-43e3-bcfe-fa4582579e2c/
+$ sudo rm -r /media/corsi/9cb79fd9-69b8-43e3-bcfe-fa4582579e2c/
 $ sync 
+
 <span class="c1"># Extraindo novo fs</span>
-$ sudo tar xvf rootfs.tar -C /run/media/corsi/9cb79fd9-69b8-43e3-bcfe-fa4582579e2c/
+$ sudo tar xvf rootfs.tar -C /media/corsi/9cb79fd9-69b8-43e3-bcfe-fa4582579e2c/
 $ sync 
 </pre></div>
 <h2 id="uboot-script-e-device-tree">uboot script e device tree<a class="headerlink" href="#uboot-script-e-device-tree" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span>$ cp ~/work/HPS-Linux/u-boot.scr /run/media/corsi/B0DA-B234/
-$ cp ~/work/HPS-Linux/socfpga.dtb /run/media/corsi/B0DA-B234/
-$ sync
-</pre></div>
 </article>
 </div>
 </div>

@@ -16,6 +16,8 @@ nav:
     - 'info-VHDL.md'
     - 'info-SDcard-img-Detalhes.md'
     - 'info-SDcard.md'
+    - 'info-HPS-Serial.md'
+    - 'info-HPS-ethernet.md'
 - 'Projeto-Overview.md'
 - 'Projeto-Entrega-1.md'
 - 'Tutorial-FPGA-RTL.md'
@@ -28,8 +30,9 @@ nav:
 - 'Tutorial-HPS-Running.md'
 - 'Tutorial-HPS-BuildSystem.md'
 - 'Tutorial-HPS-BlinkLED.md'
+- 'Entrega-4.md'
 - 'Tutorial-HPS-Kernel.md'
-
+- 'Tutorial-HPS-Buildroot.md'
 
 repo_name: 'Insper/Embarcados-Avancados'
 repo_url: 'https://github.com/insper/Embarcados-Avancados'

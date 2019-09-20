@@ -6,7 +6,6 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
-<meta content="R" name="author"/>
 <meta content="Copy to clipboard" name="lang:clipboard.copy"/>
 <meta content="Copied to clipboard" name="lang:clipboard.copied"/>
 <meta content="en" name="lang:search.language"/>
@@ -18,7 +17,7 @@
 <meta content="[\s\-]+" name="lang:search.tokenizer"/>
 <link href="../assets/images/favicon.png" rel="shortcut icon"/>
 <meta content="mkdocs-1.0.4, mkdocs-material-4.4.1" name="generator"/>
-<title>Embarcados Avançados - Linux</title>
+<title>Tutorial-HPS-Embarcando - Embarcados Avançados</title>
 <link href="../assets/stylesheets/application.30686662.css" rel="stylesheet"/>
 <link href="../assets/stylesheets/application-palette.a8b3c06d.css" rel="stylesheet"/>
 <meta content="#e91e63" name="theme-color"/>
@@ -37,7 +36,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
-<a class="md-skip" href="#imagem-padrao" tabindex="1">
+<a class="md-skip" href="#tutorial-hps-embarcando" tabindex="1">
         Skip to content
       </a>
 <header class="md-header" data-md-component="header">
@@ -58,7 +57,7 @@
             </span>
 <span class="md-header-nav__topic">
               
-                Embarcados Avançados - Linux
+                Tutorial-HPS-Embarcando
               
             </span>
 </div>
@@ -225,18 +224,28 @@
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Tutorial-HPS-BuildSystem/" title="Ferramental">
-      Ferramental
+<a class="md-nav__link" href="../Tutorial-HPS-BuildSystem/" title="Tutorial-HPS-Ferramental">
+      Tutorial-HPS-Ferramental
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Tutorial-HPS-BlinkLED/" title="Blink LED">
-      Blink LED
+<a class="md-nav__link" href="../Tutorial-HPS-BlinkLED/" title="Tutorial-HPS-BlinkLED">
+      Tutorial-HPS-BlinkLED
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../Tutorial-HPS-Kernel/" title="Kernel">
-      Kernel
+<a class="md-nav__link" href="../Entrega-4/" title="Entrega 4">
+      Entrega 4
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Tutorial-HPS-Kernel/" title="Tutorial - HPS - Kernel">
+      Tutorial - HPS - Kernel
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Tutorial-HPS-Buildroot/" title="Tutorial-HPS-Buildroot">
+      Tutorial-HPS-Buildroot
     </a>
 </li>
 </ul>
@@ -251,9 +260,18 @@
 <label class="md-nav__title" for="__toc">Table of contents</label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#imagem-padrao" title="Imagem padrão">
+    Imagem padrão
+  </a>
+<nav class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
 <a class="md-nav__link" href="#proximos-passo" title="Próximos passo">
     Próximos passo
   </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -263,6 +281,7 @@
 <div class="md-content">
 <article class="md-content__inner md-typeset"><a class="md-icon md-content__icon" download href="Tutorial-HPS-Linux.pdf" title="PDF Export"></a>
 <a class="md-icon md-content__icon" href="https://github.com/insper/Embarcados-Avancados/edit/master/docs/Tutorial-HPS-Linux.md" title="Edit this page"></a>
+<h1 id="tutorial-hps-embarcando">Tutorial-HPS-Embarcando<a class="headerlink" href="#tutorial-hps-embarcando" title="Permanent link">¶</a></h1>
 <p>O HPS espera um SDCARD formatado com o esquema a seguir para que o possa carregar o boot loader e depois o kernel :</p>
 <p><img alt="" src="figs/gsrd-sdcard.png"/></p>
 <p>Esse roteiro não trata a fundo a criação das partições no SDCARD, que podem ser ~facilmente~ geradas com o fsdisk do Linux. Aqui iremos usar uma imagem padrão que já possui a formatação e atualizar o SDCARD com o nosso uboot / kernel e filesystem.</p>
