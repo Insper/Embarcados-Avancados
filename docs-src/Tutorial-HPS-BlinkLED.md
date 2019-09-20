@@ -1,4 +1,4 @@
-# Tutorial-HPS-BlinkLED
+# Tutorial 6 - HPS - BlinkLED
 
 Nesse tutorial iremos compilar um programa para o HPS (Arm Cortex A) que será capaz de controlar os LEDs e ler os botões da placa que estão conectados ao HPS.
 

@@ -9,49 +9,82 @@ docs_dir: docs-src
 site_dir: docs
 
 nav:
-- Home: index.md
-- Sobre: Sobre.md
-- Extra:
-    - 'info-FPGA-e-Softwares.md'
-    - 'info-VHDL.md'
-    - 'info-SDcard-img-Detalhes.md'
-    - 'info-SDcard.md'
-    - 'info-HPS-Serial.md'
-    - 'info-HPS-ethernet.md'
-- 'Projeto-Overview.md'
-- 'Projeto-Entrega-1.md'
-- 'Tutorial-FPGA-RTL.md'
-- 'Entrega-1.md'
-- 'Tutorial-FPGA-NIOS.md'
-- 'Entrega-2.md'
-- 'Tutorial-FPGA-NIOS-IP.md'
-- 'Entrega-3.md'
-- 'Tutorial-HPS.md'
-- 'Tutorial-HPS-Running.md'
-- 'Tutorial-HPS-BuildSystem.md'
-- 'Tutorial-HPS-BlinkLED.md'
-- 'Entrega-4.md'
-- 'Tutorial-HPS-Kernel.md'
-- 'Tutorial-HPS-Buildroot.md'
+  - Home: index.md
+  - Sobre: Sobre.md
+  - Uteis:
+      - 'info-FPGA-e-Softwares.md'
+      - 'info-VHDL.md'
+      - 'info-SDcard.md'
+      - 'info-HPS-Serial.md'
+      - 'info-HPS-ethernet.md'
+  - 'Projeto-Overview.md'
+  - 'Projeto-Entrega-1.md'
+  - FPGA:
+      - 'Tutorial-FPGA-RTL.md'
+      - 'Entrega-1.md'
+      - 'Tutorial-FPGA-NIOS.md'
+      - 'Entrega-2.md'
+      - 'Tutorial-FPGA-NIOS-IP.md'
+      - 'Entrega-3.md'
+  - HPS:
+      - 'Tutorial-HPS.md'
+      - 'Tutorial-HPS-Running.md'
+      - 'Tutorial-HPS-BuildSystem.md'
+      - 'Tutorial-HPS-BlinkLED.md'
+      - 'Entrega-4.md'
+      - 'Tutorial-HPS-Kernel.md'
+      - 'Tutorial-HPS-Buildroot.md'
 
 repo_name: 'Insper/Embarcados-Avancados'
 repo_url: 'https://github.com/insper/Embarcados-Avancados'
 
+#markdown_extensions:
+#    - admonition
+#    - pymdownx.details
+#    - pymdownx.superfences
+#    - pymdownx.smartsymbols
+#    - pymdownx.mark
+#    - pymdownx.emoji
+#    - pymdownx.keys
+#    - pymdownx.magiclink
+#    - pymdownx.tasklist:
+#        custom_checkbox: true
+#    - toc:
+#        permalink: True
+
+# Extensions
 markdown_extensions:
-    - admonition
-    - pymdownx.details
-    - pymdownx.superfences
-    - pymdownx.smartsymbols
-    - pymdownx.mark
-    - pymdownx.emoji
-    - pymdownx.keys
-    - pymdownx.magiclink
-    - pymdownx.tasklist:
-        custom_checkbox: true
-    - toc:
-        permalink: True
+  - markdown.extensions.admonition
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
 
 plugins:
     - search
-    - pdf-export
+#    - pdf-export
 

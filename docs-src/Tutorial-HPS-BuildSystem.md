@@ -1,4 +1,4 @@
-# Tutorial-HPS-Ferramental
+# Tutorial 5 - HPS - Infra
 
 Vamos instalar o ferramental (compiladores) que será utilizado para compilar o kernel e o filesystem. Deveremos instalar o `socdes` e o `linaro-gcc` .
 

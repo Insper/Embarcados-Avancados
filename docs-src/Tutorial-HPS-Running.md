@@ -1,4 +1,4 @@
-# Executando o Linux
+# Tutorial 4 - HPS - Linux embarcado
 
 !!! danger
      Nesse tutorial mexemos com gravação de disco, se errar o dispositivo pode corromper seus arquivos!!!
