@@ -11,6 +11,19 @@
 2. Integrar em um protótipo solução para um sistema embarcado com requisitos de processamento e/ou tempo real via FPGA-SoC
 3. Interfacear diferentes módulos em um sistema embarcado (processadores, firmware e sistema operacional)
 
+## Motivação
+
+- O que é um [System On Chip (SoC)](https://en.wikipedia.org/wiki/System_on_a_chip)?
+- Quem são os principal fabricantes de SoC?
+    - [Samsung](https://en.wikipedia.org/wiki/List_of_Samsung_system-on-a-chips) / [Qualcomm](https://en.wikipedia.org/wiki/List_of_Qualcomm_Snapdragon_systems-on-chip#Qualcomm_205,_Snapdragon_208,_210_and_212_(2014-17)) / [Xilinx](https://www.xilinx.com/products/silicon-devices/soc.html) / [Intel FPGA](https://www.intel.com/content/www/us/en/products/programmable.html)
+- Áreas / Aplicações:
+    - [macbook pro](https://www.redsharknews.com/technology/item/6408-apple-s-mac-pro-afterburner-what-just-happened) / [aws f1](https://aws.amazon.com/ec2/instance-types/f1/) / [Intel 1](https://www.intel.com/content/www/us/en/products/programmable.html) / [Intel 2](http://www.innovatefpga.com) / [xilinx](https://www.xilinx.com/applications.html)
+- Qual a diferença entre [Soft-Processor](https://www.intel.com/content/www/us/en/products/programmable/processor/nios-ii.html)
+  e um HardProcessor?
+- [x86 + FPGA ?](https://www.anandtech.com/show/12773/intel-shows-xeon-scalable-gold-6138p-with-integrated-fpga-shipping-to-vendors)
+- Empregos? A qual desses você se aplicaria ?
+    - [facebook](https://www.facebook.com/careers/jobs/283243269009556/) / [google](https://www.linkedin.com/jobs/google-fpga-jobs) / [apple](https://www.linkedin.com/jobs/apple-fpga-jobs) / [apple 2](https://jobs.apple.com/en-us/details/200001001/fpga-engineer) / [microsoft](https://www.linkedin.com/jobs/microsoft-fpga-jobs) / [amazon](https://www.linkedin.com/jobs/amazon-fpga-jobs)
+- Como usar o hardware a serviço do software? [HLS](https://www.intel.com/content/www/us/en/software/programmable/quartus-prime/hls-compiler.html) / [OpenCL](https://www.intel.com/content/www/us/en/software/programmable/sdk-for-opencl/overview.html)
 ## Avaliação
 
 A avaliação é composta de entregas ao longo do semestre (a cada série de
@@ -26,20 +39,6 @@ Vamos precisar dos softwares listados
  Iremos ao longo do curso trabalhar com uma FPGA Intel, o kit é o
  [DE10-Standard](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1081).
  
- 
- 
-
-## Geral
-
- - [Sobre](Sobre)
- - [FPGA e Softwares](FPGA-e-Softwares)
- - [VHDL](VHDL)
-
-## Projeto Final
-
-- [Overview](Projeto-Overview)
-- [Entrega 1](Projeto-Entrega-1)
-
 ##  Dinâmica
 
 A disciplina é baseada em uma série de tutoriais (com entregas ao final) que começa a partir de um simples hardware na FPGA para controlar LEDs da placa e chega até a execução de um sistema Linux com interface gráfica e co-processamento em um sistema embarcado.
@@ -61,24 +60,6 @@ A disciplina é baseada em uma série de tutoriais (com entregas ao final) que c
     - [VENKATESWARAN, 2008] Venkateswaran, Sreekrishnan. Essential Linux device drivers. Prentice Hall Press, 2008.
 
 
-## Motivação
-
-- O que é um [System On Chip (SoC)](https://en.wikipedia.org/wiki/System_on_a_chip)?
-
-- Qual a vantagem/desvantagem do uso de um SoC?
-
-- Quem são os principal fabricantes de SoC?
-  - [Samsung](https://en.wikipedia.org/wiki/List_of_Samsung_system-on-a-chips) / [Qualcomm](https://en.wikipedia.org/wiki/List_of_Qualcomm_Snapdragon_systems-on-chip#Qualcomm_205,_Snapdragon_208,_210_and_212_(2014-17)) / [Xilinx](https://www.xilinx.com/products/silicon-devices/soc.html) / [Intel FPGA](https://www.intel.com/content/www/us/en/products/programmable.html)
-
-- Áreas / Aplicações:
-  - [macbook pro](https://www.redsharknews.com/technology/item/6408-apple-s-mac-pro-afterburner-what-just-happened) / [aws f1](https://aws.amazon.com/ec2/instance-types/f1/) / [Intel 1](https://www.intel.com/content/www/us/en/products/programmable.html) / [Intel 2](http://www.innovatefpga.com) / [xilinx](https://www.xilinx.com/applications.html)
-
-- Qual a diferença entre Soft-Processor e Hard-Processor?
-    - [NIOS](https://www.intel.com/content/www/us/en/products/programmable/processor/nios-ii.html)
-- [x86 + FPGA ?](https://www.anandtech.com/show/12773/intel-shows-xeon-scalable-gold-6138p-with-integrated-fpga-shipping-to-vendors)
-
-- Empregos? A qual desses você se aplicaria ?
-  - [facebook](https://www.facebook.com/careers/jobs/283243269009556/) / [google](https://www.linkedin.com/jobs/google-fpga-jobs) / [apple](https://www.linkedin.com/jobs/apple-fpga-jobs) / [apple 2](https://jobs.apple.com/en-us/details/200001001/fpga-engineer) / [microsoft](https://www.linkedin.com/jobs/microsoft-fpga-jobs) / [amazon](https://www.linkedin.com/jobs/amazon-fpga-jobs)
 
  
 ### Começando a disciplina

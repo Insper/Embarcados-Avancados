@@ -32,7 +32,7 @@ comment "Frame buffer hardware drivers"
 + CONFIG_FB_ALTERA_VIP=y
 ```
 
-4. build the kernel
+5. build the kernel
 
 
 ```bash

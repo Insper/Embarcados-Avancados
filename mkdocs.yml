@@ -1,10 +1,23 @@
-site_name: Embarcados Avançados
-theme: 
+
+site_name: 'Eletiva: Embarcados Avançados (SoC e Linux Embarcado)'
+
+theme:
+  feature:
+    tabs: true
   name: 'material'
   palette:
-      primary: 'pink'
+      primary: 'white'
       accent: 'pink'
+  logo:
+      icon: 'developer_board'
+  font:
+    text: Roboto
+    code: Roboto Mono
 
+# Copyright
+copyright: 'Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br'
+
+# repo
 docs_dir: docs-src
 site_dir: docs
 
@@ -17,8 +30,9 @@ nav:
       - 'info-SDcard.md'
       - 'info-HPS-Serial.md'
       - 'info-HPS-ethernet.md'
-  - 'Projeto-Overview.md'
-  - 'Projeto-Entrega-1.md'
+  - Projeto:
+      - 'Projeto-Overview.md'
+      - 'Projeto-Entrega-1.md'
   - FPGA:
       - 'Tutorial-FPGA-RTL.md'
       - 'Entrega-1.md'
@@ -34,23 +48,16 @@ nav:
       - 'Entrega-4.md'
       - 'Tutorial-HPS-Kernel.md'
       - 'Tutorial-HPS-Buildroot.md'
+      - 'Entrega-5.md'
+  - 'HPS + FPGA':
+      - 'Tutorial-HPS-FPGA-BlinkLED.md'
+      - 'Entrega-Extra-1.md'
+      - 'Entrega-6.md'
+      - 'Tutorial-HPS-FPGA-VGA.md'
 
 repo_name: 'Insper/Embarcados-Avancados'
 repo_url: 'https://github.com/insper/Embarcados-Avancados'
-edit_uri: 'https://github.com/insper/Embarcados-Avancados/docs-src/'
-#markdown_extensions:
-#    - admonition
-#    - pymdownx.details
-#    - pymdownx.superfences
-#    - pymdownx.smartsymbols
-#    - pymdownx.mark
-#    - pymdownx.emoji
-#    - pymdownx.keys
-#    - pymdownx.magiclink
-#    - pymdownx.tasklist:
-#        custom_checkbox: true
-#    - toc:
-#        permalink: True
+edit_uri: 'https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/'
 
 # Extensions
 markdown_extensions:
