@@ -4,7 +4,7 @@ Disciplina eletiva da Engenharia da Computação [Insper](https://www.insper.edu
 
 Prof. Rafael Corsi / rafael.corsi@insper.edu.br
 
-:right_arrow: Material de aula em: https://insper.github.io/Embarcados-Avancados/ 
+:arrow_right: Material de aula em: https://insper.github.io/Embarcados-Avancados/ 
 
 
 OBJETIVOS:
