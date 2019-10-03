@@ -1,9 +1,13 @@
-# Bem vindo a Eletica - Embarcados Avançados!
+# Bem vindo a Eletiva - Embarcados Avançados (SoC e Linux Embarcados)!
+
+![](https://camo.githubusercontent.com/31cbef310a2a8d91eeccb737c5d968223a7d1575/68747470733a2f2f7777772e696e737065722e6564752e62722f77702d636f6e74656e742f7468656d65732f696e737065722f646973742f696d6167652f6c6f676f2e706e67)
 
 - Disciplina eletiva da Engenharia da Computação [Insper](https://www.insper.edu.br/) - 2019-2.
 - Prof. Rafael Corsi / rafael.corsi@insper.edu.br
-- Repositório: http:/github.com/insper/Embarcados-Avancados
+- Repositório: [http:/github.com/insper/Embarcados-Avancados](http:/github.com/insper/Embarcados-Avancados)
 - Local: Laboratório de Arquitetura de Computadores
+
+-------------------------
 
 ## OBJETIVOS:
 
