@@ -1,4 +1,4 @@
-# Entrega 2
+#  👁 Entrega 2
 
 O que deve ser entregue?
    - Pasta `Entrega-1` no git

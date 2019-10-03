@@ -1,16 +1,33 @@
 # Bem vindo a Eletica - Embarcados Avançados!
 
-Disciplina eletiva da Engenharia da Computação [Insper](https://www.insper.edu.br/) - 2019-2.
+- Disciplina eletiva da Engenharia da Computação [Insper](https://www.insper.edu.br/) - 2019-2.
+- Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+- Repositório: http:/github.com/insper/Embarcados-Avancados
+- Local: Laboratório de Arquitetura de Computadores
 
-Prof. Rafael Corsi / rafael.corsi@insper.edu.br
-
-[Material de Aula disponível na wiki](https://github.com/Insper/Embarcados-Avancados/wiki)
-
-OBJETIVOS:
+## OBJETIVOS:
 
 1. Formular soluções que satisfazem requisitos de hardware e software de projetos com FPGA-SoC (System-on-a-chip) 
 2. Integrar em um protótipo solução para um sistema embarcado com requisitos de processamento e/ou tempo real via FPGA-SoC
 3. Interfacear diferentes módulos em um sistema embarcado (processadores, firmware e sistema operacional)
+
+## Avaliação
+
+A avaliação é composta de entregas ao longo do semestre (a cada série de
+tutoriais existe uma entrega com nota) e de um tutorial que deve ser criado ao
+longo da disciplina e integrado na wiki do curso. O tutorial é de tema livre
+dentro dos objetivos da disciplina e possui algumas entregas intermediárias
+que irão compor a nota final.
+
+## Infraestrutura
+
+Vamos precisar dos softwares listados
+ [aqui](https://github.com/Insper/Embarcados-Avancados/wiki/FPGA-e-Softwares#softwares).
+ Iremos ao longo do curso trabalhar com uma FPGA Intel, o kit é o
+ [DE10-Standard](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1081).
+ 
+ 
+ 
 
 ## Geral
 
@@ -23,85 +40,28 @@ OBJETIVOS:
 - [Overview](Projeto-Overview)
 - [Entrega 1](Projeto-Entrega-1)
 
-## Tutorias 
-
-### FPGA
-
--  [1. RTL](Tutorial-FPGA-RTL)
-    - [Entrega 1](Entrega-1)
--  [2. NIOS](Tutorial-FPGA-NIOS)
-    - [Entrega 2](Entrega-2)
--  [3. IP core](Tutorial-FPGA-NIOS-IP)
-    - [Entrega 3](Entrega-3)
-
-### SoC
-
--  [4. u-boot]()
--  [5. Linux Kernel]()
--  [6. buildroot]()
--  [7. Aplicação]()
-
-### SoC + FPGA
-
-- [8. User space]()
-- [9. Kernel space]()
-
-### Aceleração
-
-- [10. HLS]()
-- [11. OpenCl]()
-
-
-
-###  Dinâmica
+##  Dinâmica
 
 A disciplina é baseada em uma série de tutoriais (com entregas ao final) que começa a partir de um simples hardware na FPGA para controlar LEDs da placa e chega até a execução de um sistema Linux com interface gráfica e co-processamento em um sistema embarcado.
 
-### Bibliografia
+## Bibliografia
 
 - Básica
-  - [HALLINAN, 2007] HALLINAN, C. Embedded Linux primer: a practical, real-world approach. Pearson Education India, 2007.
-  - [DESCHAMPS, 2012] DESCHAMPS,  J. P.;  SUTTER, G. D.;  CANTÓ E. Guide to FPGA implementation of arithmetic functions. Springer Science & Business Media; 2012, Apr 5.
-  - [CHU, 2011] CHU, PONG P. Embedded SoPC design with Nios II processor and VHDL examples. John Wiley & Sons, 2011.
-- Complementar    
-  - [SASS, 2010] SASS, R., SCHMIDT, A.G.; Embedded Systems Design with Platform FPGAs: Principles and Practices. Elsevier, 2010.
-  - [BOVET, 2005] Bovet, Daniel P., and Marco Cesati. Understanding the Linux Kernel: from I/O ports to process management. " O'Reilly Media, Inc.", 2005.
-  - [SIMPSON, 2015] Simpson, Philip Andrew; FPGA Design: Best Practices for Team-based Reuse 2nd ed. Springer, 2015 Edition.
-  - [KOOPMAN, 2010] Koopman, Philip. Better Embedded System Software. Drumnadrochit Education, 2010.
-  - [VENKATESWARAN, 2008] Venkateswaran, Sreekrishnan. Essential Linux device drivers. Prentice Hall Press, 2008.
 
-### Avaliação
+    - [HALLINAN, 2007] HALLINAN, C. Embedded Linux primer: a practical, real-world approach. Pearson Education India, 2007.
+    - [DESCHAMPS, 2012] DESCHAMPS,  J. P.;  SUTTER, G. D.;  CANTÓ E. Guide to FPGA implementation of arithmetic functions. Springer Science & Business Media; 2012, Apr 5.
+    - [CHU, 2011] CHU, PONG P. Embedded SoPC design with Nios II processor and VHDL examples. John Wiley & Sons, 2011.
+    
+- Complementar   
 
-A avaliação é composta de entregas ao longo do semestre (a cada série de tutoriais existe uma entrega com nota) e de um tutorial que deve ser criado ao longo da disciplina e integrado na wiki do curso. O tutorial é de tema livre dentro dos objetivos da disciplina e possui algumas entregas intermediárias que irão compor a nota final.
-
-### Infraestrutura
-
-Vamos precisar dos softwares listados (aqui)[https://github.com/Insper/Embarcados-Avancados/wiki/FPGA-e-Softwares#softwares]. Iremos ao longo do curso trabalhar com uma FPGA Intel, o kit é o [DE10-Standard](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1081).
+    - [SASS, 2010] SASS, R., SCHMIDT, A.G.; Embedded Systems Design with Platform FPGAs: Principles and Practices. Elsevier, 2010.
+    - [BOVET, 2005] Bovet, Daniel P., and Marco Cesati. Understanding the Linux Kernel: from I/O ports to process management. " O'Reilly Media, Inc.", 2005.
+    - [SIMPSON, 2015] Simpson, Philip Andrew; FPGA Design: Best Practices for Team-based Reuse 2nd ed. Springer, 2015 Edition.
+    - [KOOPMAN, 2010] Koopman, Philip. Better Embedded System Software. Drumnadrochit Education, 2010.
+    - [VENKATESWARAN, 2008] Venkateswaran, Sreekrishnan. Essential Linux device drivers. Prentice Hall Press, 2008.
 
 
-## Aulas
-
-### Aulas segunda 19 / 8 e quarta 21 / 8
-
-❗️ **Sem aula** ❗️  Professor no evento [Embedded Linux](https://events.linuxfoundation.org/events/elc-north-america-2019)
-
-Usar o tempo para estudar os temas possíveis de tutorial e o que gostaria de atacar.
-
-
-### Aula 3 - 14 / 8
-
-- Introdução tutorial 2
-
-### Aula 2 - 7 / 8
-
-- Tutorial 1
-- Entrega 1
-
-### Aula 1  - 5 / 8
-
-- Objetivo da aula: Contextualização/ Aplicações/ Tecnologia/ Infraestrutura para o curso
-
-#### Assuntos 
+## Motivação
 
 - O que é um [System On Chip (SoC)](https://en.wikipedia.org/wiki/System_on_a_chip)?
 
@@ -121,7 +81,7 @@ Usar o tempo para estudar os temas possíveis de tutorial e o que gostaria de at
   - [facebook](https://www.facebook.com/careers/jobs/283243269009556/) / [google](https://www.linkedin.com/jobs/google-fpga-jobs) / [apple](https://www.linkedin.com/jobs/apple-fpga-jobs) / [apple 2](https://jobs.apple.com/en-us/details/200001001/fpga-engineer) / [microsoft](https://www.linkedin.com/jobs/microsoft-fpga-jobs) / [amazon](https://www.linkedin.com/jobs/amazon-fpga-jobs)
 
  
-### Para próxima aula
+### Começando a disciplina
 
 1. Trazer os softwares instalados
 1. Criar um repositório no github

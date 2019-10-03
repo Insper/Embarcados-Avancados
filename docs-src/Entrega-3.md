@@ -1,4 +1,4 @@
-# Entrega 3
+#  👁 Entrega 3
 
 Nessa entrega iremos encapsular um periférico que é responsável pela leitura de um mouse pela interface PS/2 no Plataform Designer (criando um periférico mapeado em memória). Utilizaremos como código padrão o exemplo fornecido pela terasic para essa placa, disponível no CD do kit: [`Demonstration/FPGA/DE10_Standard_PS2/`](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/FPGA/DE10_Standard_PS2). 
 

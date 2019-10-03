@@ -1,4 +1,4 @@
-# Entrega 4
+#  👁 Entrega 4
 
 O objetivo dessa entrega é automatizarmos a compilação e deploy de novos programas para o `target`. Para isso, teremos que criar um Makefile que deve ser capaz de compilar e fazer o deploy do programa. Para isso temos diversas opções, sendo alguma delas:
 
