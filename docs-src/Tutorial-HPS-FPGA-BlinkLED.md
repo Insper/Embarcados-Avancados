@@ -1,4 +1,4 @@
-# Tutorial - HPS+FPGA - Blink LED
+# Tutorial - HPS + FPGA - Blink LED
 
 Nesse tutorial vamos ver como interfacear o ARM com a FPGA (fabric). Nesse
 tutorial,  optei por deixar vocês seguirem o tutorial oficial da Terasic:
@@ -69,7 +69,7 @@ Com o arquivo `soc_system.rbf` criado, é só copiarmos ele para o SDCARD,
 substituindo o anterior.
 
 !!! example "Execute"
-    - Gere o `soc_system.rbf` do projeto 
+    - Gere o `soc_system.rbf` do projeto (COMPILAR O QUARTUS!)
     - Grave o novo `rbf` no SDCard (mesma partição do kernel)
     
 ## `dtb` (informações de hardware para o Kernel)
@@ -108,6 +108,7 @@ $ # Devemos executar os comandos dentro do shell do embedded (quartus)
 $ embedded_command_shell.sh
 $ sopc2dts --input soc_system.sopcinfo --output soc_system.dts --type dts --board soc_system_board_info.xml --board hps_common_board_info.xml --bridge-removal all --clocks
 ```
+
 !!! note
     Você deve executar esse comando na pasta raiz do seu projeto Quartus!
 
@@ -115,6 +116,7 @@ Agora com o `.dts` gerado, vamos dar uma olhada em seu conteúdo e como o
 interpretar. O `dts` possui a anatomia a seguir: 
 
 ![](figs/Tutorial-HLS-FPGA-BlinkLED-devicetree.png)
+
 - ref: https://developer.toradex.com/device-tree-customization
 
 O começo do nosso `.dts` tem a definição das CPUs que estão
@@ -214,14 +216,13 @@ E é por conta disso que conseguimos acessar o kit com USB (screen).
       │                                                                        
     ```
 
-!!! note "Para mais informações sobre o `dts":
+!!! note "Para mais informações sobre o `dts`:"
+      - https://elinux.org/Device_Tree_Usage
+      - https://elinux.org/Device_Tree_Reference
+      - https://developer.toradex.com/device-tree-customization#Device_Tree_Anatomy
+      - https://bootlin.com/pub/conferences/2014/elc/petazzoni-device-tree-dummies/petazzoni-device-tree-dummies.pdf
     
-    - https://elinux.org/Device_Tree_Usage
-    - https://elinux.org/Device_Tree_Reference
-    - https://developer.toradex.com/device-tree-customization#Device_Tree_Anatomy
-    - https://bootlin.com/pub/conferences/2014/elc/petazzoni-device-tree-dummies/petazzoni-device-tree-dummies.pdf
-    
- ### Gerando o `dtb`
+### Gerando o `dtb`
  
 Execute os seguintes comandos (ainda dentro do embedded shell)
 

@@ -1,11 +1,12 @@
-# Bem vindo a Eletiva - Embarcados Avançados (SoC e Linux Embarcados)!
+# Bem vindo a Eletiva - Embarcados Avançados (SoC e Linux Embarcado)!
 
 ![](https://camo.githubusercontent.com/31cbef310a2a8d91eeccb737c5d968223a7d1575/68747470733a2f2f7777772e696e737065722e6564752e62722f77702d636f6e74656e742f7468656d65732f696e737065722f646973742f696d6167652f6c6f676f2e706e67)
 
-- Disciplina eletiva da Engenharia da Computação [Insper](https://www.insper.edu.br/) - 2019-2.
-- Prof. Rafael Corsi / rafael.corsi@insper.edu.br
-- Repositório: [http:/github.com/insper/Embarcados-Avancados](http:/github.com/insper/Embarcados-Avancados)
-- Local: Laboratório de Arquitetura de Computadores
+- **Disciplina:** Eletiva da Engenharia da Computação [Insper](https://www.insper.edu.br/) - 2019-2.
+- **Prof.** Rafael Corsi / rafael.corsi@insper.edu.br
+- **Repositório:** [http:/github.com/insper/Embarcados-Avancados](http:/github.com/insper/Embarcados-Avancados)
+- **Local:** Laboratório de Arquitetura de Computadores
+- **© Todos os direitos reservados**
 
 -------------------------
 
@@ -27,7 +28,11 @@
 - [x86 + FPGA ?](https://www.anandtech.com/show/12773/intel-shows-xeon-scalable-gold-6138p-with-integrated-fpga-shipping-to-vendors)
 - Empregos? A qual desses você se aplicaria ?
     - [facebook](https://www.facebook.com/careers/jobs/283243269009556/) / [google](https://www.linkedin.com/jobs/google-fpga-jobs) / [apple](https://www.linkedin.com/jobs/apple-fpga-jobs) / [apple 2](https://jobs.apple.com/en-us/details/200001001/fpga-engineer) / [microsoft](https://www.linkedin.com/jobs/microsoft-fpga-jobs) / [amazon](https://www.linkedin.com/jobs/amazon-fpga-jobs)
-- Como usar o hardware a serviço do software? [HLS](https://www.intel.com/content/www/us/en/software/programmable/quartus-prime/hls-compiler.html) / [OpenCL](https://www.intel.com/content/www/us/en/software/programmable/sdk-for-opencl/overview.html)
+- Como usar o hardware a serviço do software?
+  [HLS](https://www.intel.com/content/www/us/en/software/programmable/quartus-prime/hls-compiler.html)
+  /
+  [OpenCL](https://www.intel.com/content/www/us/en/software/programmable/sdk-for-opencl/overview.html)
+  
 ## Avaliação
 
 A avaliação é composta de entregas ao longo do semestre (a cada série de
@@ -62,19 +67,16 @@ A disciplina é baseada em uma série de tutoriais (com entregas ao final) que c
     - [SIMPSON, 2015] Simpson, Philip Andrew; FPGA Design: Best Practices for Team-based Reuse 2nd ed. Springer, 2015 Edition.
     - [KOOPMAN, 2010] Koopman, Philip. Better Embedded System Software. Drumnadrochit Education, 2010.
     - [VENKATESWARAN, 2008] Venkateswaran, Sreekrishnan. Essential Linux device drivers. Prentice Hall Press, 2008.
-
-
-
  
-### Começando a disciplina
+## Para começar 
 
 1. Trazer os softwares instalados
 1. Criar um repositório no github
 1. Pensar um pouco sobre um tema que gostaria de se aprofundar (para o tutorial)
-   - :point_right: [Dicas](Projeto-Final)
-1. Leitura:
-  - https://www.intel.com/content/www/us/en/products/programmable/fpga/new-to-fpgas/resource-center/overview.html
-  - [CHU, 2011, cap. 1], [KOOPMAN, 2010, cap. 2] 
-  - :bangbang: Nunca mexeu com FPGA? 
+    - :point_right: [Dicas](Projeto-Final)
+1. Leitura recomendada:
+    - https://www.intel.com/content/www/us/en/products/programmable/fpga/new-to-fpgas/resource-center/overview.html
+    - Disponível no lab: [CHU, 2011, cap. 1], [KOOPMAN, 2010, cap. 2] 
+1. :bangbang: Nunca mexeu com FPGA? 
      - [VHDL introdução vídeo](https://www.youtube.com/watch?v=zm-RA6BsYmc)
      - [livro fpgas for dummie](https://www.amiq.com/consulting/misc/free_pdf_books/fpgas_for_dummies_ebook.pdf)

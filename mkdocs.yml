@@ -21,15 +21,13 @@ copyright: 'Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu
 docs_dir: docs-src
 site_dir: docs
 
+repo_name: 'Insper/Embarcados-Avancados'
+repo_url: 'https://github.com/insper/Embarcados-Avancados'
+edit_uri: 'https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/'
+
 nav:
   - Home: index.md
   - Sobre: Sobre.md
-  - Uteis:
-      - 'info-FPGA-e-Softwares.md'
-      - 'info-VHDL.md'
-      - 'info-SDcard.md'
-      - 'info-HPS-Serial.md'
-      - 'info-HPS-ethernet.md'
   - Projeto:
       - 'Projeto-Overview.md'
       - 'Projeto-Entrega-1.md'
@@ -54,10 +52,12 @@ nav:
       - 'Entrega-Extra-1.md'
       - 'Entrega-6.md'
       - 'Tutorial-HPS-FPGA-VGA.md'
-
-repo_name: 'Insper/Embarcados-Avancados'
-repo_url: 'https://github.com/insper/Embarcados-Avancados'
-edit_uri: 'https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/'
+  - 'Uteis':
+      - 'info-FPGA-e-Softwares.md'
+      - 'info-VHDL.md'
+      - 'info-SDcard.md'
+      - 'info-HPS-Serial.md'
+      - 'info-HPS-ethernet.md'
 
 # Extensions
 markdown_extensions:
