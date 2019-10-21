@@ -937,7 +937,11 @@ $ <span class="nb">cd</span> buildroot/
 </ul>
 <hr />
 <h3 id="5-kernel-bootloader">5. Kernel / bootloader<a class="headerlink" href="#5-kernel-bootloader" title="Permanent link">&para;</a></h3>
-<p>O busybox pode baixar e compilar o kernel e o uboot para nós. Não vamos usar essa configuração.</p>
+<p>O busybox pode baixar e compilar o kernel e o uboot para nós.</p>
+<div class="admonition nonte">
+<p class="admonition-title">Nonte</p>
+<p>Não vamos usar essa configuração. <strong>Deixe não checado!</strong></p>
+</div>
 <ul>
 <li>Menu principal <img alt="➡" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/27a1.svg" title=":arrow_right:" /> Kernel</li>
 </ul>
@@ -962,7 +966,7 @@ $ <span class="nb">cd</span> buildroot/
 <p>Salve a sua configuração (ESC ESC save) e volte ao terminal. Vamos agora gerar a imagem do nosso filesystem.</p>
 <h3 id="compilando">Compilando<a class="headerlink" href="#compilando" title="Permanent link">&para;</a></h3>
 <p>Para compilar e gerar o filesystem :</p>
-<div class="codehilite"><pre><span></span>$ make all -j <span class="m">4</span>
+<div class="codehilite"><pre><span></span>$ make <span class="nv">ARCH</span><span class="o">=</span>arm all -j <span class="m">4</span>
 </pre></div>
 
 <p>Nessa etapa o buildroot irá baixar da web todos os pacotes e programas que foram selecionados no menu de configuração, e irá compilar o source code com o toolchain que passamos para ele. <strong>Isso pode levar um tempinho</strong>.</p>

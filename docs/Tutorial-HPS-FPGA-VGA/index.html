@@ -1154,20 +1154,26 @@ chamado de <code>alt_vip_vfr_vga</code>, que é compatível com o driver <code>v
 implementação realizada pelo o pessoal da Altera e utilizar. Os drivers no
 repositório do Linux ficam na pasta: <code>linux/drivers</code>. No caso do vídeo/
 framebuffer, em: <code>linux/drivers/video/fbdev</code>.</p>
-<p>!!! note 'Adicionando o driver altvipfb'
-    Siga o roteiro em:
-    <a href="https://github.com/Insper/Embarcados-Avancados/blob/master/driver/altvipfb/README.md">https://github.com/Insper/Embarcados-Avancados/blob/master/driver/altvipfb/README.md</a>,
-    depois volte</p>
+<div class="admonition note">
+<p class="admonition-title">Adicionando o driver altvipfb</p>
+<p>Siga o roteiro em:
+<a href="https://github.com/Insper/Embarcados-Avancados/blob/master/driver/altvipfb/README.md">https://github.com/Insper/Embarcados-Avancados/blob/master/driver/altvipfb/README.md</a> e
+depois volte para essa página!</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Esse tutorial incluiu o driver do fb no kernel, outra opção seria criar um
 módulo (module) que poderia ser carregado conforme a necessidade.</p>
 </div>
-<p>!!! example 'Testando'
-    1. Compile o kernel
-    1. Copie o zImage novo para o SDCARD
-    1. Liga um monitor a VGA
-    1. Inicialize o linux embarcado</p>
+<div class="admonition example">
+<p class="admonition-title">Testando</p>
+<ol>
+<li>Compile o kernel</li>
+<li>Copie o zImage novo para o SDCARD</li>
+<li>Liga um monitor a VGA</li>
+<li>Inicialize o linux embarcado</li>
+</ol>
+</div>
 <p>Se tudo der certo, você deve ver dois pinguins no canto esquerdo do monitor.
 Cada pinguim representa um core do sistema, como nosso ARM é um dual core, temos
 dois. Esse pinguins aparecem porque ativamos essa opção no kernel:</p>
@@ -1191,10 +1197,7 @@ então compilados na compilação do kernel.</p>
 </pre></div>
 
 <ul>
-<li></li>
-<li>
-<p>ref: <a href="http://seenaburns.com/2018/04/04/writing-to-the-framebuffer/">http://seenaburns.com/2018/04/04/writing-to-the-framebuffer/</a></p>
-</li>
+<li>ref: <a href="http://seenaburns.com/2018/04/04/writing-to-the-framebuffer/">http://seenaburns.com/2018/04/04/writing-to-the-framebuffer/</a></li>
 </ul>
 <h2 id="buildroot">Buildroot<a class="headerlink" href="#buildroot" title="Permanent link">&para;</a></h2>
 <p>São diversas as soluções de desenvolvimento de interface gráfica para Linux
@@ -1213,17 +1216,22 @@ ferramentas que podem ser utilizadas:</p>
 tela! Quando eu estava fazendo esse roteiro, queria algo mais simples, em uma
 busca  (não muito rápida) na internet (keyword: <code>linux frame buffer show image</code>)
 eu encontrei esse programa: <code>fbv</code>, que por sorte está no <code>buildroot</code>.</p>
-<p>!!! note 'fbv'
-    1. OVERVIEW
-        fbv (FrameBuffer Viewer) is a simple program to view pictures on
-    a linux framebuffer device. In 2000, when fbv was created, there
-    were no other situable programs performing the same task, so the
-    authors decided to follow the rule: 'If you need a tool - write
-    it yourself!' :-)</p>
-<div class="codehilite"><pre><span></span>- https://github.com/smokku/fbv
-</pre></div>
-
-
+<div class="admonition note">
+<p class="admonition-title">fbv</p>
+<ol>
+<li>
+<p>OVERVIEW
+    fbv (FrameBuffer Viewer) is a simple program to view pictures on
+a linux framebuffer device. In 2000, when fbv was created, there
+were no other situable programs performing the same task, so the
+authors decided to follow the rule: 'If you need a tool - write
+it yourself!' :-)</p>
+</li>
+<li>
+<p><a href="https://github.com/smokku/fbv">https://github.com/smokku/fbv</a></p>
+</li>
+</ol>
+</div>
 <div class="admonition example">
 <p class="admonition-title">Faça</p>
 <ol>

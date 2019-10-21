@@ -36,7 +36,7 @@
     
     
       
-        <title>👁 Entrega 5 - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+        <title>Tutorial - HPS + FPGA - HLS - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
       
     
     
@@ -85,7 +85,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#entrega-5" tabindex="1" class="md-skip">
+      <a href="#tutorial-hps-fpga-hls" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -111,7 +111,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                👁 Entrega 5
+                Tutorial - HPS + FPGA - HLS
               
             </span>
           
@@ -179,16 +179,14 @@
       
         
 
-  
-
-<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+<nav class="md-tabs" data-md-component="tabs">
   <div class="md-tabs__inner md-grid">
     <ul class="md-tabs__list">
       
         
   <li class="md-tabs__item">
     
-      <a href=".." title="Home" class="md-tabs__link">
+      <a href=".." title="Home" class="md-tabs__link md-tabs__link--active">
         Home
       </a>
     
@@ -228,7 +226,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../Tutorial-HPS/" title="HPS" class="md-tabs__link md-tabs__link--active">
+        <a href="../Tutorial-HPS/" title="HPS" class="md-tabs__link">
           HPS
         </a>
       
@@ -477,12 +475,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
     <label class="md-nav__link" for="nav-5">
       HPS
@@ -582,49 +578,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        👁 Entrega 5
-      </label>
-    
-    <a href="./" title="👁 Entrega 5" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../Entrega-5/" title="👁 Entrega 5" class="md-nav__link">
       👁 Entrega 5
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#rubrica" title="Rubrica:" class="md-nav__link">
-    Rubrica:
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -806,22 +764,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#rubrica" title="Rubrica:" class="md-nav__link">
-    Rubrica:
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -832,65 +774,10 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/Entrega-5.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/Tutorial-HPS-FPGA-HLS.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="entrega-5">👁 Entrega 5<a class="headerlink" href="#entrega-5" title="Permanent link">&para;</a></h1>
-<p>Nessa entrega iremos criar um webserver no <code>target</code> que exibirá uma imagem 
-capturada por uma câmera USB conectada ao SoC. Para isso será necessário 
-configurar o kernel para possuir o driver USB que lida com a câmera USB,
-o buildroot para ter os programas que serão usados para criar o server e 
-ler a imagem e um programa para orquestrar tudo isso.</p>
-<div class="admonition note">
-<p class="admonition-title">Dicas</p>
-<ul>
-<li>Driver webcam<ul>
-<li>Plug no seu PC com linux e verifique qual driver ele utiliza. 
-Acrescente o mesmo no <code>target</code></li>
-</ul>
-</li>
-<li>Aquisição de imagens<ul>
-<li>opencv</li>
-<li><a href="https://github.com/twam/v4l2grab">v4l2grab</a></li>
-</ul>
-</li>
-<li>Servidor web<ul>
-<li>python flask </li>
-<li>apache</li>
-<li>node</li>
-</ul>
-</li>
-</ul>
-</div>
-<p>A entrega deve conter os arquivos de configuração (.config) do kernel e do
-buildroot assim como o programa do webserver.</p>
-<h3 id="rubrica">Rubrica:<a class="headerlink" href="#rubrica" title="Permanent link">&para;</a></h3>
-<ul>
-<li>A+<ul>
-<li>Detecta movimento na imagem e acende o LED do SoC</li>
-</ul>
-</li>
-<li>A<ul>
-<li>Exibe a imagem em tempo real (vídeo)</li>
-</ul>
-</li>
-<li>B<ul>
-<li>Exibe a imagem estática (foto)</li>
-</ul>
-</li>
-<li>C<ul>
-<li>Captura uma imagem e a salva no embarcado (sem web server)</li>
-</ul>
-</li>
-<li>D <ul>
-<li>Entregou somente tutorial</li>
-</ul>
-</li>
-<li>I<ul>
-<li>Não entregou nada</li>
-</ul>
-</li>
-</ul>
+                <h1 id="tutorial-hps-fpga-hls">Tutorial - HPS + FPGA - HLS<a class="headerlink" href="#tutorial-hps-fpga-hls" title="Permanent link">&para;</a></h1>
                 
                   
                 
@@ -907,41 +794,6 @@ buildroot assim como o programa do webserver.</p>
       
         
 <footer class="md-footer">
-  
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-          <a href="../Tutorial-HPS-Buildroot/" title="Tutorial 8 - HPS -Buildroot" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
-            </div>
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Tutorial 8 - HPS -Buildroot
-              </span>
-            </div>
-          </a>
-        
-        
-          <a href="../Tutorial-HPS-FPGA-BlinkLED/" title="Tutorial - HPS + FPGA - Blink LED" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                Tutorial - HPS + FPGA - Blink LED
-              </span>
-            </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
