@@ -28,7 +28,7 @@ Para conectar na rede do laboratório de Arq. será necessário editar o MAC da 
 ```bash
 $ ifconfig eth0 down
 $ ifconfig eth0 hw ether 02:01:02:03:04:08
-$ ifconfig eth0 start
+$ ifconfig eth0 up
 ```
 
 !!! note
@@ -71,17 +71,33 @@ Dentro de cada pasta `rc.x` os scripts possuem nomes que ditam a sequência na q
 
 ## Adicionando script ao boot
 
-1. Crie um script com o nome `macc.sh` na pasta `/etc/init.d` e adicione:
+1. Crie um script com o nome `S60MAC.sh` na pasta `/etc/init.d` e adicione:
 
-```
+```bash
+### Change mac
 #!/bin/bash
-$ ifconfig eth0 down
-$ ifconfig eth0 hw ether 02:01:02:03:04:08
-$ ifconfig eth0 start
+
+case "$1" in
+  start)
+    ifconfig eth0 down
+    ifconfig eth0 hw ether 02:01:02:03:04:08
+    ifconfig eth0 up
+    udchpc eth0
+    ;;
+  *)
+    exit 1
+    ;;
 ```
 
-```
+!!! note ""
+    O script deve ser executável: `chmod +x S60MAC.sh`
 
+Uma vez criado o script será necessário adicionar a inicialização do sistema,
+para isso devemos chamar (quando a iso utiliza systemd, que é o caso do
+Amstrong, mas não do buildroot):
+
+```bash
+$ systemctl enable S60MAC.sh
 ```
 
 - ref: https://forums.kali.org/showthread.php?21985-How-to-make-mac-address-random-at-each-boot-up

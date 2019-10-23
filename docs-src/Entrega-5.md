@@ -23,12 +23,14 @@ buildroot assim como o programa do webserver.
 
 ### Rubrica:
 
-- A 
+- A+
     - Detecta movimento na imagem e acende o LED do SoC
-- B
+- A
     - Exibe a imagem em tempo real (vídeo)
-- C
+- B
     - Exibe a imagem estática (foto)
+- C
+    - Captura uma imagem e a salva no embarcado (sem web server)
 - D 
     - Entregou somente tutorial
 - I

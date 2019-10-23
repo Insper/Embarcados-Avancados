@@ -767,13 +767,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#hardawre" title="Hardawre" class="md-nav__link">
-    Hardawre
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#linux" title="Linux" class="md-nav__link">
     Linux
   </a>
@@ -821,8 +814,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adicionando-script-ao-boot" title="Adicionando script ao boot" class="md-nav__link">
-    Adicionando script ao boot
+  <a href="#adicionando-script-ao-boot-systemd" title="Adicionando script ao boot (systemd)" class="md-nav__link">
+    Adicionando script ao boot (systemd)
   </a>
   
 </li>
@@ -864,13 +857,6 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#hardawre" title="Hardawre" class="md-nav__link">
-    Hardawre
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#linux" title="Linux" class="md-nav__link">
     Linux
   </a>
@@ -918,8 +904,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adicionando-script-ao-boot" title="Adicionando script ao boot" class="md-nav__link">
-    Adicionando script ao boot
+  <a href="#adicionando-script-ao-boot-systemd" title="Adicionando script ao boot (systemd)" class="md-nav__link">
+    Adicionando script ao boot (systemd)
   </a>
   
 </li>
@@ -948,20 +934,15 @@
 <p class="admonition-title">Cyclone V Hard Processor System Technical Reference Manual</p>
 <p><a href="https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_54001.pdf">https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_54001.pdf</a></p>
 </div>
-<h2 id="hardawre">Hardawre<a class="headerlink" href="#hardawre" title="Permanent link">&para;</a></h2>
-<p>O ARM do nosso HPS possui um periférico Ethernet: </p>
-<p><img alt="" src="../figs/info-hps-ethernet-hps.png" /></p>
-<p>E o nosso kit possui toda a parte eletrônica que conecta o periférico ao conector Ethernet:</p>
-<p><img alt="" src="info-hps-ethernet-de10.png" /></p>
 <h2 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">&para;</a></h2>
-<p>Com o HW da terasic preparado, e com um cabo ethernet conectado ao RJ45, precisamos configurar o Linux para utilizar essa "porta".</p>
-<p>No <code>target</code>, verifique que o linux detecta a placa de rede, com o comando <code>ifconfig</code>: </p>
-<p><img alt="" src="info-hps-ethernet-ifconfig.png" /></p>
+<p>Com um cabo ethernet conectado ao RJ45, precisamos configurar o Linux para utilizar essa "porta".</p>
+<p>No <code>target</code>, verifique que o linux detecta a placa de rede, com o comando
+<code>ifconfig eth0 up</code>.</p>
 <h3 id="alterando-o-mac">Alterando o MAC<a class="headerlink" href="#alterando-o-mac" title="Permanent link">&para;</a></h3>
 <p>Para conectar na rede do laboratório de Arq. será necessário editar o MAC da placa, caso contrário o mesmo não poderá se conectar. Para isso, execute os comandos a seguir:</p>
 <div class="codehilite"><pre><span></span>$ ifconfig eth0 down
 $ ifconfig eth0 hw ether <span class="m">02</span>:01:02:03:04:08
-$ ifconfig eth0 start
+$ ifconfig eth0 up
 </pre></div>
 
 <div class="admonition note">
@@ -1032,17 +1013,32 @@ $ ifconfig eth0 start
 </tbody>
 </table>
 <p>Dentro de cada pasta <code>rc.x</code> os scripts possuem nomes que ditam a sequência na qual os scripts da pasta serão chamados.</p>
-<h2 id="adicionando-script-ao-boot">Adicionando script ao boot<a class="headerlink" href="#adicionando-script-ao-boot" title="Permanent link">&para;</a></h2>
+<h2 id="adicionando-script-ao-boot-systemd">Adicionando script ao boot (systemd)<a class="headerlink" href="#adicionando-script-ao-boot-systemd" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Crie um script com o nome <code>macc.sh</code> na pasta <code>/etc/init.d</code> e adicione:</li>
+<li>Crie um script com o nome <code>S60MAC.sh</code> na pasta <code>/etc/init.d</code> e adicione:</li>
 </ol>
-<div class="codehilite"><pre><span></span>#!/bin/bash
-$ ifconfig eth0 down
-$ ifconfig eth0 hw ether 02:01:02:03:04:08
-$ ifconfig eth0 start
+<div class="codehilite"><pre><span></span><span class="c1">### Change mac</span>
+<span class="c1">#!/bin/bash</span>
+
+<span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> in
+  start<span class="o">)</span>
+    ifconfig eth0 down
+    ifconfig eth0 hw ether <span class="m">02</span>:01:02:03:04:08
+    ifconfig eth0 up
+    udchpc eth0
+    <span class="p">;;</span>
+  *<span class="o">)</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+    <span class="p">;;</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span>
+<div class="admonition note">
+<p>O script deve ser executável: <code>chmod +x S60MAC.sh</code></p>
+</div>
+<p>Uma vez criado o script será necessário adicionar a inicialização do sistema,
+para isso devemos chamar (quando a iso utiliza systemd, que é o caso do
+Amstrong, mas não do buildroot):</p>
+<div class="codehilite"><pre><span></span>$ systemctl <span class="nb">enable</span> S60MAC.sh
 </pre></div>
 
 <ul>

@@ -135,7 +135,10 @@ Nessa etapa vamos configurar informações como: hostname, user, password gerenc
 
 ### 5. Kernel / bootloader 
 
-O busybox pode baixar e compilar o kernel e o uboot para nós. Não vamos usar essa configuração.
+O busybox pode baixar e compilar o kernel e o uboot para nós.
+
+!!! nonte
+    Não vamos usar essa configuração. **Deixe não checado!**
 
 - Menu principal :arrow_right: Kernel
 
@@ -170,7 +173,7 @@ Salve a sua configuração (ESC ESC save) e volte ao terminal. Vamos agora gerar
 Para compilar e gerar o filesystem :
 
 ``` bash
-$ make all -j 4
+$ make ARCH=arm all -j 4
 ```
 
 Nessa etapa o buildroot irá baixar da web todos os pacotes e programas que foram selecionados no menu de configuração, e irá compilar o source code com o toolchain que passamos para ele. **Isso pode levar um tempinho**.
