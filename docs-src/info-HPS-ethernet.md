@@ -1,25 +1,14 @@
-# Info - HPS - Ethernet 
+# Ethernet 
 
 !!! note "Cyclone V Hard Processor System Technical Reference Manual"
     https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_54001.pdf
 
-## Hardawre
-
-O ARM do nosso HPS possui um periférico Ethernet: 
-
-![](figs/info-hps-ethernet-hps.png)
-
-E o nosso kit possui toda a parte eletrônica que conecta o periférico ao conector Ethernet:
-
-![](info-hps-ethernet-de10.png)
-
 ## Linux
 
-Com o HW da terasic preparado, e com um cabo ethernet conectado ao RJ45, precisamos configurar o Linux para utilizar essa "porta".
+Com um cabo ethernet conectado ao RJ45, precisamos configurar o Linux para utilizar essa "porta".
 
-No `target`, verifique que o linux detecta a placa de rede, com o comando `ifconfig`: 
-
-![](info-hps-ethernet-ifconfig.png)
+No `target`, verifique que o linux detecta a placa de rede, com o comando
+`ifconfig eth0 up`.
 
 ### Alterando o MAC
 
@@ -69,7 +58,7 @@ Já reparou nas pastas `/etc/rc*` do seu sistema operacional? É lá que reside 
 
 Dentro de cada pasta `rc.x` os scripts possuem nomes que ditam a sequência na qual os scripts da pasta serão chamados.
 
-## Adicionando script ao boot
+## Adicionando script ao boot (systemd)
 
 1. Crie um script com o nome `S60MAC.sh` na pasta `/etc/init.d` e adicione:
 

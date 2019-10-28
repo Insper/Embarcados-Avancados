@@ -641,8 +641,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../Entrega-Extra-1/" title="👁 Entrega Opcional 1" class="md-nav__link">
-      👁 Entrega Opcional 1
+    <a href="../Tutorial-HPS-FPGA-VGA/" title="Tutorial - HPS + FPGA - VGA" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
     </a>
   </li>
 
@@ -665,8 +665,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../Tutorial-HPS-FPGA-VGA/" title="Tutorial - HPS + FPGA - VGA" class="md-nav__link">
-      Tutorial - HPS + FPGA - VGA
+    <a href="../Entrega-Extra-1/" title="👁 Entrega Opcional 1" class="md-nav__link">
+      👁 Entrega Opcional 1
     </a>
   </li>
 
@@ -737,8 +737,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../info-HPS-Serial/" title="Info-HPS-Serial" class="md-nav__link">
-      Info-HPS-Serial
+    <a href="../info-HPS-Serial/" title="Screen" class="md-nav__link">
+      Screen
     </a>
   </li>
 
@@ -749,8 +749,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../info-HPS-ethernet/" title="Info - HPS - Ethernet" class="md-nav__link">
-      Info - HPS - Ethernet
+    <a href="../info-HPS-ethernet/" title="Ethernet" class="md-nav__link">
+      Ethernet
     </a>
   </li>
 
@@ -969,7 +969,9 @@ $ <span class="nb">cd</span> buildroot/
 <div class="codehilite"><pre><span></span>$ make <span class="nv">ARCH</span><span class="o">=</span>arm all -j <span class="m">4</span>
 </pre></div>
 
-<p>Nessa etapa o buildroot irá baixar da web todos os pacotes e programas que foram selecionados no menu de configuração, e irá compilar o source code com o toolchain que passamos para ele. <strong>Isso pode levar um tempinho</strong>.</p>
+<p>Nessa etapa o buildroot irá baixar da web todos os pacotes e programas que foram
+selecionados no menu de configuração, 
+e irá compilar o source code com o toolchain que passamos para ele. <strong>Isso pode levar um tempinho</strong>.</p>
 <h3 id="graficos">Gráficos !<a class="headerlink" href="#graficos" title="Permanent link">&para;</a></h3>
 <p>Uma vez acabado o processo de geração do FS, podemos gerar alguns gráficos muito importantes:</p>
 <ul>
@@ -994,7 +996,9 @@ $ <span class="nb">cd</span> buildroot/
 <p>Existem duas saídas do buildroot na pasta: <code>buildroot/output/**</code></p>
 <ol>
 <li>O arquivo <code>./images/rootfs.tar</code>: que contém o fileSystem do target (com as permissões corretas)</li>
-<li>A pasta <code>./images/target/</code>: com os arquivos contidos no <code>.tar</code> mas sem as permissões corretas para executar no target. Inclusive essa pasta possui um arquivo:</li>
+<li>A pasta <code>./images/target/</code>: com os arquivos contidos no <code>.tar</code> mas sem as
+ permissões corretas para
+ executar no target. Inclusive essa pasta possui um arquivo:</li>
 </ol>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1005,7 +1009,8 @@ $ <span class="nb">cd</span> buildroot/
 </div>
 <p>Para testarmos no nosso sistema embarcados, temos que extrair o arquivo <code>rootfs.tar</code> para o nosso cartão de memória. </p>
 <h2 id="testando">Testando<a class="headerlink" href="#testando" title="Permanent link">&para;</a></h2>
-<p>Siga o tutorial em <a href="/Tutorial-HPS-SDCard/">SDCard - FileSystem</a>. Lá está comentando como extrair o <code>rootfs.tar</code> para o nosso cartão de memória.</p>
+<p>Siga o tutorial em <a href="/info-SDcard/">SDCard - FileSystem</a>.
+Lá está comentando como extrair o <code>rootfs.tar</code> para o nosso cartão de memória.</p>
 <div class="admonition example">
 <ol>
 <li>o boot ficou mais rápido?</li>

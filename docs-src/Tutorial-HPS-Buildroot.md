@@ -176,7 +176,9 @@ Para compilar e gerar o filesystem :
 $ make ARCH=arm all -j 4
 ```
 
-Nessa etapa o buildroot irá baixar da web todos os pacotes e programas que foram selecionados no menu de configuração, e irá compilar o source code com o toolchain que passamos para ele. **Isso pode levar um tempinho**.
+Nessa etapa o buildroot irá baixar da web todos os pacotes e programas que foram
+selecionados no menu de configuração, 
+e irá compilar o source code com o toolchain que passamos para ele. **Isso pode levar um tempinho**.
 
 ### Gráficos !
 
@@ -202,7 +204,9 @@ Os gráficos são salvos na pasta: `output/graphs/`
 Existem duas saídas do buildroot na pasta: `buildroot/output/**`
 
 1. O arquivo `./images/rootfs.tar`: que contém o fileSystem do target (com as permissões corretas)
-1. A pasta `./images/target/`: com os arquivos contidos no `.tar` mas sem as permissões corretas para executar no target. Inclusive essa pasta possui um arquivo:
+1. A pasta `./images/target/`: com os arquivos contidos no `.tar` mas sem as
+ permissões corretas para
+ executar no target. Inclusive essa pasta possui um arquivo:
 
 
 !!! warning
@@ -217,7 +221,8 @@ Para testarmos no nosso sistema embarcados, temos que extrair o arquivo `rootfs.
 
 ## Testando 
 
-Siga o tutorial em [SDCard - FileSystem](/Tutorial-HPS-SDCard/). Lá está comentando como extrair o `rootfs.tar` para o nosso cartão de memória.
+Siga o tutorial em [SDCard - FileSystem](/info-SDcard/).
+Lá está comentando como extrair o `rootfs.tar` para o nosso cartão de memória.
 
 
 !!! example ""

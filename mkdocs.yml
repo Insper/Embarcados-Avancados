@@ -49,9 +49,9 @@ nav:
       - 'Entrega-5.md'
   - 'HPS + FPGA':
       - 'Tutorial-HPS-FPGA-BlinkLED.md'
-      - 'Entrega-Extra-1.md'
-      - 'Entrega-6.md'
       - 'Tutorial-HPS-FPGA-VGA.md'
+      - 'Entrega-6.md'
+      - 'Entrega-Extra-1.md'
   - 'Uteis':
       - 'info-FPGA-e-Softwares.md'
       - 'info-VHDL.md'
