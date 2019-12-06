@@ -1,0 +1,1535 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+    
+    
+      
+        <title>Pedro de la Penã - Jetson Nano GPU - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.96cc8824.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="pink">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#pedro-de-la-pena-jetson-nano-gpu" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">developer_board</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Pedro de la Penã - Jetson Nano GPU
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Projeto-Overview/" class="md-tabs__link">
+          Projeto
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Tutorial-FPGA-RTL/" class="md-tabs__link">
+          FPGA
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Tutorial-HPS/" class="md-tabs__link">
+          HPS
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Tutorial-HPS-FPGA-BlinkLED/" class="md-tabs__link">
+          HPS + FPGA
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Tutorial-Acelerando-HLS/" class="md-tabs__link">
+          Acelerando
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../info-FPGA-e-Softwares/" class="md-tabs__link">
+          Uteis
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../Gabriel-TensorFlow/" class="md-tabs__link md-tabs__link--active">
+          Tutoriais Alunos
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo">
+      
+        <i class="md-icon">developer_board</i>
+      
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../Sobre/" title="Sobre" class="md-nav__link">
+      Sobre
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Projeto
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Projeto
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Overview/" title="Projeto Overview" class="md-nav__link">
+      Projeto Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Entrega-1/" title="Projeto Entrega 1" class="md-nav__link">
+      Projeto Entrega 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      FPGA
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-RTL/" title="Tutorial 1 - FPGA - RTL" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-1/" title="👁 Entrega 1" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS/" title="Tutorial 2 - FPGA - NIOS" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-2/" title="👁 Entrega 2" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS-IP/" title="Tutorial 3 - FPGA - IP" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-3/" title="👁 Entrega 3" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      HPS
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS/" title="Visão geral" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Running/" title="Tutorial 4 - HPS - Linux embarcado" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BuildSystem/" title="Tutorial 5 - HPS - Infra" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BlinkLED/" title="Tutorial 6 - HPS - BlinkLED" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-4/" title="👁 Entrega 4" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Kernel/" title="Tutorial 7 - HPS - Compilando o kernel" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Buildroot/" title="Tutorial 8 - HPS -Buildroot" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-5/" title="👁 Entrega 5" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      HPS + FPGA
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-BlinkLED/" title="Tutorial - HPS + FPGA - Blink LED" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-VGA/" title="Tutorial - HPS + FPGA - VGA" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-6/" title="👁 Entrega 6" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-Extra-1/" title="👁 Entrega Opcional 1" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Acelerando
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-Acelerando-HLS/" title="Tutorial - Acelerando - HLS" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Uteis
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Uteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-FPGA-e-Softwares/" title="Infraestrutura / FPGA e SWs" class="md-nav__link">
+      Infraestrutura / FPGA e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-VHDL/" title="VHDL" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-SDcard/" title="Atualizando o SDCARD" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-Serial/" title="Screen" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" title="Ethernet" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
+    
+    <label class="md-nav__link" for="nav-9">
+      Tutoriais Alunos
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Gabriel-TensorFlow/" title="Gabriel Moreira - TensorFlow" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Leo-OpenCL/" title="Leonardo Medeiros - Tutorial OpenCL" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Elisa-Yocto/" title="Elisa Malzoni - Yocto" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Pedro de la Penã - Jetson Nano GPU
+      </label>
+    
+    <a href="./" title="Pedro de la Penã - Jetson Nano GPU" class="md-nav__link md-nav__link--active">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pre-requisitos" class="md-nav__link">
+    Pré Requisitos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arquitetura-da-placa-jetson-nano" class="md-nav__link">
+    Arquitetura da placa Jetson Nano
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nvidia-tegra-x1-soc-gpu" class="md-nav__link">
+    NVIDIA Tegra X1 SoC (GPU)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gravando-um-sdcard-e-inicializando-o-linux" class="md-nav__link">
+    Gravando um SDCard e inicializando o Linux
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configurando-o-sistema-operacional-no-sd-card" class="md-nav__link">
+    Configurando o sistema operacional no SD card
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inserindo-o-sd-card-na-placa-jetson-nano" class="md-nav__link">
+    Inserindo o SD card na placa Jetson Nano
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primeiro-boot" class="md-nav__link">
+    Primeiro boot
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atualizando-libs-e-packages" class="md-nav__link">
+    Atualizando libs e packages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configurando-o-ambiente-python" class="md-nav__link">
+    Configurando o ambiente Python
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configurando-o-ambiente-cuda" class="md-nav__link">
+    Configurando o ambiente CUDA
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configurando-o-ambiente-opencv" class="md-nav__link">
+    Configurando o Ambiente OpenCV
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalacao-pytorch" class="md-nav__link">
+    Instalação Pytorch
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cpu-vs-gpu" class="md-nav__link">
+    CPU vs GPU
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuda-opencv" class="md-nav__link">
+    CUDA OpenCV
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instalacao-da-camera" class="md-nav__link">
+    Instalação da Câmera
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testando-a-camera-raspberry-pi" class="md-nav__link">
+    Testando a Câmera Raspberry Pi
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-e-comparacao-opencv-vs-opencv-cuda" class="md-nav__link">
+    Exemplo e comparação OpenCV vs OpenCV CUDA
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Martim-F1/" title="Martim F. José - FPGA na AWS" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pre-requisitos" class="md-nav__link">
+    Pré Requisitos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arquitetura-da-placa-jetson-nano" class="md-nav__link">
+    Arquitetura da placa Jetson Nano
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nvidia-tegra-x1-soc-gpu" class="md-nav__link">
+    NVIDIA Tegra X1 SoC (GPU)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gravando-um-sdcard-e-inicializando-o-linux" class="md-nav__link">
+    Gravando um SDCard e inicializando o Linux
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configurando-o-sistema-operacional-no-sd-card" class="md-nav__link">
+    Configurando o sistema operacional no SD card
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inserindo-o-sd-card-na-placa-jetson-nano" class="md-nav__link">
+    Inserindo o SD card na placa Jetson Nano
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primeiro-boot" class="md-nav__link">
+    Primeiro boot
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atualizando-libs-e-packages" class="md-nav__link">
+    Atualizando libs e packages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configurando-o-ambiente-python" class="md-nav__link">
+    Configurando o ambiente Python
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configurando-o-ambiente-cuda" class="md-nav__link">
+    Configurando o ambiente CUDA
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configurando-o-ambiente-opencv" class="md-nav__link">
+    Configurando o Ambiente OpenCV
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalacao-pytorch" class="md-nav__link">
+    Instalação Pytorch
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cpu-vs-gpu" class="md-nav__link">
+    CPU vs GPU
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuda-opencv" class="md-nav__link">
+    CUDA OpenCV
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instalacao-da-camera" class="md-nav__link">
+    Instalação da Câmera
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testando-a-camera-raspberry-pi" class="md-nav__link">
+    Testando a Câmera Raspberry Pi
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-e-comparacao-opencv-vs-opencv-cuda" class="md-nav__link">
+    Exemplo e comparação OpenCV vs OpenCV CUDA
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/2019/Pedro-OpenCV.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="pedro-de-la-pena-jetson-nano-gpu">Pedro de la Penã - Jetson Nano GPU<a class="headerlink" href="#pedro-de-la-pena-jetson-nano-gpu" title="Permanent link">&para;</a></h1>
+<ul>
+<li>Aluno: Pedro de la Penã</li>
+<li>Curso: Engenharia da Computação</li>
+<li>Semestre: 9</li>
+<li>Contato: </li>
+<li>Link tutorial oficial: <a href="https://github.com/pedrodelapena/TutorialEmbarcados">https://github.com/pedrodelapena/TutorialEmbarcados</a></li>
+<li>Ano: 2019</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Hardware utilizado no tutorial</p>
+<ul>
+<li>Jetson Nano</li>
+<li>Câmera raspberry pi</li>
+</ul>
+</div>
+<p>Neste projeto iremos utilizar uma placa Jetson Nano para comparar a diferença no desempenho de um código sendo executado em CPU VS GPU.</p>
+<h2 id="pre-requisitos">Pré Requisitos<a class="headerlink" href="#pre-requisitos" title="Permanent link">&para;</a></h2>
+<p>Para seguir este tutorial, é necessário:</p>
+<p><strong>- Conexão com a internet</strong>; 
+<strong>- Hardware</strong>: Jetson Nano; 
+<strong>- Hardware</strong>: SD Card 16 GB OU 32 GB (preferível);  <strong>- Hardware</strong>: Teclado e Mouse USB;<br />
+<strong>- Hardware</strong>: Monitor com entrada HDMI; 
+<strong>- Hardware</strong>: Câmera Raspberry Pi 2.1 OU Câmera USB; 
+<strong>- Software</strong>: Baixar imagem <a href="https://developer.nvidia.com/jetson-nano-sd-card-image-r3221">https://developer.nvidia.com/jetson-nano-sd-card-image-r3221</a> </p>
+<h2 id="arquitetura-da-placa-jetson-nano">Arquitetura da placa Jetson Nano<a class="headerlink" href="#arquitetura-da-placa-jetson-nano" title="Permanent link">&para;</a></h2>
+<p>A placa Jetson Nano possui uma GPU integrada além de sua CPU ARM Cortex-A57 Quad-Core, o que a faz ser muito utilizada em aplicações de processamento de imagens e também em <em>Machine Learning</em> com o uso de redes neurais. 
+A lista completa de seus componentes e especificações está a seguir:
+<img alt="alt text" src="../imgs/Pedro/nano.jpg" /></p>
+<h3 id="nvidia-tegra-x1-soc-gpu">NVIDIA Tegra X1 SoC (GPU)<a class="headerlink" href="#nvidia-tegra-x1-soc-gpu" title="Permanent link">&para;</a></h3>
+<p>A Jetson Nano possui um <em>System On a Chip</em> (SoC) Tegra X1 Maxell, frequentemente encontrado em tablets que são baseados no sistema Android. Este SoC possibilita o uso softwares como OpenGL, CUDA e também DirectX. Com um <em>clock</em> máximo de até 1000 MHz, a GPU oferece 256 <em>shader-cores</em> e é capaz de codificar vídeos em 30fps e decodificar em 60fps.</p>
+<h2 id="gravando-um-sdcard-e-inicializando-o-linux">Gravando um SDCard e inicializando o Linux<a class="headerlink" href="#gravando-um-sdcard-e-inicializando-o-linux" title="Permanent link">&para;</a></h2>
+<h3 id="configurando-o-sistema-operacional-no-sd-card">Configurando o sistema operacional no SD card<a class="headerlink" href="#configurando-o-sistema-operacional-no-sd-card" title="Permanent link">&para;</a></h3>
+<p>Após realizar o download da imagem, conecte o SD card em um adaptador e então no seu computador. Agora é preciso extrair a imagem e copiá-la para o driver de maneira que o sistema operacional funcione. Para realizar o processo utilizando utilizando uma interface gráfica, <a href="https://www.balena.io/etcher/">faça o dowload do Etcher</a>. O processo de <em>flashing</em> é um pouco demorado, levando cerca de 10-15 minutos. Você pode meditar um pouco ou então pode ir dar uma volta e tomar um café!</p>
+<p><img alt="Etcher Interface" src="../imgs/Pedro/etcher.png" /></p>
+<p>Caso você prefira realizar o processo de forma mais <em>raiz</em>, você também o pode fazer pela linha de comando. Para isto, descubra o nome e localização do seu flash drive com <code>dmesg | tail</code>. Após encontrar o drive, extraia o arquivo para o SD card com o comando:</p>
+<p><div class="codehilite"><pre><span></span>$ /usr/bin/unzip -p ~/<span class="o">[</span>LOCAL_DE_DOWNLOAD<span class="o">]</span>/jetson_nano_devkit_sd_card.zip 
+$ sudo /bin/dd <span class="nv">of</span><span class="o">=</span>/dev/sd<span class="o">[</span>NOME_DO_DRIVE<span class="o">]</span> <span class="nv">bs</span><span class="o">=</span>1M <span class="nv">status</span><span class="o">=</span>progress
+</pre></div>
+Após finalizado o processo, remova o drive de seu computador.</p>
+<h3 id="inserindo-o-sd-card-na-placa-jetson-nano">Inserindo o SD card na placa Jetson Nano<a class="headerlink" href="#inserindo-o-sd-card-na-placa-jetson-nano" title="Permanent link">&para;</a></h3>
+<p>A entrada do cartão de memória não é muito visível para aqueles que estão tendo o primeiro contato com a placa. Aqui há uma imagem para auxilia-lo(a) a encontrar a entrada do cartão: </p>
+<p><img alt="Tá bem ai!" src="https://www.pyimagesearch.com/wp-content/uploads/2019/05/jetson_nano_getting_started_sd_slot.jpg" /></p>
+<h3 id="primeiro-boot">Primeiro boot<a class="headerlink" href="#primeiro-boot" title="Permanent link">&para;</a></h3>
+<p>Com o cartão de memória já inserido, é preciso conectar os cabos na placa. Não há "botão de ligar ou desligar" na placa, e o boot começa automaticamente quando o cabo de alimentação (supply de 5V (USB) OU fonte) estiver conectado. Além disso, lembre-se que <u>será preciso conexão com a internet para os próximos passos</u>.</p>
+<p>Após inserir as configurações de formato de teclado, região e informações 'pessoais' do ambiente Linux, a placa reiniciará e então estará pronta para uso.</p>
+<p><img alt="Wow! Que wallpaper irado!" src="../imgs/Pedro/wow.jpg" /></p>
+<p>Para maior comodidade, recomenda-se que a suspensão automática e <em>screen lock</em> sejam desativadas em <code>All Settings -&gt; Brightness &amp; Lock</code>, dado que alguns downloads e instalações possam demorar <em>um pouco</em>.</p>
+<h3 id="atualizando-libs-e-packages">Atualizando libs e packages<a class="headerlink" href="#atualizando-libs-e-packages" title="Permanent link">&para;</a></h3>
+<p>Já que acabamos de configurar o sistema operacional, é necessário executar os comandos <code>sudo apt-get update</code> e <code>sudo apt-get upgrade</code>.</p>
+<h3 id="configurando-o-ambiente-python">Configurando o ambiente Python<a class="headerlink" href="#configurando-o-ambiente-python" title="Permanent link">&para;</a></h3>
+<p>Para instalar bibliotecas adicionais, é preciso instalar o pip. Para isto, execude os comandos a seguir:</p>
+<div class="codehilite"><pre><span></span>$ wget https://bootstrap.pypa.io/get-pip.py
+$ sudo python3 get-pip.py
+</pre></div>
+
+<h3 id="configurando-o-ambiente-cuda">Configurando o ambiente CUDA<a class="headerlink" href="#configurando-o-ambiente-cuda" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span>$ wget http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run
+$ sudo sh cuda_10.2.89_440.33.01_linux.run
+</pre></div>
+
+<h2 id="configurando-o-ambiente-opencv">Configurando o Ambiente OpenCV<a class="headerlink" href="#configurando-o-ambiente-opencv" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Esse aqui demora... E MUITO! (~4 horas) </p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>IMPORTANTE!</strong>  Conecte um cooler à placa e faça questão de utilizar a fonte de alimentação normal em relação à USB para este processo, já que ele demanda MUITA potência e a placa atingir altas temperaturas, o que pode levar ao seu superaquecimento.</p>
+</div>
+<p><img alt="Cooler" src="../imgs/Pedro/cooler.jpg" /></p>
+<p>Com o cooler instalado, rode as seguintes linhas de comando para instalar e compilar o OpenCV. E lembrando, é uma looooooonga espera.</p>
+<div class="codehilite"><pre><span></span>$ wget https://github.com/AastaNV/JEP/blob/master/script/install_opencv4.1.1_Jetson.sh
+$ sudo sh install_opencv4.1.1_Jetson.sh
+$ export PYTHONPATH=/usr/local/python
+</pre></div>
+
+<p>Após realizada a build, abra um terminal python3 e rode o seguinte código para testar o OpenCV:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="k">print</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">getBuildInformation</span><span class="p">())</span>
+</pre></div>
+
+<p>A partir deste comando, é possivel visualizar se o CUDA OpenCV está configurado, no campo <code>NVIDIA CUDA</code></p>
+<p><img alt="Cooler" src="../imgs/Pedro/cuda.png" /></p>
+<h2 id="instalacao-pytorch">Instalação Pytorch<a class="headerlink" href="#instalacao-pytorch" title="Permanent link">&para;</a></h2>
+<p>A biblioteca Pytorch possui funções que tornam possível a utilização da GPU no ambiente Python. Esta biblioteca será utilizada para fazer alguns testes e comparações mais para frente no tutorial.</p>
+<div class="codehilite"><pre><span></span>$ wget https://nvidia.box.com/shared/static/phqe92v26cbhqjohwtvxorrwnmrnfx1o.whl -O torch-1.3.0-cp36-cp36m-linux_aarch64.whl
+$ pip3 install numpy torch-1.3.0-cp36-cp36m-linux_aarch64.whl
+</pre></div>
+
+<p>Caso algum erro de dependência relacionado ao numpy ocorra, reinstale-o.</p>
+<div class="codehilite"><pre><span></span>$ sudo pip uninstall numpy
+$ pip3 install numpy --user
+</pre></div>
+
+<h3 id="cpu-vs-gpu">CPU vs GPU<a class="headerlink" href="#cpu-vs-gpu" title="Permanent link">&para;</a></h3>
+<p>A diferença no desempenho de certos códigos executados em CPU ou GPU é dada pela quantidade de cálculos em paralelo que cada um dos hardwares consegue realizar. Dependendo da arquitetura dos hardwares, uma GPU pode executar centenas - ou até milhares - de vezes mais instruções por <em>clock</em> em relação à CPU. Por conta disto, GPUs são largamente utilizadas em processos que podem ser amplamente divididos e paralelizados em blocos, como é o caso da multiplicação de matrizes com muitas linhas e colunas. O simples exemplo a seguir deixa evidente a diferença no desempenho.</p>
+<p>Código em CPU:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">7000</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">7000</span><span class="p">)</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Elapsed time CPU:&quot;</span><span class="p">,</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">,</span><span class="s2">&quot;seconds&quot;</span><span class="p">)</span>
+</pre></div>
+
+<p>Código em GPU:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">7000</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">7000</span><span class="p">)</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Elapsed time GPU:&quot;</span><span class="p">,</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">,</span><span class="s2">&quot;seconds&quot;</span><span class="p">)</span>
+</pre></div>
+
+<h2 id="cuda-opencv">CUDA OpenCV<a class="headerlink" href="#cuda-opencv" title="Permanent link">&para;</a></h2>
+<p>A GPU também é de fundamental uso em outras aplicações como a rederização de vídeos e imagens e também no treinamento de modelos de Machine Learning e redes neurais. Desta forma,a biblioteca OpenCV pode ser utilizada para realizar tais tarefas na GPU. </p>
+<h3 id="instalacao-da-camera">Instalação da Câmera<a class="headerlink" href="#instalacao-da-camera" title="Permanent link">&para;</a></h3>
+<p>Caso esteja utilizando uma câmera USB, pule esta etapa.</p>
+<p>Com a Jetson Nano <u>desligada de todas as fontes de energia</u> e com a câmera Raspberry Pi 2.1 (1.3 não funciona), levante a trava localzada em um dos cantos da placa, forçando-a para cima.</p>
+<p><img alt="Camera" src="../imgs/Pedro/camera.png" /></p>
+<p>Em seguida, insira o conector da câmera (com "a parte azul voltada para fora") e então pressione a trava novamente para baixo.</p>
+<h3 id="testando-a-camera-raspberry-pi">Testando a Câmera Raspberry Pi<a class="headerlink" href="#testando-a-camera-raspberry-pi" title="Permanent link">&para;</a></h3>
+<p>Após conectada, teste a câmera para checar se ela realmente está funcional com a seguinte linha de código no terminal.</p>
+<div class="codehilite"><pre><span></span>$ gst-launch-1.0 nvarguscamerasrc ! <span class="s1">&#39;video/x-raw(memory:NVMM),width=3820, height=2464, framerate=21/1, format=NV12&#39;</span> ! nvvidconv flip-method<span class="o">=</span><span class="m">0</span> ! <span class="s1">&#39;video/x-raw,width=960, height=616&#39;</span> ! nvvidconv ! nvegltransform ! nveglglessink -e
+</pre></div>
+
+<h3 id="exemplo-e-comparacao-opencv-vs-opencv-cuda">Exemplo e comparação OpenCV vs OpenCV CUDA<a class="headerlink" href="#exemplo-e-comparacao-opencv-vs-opencv-cuda" title="Permanent link">&para;</a></h3>
+<p>O código à seguir foi adaptado do Jetson Nano Hacks, sendo que o original pode ser encontrado <a href="https://github.com/JetsonHacksNano/CSI-Camera/blob/master/simple_camera.py">neste link</a>. Neste código é testada a diferença de desempenho da CPU em relação à GPU.</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">gstreamer_pipeline</span><span class="p">(</span>
+    <span class="n">capture_width</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span>
+    <span class="n">capture_height</span><span class="o">=</span><span class="mi">360</span><span class="p">,</span>
+    <span class="n">display_width</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span>
+    <span class="n">display_height</span><span class="o">=</span><span class="mi">360</span><span class="p">,</span>
+    <span class="n">framerate</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+    <span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="s2">&quot;nvarguscamerasrc ! &quot;</span>
+        <span class="s2">&quot;video/x-raw(memory:NVMM), &quot;</span>
+        <span class="s2">&quot;width=(int)</span><span class="si">%d</span><span class="s2">, height=(int)</span><span class="si">%d</span><span class="s2">, &quot;</span>
+        <span class="s2">&quot;format=(string)NV12, framerate=(fraction)</span><span class="si">%d</span><span class="s2">/1 ! &quot;</span>
+        <span class="s2">&quot;nvvidconv flip-method=</span><span class="si">%d</span><span class="s2"> ! &quot;</span>
+        <span class="s2">&quot;video/x-raw, width=(int)</span><span class="si">%d</span><span class="s2">, height=(int)</span><span class="si">%d</span><span class="s2">, format=(string)BGRx ! &quot;</span>
+        <span class="s2">&quot;videoconvert ! &quot;</span>
+        <span class="s2">&quot;video/x-raw, format=(string)BGR ! appsink&quot;</span>
+        <span class="o">%</span> <span class="p">(</span>
+            <span class="n">capture_width</span><span class="p">,</span>
+            <span class="n">capture_height</span><span class="p">,</span>
+            <span class="n">framerate</span><span class="p">,</span>
+            <span class="n">flip_method</span><span class="p">,</span>
+            <span class="n">display_width</span><span class="p">,</span>
+            <span class="n">display_height</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">show_camera</span><span class="p">():</span>
+    <span class="c1"># To flip the image, modify the flip_method parameter (0 and 2 are the most common)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">gstreamer_pipeline</span><span class="p">(</span><span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">gstreamer_pipeline</span><span class="p">(</span><span class="n">flip_method</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CAP_GSTREAMER</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cap</span><span class="o">.</span><span class="n">isOpened</span><span class="p">():</span>
+        <span class="n">window_handle</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">namedWindow</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">WINDOW_AUTOSIZE</span><span class="p">)</span>
+        <span class="c1"># Window</span>
+        <span class="k">while</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getWindowProperty</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ret_val</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">();</span> 
+            <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="c1">#Alterar aqui para &quot;c2.cuda.flip()&quot; ou &quot;cv2.flip()&quot;</span>
+            <span class="n">img2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Elapsed time&quot;</span><span class="p">,</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;CSI Camera&quot;</span><span class="p">,</span> <span class="n">img2</span><span class="p">)</span>
+            <span class="n">keyCode</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span>
+            <span class="c1"># Stop the program on the ESC key</span>
+            <span class="k">if</span> <span class="n">keyCode</span> <span class="o">==</span> <span class="mi">27</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="n">cap</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Unable to open camera&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">show_camera</span><span class="p">()</span>
+</pre></div>
+
+<p>Neste caso, devido ao fato de ser uma simples alteração na imagem como um <em>flip</em>, o programa demora mais para enviar a imagem para a GPU que realizar todo o processo na CPU. Contudo, com mais processos e operações, o ganho de desempenho da GPU fica evidente. Além disso, para descobrir todas as funções do módulo CUDA, abra um terminal Python3 e insira a linha <code>dir(cv2.cuda)</code>. </p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../Elisa-Yocto/" title="Elisa Malzoni - Yocto" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Elisa Malzoni - Yocto
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../Martim-F1/" title="Martim F. José - FPGA na AWS" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Martim F. José - FPGA na AWS
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.1f8d785c.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

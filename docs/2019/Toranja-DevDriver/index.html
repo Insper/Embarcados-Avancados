@@ -1,0 +1,1105 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+    
+    
+      
+        <title>Bruno Toranja - Linux Device Driver - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.96cc8824.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="pink">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#bruno-toranja-linux-device-driver" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">developer_board</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Bruno Toranja - Linux Device Driver
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+<nav class="md-tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link md-tabs__link--active">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Projeto-Overview/" class="md-tabs__link">
+          Projeto
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Tutorial-FPGA-RTL/" class="md-tabs__link">
+          FPGA
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Tutorial-HPS/" class="md-tabs__link">
+          HPS
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Tutorial-HPS-FPGA-BlinkLED/" class="md-tabs__link">
+          HPS + FPGA
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Tutorial-Acelerando-HLS/" class="md-tabs__link">
+          Acelerando
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../info-FPGA-e-Softwares/" class="md-tabs__link">
+          Uteis
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../Gabriel-TensorFlow/" class="md-tabs__link">
+          Tutoriais Alunos
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo">
+      
+        <i class="md-icon">developer_board</i>
+      
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../Sobre/" title="Sobre" class="md-nav__link">
+      Sobre
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Projeto
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Projeto
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Overview/" title="Projeto Overview" class="md-nav__link">
+      Projeto Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Entrega-1/" title="Projeto Entrega 1" class="md-nav__link">
+      Projeto Entrega 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      FPGA
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-RTL/" title="Tutorial 1 - FPGA - RTL" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-1/" title="👁 Entrega 1" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS/" title="Tutorial 2 - FPGA - NIOS" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-2/" title="👁 Entrega 2" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS-IP/" title="Tutorial 3 - FPGA - IP" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-3/" title="👁 Entrega 3" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      HPS
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS/" title="Visão geral" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Running/" title="Tutorial 4 - HPS - Linux embarcado" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BuildSystem/" title="Tutorial 5 - HPS - Infra" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BlinkLED/" title="Tutorial 6 - HPS - BlinkLED" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-4/" title="👁 Entrega 4" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Kernel/" title="Tutorial 7 - HPS - Compilando o kernel" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Buildroot/" title="Tutorial 8 - HPS -Buildroot" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-5/" title="👁 Entrega 5" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      HPS + FPGA
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-BlinkLED/" title="Tutorial - HPS + FPGA - Blink LED" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-VGA/" title="Tutorial - HPS + FPGA - VGA" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-6/" title="👁 Entrega 6" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-Extra-1/" title="👁 Entrega Opcional 1" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Acelerando
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-Acelerando-HLS/" title="Tutorial - Acelerando - HLS" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Uteis
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Uteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-FPGA-e-Softwares/" title="Infraestrutura / FPGA e SWs" class="md-nav__link">
+      Infraestrutura / FPGA e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-VHDL/" title="VHDL" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-SDcard/" title="Atualizando o SDCARD" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-Serial/" title="Screen" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" title="Ethernet" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      Tutoriais Alunos
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Gabriel-TensorFlow/" title="Gabriel Moreira - TensorFlow" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Leo-OpenCL/" title="Leonardo Medeiros - Tutorial OpenCL" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Elisa-Yocto/" title="Elisa Malzoni - Yocto" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Pedro-OpenCV/" title="Pedro de la Penã - Jetson Nano GPU" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Martim-F1/" title="Martim F. José - FPGA na AWS" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#se-for-testar-no-seu-linux-deixe-libmodulesuname-rbuild" class="md-nav__link">
+    se for testar no seu linux deixe /lib/modules/$(uname -r)/build
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/2019/Toranja-DevDriver.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="bruno-toranja-linux-device-driver">Bruno Toranja - Linux Device Driver<a class="headerlink" href="#bruno-toranja-linux-device-driver" title="Permanent link">&para;</a></h1>
+<ul>
+<li>Aluno: Bruno Toranja</li>
+<li>Curso: Engenharia da Computação</li>
+<li>Semestre: 7</li>
+<li>Contato: </li>
+<li>Link tutorial oficial: <a href="https://github.com/brunoartc/virtual_com_driver">https://github.com/brunoartc/virtual_com_driver</a></li>
+<li>Ano: 2019</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Hardware utilizado no tutorial</p>
+<ul>
+<li>?</li>
+</ul>
+</div>
+<p>Um driver de linux é um programa que facilita a comunicação dos programas com a parte fisica do nosso dispositivo </p>
+<p>Para entendermos como isso funciona primeiro temos que entender o que significam os programas e o kernel</p>
+<p>Os programas rodam em uma parte especial da nossa memoria chamada de espaço de usuario, como por exemplo o python ou ate mesmo um bash, esses programas normalmente nao precisam acessar itens de mais baixo nivel como por exxemplo acesso direto a memoria ou portas UBS por exemplo.</p>
+<p>Essas tarefas sao executadas pelo kernel space que sabe lidar com o nosso hardware de uma maneira efficiente nos dando uma "API" para isso, são aqui que sao localizados os drivers compilados juntamente ao linux</p>
+<p>Os programas localizados no user space tem um momento especifico para pedir coisas para o kernel sobre o hardware como eh o caso de exploradores de arquivos e comunicação serial, caso algum desses programas queira se comunicar com um acessorio que nao tenha seu proprio driver, temos um problema pois esse nao conseguira ser comunicado</p>
+<p>Entao temos outra opcao, desenvolver nosso proprio driver, ou um driver quer compila juntamente com o kernel e vem juntamente com ele, ou um simples modulo que é compilado a parte e depois carregado no linux a partir do user space que ensinaremos nesse tutorial</p>
+<p>Para fazer um driver do linux temos duas opções, podemos fazer um modulo que seja compilado junto ao kernel ou simplesmente fazer um driver para ser carregado como um modulo vindo do user-space e é isso que vamos fazer desenvolver um driver para fazer uma conn virtual que comunique com seu pc</p>
+<p>para isso precisamos de um codigo fonte que sera feito em c</p>
+<p>primeiramente precisamo incluir a biblioteca de modulos do linux, para faremos um novo arquivo chamado de tcom.c</p>
+<div class="codehilite"><pre><span></span>touch tcom.c
+</pre></div>
+
+<p>precisamos adicionar os headers no nosso arquivo tambem
+<div class="codehilite"><pre><span></span>nano tcom.c
+</pre></div></p>
+<p>dentro do arquivo temos que adicionar as duas linhas de bibliotecas para que possamos usar as funções que conversam com o kernel alem de poder usar seus macros</p>
+<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;linux/init.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;linux/module.h&gt;</span><span class="cp"></span>
+</pre></div>
+
+<p>com as bibliotecas importadas podemos começar o nosso codigo como por exemplo fazer dizer o que nosso driver fará ao ser carregado e descarregado.</p>
+<p><a href="https://github.com/torvalds/linux/tree/f1f2f614d535564992f32e720739cb53cf03489f/include/linux/module.h#L72-L74">https://github.com/torvalds/linux/tree/f1f2f614d535564992f32e720739cb53cf03489f/include/linux/module.h#L72-L74</a></p>
+<p>essas funções tem um padrão para se seguir em que a função de inicialização retorna um inteiro e o exit nao retorna nada
+como mostrado acima</p>
+<div class="codehilite"><pre><span></span><span class="k">static</span> <span class="kt">int</span> <span class="nf">init_com</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span>  <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">finish_com</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">module_init</span><span class="p">(</span><span class="n">init_com</span><span class="p">);</span>
+<span class="n">module_exit</span><span class="p">(</span><span class="n">finish_com</span><span class="p">);</span>
+</pre></div>
+
+<p>essas duas funcoes podem ser chamadas pelas macros module_init e module_exit, que vao ser chamados no momento de inicio do modulo e saida do modulo</p>
+<p><a href="https://github.com/torvalds/linux/blob/f1f2f614d535564992f32e720739cb53cf03489f/include/linux/module.h#L76-L107">https://github.com/torvalds/linux/blob/f1f2f614d535564992f32e720739cb53cf03489f/include/linux/module.h#L76-L107</a></p>
+<p>tem tambem muitas outra opções para definir o autor do módulo e ate mesmo a licensa dele, mas nao entraremos em muitos detalhes</p>
+<p>Podemos por exemplo fazer um driver que simplesmente mande um Hello World para o kernel quando ele é inicializado para isso semelhante a um programa em C utilizaremos uma função print</p>
+<p>precisamos importar mais uma biblioteca para que essa função fique disponivel</p>
+<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;linux/kernel.h&gt;</span><span class="cp"></span>
+</pre></div>
+
+<p>com essa funcão importada temos acesso ao printk uma função que printa ao log do kernel</p>
+<p>Ate agora temos um programa assim</p>
+<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;linux/kernel.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;linux/init.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;linux/module.h&gt;</span><span class="cp"></span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="nf">init_com</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printk</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Hello World</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">return</span>  <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">finish_com</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">module_init</span><span class="p">(</span><span class="n">init_com</span><span class="p">);</span>
+<span class="n">module_exit</span><span class="p">(</span><span class="n">finish_com</span><span class="p">);</span>
+</pre></div>
+
+<p>podemos entao compilar o nosso programa usando uma Makefile contendo</p>
+<div class="codehilite"><pre><span></span><span class="nv">obj-m</span> <span class="o">:=</span> tcom.o
+</pre></div>
+
+<p>usamos tambem por padrao o lib modules do nosso sistema que esta localizado em <code>/lib/modules/$(uname -r)/build</code> </p>
+<h2 id="se-for-testar-no-seu-linux-deixe-libmodulesuname-rbuild">se for testar no seu linux deixe /lib/modules/$(uname -r)/build<a class="headerlink" href="#se-for-testar-no-seu-linux-deixe-libmodulesuname-rbuild" title="Permanent link">&para;</a></h2>
+<p>ou podemos gerar nosso proprio com um kernel do linux </p>
+<div class="codehilite"><pre><span></span>make modules_install <span class="nv">INSTALL_MOD_PATH</span><span class="o">=</span>/some/root/folder
+</pre></div>
+
+<p>ou simplesmente dentro da sua pasta do linux</p>
+<div class="codehilite"><pre><span></span>make modules
+</pre></div>
+
+<p>usando</p>
+<div class="codehilite"><pre><span></span>make -C /path/para/source/linux <span class="nv">M</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span> modules
+</pre></div>
+
+<p>para compilar</p>
+<p>com isso teremos um arquivo .ko que para todos os fins é o nosso driver, este pode ser carregado e descarregado usando insmod e rmmod respectivamente</p>
+<p>como uma simples demosntração podemos abrir um terminal e observar os logs do linux</p>
+<div class="codehilite"><pre><span></span>tail -f /var/log/kern.log
+</pre></div>
+
+<p>enquanto em outro terminal compilamos o modulo e carregamos ele</p>
+<div class="codehilite"><pre><span></span>make -C /path/para/source/linux <span class="nv">M</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span> modules
+sudo insmod ./tcom.ko
+sudo rmmod ./tcom.ko
+</pre></div>
+
+<p>depois de executar esses comandos no linux voltamos ao nosso terminal que esta acompanhando o log do kernel e vemos que com sucesso obtivemos a mensagem</p>
+<div class="codehilite"><pre><span></span>kernel: [666.1337] Hello World
+</pre></div>
+
+<p>Com isso temos a nossa primeira implementacao de um driver que simplesmesnte sobe uma mensagem para o kernel</p>
+<p>Agora precisamos dar alguma funcionalidade para o nosso driver, como por exemplo interfacear com o hardware para simplesmente receber mensagens</p>
+<p>Como tudo no linux precisamos abrir um arquivo para fazer a comunicacao com o kernel space e este fazer a comunicacao com o hardware </p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.1f8d785c.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,91 @@
+{
+  "nodes":
+  [
+    {
+      "type":"interface"
+      , "id":23
+      , "name":"N"
+      , "debug":
+      [
+        [
+          {
+            "filename":"image.cpp"
+            , "line":28
+          }
+        ]
+      ]
+      , "details":
+      [
+        {
+          "type":"table"
+          , "Stable":"No"
+          , "Width":"32 bits"
+          , "Component":"imgOffSet"
+        }
+      ]
+    }
+    , {
+      "type":"interface"
+      , "id":21
+      , "name":"imgIn"
+      , "debug":
+      [
+        [
+          {
+            "filename":"image.cpp"
+            , "line":28
+          }
+        ]
+      ]
+      , "details":
+      [
+        {
+          "type":"table"
+          , "Stable":"No"
+          , "Data width":"8"
+          , "Address width":"32"
+          , "Address Space":"1"
+          , "Latency":"1"
+          , "ReadWrite Mode":"readwrite"
+          , "Maximum burst":"1"
+          , "Wait request":"0"
+          , "Alignment":"0"
+          , "Component":"imgOffSet"
+        }
+      ]
+    }
+    , {
+      "type":"interface"
+      , "id":22
+      , "name":"imgOut"
+      , "debug":
+      [
+        [
+          {
+            "filename":"image.cpp"
+            , "line":28
+          }
+        ]
+      ]
+      , "details":
+      [
+        {
+          "type":"table"
+          , "Stable":"No"
+          , "Data width":"8"
+          , "Address width":"32"
+          , "Address Space":"2"
+          , "Latency":"1"
+          , "ReadWrite Mode":"readwrite"
+          , "Maximum burst":"1"
+          , "Wait request":"0"
+          , "Alignment":"0"
+          , "Component":"imgOffSet"
+        }
+      ]
+    }
+  ]
+  , "links":
+  [
+  ]
+}

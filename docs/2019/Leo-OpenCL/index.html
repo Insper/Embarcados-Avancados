@@ -1,0 +1,1565 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+    
+    
+      
+        <title>Leonardo Medeiros - Tutorial OpenCL - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.96cc8824.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="pink">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#leonardo-medeiros-tutorial-opencl" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">developer_board</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Leonardo Medeiros  - Tutorial OpenCL
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Projeto-Overview/" class="md-tabs__link">
+          Projeto
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Tutorial-FPGA-RTL/" class="md-tabs__link">
+          FPGA
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Tutorial-HPS/" class="md-tabs__link">
+          HPS
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Tutorial-HPS-FPGA-BlinkLED/" class="md-tabs__link">
+          HPS + FPGA
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Tutorial-Acelerando-HLS/" class="md-tabs__link">
+          Acelerando
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../info-FPGA-e-Softwares/" class="md-tabs__link">
+          Uteis
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../Gabriel-TensorFlow/" class="md-tabs__link md-tabs__link--active">
+          Tutoriais Alunos
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo">
+      
+        <i class="md-icon">developer_board</i>
+      
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../Sobre/" title="Sobre" class="md-nav__link">
+      Sobre
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Projeto
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Projeto
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Overview/" title="Projeto Overview" class="md-nav__link">
+      Projeto Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Entrega-1/" title="Projeto Entrega 1" class="md-nav__link">
+      Projeto Entrega 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      FPGA
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-RTL/" title="Tutorial 1 - FPGA - RTL" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-1/" title="👁 Entrega 1" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS/" title="Tutorial 2 - FPGA - NIOS" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-2/" title="👁 Entrega 2" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS-IP/" title="Tutorial 3 - FPGA - IP" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-3/" title="👁 Entrega 3" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      HPS
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS/" title="Visão geral" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Running/" title="Tutorial 4 - HPS - Linux embarcado" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BuildSystem/" title="Tutorial 5 - HPS - Infra" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BlinkLED/" title="Tutorial 6 - HPS - BlinkLED" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-4/" title="👁 Entrega 4" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Kernel/" title="Tutorial 7 - HPS - Compilando o kernel" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Buildroot/" title="Tutorial 8 - HPS -Buildroot" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-5/" title="👁 Entrega 5" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      HPS + FPGA
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-BlinkLED/" title="Tutorial - HPS + FPGA - Blink LED" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-VGA/" title="Tutorial - HPS + FPGA - VGA" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-6/" title="👁 Entrega 6" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-Extra-1/" title="👁 Entrega Opcional 1" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Acelerando
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-Acelerando-HLS/" title="Tutorial - Acelerando - HLS" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Uteis
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Uteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-FPGA-e-Softwares/" title="Infraestrutura / FPGA e SWs" class="md-nav__link">
+      Infraestrutura / FPGA e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-VHDL/" title="VHDL" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-SDcard/" title="Atualizando o SDCARD" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-Serial/" title="Screen" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" title="Ethernet" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
+    
+    <label class="md-nav__link" for="nav-9">
+      Tutoriais Alunos
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Gabriel-TensorFlow/" title="Gabriel Moreira - TensorFlow" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Leonardo Medeiros  - Tutorial OpenCL
+      </label>
+    
+    <a href="./" title="Leonardo Medeiros - Tutorial OpenCL" class="md-nav__link md-nav__link--active">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#opencl" class="md-nav__link">
+    OpenCL
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arquitetura-opencl" class="md-nav__link">
+    Arquitetura OpenCL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fpga-vs-cpu" class="md-nav__link">
+    FPGA vs CPU
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-opencl-de-10" class="md-nav__link">
+    Tutorial OpenCL-DE-10
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-requerimentos-de-sistema" class="md-nav__link">
+    1. Requerimentos de Sistema
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configurando-a-infra-estrutura" class="md-nav__link">
+    2. Configurando a Infra Estrutura
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-instalacao-de-software" class="md-nav__link">
+    2.1 Instalação de Software
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-instalacao-da-licensa-opencl" class="md-nav__link">
+    2.2 Instalação da Licensa Opencl
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-configurando-variaveis-de-ambiente" class="md-nav__link">
+    2.3 Configurando variaveis de ambiente
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-verificacao-do-ambiente" class="md-nav__link">
+    2.3 Verificação do Ambiente
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-compilar-projeto" class="md-nav__link">
+    3. Compilar Projeto
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-embarcar-kernel" class="md-nav__link">
+    4. Embarcar Kernel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-ajustar-a-placa" class="md-nav__link">
+    5. Ajustar a placa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-conectar-se-a-placa" class="md-nav__link">
+    5. Conectar-se a placa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-executar-o-projeto" class="md-nav__link">
+    6. Executar o projeto
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analises-de-desempenho-cpu-vs-opencl" class="md-nav__link">
+    Análises de Desempenho CPU vs OPENCL
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Elisa-Yocto/" title="Elisa Malzoni - Yocto" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Pedro-OpenCV/" title="Pedro de la Penã - Jetson Nano GPU" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Martim-F1/" title="Martim F. José - FPGA na AWS" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#opencl" class="md-nav__link">
+    OpenCL
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arquitetura-opencl" class="md-nav__link">
+    Arquitetura OpenCL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fpga-vs-cpu" class="md-nav__link">
+    FPGA vs CPU
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-opencl-de-10" class="md-nav__link">
+    Tutorial OpenCL-DE-10
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-requerimentos-de-sistema" class="md-nav__link">
+    1. Requerimentos de Sistema
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configurando-a-infra-estrutura" class="md-nav__link">
+    2. Configurando a Infra Estrutura
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-instalacao-de-software" class="md-nav__link">
+    2.1 Instalação de Software
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-instalacao-da-licensa-opencl" class="md-nav__link">
+    2.2 Instalação da Licensa Opencl
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-configurando-variaveis-de-ambiente" class="md-nav__link">
+    2.3 Configurando variaveis de ambiente
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-verificacao-do-ambiente" class="md-nav__link">
+    2.3 Verificação do Ambiente
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-compilar-projeto" class="md-nav__link">
+    3. Compilar Projeto
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-embarcar-kernel" class="md-nav__link">
+    4. Embarcar Kernel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-ajustar-a-placa" class="md-nav__link">
+    5. Ajustar a placa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-conectar-se-a-placa" class="md-nav__link">
+    5. Conectar-se a placa
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-executar-o-projeto" class="md-nav__link">
+    6. Executar o projeto
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analises-de-desempenho-cpu-vs-opencl" class="md-nav__link">
+    Análises de Desempenho CPU vs OPENCL
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/2019/Leo-OpenCL.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="leonardo-medeiros-tutorial-opencl">Leonardo Medeiros  - Tutorial OpenCL<a class="headerlink" href="#leonardo-medeiros-tutorial-opencl" title="Permanent link">&para;</a></h1>
+<ul>
+<li>Aluno: Leonardo Medeiros</li>
+<li>Curso: Engenharia da Computação</li>
+<li>Semestre: 9</li>
+<li>Contato: </li>
+<li>Link tutorial oficial: <a href="https://github.com/Leotayner/Tutorial-OpenCL">https://github.com/Leotayner/Tutorial-OpenCL</a></li>
+<li>Ano: 2019</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Hardware utilizado no tutorial</p>
+<ul>
+<li>DE10-Standard</li>
+</ul>
+</div>
+<h2 id="opencl">OpenCL<a class="headerlink" href="#opencl" title="Permanent link">&para;</a></h2>
+<p><a href="https://software.intel.com/en-us/opencl-sdk">OpenCL</a> (Open Computing Language) é uma API de baixo nível para programação de alto desempenho em ambientes computacionais heterogêneos compostos por CPUs, GPUs, e outros processadores paralelos como FPGA, permitindo desenvolver aplicações portáveis e eficientes.</p>
+<h3 id="arquitetura-opencl">Arquitetura OpenCL<a class="headerlink" href="#arquitetura-opencl" title="Permanent link">&para;</a></h3>
+<p>O padrão OpenCL propõe uma arquitetura em que há um host que agrega um ou mais devices, cada device possui unidades de computação que contém elementos de processamento.</p>
+<p>O host é responsável pelo reconhecimento e inicialização dos dispositivos, bem como pela transferência de dados e tarefas para execução.</p>
+<p>O device é responsável por processar todos esses dados ao executar as tarefas programadas.</p>
+<p>Na arquitetura do device, considerando o contexto de programação paralela, o equivalente a uma thread é o work-item, que representa a menor unidade de tarefa. Esses works-itens são agrupados em blocos denominados work-group, onde os works-itens de um mesmo bloco podem se comunicar e se sincronizar</p>
+<p>Os work-groups por sua vez são organizados em grids, onde deverão ter a mesma dimensão, podendo a grid ser unidimensional, bidimensional ou tridimensional.</p>
+<p><img alt="" src="../imgs/Leo/grid.png" />
+<em>Figura 1 - Arquitetura OpenCL</em></p>
+<p>De forma geral essa estrutura possui três tipos de memórias:</p>
+<ul>
+<li>
+<p>Private Memory 
+   Estritamente atrelada ao seu respectivo worker, apenas seu worker pode acessa-la</p>
+</li>
+<li>
+<p>Local memory 
+   Estritamente atrelada ao seu respectivo bloco, todos os workers dentro do bloco podem acessá-la</p>
+</li>
+<li>
+<p>Global Constant Memory data Cache 
+   Cache da memoria global do device, todos os blocos podem acessa-la</p>
+</li>
+<li>
+<p>Global Constant Memory 
+   memoria global do device</p>
+</li>
+</ul>
+<p><img alt="" src="../imgs/Leo/Diagrama1.png" /> 
+<em>Figura 1 - Arquitetura OpenCL</em></p>
+<h3 id="fpga-vs-cpu">FPGA vs CPU<a class="headerlink" href="#fpga-vs-cpu" title="Permanent link">&para;</a></h3>
+<p>A arquitetura de funcionamento de acessos de memória e configuração do programa na estrutura OpenCL é um pouco diferente da estrutura geral apresentada anteriormente, a única diferença é que a memória do host e do device estão contidas no mesmo dispositivo, consequentemente o tempo de transferência dos dados entre Host e o device é muito menor, nessa estrutura o ARM é responsável por programar a FPGA através do barramento AxI, e transmitir dados para a memória global DDR3, da qual a FPGA faz uso para executar suas tarefas como device.</p>
+<p>Ao analisar os ganhos ao utilizar o OpenCL em FPGA, além da vantagem do baixo tempo de transferência de dados citado anteriormente, também há as vantagens características desse processador, como flexibilidade de hardware e sua quantidade massiva de cores.</p>
+<p><img alt="" src="../imgs/Leo/Diagrama2.png" /><br />
+<em>Figura 2 - Arquitetura OpenCL-FPGA</em> </p>
+<p>Enquanto que a estrutura em CPU, possui uma quantidade reduzida de cores com unidades aritméticas potentes para reduzir latência de operações.</p>
+<p><img alt="" src="../imgs/Leo/cpu.png" /><br />
+<em>Figura 4 - Arquitetura CPU</em></p>
+<p>Logo a estrutura em FPGA apresenta maior desempenho comparada a CPU para programas paralelos, devido a seu grande número de cores e baixo tempo de transferência de dados, enquanto a CPU apresenta maior desempenho que a fpga para programas sequenciais, devido a suas unidades aritméticas potentes.</p>
+<h2 id="tutorial-opencl-de-10">Tutorial OpenCL-DE-10<a class="headerlink" href="#tutorial-opencl-de-10" title="Permanent link">&para;</a></h2>
+<h3 id="1-requerimentos-de-sistema">1. Requerimentos de Sistema<a class="headerlink" href="#1-requerimentos-de-sistema" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Placa Terasic DE10-Standard</li>
+<li>Cartão microSD com ao menos 4GB</li>
+<li>Leitor de cartão microSD</li>
+<li>Cabo USB (tipo A para mini-B)</li>
+<li>Host PC com</li>
+<li>Porta USB</li>
+<li>64-bit Windows 7 ou Linux ( este tutorial utiliza linux)</li>
+<li>32GB de memoria é recomendado</li>
+<li>PuTTY ou Minicom(Linux) utility</li>
+<li>Intel Quartus Prime v18.1 instalado com licença valida</li>
+<li>Intel OpenCL v18.1 instalado com licença valida</li>
+<li>Intel SoC EDS v18.1 instalado</li>
+</ul>
+<h3 id="2-configurando-a-infra-estrutura">2. Configurando a Infra Estrutura<a class="headerlink" href="#2-configurando-a-infra-estrutura" title="Permanent link">&para;</a></h3>
+<p>Essa etapa descreve como configurar o ambiente de desenvolvimento do OpenCL no Padrão DE10-Standard.</p>
+<h4 id="21-instalacao-de-software">2.1 Instalação de Software<a class="headerlink" href="#21-instalacao-de-software" title="Permanent link">&para;</a></h4>
+<p>É necessário instalar os seguintes softwares:</p>
+<ul>
+<li>
+<p><a href="http://dl.altera.com/opencl">Intel Quartus Standard e OpenCL SDK</a></p>
+</li>
+<li>
+<p><a href="http://dl.altera.com/soceds">Intel SoC EDS</a></p>
+</li>
+<li>
+<p><a href="http://de10-standard.terasic.com/cd">DE10-Standard OpenCL Board Support Package (BSP)</a></p>
+</li>
+</ul>
+<p>Após a instalação do Quartus Prime e do OpenCL SDK, crie uma pasta com o nome terasic, a qual deve conter a pasta DE10-Standard-Opencl. A pasta criada deve estar no diretório board:</p>
+<p><code>/intelFPGA/18.1/hld/board</code></p>
+<h4 id="22-instalacao-da-licensa-opencl">2.2 Instalação da Licensa Opencl<a class="headerlink" href="#22-instalacao-da-licensa-opencl" title="Permanent link">&para;</a></h4>
+<p>É necessária uma licença OpenCL para o Intel OpenCL SDK compilar o projeto. Em posse da licença é necessário criar uma variável de ambiente LM_LICENSE_FILE com a atribuição do diretório da licença.</p>
+<h4 id="23-configurando-variaveis-de-ambiente">2.3 Configurando variaveis de ambiente<a class="headerlink" href="#23-configurando-variaveis-de-ambiente" title="Permanent link">&para;</a></h4>
+<p>As seguintes variáveis de ambiente devem ser configuradas para o funcionamento do projeto, isso pode ser feito adicionando as variáveis a seguir ao arquivo .bash-rc (configuração permanente), ou em um <code>arquivo.sh</code> (configuração temporaria, utilizar <code>$source arquivo.sh</code> para ativar o ambiente).</p>
+<div class="codehilite"><pre><span></span><span class="nb">echo</span> Opencl <span class="m">18</span>.1
+<span class="nb">export</span> <span class="nv">LOCAL</span><span class="o">=</span> /media/leonardo
+<span class="nb">export</span> <span class="nv">QUARTUS_ROOTDIR</span><span class="o">=</span><span class="nv">$LOCAL</span>/FPGA/intelFPGA/18.1/quartus
+<span class="nb">export</span> <span class="nv">ALTERAOCLSDKROOT</span><span class="o">=</span><span class="nv">$LOCAL</span>/FPGA/intelFPGA/18.1/hld
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$QUARTUS_ROOTDIR</span>/bin:<span class="nv">$LOCAL</span>/FPGA/intelFPGA/18.1/embedded/ds-5/bin:<span class="nv">$LOCAL</span>/FPGA/intelFPGA/18.1/embedded/ds-5/sw/gcc/bin:<span class="nv">$ALTERAOCLSDKROOT</span>/bin:<span class="nv">$ALTERAOCLSDKROOT</span>/linux64/bin:
+<span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ALTERAOCLSDKROOT</span>/linux64/lib
+<span class="nb">export</span> <span class="nv">AOCL_BOARD_PACKAGE_ROOT</span><span class="o">=</span><span class="nv">$ALTERAOCLSDKROOT</span>/board/terasic/de10_standard
+<span class="nb">export</span> <span class="nv">QUARTUS_64BIT</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span> <span class="nv">LM_LICENSE_FILE</span><span class="o">=</span><span class="s2">&quot;/home/leonardo/Downloads/1-R3OQLF_License.dat&quot;</span>
+<span class="nb">export</span> <span class="nv">INTELFPGAOCLSDKROOT</span><span class="o">=</span><span class="nv">$LOCAL</span>/FPGA/intelFPGA/18.1/hld
+</pre></div>
+
+<h4 id="23-verificacao-do-ambiente">2.3 Verificação do Ambiente<a class="headerlink" href="#23-verificacao-do-ambiente" title="Permanent link">&para;</a></h4>
+<p>Esta seção mostra como verificar se o ambiente OpenCL está configurado corretamente.</p>
+<ul>
+<li>Verificar Versão </li>
+</ul>
+<div class="codehilite"><pre><span></span>  $ aocl version
+      aocl 18.1.0.625 (Intel(R) FPGA SDK for OpenCL(TM), Version 18.1.0 Build 625 Standard Edition, Copyright (C) 2018 Intel Corporation)
+</pre></div>
+
+<ul>
+<li>Verificar placa de destino 
+<div class="codehilite"><pre><span></span>$ aoc -list-boards
+   Board list:
+      de10_standard_sharedonly```
+          Board Package: /media/leonardo/FPGA/intelFPGA/18.1/hld/board/terasic/de10_standard
+</pre></div></li>
+</ul>
+<h3 id="3-compilar-projeto">3. Compilar Projeto<a class="headerlink" href="#3-compilar-projeto" title="Permanent link">&para;</a></h3>
+<p>Esta seção mostra como compilar o kernel e o programa host do OpenCL, necessários para executar um programa em OpenCL.</p>
+<ul>
+<li>
+<p>Compilar Kernel</p>
+<ul>
+<li>
+<p><code>$ cd /media/leonardo/FPGA/intelFPGA/18.1/hld/board/terasic/de10_standard/test/vector_add_2</code></p>
+</li>
+<li>
+<p><code>$ aoc device/vector_add.cl -o bin/vector_add.aocx --sw-dimm-partition -board=de10_standard_sharedonly -report</code></p>
+</li>
+<li>
+<p>Um arquivo <code>.aocx</code> será gerado, este é utilizado para a configuração dos kernels programados, configurando a execução de tarefas e troca de informações entre FPGA e sistema host.</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A copilação do kernel é muito lenta, pode levar horas.</p>
+</div>
+<ul>
+<li>
+<p>Compilar Programa Host</p>
+<ul>
+<li>
+<p><code>$ cd /media/leonardo/FPGA/intelFPGA/18.1/embedded</code></p>
+</li>
+<li>
+<p><code>$ embedded_command_shell.sh</code></p>
+</li>
+<li>
+<p><code>$ cd /media/leonardo/FPGA/intelFPGA/18.1/hld/board/terasic/de10_standard/test/vector_add_2</code></p>
+</li>
+<li>
+<p><code>$ make</code></p>
+</li>
+<li>
+<p>Um arquivo host será gerado, esse arquivo é basicamente o .o usual de uma compilação do GCC, arquivo intermediário que será utilizado em estágios de execução.</p>
+</li>
+<li>
+<p>Se ao executar o comando make ocorrer erros de include na biblioteca Cl adicione o parâmetro <code>../../../../../host/include/</code> ao <code>INC_DIRS</code> no arquivo makefile</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-embarcar-kernel">4. Embarcar Kernel<a class="headerlink" href="#4-embarcar-kernel" title="Permanent link">&para;</a></h3>
+<p>Utilizaremos uma imagem <code>.iso</code> já gerada com as especificações e que já possui todo o sistema necessário para executar o linux com OpenCL.
+Através da pasta DE10_standard_opencl extraia o arquivo de10_standard_opencl.img, esse arquivo é uma cópia bit a bit do que deve ser salvo no SDCard.</p>
+<p>Quando inserirmos um disco externo no linux o mesmo o associa a um 'device' na pasta '/dev/', para sabermos qual o nome do device que foi atribuído ao SDcard, podemos usar o comando dmesg, que exibe o log do sistema operacional e nele podemos ver qual foi o último hardware detectado e qual device foi atribuído:</p>
+<div class="codehilite"><pre><span></span>$ dmesg | tail
+  4789.207972] mmc0: new ultra high speed SDR50 SDHC card at address aaaa
+  [4789.211680] mmcblk0: mmc0:aaaa SL16G 14.8 GiB
+  [ 4789.215857]  mmcblk0: p1 p2 p3
+  [ 4988.443942]  mmcblk0: p1 p2 p3
+</pre></div>
+
+<p>Agora vamos salvar a .iso no SDcard.</p>
+<div class="codehilite"><pre><span></span>$ sudo dd bs=1M if=de10_standard_opencl.img of=/dev/sdc conv=fsync status=progress
+$ sync
+</pre></div>
+
+<p>O sync é necessário para que o kernel faça um flush do cache escrevendo realmente no SDCard todos os dados que foram endereçados a ele.</p>
+<p>Agora devemos ter duas partições visíveis:</p>
+<ul>
+<li>
+<p>524 MiB: FAT32</p>
+</li>
+<li>
+<p>Script de configuração do uboot; Kernel comprimido; Device Tree Blob file</p>
+</li>
+<li>
+<p>u-boot.scr; zImage; socfpga.dtb</p>
+</li>
+<li>
+<p>1 GiB:
+  Filesystem (/)</p>
+</li>
+</ul>
+<p>Os arquivos obtidos na compilação do kernel e host, respectivamente <code>arquivo.ocx</code> e <code>host</code> devem ser colocados na pasta /home/root/ da partição de 1GiB, para serem executadas posteriormente na placa.</p>
+<h3 id="5-ajustar-a-placa">5. Ajustar a placa<a class="headerlink" href="#5-ajustar-a-placa" title="Permanent link">&para;</a></h3>
+<p>Verifique se o interruptor DIP (SW10) MSEL [4: 0] = 01010.</p>
+<p><img alt="" src="../imgs/Leo/d10.png" /></p>
+<h3 id="5-conectar-se-a-placa">5. Conectar-se a placa<a class="headerlink" href="#5-conectar-se-a-placa" title="Permanent link">&para;</a></h3>
+<p>Com a placa conectada ao USB do computador, para conectar-se ao kernel da sistema, deve-se utilizar o seguinte comando:</p>
+<div class="codehilite"><pre><span></span>$ screen /dev/ttyUSB0 115200,cs8
+</pre></div>
+
+<h3 id="6-executar-o-projeto">6. Executar o projeto<a class="headerlink" href="#6-executar-o-projeto" title="Permanent link">&para;</a></h3>
+<p>Dentro do terminal do sistema:</p>
+<div class="codehilite"><pre><span></span>$ source ./init_opencl.sh
+$ aocl program /dev/acl0 vector_add.aocx
+$ ./host
+</pre></div>
+
+<h2 id="analises-de-desempenho-cpu-vs-opencl">Análises de Desempenho CPU vs OPENCL<a class="headerlink" href="#analises-de-desempenho-cpu-vs-opencl" title="Permanent link">&para;</a></h2>
+<p>Ao comparar o tempo de execução do programa <code>vector_add</code>, que realiza uma simples soma de vetores, entre a CPU e a FPGA foram obtidos os seguintes resultados.</p>
+<table>
+<thead>
+<tr>
+<th>Size-Vector</th>
+<th align="center">CPU</th>
+<th align="right">FPGA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000000</td>
+<td align="center">32.011</td>
+<td align="right">6.924</td>
+</tr>
+<tr>
+<td>5000000</td>
+<td align="center">159.805</td>
+<td align="right">34.278</td>
+</tr>
+<tr>
+<td>10000000</td>
+<td align="center">304.255</td>
+<td align="right">68.462</td>
+</tr>
+<tr>
+<td>20000000</td>
+<td align="center">617.676</td>
+<td align="right">180.13</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="" src="../imgs/Leo/CPUxFPGA.png" /></p>
+<p>Como pode-se observar o desempenho da execução na FPGA é muito maior, embora a diferença numérica seja pequena, deve-se lembrar que o arquivo de teste realiza uma simples operação de soma de vetor, logo para programas mais complexos, o ganho de desempenho na FPGA seria mais expressivo.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>O teste da CPU é single thread</p>
+</div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../Gabriel-TensorFlow/" title="Gabriel Moreira - TensorFlow" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Gabriel Moreira - TensorFlow
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../Elisa-Yocto/" title="Elisa Malzoni - Yocto" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Elisa Malzoni - Yocto
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.1f8d785c.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

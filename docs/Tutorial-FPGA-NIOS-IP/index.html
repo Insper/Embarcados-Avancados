@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -40,7 +40,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.96cc8824.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -51,7 +51,7 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
@@ -188,7 +188,7 @@
         
   <li class="md-tabs__item">
     
-      <a href=".." title="Home" class="md-tabs__link">
+      <a href=".." class="md-tabs__link">
         Home
       </a>
     
@@ -202,7 +202,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../Projeto-Overview/" title="Projeto" class="md-tabs__link">
+        <a href="../Projeto-Overview/" class="md-tabs__link">
           Projeto
         </a>
       
@@ -215,7 +215,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../Tutorial-FPGA-RTL/" title="FPGA" class="md-tabs__link md-tabs__link--active">
+        <a href="../Tutorial-FPGA-RTL/" class="md-tabs__link md-tabs__link--active">
           FPGA
         </a>
       
@@ -228,7 +228,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../Tutorial-HPS/" title="HPS" class="md-tabs__link">
+        <a href="../Tutorial-HPS/" class="md-tabs__link">
           HPS
         </a>
       
@@ -241,7 +241,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../Tutorial-HPS-FPGA-BlinkLED/" title="HPS + FPGA" class="md-tabs__link">
+        <a href="../Tutorial-HPS-FPGA-BlinkLED/" class="md-tabs__link">
           HPS + FPGA
         </a>
       
@@ -254,8 +254,34 @@
   
     <li class="md-tabs__item">
       
-        <a href="../info-FPGA-e-Softwares/" title="Uteis" class="md-tabs__link">
+        <a href="../Tutorial-Acelerando-HLS/" class="md-tabs__link">
+          Acelerando
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../info-FPGA-e-Softwares/" class="md-tabs__link">
           Uteis
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../2019/Gabriel-TensorFlow/" class="md-tabs__link">
+          Tutoriais Alunos
         </a>
       
     </li>
@@ -266,7 +292,7 @@
   </div>
 </nav>
       
-      <main class="md-main">
+      <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
             
@@ -479,28 +505,28 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pre-requisitos" title="Pré-requisitos" class="md-nav__link">
+  <a href="#pre-requisitos" class="md-nav__link">
     Pré-requisitos
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#ip-cores" title="IP Cores" class="md-nav__link">
+  <a href="#ip-cores" class="md-nav__link">
     IP Cores
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#platform-desginer" title="Platform Desginer" class="md-nav__link">
+  <a href="#platform-desginer" class="md-nav__link">
     Platform Desginer
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#barramentos" title="Barramentos" class="md-nav__link">
+  <a href="#barramentos" class="md-nav__link">
     Barramentos
   </a>
   
@@ -508,7 +534,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#avalon" title="Avalon" class="md-nav__link">
+  <a href="#avalon" class="md-nav__link">
     Avalon
   </a>
   
@@ -520,7 +546,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#projeto" title="Projeto" class="md-nav__link">
+  <a href="#projeto" class="md-nav__link">
     Projeto
   </a>
   
@@ -528,7 +554,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#criando-um-periferico" title="Criando um periférico" class="md-nav__link">
+  <a href="#criando-um-periferico" class="md-nav__link">
     Criando um periférico
   </a>
   
@@ -536,7 +562,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#avalon-slave-memory-mapped" title="Avalon Slave Memory Mapped" class="md-nav__link">
+  <a href="#avalon-slave-memory-mapped" class="md-nav__link">
     Avalon Slave Memory Mapped
   </a>
   
@@ -548,28 +574,28 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#especificacao" title="Especificação" class="md-nav__link">
+  <a href="#especificacao" class="md-nav__link">
     Especificação
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#gerar-hdl-que-representa-o-periferico-com-interface-avalon" title="Gerar HDL que representa o periférico com interface Avalon" class="md-nav__link">
+  <a href="#gerar-hdl-que-representa-o-periferico-com-interface-avalon" class="md-nav__link">
     Gerar HDL que representa o periférico com interface Avalon
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#configurando-path" title="Configurando path" class="md-nav__link">
+  <a href="#configurando-path" class="md-nav__link">
     Configurando path
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#criando-componente" title="Criando componente" class="md-nav__link">
+  <a href="#criando-componente" class="md-nav__link">
     Criando componente
   </a>
   
@@ -577,21 +603,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#files" title="Files" class="md-nav__link">
+  <a href="#files" class="md-nav__link">
     Files
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#signals-interfaces" title="Signals &amp; Interfaces" class="md-nav__link">
+  <a href="#signals-interfaces" class="md-nav__link">
     Signals &amp; Interfaces
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#finalizando" title="Finalizando" class="md-nav__link">
+  <a href="#finalizando" class="md-nav__link">
     Finalizando
   </a>
   
@@ -603,14 +629,14 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#utilizando-o-componente-no-pd" title="Utilizando o componente no PD" class="md-nav__link">
+  <a href="#utilizando-o-componente-no-pd" class="md-nav__link">
     Utilizando o componente no PD
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#utilizando-o-componente-no-toplevelvhd" title="Utilizando o componente no topLevel.vhd" class="md-nav__link">
+  <a href="#utilizando-o-componente-no-toplevelvhd" class="md-nav__link">
     Utilizando o componente no topLevel.vhd
   </a>
   
@@ -622,7 +648,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#firmware" title="Firmware" class="md-nav__link">
+  <a href="#firmware" class="md-nav__link">
     Firmware
   </a>
   
@@ -630,7 +656,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#executando" title="Executando" class="md-nav__link">
+  <a href="#executando" class="md-nav__link">
     Executando
   </a>
   
@@ -642,7 +668,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#simulando" title="Simulando" class="md-nav__link">
+  <a href="#simulando" class="md-nav__link">
     Simulando
   </a>
   
@@ -650,14 +676,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#configurando-o-bsp" title="Configurando o bsp" class="md-nav__link">
+  <a href="#configurando-o-bsp" class="md-nav__link">
     Configurando o bsp
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#modelsim" title="ModelSim" class="md-nav__link">
+  <a href="#modelsim" class="md-nav__link">
     ModelSim
   </a>
   
@@ -669,7 +695,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#entrega-3" title="Entrega 3" class="md-nav__link">
+  <a href="#entrega-3" class="md-nav__link">
     Entrega 3
   </a>
   
@@ -905,10 +931,46 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
     <label class="md-nav__link" for="nav-7">
-      Uteis
+      Acelerando
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-7">
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-Acelerando-HLS/" title="Tutorial - Acelerando - HLS" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Uteis
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
         Uteis
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -979,6 +1041,90 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      Tutoriais Alunos
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Gabriel-TensorFlow/" title="Gabriel Moreira - TensorFlow" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Leo-OpenCL/" title="Leonardo Medeiros - Tutorial OpenCL" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Elisa-Yocto/" title="Elisa Malzoni - Yocto" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Pedro-OpenCV/" title="Pedro de la Penã - Jetson Nano GPU" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Martim-F1/" title="Martim F. José - FPGA na AWS" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -1000,28 +1146,28 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pre-requisitos" title="Pré-requisitos" class="md-nav__link">
+  <a href="#pre-requisitos" class="md-nav__link">
     Pré-requisitos
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#ip-cores" title="IP Cores" class="md-nav__link">
+  <a href="#ip-cores" class="md-nav__link">
     IP Cores
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#platform-desginer" title="Platform Desginer" class="md-nav__link">
+  <a href="#platform-desginer" class="md-nav__link">
     Platform Desginer
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#barramentos" title="Barramentos" class="md-nav__link">
+  <a href="#barramentos" class="md-nav__link">
     Barramentos
   </a>
   
@@ -1029,7 +1175,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#avalon" title="Avalon" class="md-nav__link">
+  <a href="#avalon" class="md-nav__link">
     Avalon
   </a>
   
@@ -1041,7 +1187,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#projeto" title="Projeto" class="md-nav__link">
+  <a href="#projeto" class="md-nav__link">
     Projeto
   </a>
   
@@ -1049,7 +1195,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#criando-um-periferico" title="Criando um periférico" class="md-nav__link">
+  <a href="#criando-um-periferico" class="md-nav__link">
     Criando um periférico
   </a>
   
@@ -1057,7 +1203,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#avalon-slave-memory-mapped" title="Avalon Slave Memory Mapped" class="md-nav__link">
+  <a href="#avalon-slave-memory-mapped" class="md-nav__link">
     Avalon Slave Memory Mapped
   </a>
   
@@ -1069,28 +1215,28 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#especificacao" title="Especificação" class="md-nav__link">
+  <a href="#especificacao" class="md-nav__link">
     Especificação
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#gerar-hdl-que-representa-o-periferico-com-interface-avalon" title="Gerar HDL que representa o periférico com interface Avalon" class="md-nav__link">
+  <a href="#gerar-hdl-que-representa-o-periferico-com-interface-avalon" class="md-nav__link">
     Gerar HDL que representa o periférico com interface Avalon
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#configurando-path" title="Configurando path" class="md-nav__link">
+  <a href="#configurando-path" class="md-nav__link">
     Configurando path
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#criando-componente" title="Criando componente" class="md-nav__link">
+  <a href="#criando-componente" class="md-nav__link">
     Criando componente
   </a>
   
@@ -1098,21 +1244,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#files" title="Files" class="md-nav__link">
+  <a href="#files" class="md-nav__link">
     Files
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#signals-interfaces" title="Signals &amp; Interfaces" class="md-nav__link">
+  <a href="#signals-interfaces" class="md-nav__link">
     Signals &amp; Interfaces
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#finalizando" title="Finalizando" class="md-nav__link">
+  <a href="#finalizando" class="md-nav__link">
     Finalizando
   </a>
   
@@ -1124,14 +1270,14 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#utilizando-o-componente-no-pd" title="Utilizando o componente no PD" class="md-nav__link">
+  <a href="#utilizando-o-componente-no-pd" class="md-nav__link">
     Utilizando o componente no PD
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#utilizando-o-componente-no-toplevelvhd" title="Utilizando o componente no topLevel.vhd" class="md-nav__link">
+  <a href="#utilizando-o-componente-no-toplevelvhd" class="md-nav__link">
     Utilizando o componente no topLevel.vhd
   </a>
   
@@ -1143,7 +1289,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#firmware" title="Firmware" class="md-nav__link">
+  <a href="#firmware" class="md-nav__link">
     Firmware
   </a>
   
@@ -1151,7 +1297,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#executando" title="Executando" class="md-nav__link">
+  <a href="#executando" class="md-nav__link">
     Executando
   </a>
   
@@ -1163,7 +1309,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#simulando" title="Simulando" class="md-nav__link">
+  <a href="#simulando" class="md-nav__link">
     Simulando
   </a>
   
@@ -1171,14 +1317,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#configurando-o-bsp" title="Configurando o bsp" class="md-nav__link">
+  <a href="#configurando-o-bsp" class="md-nav__link">
     Configurando o bsp
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#modelsim" title="ModelSim" class="md-nav__link">
+  <a href="#modelsim" class="md-nav__link">
     ModelSim
   </a>
   
@@ -1190,7 +1336,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#entrega-3" title="Entrega 3" class="md-nav__link">
+  <a href="#entrega-3" class="md-nav__link">
     Entrega 3
   </a>
   
@@ -1697,7 +1843,7 @@ LEDs : out std_logic_vector(LEN - 1 downto 0) := (others =&gt; &#39;0&#39;);
       
     </div>
     
-      <script src="../assets/javascripts/application.c648116f.js"></script>
+      <script src="../assets/javascripts/application.1f8d785c.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       

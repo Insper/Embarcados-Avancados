@@ -1,0 +1,162 @@
+{
+  "columns":
+  ["", "Pipelined", "II", "Bottleneck", "Details"]
+  , "children":
+  [
+    {
+      "name":"Component: imgOffSet"
+      , "data":
+      ["", "", ""]
+      , "debug":
+      [
+        [
+          {
+            "filename":"image.cpp"
+            , "line":28
+          }
+        ]
+      ]
+      , "details":
+      [
+        {
+          "type":"brief"
+          , "text":"Task function"
+        }
+        , {
+          "type":"text"
+          , "text":"Task function"
+        }
+      ]
+      , "children":
+      [
+        {
+          "name":"imgOffSet.B1.start"
+          , "data":
+          ["No", "n/a", "n/a"]
+          , "debug":
+          [
+            [
+              {
+                "filename":"Component invocation"
+                , "line":0
+              }
+            ]
+          ]
+          , "details":
+          [
+            {
+              "type":"brief"
+              , "text":"Out-of-order inner loop"
+            }
+            , {
+              "type":"text"
+              , "text":"Loop not pipelined due to:"
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"Loop iteration ordering: iterations of inner loop shown may get out of order with respect to the listed inner loop, as the number of iterations of the listed inner loop may be different for different iterations of this loop."
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"imgOffSet.B2 (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"image.cpp"
+                          , "line":"29"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"imgOffSet.B3 (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"image.cpp"
+                          , "line":"30"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"text"
+              , "text":"See %L for more information"
+            }
+          ]
+          , "children":
+          [
+            {
+              "name":"imgOffSet.B2"
+              , "data":
+              ["Yes", ">=1", "n/a"]
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"image.cpp"
+                    , "line":29
+                  }
+                ]
+                , [
+                  {
+                    "filename":"image.cpp"
+                    , "line":29
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"brief"
+                  , "text":" "
+                }
+                , {
+                  "type":"text"
+                  , "text":"Run simulation to verify component's dynamic II. Use the %L report to view results. II is an approximation due to variable inner loop trip count."
+                  , "links":
+                  [
+                    {
+                      "view":"Verification statistics"
+                    }
+                  ]
+                }
+              ]
+              , "children":
+              [
+                {
+                  "name":"imgOffSet.B3"
+                  , "data":
+                  ["Yes", "1", "n/a"]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":30
+                      }
+                    ]
+                    , [
+                      {
+                        "filename":"image.cpp"
+                        , "line":30
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

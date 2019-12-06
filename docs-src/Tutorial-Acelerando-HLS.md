@@ -74,42 +74,55 @@ A função a ser acelerada é a seguinte (`imgOffSet`):
 ``` c
 #define OFFSET 50
 
+typedef ihc::mm_master<unsigned char, ihc::aspace<1>,
+                       ihc::awidth<32>,
+                       ihc::dwidth<8> > Master1;
+typedef ihc::mm_master<unsigned char, ihc::aspace<2>,
+                       ihc::awidth<32>,
+                       ihc::dwidth<8> > Master2;
+
+
+
+
 // just for a NxN image
 inline uint pxToMem(uint x, uint y, uint N){
   return(x+y*N);
 }
 
-component void imgOffSet(ihc::mm_master<unsigned char, ihc::aspace<1>, ihc::awidth<32>, ihc::dwidth<8>>& imgIn,
-                         ihc::mm_master<unsigned char, ihc::aspace<2>, ihc::awidth<32>, ihc::dwidth<8>>& imgOut,
-                         int N)
-{
+// px + OFFSET
+hls_avalon_slave_component
+component void imgOffSet(Master1& imgIn,
+                         Master2& imgOut,
+                         hls_avalon_slave_register_argument int offSet,
+                         hls_avalon_slave_register_argument int N
+                         ){
     for(int y=0; y < N; y++){
+      #pragma unroll 8
       for (int x=0; x < N; x++){
         int px = pxToMem(x,y,N);
-        printf("%d \n", px);
-        unsigned int tpx = ((unsigned int) imgIn[px])+OFFSET;
+        unsigned int tpx = ((unsigned int) imgIn[px])+offSet;
         if(tpx > 255)
           imgOut[px]= 255;
         else
           imgOut[px]= tpx;
-   	 }
-	}
+        }
+    }
 }
+
 ```
 
-Note que a função `imgOffSet` possui três argumentos: `imgIn`, `imgOut` e `N`.
+Note que a função `imgOffSet` possui quatro argumentos: `imgIn`, `imgOut`, `offSet` e `N`.
 Os dois primeiros são ponteiros de memória, que é respectivamente onde o
 componente vai fazer a leitura da imagem e onde ele vai fazer a escrita da
-imagem. Já o argumento `N` não tem tipo definido, e será convertido para um
-`conduit`, que deverá ser tratado em nível de hardware.
+imagem. Já os argumentos `offSet` e `N` são: valor a ser aplicado de offSet no px e o tamanho
+da imagem em pxs, esse argumentos são do tipo `hls_avalon_slave_register_argument`, que será
+convertido para um banco de registradores.
 
 Além dessas entradas e saídas, para cada interface do tipo `mm_master` o HLS vai
 criar mais um `conduit`, que será o offset de endereço na qual ele deve acessar
 o dado (para a função o endereço 0 é relativo). E mais dois `conduits`, um para
 controlar o inicio do processamento (chamada de função/ `call`) e outro para
 informar sobre o status do processamento (`return`).
-
-Um hardware auxiliar deve ser criado a fim de controlar esse periférico.
 
 ### `imgIn` , `imgOut`
 
@@ -129,10 +142,53 @@ traduzidos para um barramento do tipo `Avalon` e que devem ser tradados como
 Para facilitar o desenvolvimento, a função `pxToMem(x,y,N)` traduz um acesso a
 px por endereço na matriz para o endereço de memória do px.
 
-### `printf`
+#### `printf()`
 
 Essa função será removida quando a função for compilada para hardware, ela só
 está disponível para simulação e testes.
+
+### `offSet`, `n`
+
+Precisamos lembrar que estamos criando um componente que resolverá um código em C, e a maneira de conseguirmos
+passar argumentos para um componente é criando uma memória interna, que chamamos normalmente de banco de 
+registrador e dando funcionalidade para eles. É dessa maneira, que os parâmetros `offSet` e `n` serão criados.
+Na geração do componente, uma memória será inicializada e endereços serão reservados para o `offSet` e `n`, como
+no exemplo a seguir:
+
+```c
+/******************************************************************************/
+/* Memory Map Summary                                                         */
+/******************************************************************************/
+
+/*
+  Register  | Access  |   Register Contents      | Description
+  Address   |         |      (64-bits)           | 
+------------|---------|--------------------------|-----------------------------
+        0x0 |       R |         {reserved[62:0], |     Read the busy status of
+            |         |               busy[0:0]} |               the component
+            |         |                          |  0 - the component is ready
+            |         |                          |       to accept a new start
+            |         |                          |    1 - the component cannot
+            |         |                          |          accept a new start
+------------|---------|--------------------------|-----------------------------
+        0x8 |       W |         {reserved[62:0], |  Write 1 to signal start to
+            |         |              start[0:0]} |               the component
+------------|---------|--------------------------|-----------------------------
+       0x10 |     R/W |         {reserved[62:0], |      0 - Disable interrupt,
+            |         |   interrupt_enable[0:0]} |        1 - Enable interrupt
+------------|---------|--------------------------|-----------------------------
+       0x18 |  R/Wclr |         {reserved[61:0], | Signals component completion
+            |         |               done[0:0], |       done is read-only and
+            |         |   interrupt_status[0:0]} | interrupt_status is write 1
+            |         |                          |                    to clear
+------------|---------|--------------------------|-----------------------------
+       0x20 |     R/W |         {reserved[31:0], |             Argument offSet
+            |         |            offSet[31:0]} |                            
+------------|---------|--------------------------|-----------------------------
+       0x28 |     R/W |         {reserved[31:0], |                  Argument N
+            |         |                 N[31:0]} |                            
+
+``
 
 ### main.c
 
@@ -144,7 +200,7 @@ original processada ("out.pgm"). A fim de validarmos o componente a ser gerado (
 e `out[M_SIZE)` que serão utilizadas como input do componente (simulando o
 barramento AVALON).
 
-``` c
+```c
 int main(void) {
 
   int N = IMG_W;
@@ -159,13 +215,13 @@ int main(void) {
   /* reading img to mem */
   /* -------------------------- */
   printf("loading img\n");
-  readImgPgm(IMG_IN, in);
+  readImgPgm(IMG_IN, in, M_SIZE);
 
   /* -------------------------- */
   /* create fake memorys components*/
   /* -------------------------- */
-  ihc::mm_master<unsigned char, ihc::aspace<1>, ihc::awidth<32>, ihc::dwidth<8>>mm_in(in, M_SIZE);
-  ihc::mm_master<unsigned char, ihc::aspace<2>, ihc::awidth<32>, ihc::dwidth<8>>mm_out(out, M_SIZE);
+  Master1 mm_in(in, M_SIZE);
+  Master2 mm_out(out, M_SIZE);
 
   /* -------------------------- */
   /* process with kernel */
@@ -182,4 +238,130 @@ int main(void) {
   return 0;
 }
 ```
+
+!!! note
+     Quando formos executar a função `imgOffSet` no nosso hardware, não será tão simples 
+     quanto apenas uma chamada de função.
+
+### Testando (x86)
+
+!!! note
+    Deve ser feito no centos (docker)
+
+Para testar, vamos compilar o nosso projeto para `x86` (não será um hardware) e validar 
+se nossa lógica está correta. Se funcionar, compilamos para hardware.
+
+Para compilar basta usarmos o compilador `i++` como no exemplo a seguir:
+
+```bash
+$ i++ image.cpp -march=x86-64 -o image_x86
+```
+
+E testar o programa gerado:
+
+```bash
+$ ./image_x86
+```
+
+O resultado deve ser a belíssima foto `img.ppm` do seu professor, processada com um offset (`out.ppm`):
+
+![](figs/Tutorial-Acelerando-HLS:resultadoSW.png)
+
+!!! tip 
+    Para gerar uma imagem do tipo `ppm` você pode usar o Gimp
+
+!!! note
+    Essa execução é como se tivéssemos compilado com gcc, só serve para validar lógica
+    
+| input     | output             |
+| -----     | ---------          |
+| img.pgm   | image    (binário) |
+| image.cpp | out.pgm            |
+    
+## Acelerando na FPGA
+
+Para acelerar na FPGA, vamos compilar novamente a aplicação, porém agora com a flag `-march=CycloneV ` 
+que representa a nossa FPGA
+
+```bash
+$ i++ image.cpp -march=CycloneV -o image-CycloneV
+```
+
+!!! note
+    Isso pode bastante tempo, o que ele vai fazer é:
+    
+    1. Gerar um HDL a partir da sua função
+    1. Criar um componente para o Platform Designer
+    
+| input   | output            |
+| -----   | ---------         |
+| img.pgm | image-CycloneV.prj (pasta) |
+    
+### image-CycloneV.prj (pasta)
+
+Se reparar na pasta do projeto, deve ter uma pasta nova: **image-CycloneV.prj**, com o seguinte conteúdo:
+
+- **components**: Pasta com o componente criado (para ser usado no Platform designer)
+- **quartus**: Pasta do projeto Quartus utilizado para compilar o componente, **não vamos usar**
+- **report**: Pasta com reports gerado pela ferramenta (html)
+- **report**: Pasta para simular o projeto
+
+### testando
+
+Agora podemos testar nossa aplicação utilizando o hardware criado pelo HLS, para isso basta executar
+o novo binário criado quando compilamos para a arquitetura `CycloneV`. 
+
+```bash
+$ ./image-CycloneV
+```
+
+!!! warning
+    Isso vai levar muito tempo! No monstrinho do lab de Arquitetura, levou mais de 1 hora!
+    
+Essa simulação é realizada no modelsim! A nível de hardware. O resultado será o esperado quando formos embarcar
+na FPGA. Com essa simulação conseguimos verificar erros de arredondamento, acesso a memória, entre outros.
+
+!!! tipa
+    A imagem `out-CycloneV.pgm` que está na pasta do projeto, é o resultado dessa simulação.
+
+### report
+
+O HLS gera um relatório da compilação do hardware, ele pode ser encontrado em: [`reports/report.html`](/Tutorial-Acelerando-HLS-reports/report.html). Um report interessante de se analisar é o **Loops analysis**, que demonstra os loops do programa:
+
+![](figs/Tutorial-Acelerando-HLS:report.png)
+
+### Otimizando
+
+Podemos aplicar diversas técnicas de paralelização no software que irá impactar no hardware criado (área e performance), no manual do HLS ([Intel High Level Synthesis Compiler: Reference Manual](https://www.intel.com/content/www/us/en/programmable/documentation/ewa1462824960255.html#ewa1462826976357)) tem a documentação que descreve cada uma das técnicas.
+
+Vamos utilizar a do **Loop Unrolling**, que permite executarmos um loop paralelo:
+
+```c
+ #pragma unroll <N>
+ for (int i = 0; i < M; ++i) {
+     // Some useful work
+ }
+```
+
+!!! tip
+    **N** é a quantidade de loops a serem executado em //.
+
+Vamos paralelizar a varredura da linha em 8 execuções em paralelo, para isso adicione no for que varre a linha (x):
+
+```c
+ for(int y=0; y < N; y++){
+      #pragma unroll 8
+      for (int x=0; x < N; x++){
+```
+
+### Criando um hardware
+
+Agora com o componente criado é necessário adicionarmos ele no hardware, isso será feito via Plataform Design.
+Para facilitar o desenvolvimento, vamos usar o projeto de hw exemplo da `Terasic`: `DE10_Standard_FB` e modificar
+inserindo o componente e duas memórias, como indicado a seguir:
+
+
+
+
+
 
