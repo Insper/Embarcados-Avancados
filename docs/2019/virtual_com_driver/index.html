@@ -36,7 +36,7 @@
     
     
       
-        <title>Bruno Toranja - Linux Device Driver - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+        <title>Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
       
     
     
@@ -85,7 +85,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#bruno-toranja-linux-device-driver" tabindex="1" class="md-skip">
+      <a href="#introducao" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -111,7 +111,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Bruno Toranja - Linux Device Driver
+                Home
               
             </span>
           
@@ -179,16 +179,14 @@
       
         
 
-  
-
-<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+<nav class="md-tabs" data-md-component="tabs">
   <div class="md-tabs__inner md-grid">
     <ul class="md-tabs__list">
       
         
   <li class="md-tabs__item">
     
-      <a href="../.." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link md-tabs__link--active">
         Home
       </a>
     
@@ -280,7 +278,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../Tutoriais/" class="md-tabs__link md-tabs__link--active">
+        <a href="../Tutoriais/" class="md-tabs__link">
           Tutoriais Alunos
         </a>
       
@@ -815,12 +813,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
     
     <label class="md-nav__link" for="nav-9">
       Tutoriais Alunos
@@ -908,158 +904,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Bruno Toranja - Linux Device Driver
-      </label>
-    
-    <a href="./" title="Bruno Toranja - Linux Device Driver" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../Toranja-DevDriver/" title="Bruno Toranja - Linux Device Driver" class="md-nav__link">
       Bruno Toranja - Linux Device Driver
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introducao" class="md-nav__link">
-    Introdução
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-kernel-space-e-user-space" class="md-nav__link">
-    1. Kernel space e user space
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-como-o-driver-conversa-com-o-computador" class="md-nav__link">
-    2. Como o driver conversa com o computador
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-criacao-do-modulo-basico" class="md-nav__link">
-    3. criação do modulo basico
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#a-estruturacao-de-um-modulo" class="md-nav__link">
-    a. Estruturação de um modulo
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#b-funcionalidades-do-modulo" class="md-nav__link">
-    b. Funcionalidades do modulo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#c-compilando-o-modulo" class="md-nav__link">
-    c. Compilando o modulo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#d-carregando-o-modulo-e-verificando" class="md-nav__link">
-    d. Carregando o modulo e verificando
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-criacao-do-modulo-com-funcionalidade-comunicacao-char" class="md-nav__link">
-    4. criação do modulo com funcionalidade (comunicação char)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#a-adicionar-novas-funcionalidades" class="md-nav__link">
-    a. Adicionar novas funcionalidades
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#b-adicionar-a-relacao-do-driver-com-o-hardware" class="md-nav__link">
-    b. Adicionar a relação do driver com o hardware
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#c-funcoes-de-inicializacao-de-memoria" class="md-nav__link">
-    c. Funções de inicialização de memoria
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#d-funcoes-para-manipulacao-de-memoria" class="md-nav__link">
-    d. Funções para manipulação de memoria
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-driver-que-controla-gpio-do-raspberry" class="md-nav__link">
-    5. driver que controla GPIO do raspberry
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -1082,8 +931,6 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
@@ -1110,12 +957,7 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#3-criacao-do-modulo-basico" class="md-nav__link">
     3. criação do modulo basico
   </a>
@@ -1128,8 +970,7 @@
     a. Estruturação de um modulo
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#b-funcionalidades-do-modulo" class="md-nav__link">
@@ -1220,25 +1061,12 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/2019/Toranja-DevDriver.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/2019/virtual_com_driver/README.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="bruno-toranja-linux-device-driver">Bruno Toranja - Linux Device Driver<a class="headerlink" href="#bruno-toranja-linux-device-driver" title="Permanent link">&para;</a></h1>
-<ul>
-<li>Aluno: Bruno Toranja</li>
-<li>Curso: Engenharia da Computação</li>
-<li>Semestre: 7</li>
-<li>Contato: </li>
-<li>Link tutorial oficial: <a href="https://github.com/brunoartc/virtual_com_driver">https://github.com/brunoartc/virtual_com_driver</a></li>
-<li>Ano: 2019</li>
-</ul>
-<div class="admonition example">
-<p class="admonition-title">Hardware utilizado no tutorial</p>
-<ul>
-<li>?</li>
-</ul>
-</div>
-<h2 id="introducao">Introdução<a class="headerlink" href="#introducao" title="Permanent link">&para;</a></h2>
+                  <h1>Home</h1>
+                
+                <h2 id="introducao">Introdução<a class="headerlink" href="#introducao" title="Permanent link">&para;</a></h2>
 <p>Um driver de linux é um programa que facilita a comunicação dos programas com a parte fisica do nosso dispositivo </p>
 <h3 id="1-kernel-space-e-user-space">1. Kernel space e user space<a class="headerlink" href="#1-kernel-space-e-user-space" title="Permanent link">&para;</a></h3>
 <p>Para entendermos como isso funciona primeiro temos que entender o que significam os programas e o kernel</p>
@@ -1247,24 +1075,23 @@
 <h3 id="2-como-o-driver-conversa-com-o-computador">2. Como o driver conversa com o computador<a class="headerlink" href="#2-como-o-driver-conversa-com-o-computador" title="Permanent link">&para;</a></h3>
 <p>Os programas localizados no user space tem um momento especifico para pedir coisas para o kernel sobre o hardware como eh o caso de exploradores de arquivos e comunicação serial, caso algum desses programas queira se comunicar com um acessorio que não tenha seu proprio driver, temos um problema pois esse não conseguira ser comunicado</p>
 <p>Entao temos outra opção para isso, desenvolver nosso proprio driver, para ser compilado juntamente com o kernel e vir juntamente com ele, ou um simples modulo que é compilado a parte e depois carregado no linux a partir do user space que ensinaremos nesse tutorial</p>
-<h2 id="3-criacao-do-modulo-basico">3. criação do modulo basico<a class="headerlink" href="#3-criacao-do-modulo-basico" title="Permanent link">&para;</a></h2>
+<h3 id="3-criacao-do-modulo-basico">3. criação do modulo basico<a class="headerlink" href="#3-criacao-do-modulo-basico" title="Permanent link">&para;</a></h3>
 <p>O nosso modulo precisa ser criado em alguma linguagem que o kernel do linux entenda, por isso utilizaremos o C</p>
-<h3 id="a-estruturacao-de-um-modulo">a. Estruturação de um modulo<a class="headerlink" href="#a-estruturacao-de-um-modulo" title="Permanent link">&para;</a></h3>
+<h4 id="a-estruturacao-de-um-modulo">a. Estruturação de um modulo<a class="headerlink" href="#a-estruturacao-de-um-modulo" title="Permanent link">&para;</a></h4>
 <p>Primeiramente precisamo incluir a biblioteca de modulos do linux, para faremos um novo arquivo chamado de tcom.c</p>
 <div class="codehilite"><pre><span></span>touch tcom.c
 </pre></div>
 
-<p>precisamos adicionar os headers no nosso arquivo tambem</p>
+<p>precisamos adicionar os headers no nosso arquivo tambem
 <div class="codehilite"><pre><span></span>nano tcom.c
-</pre></div>
-
+</pre></div></p>
 <p>dentro do arquivo temos que adicionar as duas linhas de bibliotecas para que possamos usar as funções que conversam com o kernel alem de poder usar seus macros</p>
 <div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;linux/init.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;linux/module.h&gt;</span><span class="cp"></span>
 </pre></div>
 
-<p>Com as bibliotecas importadas podemos começar o nosso codigo como por exemplo fazer dizer o que nosso driver fará ao ser carregado e descarregado.</p>
-<p>Essas funções tem um padrão para se seguir em que a função de inicialização retorna um inteiro e o exit nao retorna nada como mostrado acima <a href="https://github.com/torvalds/linux/tree/f1f2f614d535564992f32e720739cb53cf03489f/include/linux/module.h#L72-L74">referencia no linux</a></p>
+<p>com as bibliotecas importadas podemos começar o nosso codigo como por exemplo fazer dizer o que nosso driver fará ao ser carregado e descarregado.</p>
+<p>essas funções tem um padrão para se seguir em que a função de inicialização retorna um inteiro e o exit nao retorna nada como mostrado acima <a href="https://github.com/torvalds/linux/tree/f1f2f614d535564992f32e720739cb53cf03489f/include/linux/module.h#L72-L74">referencia no linux</a></p>
 <div class="codehilite"><pre><span></span><span class="k">static</span> <span class="kt">int</span> <span class="nf">init_com</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">return</span>  <span class="mi">0</span><span class="p">;</span>
@@ -1697,27 +1524,6 @@ caso alguem queria tentera depois com a biblioteca de timers tambem deixo o codi
       
         
 <footer class="md-footer">
-  
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-          <a href="../Martim-F1/" title="Martim F. José - FPGA na AWS" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
-            </div>
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Martim F. José - FPGA na AWS
-              </span>
-            </div>
-          </a>
-        
-        
-      </nav>
-    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">

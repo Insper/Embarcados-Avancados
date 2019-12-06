@@ -61,12 +61,13 @@ nav:
       - 'info-HPS-Serial.md'
       - 'info-HPS-ethernet.md'
   - 'Tutoriais Alunos':
+      - '2019/Tutoriais.md'
       - '2019/Gabriel-TensorFlow.md'
       - '2019/Leo-OpenCL.md'
       - '2019/Elisa-Yocto.md'
       - '2019/Pedro-OpenCV.md'
       - '2019/Martim-F1.md'
-#      - '2019/Toranja-DevDriver.md'
+      - '2019/Toranja-DevDriver.md'
 
 # Extensions
 markdown_extensions:
