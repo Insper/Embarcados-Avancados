@@ -8,8 +8,6 @@ theme:
   palette:
       primary: 'white'
       accent: 'pink'
-  logo:
-      icon: 'developer_board'
   font:
     text: Roboto
     code: Roboto Mono
