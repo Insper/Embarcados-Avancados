@@ -8,7 +8,7 @@ O objetivo dessa entrega é automatizarmos a compilação e deploy de novos prog
     - executa no `target` um gdb server que possibilita ao `host` transferir e debugar um binário.
 
 Note que todas as soluções demandam de conexão com a internet, para isso,
-siga o roteiro: [Info HPS Ethernet](/Embarcados-Avancados/info-HPS-ethernet/).
+siga o roteiro: [Info HPS Ethernet](/info-HPS-ethernet/).
 
 ## Rubrica:
 

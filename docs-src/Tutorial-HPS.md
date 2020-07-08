@@ -1,5 +1,9 @@
 # Visão geral
 
+!!! success "Revisão 2020-2"
+    - [x] teoria/ texto
+    - [x] spellcheck
+
 A FPGA contida no kit DE10-Standard é um chip SoC que em um único dispositivo que possui duas partes: o fabric da FPGA e um Hardware Process System (HPS). HPS é o termo utilizado pela Intel-Altera para definir a parte da FPGA que é fixa e relativa ao processador ARM A9 (pode ser outro ARM, depende da família da FPGA).
  
 ![](figs/Tutorial-HPS-SoC.png)
@@ -11,7 +15,7 @@ O HPS possui uma unidade de processamento com um ou dois Cores (depende do chip,
 
 ## Família de FPGAs
 
-A Altera possui quatro família de [FPGAs-SoC](https://www.intel.com/content/www/us/en/products/programmable/soc.html):
+A Altera possui quatro famílias de [FPGAs-SoC](https://www.intel.com/content/www/us/en/products/programmable/soc.html):
 
 - Stratix 10 SoC: High end, 14nm com ARM-Cortex-A53 de 64bits quad-core
 - Arria 10 SoC: 20nm, Cortex A9 duas core com grande capacidade na FPGA
@@ -54,11 +58,11 @@ Note que existe no diagrama anterior algumas interfaces definidas no "FPGA Porti
 Os barramentos são todos do tipo [AXI](https://en.wikipedia.org/wiki/Advanced_Microcontroller_Bus_Architecture), um padrão definido pela própria ARM e usada em seus microcontroladores. 
 
 !!! note "AXI - AVALON"
-    Via Platform Designer podemos conectarmos periféricos com o barramento Avalon (mm) no barramento AXI do ARM, isso é possível por uma "mágica" que a PD faz convertendo um barramento no outro de forma transparente ao usuário.
+    Via Platform Designer podemos conectar periféricos com o barramento Avalon (mm) no barramento AXI do ARM, isso é possível por uma "mágica" que a PD faz convertendo um barramento no outro de forma transparente ao usuário.
 
 ### SDRAM
 
-A SDRAM deve ser usada com muita cautela pois ela será compartilhada com o Linux que estará em execução no ARM, caso um periférico da FPGA acesse "aleatoriamente" a memória SDRAM ele pode sobrescrever dados importantes do kernel e crashar todo o sistema. Essa alocação deve ser realizada no boot do Linux onde iremos dizer qual região de memória o kernel pode utilizar. 
+A SDRAM deve ser usada com muita cautela, pois ela será compartilhada com o Linux que estará em execução no ARM, caso um periférico da FPGA acesse "aleatoriamente" a memória SDRAM ele pode sobrescrever dados importantes do kernel e pode causar falhar em todo sistema. Essa alocação deve ser realizada no boot do Linux onde iremos dizer qual região de memória o kernel pode utilizar. 
 
 !!! note 
     Essa memória que é acessível tanto pelo Linux quanto pela FPGA é uma boa maneira de compartilhamento de dados a serem processados.  
@@ -67,7 +71,7 @@ A SDRAM deve ser usada com muita cautela pois ela será compartilhada com o Linu
 
 Com isso agora é possível unir o melhor dos dois mundos: flexibilidade e paralelismo da FPGA com o melhor dos processadores embarcados ARM. Nos nossos projetos, o NIOS será substituído pelo ARM, possibilitando maior poder de processamento e também suportando a execução de sistemas mais complexos, tal como o Linux.
 
-Pense na aplicação de uma imagem que será processada pela FPGA a fim de aumentar o throughtput do sistema. Essa imagem será lida por exemplo por uma câmera USB conectada no HPS, como geralmente o HPS executa um Linux, temos facilidade de acesso ao driver dessa câmera USB.
+Pense na aplicação de uma imagem que será processada pela FPGA de modo a aumentar o throughtput do sistema. Essa imagem seria lida, por exemplo por uma câmera USB conectada no HPS, como geralmente o HPS executa um Linux, temos facilidade de acesso ao driver desse dispositivo.
 
 A imagem será então lida via o driver e então alocada na memória SDRAM, o endereço da memória assim como as propriedades do processamento serão transferidas para um periférico customizado no Fabric da FPGA via a interface LT-AXI. O periférico que está em modo wait, após ser configurado, começa a ler a imagem na memória SDRAM, processar e salvar o resultado na própria memória. Ao final da conversão uma interrupção é gerada e o Linux irá tratar o dado.
 
@@ -75,7 +79,6 @@ Enquanto o periférico processa o dado, a aplicação pode de forma concorrente,
 
 ## Próximos passos
 
-Vamos agora subir executar um Linux no ARM, iremos nesse momento trabalhar com uma imagem já pronto. Siga para o tutorial 
+Vamos agora subir executar um Linux no ARM, iremos nesse momento trabalhar com uma imagem já pronta. Siga para o próximo tutorial, onde iremos  configurar nossa infra para podermos gerar códigos para o ARM.
 
-
-ter que configurar nossa infra para podermos gerar códigos para o ARM, siga o para: [Tutorial HPS BuildSystem](Tutorial-HPS-BuildSystem).
+Siga para [Tutorial HPS BuildSystem](Tutorial-HPS-BuildSystem).

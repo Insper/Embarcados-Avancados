@@ -8,8 +8,6 @@ theme:
   palette:
       primary: 'white'
       accent: 'pink'
-  logo:
-      icon: 'developer_board'
   font:
     text: Roboto
     code: Roboto Mono
@@ -24,12 +22,12 @@ site_dir: docs
 repo_name: 'Insper/Embarcados-Avancados'
 repo_url: 'https://github.com/insper/Embarcados-Avancados'
 edit_uri: 'https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/'
-
+site_url: 'https://insper.github.io/Embarcados-Avancados/'
 nav:
   - Home: index.md
-  - Sobre: Sobre.md
   - Projeto:
       - 'Projeto-Overview.md'
+      - 'Projeto-Rubrica.md'
       - 'Projeto-Entrega-1.md'
   - FPGA:
       - 'Tutorial-FPGA-RTL.md'
@@ -54,7 +52,7 @@ nav:
       - 'Entrega-Extra-1.md'
   - 'Acelerando':
       - 'Tutorial-Acelerando-HLS.md'
-  - 'Uteis':
+  - 'Úteis':
       - 'info-FPGA-e-Softwares.md'
       - 'info-VHDL.md'
       - 'info-SDcard.md'
@@ -71,6 +69,7 @@ nav:
 
 # Extensions
 markdown_extensions:
+  - markdown.extensions.attr_list
   - markdown.extensions.admonition
   - markdown.extensions.codehilite:
       guess_lang: false
@@ -96,12 +95,10 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.superfences
+  - pymdownx.tabbed
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
 
-
 plugins:
     - search
-#    - pdf-export
-

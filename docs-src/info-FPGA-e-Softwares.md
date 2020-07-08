@@ -1,14 +1,24 @@
-# Infraestrutura / FPGA e SWs
+# Infraestrutura de HW e SWs
 
 Ao longo do curso iremos trabalhar principalmente com FPGAs SoC da Intel, o principal kit de desenvolvimento é o DE10-Standard que possui uma FPGA Cyclone V SoC.
 
 O software de desenvolvimento para FPGAs Intel chama Quartus, e ele possui várias e várias versões e variações, baixar a indicada aqui para não correr o risco de ter que instalar tudo novamente.
 
-## DE10-Standard
+
+!!! note "Versão 2020-2 online"
+    Vocês vão receber os seguintes materiais para trabalharem no curso de casa:
+    
+    - 1x FPGA DE10-Standard
+    - 1x micro SDcard
+    - 1x Adaptador microSD/USB
+    - 1x NIC USB-Wifi
+
+
+## HW - DE10-Standard
 
 - [Site do fabricante](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=205&No=1081&PartNo=2)
 
-É um kit de desenvolvimento fabricado pela Terasic ao curso to $350 que possui em seu core uma FPGA Cyclone V com grande capacidade de memória e várias células lógicas, possui diversos periféricos que podem ser controlados ou pela FPGA ou pelo ARM do chip.
+É um kit de desenvolvimento fabricado pela Terasic com valor de $350 que possui em seu core uma FPGA Intel Cyclone V - SoC com grande capacidade de memória e várias células lógicas, possui diversos periféricos que podem ser controlados ou pela FPGA ou pelo ARM do chip.
 
 ![](https://img11.shop-pro.jp/PA01053/865/etc/DE10-Standard_Front.jpg?cmsp_timestamp=20170421200223)
 
@@ -23,6 +33,8 @@ Para o desenvolvimento na disciplina:
 - [SoC EDS](http://fpgasoftware.intel.com/soceds/18.1/?edition=standard&platform=linux&download_manager=dlm3)
 
 Após instalar, seguir roteiro em (para o quartus funcionar no ubuntu):
+
+:TODO: Atualizar link!
 
 - https://github.com/Insper/Z01.1/wiki/Infraestrutura-Detalhada#3---quartus-prime-e-modelsim
 

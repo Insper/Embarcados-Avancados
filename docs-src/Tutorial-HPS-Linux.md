@@ -1,6 +1,6 @@
 # Tutorial-HPS-Embarcando
 
-O HPS espera um SDCARD formatado com o esquema a seguir para que o possa carregar o boot loader e depois o kernel :
+O HPS espera um SDCARD formatado com o esquema a seguir para que o possa carregar o boot loader e depois o kernel:
 
 ![](figs/gsrd-sdcard.png)
 

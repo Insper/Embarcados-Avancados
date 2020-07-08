@@ -1,13 +1,16 @@
 #  👁 Entrega 1
 
-Entrega:
+!!! success
+    Revisado 2020-2
 
-- Pasta `Entrega-1` no git
-- Demonstração em sala
+O que deve ser entregue?
 
-A ideia dessa entrega é que vocês trabalhem um pouco mais com o VHDL e com o Quartus e que também relembrem como desenvolver um projeto de forma hierárquica. A partir do tutorial, vocês devem modificar o projeto para que o controle do LED seja feito por um componente (chamado de `LED_peripheral`). 
+- **Pasta:** `Entrega-1-FPGA-RTL`
+- **Vídeo** do projeto funcionando com uma explicação (curto!)
 
-Esse componente deve variar a frequência na qual os LEDs piscam com base um vetor de 4 bits, que será ao final atribuido as chaves SW. E também deve possuir um sinal de enable (EN), que só deve funcionar caso positivo. Esse sinal de EN será atribuido a botão KEY0.
+A ideia dessa entrega é que vocês trabalhem um pouco mais com o VHDL e com o Quartus e que também relembrem como desenvolver um projeto de forma hierárquica. Vocês devem modificar o laboratório anterior para que o controle do LED seja feito por um componente (chamado de `LED_peripheral`). 
+
+Esse componente deve variar a frequência na qual os LEDs piscam com base um vetor de 4 bits, que deverá ser atribuido as chaves SW. E também deve possuir um sinal de enable (EN), que deve controlar se os LEDs piscam ou não. Esse sinal de EN será atribuido ao botão KEY0.
 
 Depois de criarem esse novo componente, vocês devem o utilizar no `topLevel` para controlar efetivamente os pinos. 
 
@@ -15,8 +18,6 @@ Depois de criarem esse novo componente, vocês devem o utilizar no `topLevel` pa
 
 ## Rubrica
 
-- A
-    - Entregue um testbench capaz de testar o projeto.
 - A
     - Entregue um testbench capaz de testar o projeto.
 - B 
@@ -29,8 +30,3 @@ Depois de criarem esse novo componente, vocês devem o utilizar no `topLevel` pa
     - Entregou o tutorial
 - I
     - Não entregou nada
-
-
-### Próximo passo 
-
-:bangbang: Siga para o tutorial [Tutorial FPGA NIOS](Tutorial-FPGA-NIOS)

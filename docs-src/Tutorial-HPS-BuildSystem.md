@@ -1,17 +1,22 @@
 # Tutorial 5 - HPS - Infra
 
-Vamos instalar o ferramental (compiladores) que será utilizado para compilar o kernel e o filesystem. Deveremos instalar o `socdes` e o `linaro-gcc` .
+!!! success "Revisão 2020-2"
+    - [x] passos
+    - [x] teoria/ texto
+    - [x] spellcheck
+
+Vamos instalar o ferramental (compiladores) que será utilizado para compilar o kernel e o filesystem. Deveremos instalar o `soceds` e o `linaro-gcc` .
 
 ## Intel SOCDES
 
 Você irá precisar ter o software `SOCEDS` instalado, e ele precisa ser a mesma versão do Quartus. Link para download:
    
-   - [Intel SoC FPGA Embedded Development Suite](http://fpgasoftware.intel.com/soceds/)
+- [Intel SoC FPGA Embedded Development Suite](http://fpgasoftware.intel.com/soceds/)
 
 Vamos precisar inserir no path do bash referência para uma série de softwares a serem usados, modifique seu `.bashrc` inserindo: 
 
 !!! note ""
-   Ao fazer o download do `soced` deve-se verificar para ser a mesma versão do Quartus.
+   Ao fazer o download do `soceds` deve-se verificar para ser a mesma versão do Quartus.
 
 ```bash
 export ALTERAPATH=~/intelFPGA/18.1/
@@ -43,7 +48,7 @@ export SOCEDS_HWLIB=${ALTERAPATH}/embedded/ip/altera/hps/altera_hps/hwlib/
     
 ### Testando
 
-Para testar, digite no terminal (após abrir uma nova aba, ou executar `source ~/.bashrc`):
+Para testar, digite no terminal `nios2_command_shell.sh ` (após abrir uma nova aba, ou executar `source ~/.bashrc`):
 
 ``` bash
 $ nios2_command_shell.sh 
@@ -61,18 +66,25 @@ $ exit
 
 # GCC toolchain
 
-Iremos utilizar o GCC cross compile fornecido pelo Linaro, esse mesmo GCC será utilizado para compilar o Kernel, gerar o file system e compilar os programas que executarão no Linux. Para facilitar a organização, iremos manter o toolchain na pasta `~/work/`.
-
+Iremos utilizar o GCC cross compile fornecido pelo Linaro, esse mesmo GCC será utilizado para compilar o Kernel, gerar o file system e compilar os programas que executarão no Linux. 
 
 !!! note "Wikipidia Linaro"
     *Linaro is an engineering organization that works on free and open-source software such as the Linux kernel, the GNU Compiler Collection, power management, graphics and multimedia interfaces for the ARM family of instruction sets and implementations thereof as well as for the Heterogeneous System Architecture.*
 
     - https://en.wikipedia.org/wiki/Linaro
 
+!!! note "gcc"
+    No site do linaro existem vários `GCC` diferentes, cada um com uma configuração diferente. O que vamos usar é `arm-linux-gnueabihf` isso significa:
+    
+    - `linux`: para compilar programas que executarão no linux (poderia ser baremetal)
+    - `eabi`: [Embedded Application Binary Interface](https://processors.wiki.ti.com/index.php/EABI) para ser usado pelo sistema operacional.
+    - `hf`: usa multiplicação de ponto flutuante de hardware
+    
+
 Do site de [binários do Linaro](https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-linux-gnueabihf/) abaixe a versão `gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz` e extraía para alguma pasta no seu Linux.
 
 !!! note "Quer baixar via terminal?"
-     Meus projetos ficam todos dentro da pasta: `/home/corsi/work`, por isso eu extraí para lá. Você pode escolher outro local.
+     Meus projetos ficam todos dentro da pasta: `/home/corsi/work/`, por isso eu extraí para lá. Você pode escolher outro local.
      
     ``` bash
     $ cd ~/work
@@ -120,7 +132,7 @@ export PATH=$PATH:${GCC_Linaro}
 !!! note
     Edite o comando para a pasta correta de onde Linaro foi extraído: `/home/...`
 
-Agora temos um atalho para o gcc-arm, vamos testar :
+Agora temos um atalho para o `gcc-arm`, vamos testar :
 
 ```bash
 $ $GCC_Linaro/arm-linux-gnueabihf-gcc -v
@@ -137,12 +149,11 @@ E ele também deve estar no path, como `arm-linux-*`:
 !!! note
     É possível instalar o `arm-linux` via `apt install`, mas não vamos fazer isso pois queremos ter controle da versão do compilador que estamos utilizando.
 
-
 !!! note "bashrc ao final"
      Eu não modifico meu `bashrc`, o que eu faço é criar um arquivo com o nome: `Quartus18.sh` 
-     e coloco toda essa configuração nele, e quando eu quero trabalhar em embarcados avançados eu só
-     preciso dar `source Quartus18.sh` e tenho meu ambiente configurado. Com isso, eu tenho
-     a vantagem de ter 'várias' versões instaladas e selecionar a que eu quero trabalhar. 
+     e coloco toda essa configuração nele, e quando eu quero trabalhar na disciplina eu só
+     preciso executar `source ~/Quartus18.sh` e tenho meu ambiente configurado. Com isso, eu tenho
+     a vantagem de ter 'várias' versões instaladas e selecionar a que quero trabalhar. 
      
      Isso também funciona pois eu tenho ambientes diferentes, com base nas disciplinas: Elementos tem um
      e Avançados outro.
@@ -154,8 +165,6 @@ E ele também deve estar no path, como `arm-linux-*`:
 
     export MGLS_LICENSE_FILE=/home/corsi/opt/intelFPGA/1-MBTRJ3_License.dat
     export LM_LICENSE_FILE=/home/corsi/opt/intelFPGA/1-MBTRJ3_License.dat
-    #export MGLS_LICENSE_FILE=27001@35.172.191.36
-    #export LM_LICENSE_FILE=27001@35.172.191.3
 
     export ALTERAPATH=/home/corsi/opt/intelFPGA/18.1
     export QUARTUS_ROOTDIR=$ALTERAPATH/quartus/

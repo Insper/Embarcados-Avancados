@@ -13,16 +13,21 @@ Nesse tutorial iremos compilar o kernel do Linux para o ARM do nosso SoC usando 
 Clone o kernel do linux :
 
 ``` bash
-$ git clone https://git.kernel.org
+$ git clone  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
 $ cd linux
 ```
 
-Vamos trabalhar com a versão `4.4` do kernel que é uma versão com: `Long Time Suport` (LTS), ou seja, será mantida por muito mais tempo que as outras versões. A versão 4.4 foi lançada em 10 de Janeiro e será mantida oficialmente até 2021, ela é também a versão Super LTS, com suporte estendido até 2036. 
+> Isso pode demorar um pouquinho, o kernel é um projeto grande.
+
+!!! tip
+    Também tem um mirror no github: https://github.com/torvalds/linux
+
+Vamos trabalhar com a versão `4.4` do kernel que é uma versão com: `Long Time Suport` (LTS), ou seja, será mantida por muito mais tempo que as outras versões. A versão 4.4 foi lançada em 10 de Janeiro e será mantida oficialmente até 2021, ela também é uma versão chamada de Super LTS, com suporte estendido até 2036. 
 
 ??? Linux Kernel wikipidia - Versões
     <iframe src="https://en.wikipedia.org/wiki/Linux_kernel" title="Linux Kernel" width="100%" height="300"> </iframe>
 
-Pense que um desenvolvedor de um sistema embarcado, que vai criar toda uma infra dedicada não quer ficar ter que ajustando e validando tudo novamente só para ter a versão mais nova do kenrel. A ideia de usar uma com maior suporte é minimizar esforços.
+Pense que um desenvolvedor de um sistema embarcado, que vai criar toda uma infra dedicada não quer ficar ter que ajustando e validando tudo novamente só para ter a versão mais nova do kenrel. A ideia de usar uma com maior suporte é minimizar esforços com recursos novos.
 
 O kernel utiliza o sistema de `tag` do git:
 
@@ -77,8 +82,12 @@ $ make ARCH=arm menuconfig
 
 !!! note
     Talvez seja necessário instalar o pacote **libncurses5-dev**
+    
+    ```bash
+    $ sudo apt install libncurses5-dev
+    ```
 
-Esse comando irá abrir a interface de configuração do Kernel do Linux (existem outras opções: `make xconfig`; `make config`; `make gconfig`, ...). Essa interface permite selecionarmos várias configurações do Kernel. Agora iremos seguir o roteiro proposto no tutorial a seguir, traduzido de maneira reduzida nesse tutorial. 
+Esse comando irá abrir a interface de configuração do Kernel do Linux (existem outras opções: `make xconfig`; `make config`; `make gconfig`, ...). Essa interface permite selecionarmos várias configurações do Kernel. Agora iremos seguir o roteiro proposto no tutorial a seguir, traduzido de maneira reduzida aqui. 
 
 - https://rocketboards.org/foswiki/Documentation/EmbeddedLinuxBeginnerSGuide
 
@@ -87,7 +96,9 @@ Esse comando irá abrir a interface de configuração do Kernel do Linux (existe
 1. Automatically append version information to the version string
 
 - General Setup :arrow_right:
-    - **Desabilite** : *Automatically append version information to the version string*
+    - **Desabilite**: *Automatically append version information to the version string*
+ 
+ ![](figs/Tutorial-HPS-Kernel:config.gif)
  
 !!! note "Exclude/ Include" 
     Para **Desativar** utilize a letra `N` do teclado, para incluir a letra `Y`
@@ -97,6 +108,7 @@ Esse comando irá abrir a interface de configuração do Kernel do Linux (existe
 
 !!! note 
     - ref :  https://rocketboards.org/foswiki/Documentation/EmbeddedLinuxBeginnerSGuide#8
+    
     Go into the “General Setup” menu. Uncheck “Automatically append version information to the version string”. This will prevent the kernel from adding extra “version” information to the kernel. Whenever we try to dynamically load a driver (also called kernel modules, as discussed in a later section) the kernel will check to see if the driver was built with the same version of the source code as itself. If it isn’t, it will reject to load that driver. For development, it’s useful to disable these options to make it easier to test out different versions of drivers. In a production system however, it’s recommend to keep this option enabled and only use drivers that were compiled with the correct version of the kernel.
     I encourage you to peruse the options in the General Setup menu and see what’s available to you (hitting “?” to view the help info for the highlighted option). Of particular importance to us is the “Embedded System” option (turns on advanced features) and the type of SLAB allocator used (determines how memory will be dynamically allocated in the kernel). If you want to use an initial ram disk or ram filesystem that would be enabled here as well (these will be explained in the next section).
     (texto extraído da referência)
@@ -116,7 +128,7 @@ Esse comando irá abrir a interface de configuração do Kernel do Linux (existe
 #### Support for large (2TB+) block devices and files
 
 - No menu principal :arrow_right: Enable the block layer :arrow_right:
-    - **Ative** : Support for large (2TB+) block devices and files
+    - **Ative**: `Support for large (2TB+) block devices and files`
 
 !!! note ""
     Essa opção irá permitir a utilização de partições do tipo EXT4. Se esquecer essa opção e o kernel tiver em uma partição EXT4 a mesma será montada como READ-ONLY.
@@ -126,7 +138,7 @@ Esse comando irá abrir a interface de configuração do Kernel do Linux (existe
 #### The Extended 4 (ext4) filesystem 
 
 - Menu principal :arrow_right: File systems :arrow_right: 
-    - **Ative** : The Extended 4 (ext4) filesystem
+    - Note que já está selecionado: `The Extended 4 (ext4) filesystem`
     
 !!! note ""
     Essa opção irá possibilitar que o kernel monte dispositivos formatados em EXT4. Pretendemos usar isso no SDCARD.
@@ -136,7 +148,7 @@ Esse comando irá abrir a interface de configuração do Kernel do Linux (existe
 #### Altera SOCFPGA family
 
 - Menu principal :arrow_right: System Type :arrow_right:
-    - **Ative** : Altera SOCFGPA family
+    - Note que já está selecioado: `Altera SOCFGPA family`
     
 !!! note ""
     Isso indica para o kernel qual será o dispositivo que o mesmo será executado, note que esssa opção possui um novo menu onde podemos ativar ou não a suspensão para RAM.
@@ -146,7 +158,7 @@ Esse comando irá abrir a interface de configuração do Kernel do Linux (existe
 #### Symmetric Multi-Processing
     
 - Menu principal :arrow_right: Kernel Features :arrow_right:
-    - **Ative**: Symmmetric Multi-Processing
+    - Note que já está selecioado: `Symmmetric Multi-Processing`
     
 !!! note ""
     Essa opção indica para o kernel que ele deve utilizar os dois cores presente no ARM HPS da FPGA. 
@@ -156,6 +168,7 @@ Esse comando irá abrir a interface de configuração do Kernel do Linux (existe
 #### Device Drivers
 
 - Menu principal :arrow_right: Device Drivers :arrow_right: 
+    - Analise os drivers disponíveis...
 
 !!! note ""
     Indica quais drivers serão compilados junto com o kernel, note que já temos configurado drivers de rede (Network device support); GPIO (GPIO Support); RTC; DMA; ... . Lembre que já inicializamos o `.config` com uma configuração padrão para SoCs Altera.

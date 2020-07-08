@@ -1,8 +1,16 @@
 # Tutorial 3 - FPGA - IP
 
+!!! success "Revisão 2020-2"
+    - [x] quartus 20.01
+    - [x] teoria/ texto
+    - [ ] passos validados 
+    - [x] spellcheck
+
+    Melhorar especificação de componente (mapa de registradores?)
+
 Nesse tutorial deseja-se desenvolver um periférico customizado para o processador NIOS, esse periférico será dedicado ao controle dos LEDs da placa, o periférico terá um banco de registradores interno para seu controle, e interface de "I/O mapeado em memória".
 
-## Pré-requisitos
+## Começando
 
 Para seguir esse tutorial, é necessário:
 
@@ -12,37 +20,37 @@ Para seguir esse tutorial, é necessário:
 
 Entrega no git:
 
-- **Pasta:** `Tutorial-FPGA-NIOS-IP`
+- **Pasta:** `Lab3_FPGA_IP/`
 
 ## IP Cores
 
-Intelectual Proprety Core (IP Core) são componentes descritos em HDL que possibilitam ser utilizados em múltiplos projetos de Hardware. O Platform Designer (PD) fornece além da interface visual de conexão um padrão de comunicação entre os componentes, facilitando assim o uso desses IPs.
+Intelectual Proprety Core ([IP Core](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/cgn_c_ip_overview.htm)) são componentes descritos em HDL que possibilitam ser utilizados em múltiplos projetos de Hardware. O Platform Designer (PD) fornece além da interface visual de conexão um padrão de comunicação entre os componentes, facilitando assim o uso desses IPs.
 
-Além da centenas de projetos espalhados pela internet (github), existe um repositório muito completo de IP cores opensource que concentra grande variedade de projeto:
+Além das centenas de projetos espalhados pela internet (github), existe um repositório muito completo de IP cores opensource que concentra grande variedade de projeto:
 
 - [opencores](http://opencores.org/projects)
 
 As empresas também disponibilizando IPs, pagos e gratuitos:
 
-- [Altera IP cores](https://www.altera.com/products/intellectual-property/ip.html)
+- [Intel-FPGA IP cores](https://www.altera.com/products/intellectual-property/ip.html)
 
 ## Platform Desginer 
 
 O PD é uma ferramenta integradora de IPs, com ela é muito simples inserirmos e criarmos componentes que serão utilizados para formar um sistema mais completo. Como no caso do tutorial passado onde usamos uma série de componentes para criar nosso projeto. Esses componentes são de certa forma IPs (simples como o PIO e complexo como o NIOS).
 
-A integração dos IPs no PD se da devido a padronização da comunicação entre esses componentes, que é dada via o barramento.
+A integração dos IPs no PD se da devido à padronização da comunicação entre esses componentes, que é dada via o barramento.
 
 ## Barramentos
 
-A Altera define dois tipos de barramento de dados para o PD: **Avalon** e **AXI**. O barramento Avalon é a principal maneira de conectar um periférico ao NIOS (processador), já o AXI é o padrão de barramento do ARM, que também é utilizado no plataform designer.
+A Intel-FPGA define duas categorias de barramento de dados para o PD: **Avalon** e **AXI**. O barramento Avalon é a principal maneira de conectar um periférico ao NIOS (processador), já o AXI é o padrão de barramento do ARM, que também é utilizado no platform designer.
 
 ### Avalon
 
-Documentação completa dos tipos do barramento AVALON :
+Documentação completa dos tipos do barramento AVALON:
 
 - https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/manual/mnl_avalon_spec.pdf
 
-O barramento Avalon define basicamente dois tipos de comunicação : **Memory Mapped (MM)** e **Avalon Streaming Interface (ST)**, conforme descrição a seguir extraído da documentação :
+O barramento Avalon define basicamente dois tipos de comunicação: **Memory Mapped (MM)** e **Avalon Streaming Interface (ST)**, conforme descrição a seguir extraído da documentação:
 
 -  **Avalon Streaming Interface (Avalon-ST)** — an interface that supports the unidirectional flow of data, including multiplexed streams, packets, and DSP data.
 -  **Avalon Memory Mapped Interface (Avalon-MM)** — an address-based read/write interface typical of master–slave connections.
@@ -55,7 +63,7 @@ O barramento Avalon define basicamente dois tipos de comunicação : **Memory Ma
 ## Projeto 
 
 !!! note
-    Vamos melhorar o projeto passado, faça uma cópia da pasta do projeto : `Tutorial-FPGA-NIOS` e renomeei para: `Tutorial-FPGA-NIOS-IP`. Iremos agora trabalhar nessa nova pasta.
+    Vamos melhorar o projeto passado, faça uma cópia da pasta do projeto: `Lab2_FPGA_NIOS/` e renomeei para: `Lab3_FPGA_IP/`. Iremos agora trabalhar nessa nova pasta.
 
 ### Criando um periférico 
 
@@ -70,19 +78,19 @@ Roteiro a ser seguido:
     - Definições gerais
     - Associar as portas do componente com os sinais do barramento
 1. Usar componente no projeto
-1. Criar driver (.c e .h)
+1. Criar driver (`.c` e `.h`)
 1. Simular
 1. Implementar/ Testar
 1. Rever especificação (1.)
 
 Primeiramente precisamos definir o papel principal desse periférico e seu fluxo de dados. Com isso será possível definir se o periférico é do tipo: **Master** ou **Slave** e se sua interface é do tipo **Memory Mapped** ou **Streaming**.
 
-Um periférico pode possuir mais de uma interface, por exemplo: Um periférico que irá processar um áudio em tempo real pode ter até três interfaces: O mesmo irá receber o áudio via a interface **streaming** e retornar o dado por outra interface de **streaming**, porém será necessário uma terceira interface para controle desse periférico, muito provavelmente do tipo **Memory Mapped**.
+Um periférico pode possuir mais de uma interface, por exemplo: Um periférico que irá processar um áudio em tempo real pode ter até três interfaces: O mesmo irá receber o áudio via a interface **streaming** e retornar o dado por outra interface de **streaming**, porém será necessária uma terceira interface para controle desse periférico, muito provavelmente do tipo **Memory Mapped**.
 
 !!! note ""
     É possível transmitir pacotes de comando pela interface streaming, mas isso torna o projeto mais complexo.
 
-O nosso simples periférico irá simplesmente receber configurações para acionar o LED, sem nenhum fluxo contínuo ou intenso de dados, sendo a interface mais apropriada a do **periférico mapeado em memória**. Além disso, nosso periférico exclusivo para controle do LED é claramente um **slave** do sistema, já que ele deve ser controlado por outra parte do sistema (no nosso caso o uC) para agir conforme necessário.
+O nosso simples periférico irá simplesmente receber configurações para acionar o LED, sem nenhum fluxo contínuo ou intenso de dados, sendo a interface mais apropriada a do **periférico mapeado em memória**. Além disso, nosso periférico exclusivo para controle do LED é um **slave** do sistema, já que ele deve ser controlado por outra parte do sistema (no nosso caso o uC) para agir conforme necessário.
 
 #### Avalon Slave Memory Mapped
 
@@ -107,7 +115,7 @@ entity peripheral_MM is
 end entity peripheral_MM;
 ```
 
-Note que a primeira parte do componente define um sinal de clock (`clk`) e um sinal de reset (`reset), lembre que projeto digitais em FPGA devem ser na maioria das vezes síncronos. A segunda parte é a definição dos sinais que irão ser conectados no barramento para acesso de outros periféricos.
+Note que a primeira parte do componente define um sinal de clock (`clk`) e um sinal de reset (`reset`), lembre que projetos digitais em FPGA devem ser na maioria das vezes síncronos. A segunda parte é a definição dos sinais que irão ser conectados no barramento para acesso de outros periféricos.
 
 Lembrem que estamos criando um componente mapeado em memória, logo o mesmo deve ter comportamento e interface similar ao de uma memória. 
 
@@ -117,7 +125,7 @@ Lembrem que estamos criando um componente mapeado em memória, logo o mesmo deve
 - `avs_write`: Indica que é um acesso de escrita
 - `avs_writedata`: Dado que é transmitido ao componente dado um acesso de escrita.
 
-O tamanho da palavra do `avs_readdata` e do `avs_writadata` é definido pelo componente e não é fixado em 32 bits como no exemplo, pode assumir outros valores.
+O tamanho da palavra do `avs_readdata` e do `avs_writadata` é definido pelo componente e não é fixo em 32 bits como no exemplo, pode assumir outros valores.
 
 Uma escrita ao periférico é dada da seguinte forma:
 
@@ -148,7 +156,7 @@ Uma leitura ao periférico é dada da seguinte forma:
 
 ### Especificação
 
-Nosso periférico será no começo bem simples, apenas para entendermos todo o processo de desenvolvimento de um periférico e o seu uso. O periférico que iremos desenvolver será um substituto ao periférico PIO fornecido pela Altera, utilizado no projeto do pisca LED com o NIOS.
+Nosso periférico será no começo bem simples, apenas para entendermos todo o processo de desenvolvimento de um periférico e o seu uso. O periférico que iremos desenvolver será um substituto ao periférico PIO fornecido pela Intel-FPGA, utilizado no projeto do pisca LED com o NIOS.
 
 Nosso periférico será mapeado em memória e possuirá um conduit (saída) onde será realizada o acionamento dos LEDs:
 
@@ -161,11 +169,11 @@ O acesso ao nosso periférico será por uma palavra de 32 bits (para mater um pa
 
 ### Gerar HDL que representa o periférico com interface Avalon
 
-Partindo da entidade fornecida (peripheral_MM), podemos criar um componente que implementa parcialmente a especificação anterior, nessa implementação não temos os dois registradores (`REG_CONFIG` e `REG_DATA`), temos apenas a funcionalidade do `REG_DATA`. Note que a implementação faz uso de um generic para definir a quantidade de LEDs que esse periférico controla. Esse generic poderá ser configurado pela interface gráfica do Plataform Designer, tornando um componente customizado.
+Partindo da entidade fornecida (`peripheral_MM`), podemos criar um componente que implementa parcialmente a especificação anterior, nessa implementação não temos os dois registradores (`REG_CONFIG` e `REG_DATA`), temos apenas a funcionalidade do `REG_DATA`. Note que a implementação faz uso de um generic para definir a quantidade de LEDs que esse periférico controla. Esse genérico poderá ser configurado pela interface gráfica do Plataform Designer, tornando um componente customizado.
 
 
 !!! info
-    Crie um arquivo chamado: `peripheral_LED.vhd` e salve na pasta do projeto : `Tutorial-FPGA-NIOS-IP/IP/`
+    Crie um arquivo chamado: `peripheral_LED.vhd` e salve na pasta do projeto : `Lab3_FPGA_IP/IP/`
 
     !!! warning ""
         Será necessário criar a pasta IP
@@ -228,7 +236,7 @@ end rtl;
 
 Agora iremos adicionar o nosso periférico no **Platform Designer**, esse novo componente que será criado será incorporado na ferramenta, para isso:
 
-Precisamos indicar para o PD o local que ele deve buscar para encontrar por códigos fontes que não fazem parte do catálogo padrão, para isso:
+Precisamos indicar para o PD o local que ele deve buscar para encontrar por códigos fonte que não fazem parte do catálogo padrão, para isso:
 
 1. `Tools` :arrow_right: `Options` :arrow_right: `IP Search Path`
 1. Adicione a pasta `IP` recém criada.
@@ -239,7 +247,7 @@ E agora remova o componente PIO:
 
 ### Criando componente
 
-Só adicionar o arquivo HDL (`.vhd` ou `.v` verilog) não é suficiente para o PD reconhecer o componente, precisamos criar um segundo arquivo (`*_hw.tcl`) que é lido pelo PD, esse arquivo possuirá todas as configurações e descrições do novo componente. Para isso :
+Só adicionar o arquivo HDL (`.vhd` ou `.v`) não é suficiente para o PD reconhecer o componente, precisamos criar um segundo arquivo (`*_hw.tcl`) que é lido pelo PD, esse arquivo possuirá todas as configurações e descrições do novo componente. Para isso:
 
 - `File` :arrow_right: `New Component` :ok:
 
@@ -251,12 +259,12 @@ Já na aba `Files` temos as informações de quais arquivos pertencem ao compone
 
 #### Files
 
-Na aba Files adicione o arquivo `peripheral-LED.vhd`:
+Na aba Files adicione o arquivo `peripheral_LED.vhd`:
 
-1. `Files` :arrow_right: `Syntesis Files` :arrow_right: `add file` :arrow_right: **`peripheral-LED.vhd`**
+1. `Files` :arrow_right: `Syntesis Files` :arrow_right: `add file` :arrow_right: **`peripheral_LED.vhd`**
 1. Clique em :arrow_right: `Analyze Synthesis Files` : isso fará com que a ferramenta faça uma breve análise dos arquivos HDL e detecte as interfaces do componente.
 
-Note o atributo do arquivo: `Top-level File`, isso indica que o `peripheral-LED.vhd` é o arquivo principal desse componente, se tivéssemos um desenvolvimento hierárquico do componente, nessa etapa adicionaríamos vários arquivos e deveríamos configurar qual deles é o toplevel.
+Note o atributo do arquivo: `Top-level File`, isso indica que o `peripheral_LED.vhd` é o arquivo principal desse componente, se tivéssemos um desenvolvimento hierárquico do componente, nessa etapa adicionaríamos vários arquivos e deveríamos configurar qual deles é o toplevel.
 
 - Na secção `VHDL Simulation Files`  :arrow_right: **Copy from Synthesis Files** :ok:
 
@@ -308,39 +316,39 @@ Iremos indicar agora para a ferramenta que o sinal `LEDs` deve ser interpretado 
 
 #### Finalizando
 
-Verifique os sinais e o diagrama de bloco antes de continuar e clique em **Finish**. Quando o componente for gerado, ele automaticamente irá aparecer no catálogo de componentes que podem ser inseridos no SoC :
+Verifique os sinais e o diagrama de bloco antes de continuar e clique em **Finish**. Quando o componente for gerado, ele automaticamente irá aparecer no catálogo de componentes que podem ser inseridos no SoC:
 
 ![](figs/Tutorial-FPGA-IP:catalogo.png)
 
-Porém o arquivo de configuração desse componente (.tcl) foi salvo na pasta raiz do projeto do Quartus : 
+Porém o arquivo de configuração desse componente (.tcl) foi salvo na pasta raiz do projeto do Quartus: 
 
-- `tutorial-SoftProcessor-IP/peripheral_LED_hw.tcl`
+- `Lab3_FPGA_IP/peripheral_LED_hw.tcl`
 
 Esse arquivo `.tcl` descreve todas as configurações realizadas anteriormente no componente. O mais natural é que esse arquivo esteja na mesma localidade (pasta IP) que os códigos HDL. Mova essa arquivo para:
 
-- `tutorial-SoftProcessor-IP/IP/peripheral_LED_hw.tcl`
+- `Lab3_FPGA_IP/IP/peripheral_LED_hw.tcl`
 
-Agora precisamos editar o arquivo `.tcl` para atualizarmos o local do arquivo `peripheral-LED.vhd`, procure pela secção **files set**:
+Agora precisamos editar o arquivo `.tcl` para atualizarmos o local do arquivo `peripheral_LED.vhd`, procure pela secção **files set**:
 
 - Antes 
 
 ```tcl
-add_fileset_file peripheral-LED.vhd VHDL PATH IP/peripheral-LED.vhd TOP_LEVEL_FILE
+add_fileset_file peripheral_LED.vhd VHDL PATH IP/peripheral_LED.vhd TOP_LEVEL_FILE
 ...
-add_fileset_file peripheral-LED.vhd VHDL PATH IP/peripheral-LED.vhd
+add_fileset_file peripheral_LED.vhd VHDL PATH IP/peripheral_LED.vhd
 ```
 
 E edite para:
 
 ```tcl
-add_fileset_file peripheral-LED.vhd VHDL PATH peripheral-LED.vhd TOP_LEVEL_FILE
+add_fileset_file peripheral_LED.vhd VHDL PATH peripheral_LED.vhd TOP_LEVEL_FILE
 ...
-add_fileset_file peripheral-LED.vhd VHDL PATH peripheral-LED.vhd
+add_fileset_file peripheral_LED.vhd VHDL PATH peripheral_LED.vhd
 ```
 
 ### Utilizando o componente no PD
 
-Agora adicione o componente no projeto e faça as conexões corretas (como se fosse outro componente), exporte o sinal dos LEDs, o resultado final deve ser algo como :
+Agora adicione o componente no projeto e faça as conexões corretas (como se fosse outro componente), exporte o sinal dos LEDs, o resultado final deve ser algo como:
 
 ![](figs/Tutorial-FPGA-IP:final.png)
 
@@ -378,17 +386,17 @@ No meu caso o resultado foi:
         );
 ```
 
-Devemos inserir agora esse componente com a nova interface (**leds_name**) no `topLevel.vhd`.
+Devemos inserir agora esse componente com a nova interface (**leds_name**) no `Lab3_FPGA_IP.vhd`.
 
 > Você deve fazer essa etapa com cuidado. Esses nomes podem alterar entre versões da ferramenta.
 
-Editando o `topLevel.vhd`:
+Editando o `Lab3_FPGA_IP.vhd`:
 
 ``` vhdl
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity topLevel is
+entity Lab3_FPGA_IP is
     port (
         -- Gloabals
         fpga_clk_50        : in  std_logic;             -- clock.clk
@@ -398,9 +406,9 @@ entity topLevel is
         fpga_button_pio    : in  std_logic_vector(2 downto 0)
 
 	);
-end entity topLevel;
+end entity Lab3_FPGA_IP;
 
-architecture rtl of topLevel is
+architecture rtl of Lab3_FPGA_IP is
 
    component niosHello is
         port (
@@ -434,7 +442,7 @@ Verificamos que a ferramenta inferiu um registrador de 4 bits para armazenar o v
 
 ## Firmware
 
-Devemos agora escrever um firmware que será executado no NIOS e que acesse e controle nosso periférico. Para isso será necessário criarmos um novo BSP para o projeto. Abra o **NIOS II Software Build ...** e refaça a etapa do tutorial anterior com o novo SoC e adicione o código a seguir:
+Devemos agora escrever um firmware que será executado no NIOS e que acesse e controle nosso periférico. Para isso será necessário criarmos um BSP para o projeto. Abra o **NIOS II Software Build ...** e refaça a etapa do tutorial anterior com o novo SoC e adicione o código a seguir:
 
 ``` c
 #include <stdio.h>
@@ -471,7 +479,7 @@ int main(void){
 }
 ```
 
-O firmware utiliza o `peripheral-LED` para controlar os LEDs da placa, note que o acesso dessa vez é feito pelo ponteiro `p_led` e não mais pela função da Alteara `IOWR_32DIRECT` (deveria funcionar também).
+O firmware utiliza o `peripheral_LED` para controlar os LEDs da placa, note que o acesso dessa vez é feito pelo ponteiro `p_led` e não mais pela função da Alteara `IOWR_32DIRECT` (deveria funcionar também).
 
 ### Executando 
 
@@ -487,7 +495,7 @@ Note que no código anterior, o printf foi comentando, assim como o delay de 500
     *(p_led+REG_DATA_OFFSET) = (0x1 << led++);
 ```
 
-Nesse momento, o NIOS envia um comando ao barramento no endereço **PERIPHERAL_LED_0_BASE + REG_DATA_OFFSET**, o comando carrega a mensagem : **0x01 << led**, gravando no registrador `REG_DATA` qual LED deve ser acionado.
+Nesse momento, o NIOS envia um comando ao barramento no endereço **PERIPHERAL_LED_0_BASE + REG_DATA_OFFSET**, o comando carrega a mensagem: **0x01 << led**, gravando no registrador `REG_DATA` qual LED deve ser acionado.
 
 ### Configurando o bsp
 
@@ -504,9 +512,9 @@ Além de configurarmos a otimização durante a simulação, iremos desativar o 
 
 No **Eclipse**, após ter compilado o projeto:
 
-- `Run` :arrow_right:  `Run configuration` :arrow_right: `Nios II ModelSim`
+- `Run` :arrow_right: `Run configuration` :arrow_right: `Nios II ModelSim`
 
-O simulador a ser utilizado é o modelsim da Mentor, o mais completo do mercado e fornecido com algumas customizações pela Altera. No modelsim, iremos adicionar os sinais que desejamos visualizar, para isso, siga o que indica a figura a seguir:
+O simulador a ser utilizado é o modelsim da Mentor, o mais completo do mercado e fornecido com algumas customizações pela Intel-FPGA. No modelsim, iremos adicionar os sinais que desejamos visualizar, para isso, siga o que indica a figura a seguir:
 
 ![](figs/Tutorial-FPGA-IP:modelsim1.png)
 
@@ -522,4 +530,4 @@ Após a simulação finalizar, note os valore dos sinais `avs_write`, `avs_write
 
 Siga para a terceira entrega:
 
-- [Entega 3](Entrega-3)
+- [Entega 3](/Entrega-3)

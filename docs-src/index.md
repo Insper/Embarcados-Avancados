@@ -1,11 +1,12 @@
-# Bem vindo a Eletiva - Embarcados Avançados (SoC e Linux Embarcado)!
+# Bem vindo a Eletiva - SoC e Linux Embarcado!
 
-![](https://camo.githubusercontent.com/31cbef310a2a8d91eeccb737c5d968223a7d1575/68747470733a2f2f7777772e696e737065722e6564752e62722f77702d636f6e74656e742f7468656d65732f696e737065722f646973742f696d6167652f6c6f676f2e706e67)
+[![](https://camo.githubusercontent.com/31cbef310a2a8d91eeccb737c5d968223a7d1575/68747470733a2f2f7777772e696e737065722e6564752e62722f77702d636f6e74656e742f7468656d65732f696e737065722f646973742f696d6167652f6c6f676f2e706e67)](http://www.insper.edu.br)
 
-- **Disciplina:** Eletiva da Engenharia da Computação [Insper](https://www.insper.edu.br/) - 2019-2.
+- **Disciplina:** Eletiva da Engenharia da Computação
+    - Versões: 2018b/ 2019b / :arrow_right: 2020
 - **Prof.** Rafael Corsi / rafael.corsi@insper.edu.br
 - **Repositório:** [http:/github.com/insper/Embarcados-Avancados](http:/github.com/insper/Embarcados-Avancados)
-- **Local:** Laboratório de Arquitetura de Computadores
+- **Local:** Laboratório de Arquitetura de Computadores 
 - **© Todos os direitos reservados**
 
 -------------------------
@@ -15,6 +16,15 @@
 1. Formular soluções que satisfazem requisitos de hardware e software de projetos com FPGA-SoC (System-on-a-chip) 
 2. Integrar em um protótipo solução para um sistema embarcado com requisitos de processamento e/ou tempo real via FPGA-SoC
 3. Interfacear diferentes módulos em um sistema embarcado (processadores, firmware e sistema operacional)
+
+## Metodologia
+
+A disciplina é baseada em tutoriais, onde os conceitos teóricos e práticos são apresentados. O aluno deve seguir o material conforme é apresentado (na sequência) pois o mesmo foi concebido de maneira incremental. Cada tutorial (ou série de) possui uma entrega (APS) que deve ser realizada, o tutorial é ponto de entrada para a entrega, porém vai além em compreensão e conceitos. 
+
+## Avaliação
+
+A avaliação é composta de entregas ao longo do semestre (a cada série de
+tutoriais existe uma entrega com nota) e de um tutorial que deve ser criado ao longo da disciplina e integrado na página do curso. O tutorial é de tema livre dentro dos objetivos da disciplina e possui algumas entregas intermediárias que irão compor a nota final.
 
 ## Motivação
 
@@ -27,26 +37,15 @@
   e um HardProcessor?
 - [x86 + FPGA ?](https://www.anandtech.com/show/12773/intel-shows-xeon-scalable-gold-6138p-with-integrated-fpga-shipping-to-vendors)
 - Empregos? A qual desses você se aplicaria ?
-    - [facebook](https://www.facebook.com/careers/jobs/283243269009556/) / [google](https://www.linkedin.com/jobs/google-fpga-jobs) / [apple](https://www.linkedin.com/jobs/apple-fpga-jobs) / [apple 2](https://jobs.apple.com/en-us/details/200001001/fpga-engineer) / [microsoft](https://www.linkedin.com/jobs/microsoft-fpga-jobs) / [amazon](https://www.linkedin.com/jobs/amazon-fpga-jobs)
+    - [facebook](https://www.glassdoor.com.br/Vagas/Facebook-fpga-Vagas-EI_IE40772.0,8_KO9,13.htm?countryRedirect=true) / [google](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=google%20fpga&location=Mundialmente) / [apple](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=apple%20fpga&location=Mundialmente) / [microsoft](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=microsoft%20fpga&location=Mundialmente) / [amazon](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=amazon%20fpga&location=Mundialmente)
 - Como usar o hardware a serviço do software?
   [HLS](https://www.intel.com/content/www/us/en/software/programmable/quartus-prime/hls-compiler.html)
   /
   [OpenCL](https://www.intel.com/content/www/us/en/software/programmable/sdk-for-opencl/overview.html)
   
-## Avaliação
-
-A avaliação é composta de entregas ao longo do semestre (a cada série de
-tutoriais existe uma entrega com nota) e de um tutorial que deve ser criado ao
-longo da disciplina e integrado na wiki do curso. O tutorial é de tema livre
-dentro dos objetivos da disciplina e possui algumas entregas intermediárias
-que irão compor a nota final.
-
 ## Infraestrutura
 
-Vamos precisar dos softwares listados
- [aqui](https://github.com/Insper/Embarcados-Avancados/wiki/FPGA-e-Softwares#softwares).
- Iremos ao longo do curso trabalhar com uma FPGA Intel, o kit é o
- [DE10-Standard](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1081).
+Para facilitar o andamento do curso, estamos enviando um SSD com os softwares listados [aqui](/info-FPGA-e-Softwares/). Iremos com o kit [DE10-Standard](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1081).
  
 ##  Dinâmica
 
@@ -73,7 +72,7 @@ A disciplina é baseada em uma série de tutoriais (com entregas ao final) que c
 1. Trazer os softwares instalados
 1. Criar um repositório no github
 1. Pensar um pouco sobre um tema que gostaria de se aprofundar (para o tutorial)
-    - :point_right: [Dicas](Projeto-Final)
+    - :point_right: [Dicas](Projeto-Overview)
 1. Leitura recomendada:
     - https://www.intel.com/content/www/us/en/products/programmable/fpga/new-to-fpgas/resource-center/overview.html
     - Disponível no lab: [CHU, 2011, cap. 1], [KOOPMAN, 2010, cap. 2] 

@@ -1,11 +1,11 @@
-# Embarcados-Avancados
+# SoC e Linux Embarcado (Embarcados Avançados)
 
-Disciplina eletiva da Engenharia da Computação [Insper](https://www.insper.edu.br/) - 2019-2.
+Disciplina eletiva da Engenharia da Computação [Insper](https://www.insper.edu.br/) - 2020-b.
 
 Prof. Rafael Corsi / rafael.corsi@insper.edu.br
 
-:arrow_right: Material de aula em: https://insper.github.io/Embarcados-Avancados/ 
-
+:arrow_right: Material de aula em:
+https://insper.github.io/Embarcados-Avancados/ 
 
 OBJETIVOS:
 
