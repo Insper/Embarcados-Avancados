@@ -1,31 +1,55 @@
 #  👁 Entrega 1
 
-!!! success
-    Revisado 2020-2
-
+!!! success "2020-2"
+    - Material atualizado.
+    
 O que deve ser entregue?
 
-- **Pasta:** `Entrega-1-FPGA-RTL`
+- **Pasta:** `Entrega_1_FPGA_RTL`
 - **Vídeo** do projeto funcionando com uma explicação (curto!)
 
-A ideia dessa entrega é que vocês trabalhem um pouco mais com o VHDL e com o Quartus e que também relembrem como desenvolver um projeto de forma hierárquica. Vocês devem modificar o laboratório anterior para que o controle do LED seja feito por um componente (chamado de `LED_peripheral`). 
+A ideia dessa entrega é que vocês trabalhem um pouco mais com o VHDL e que também relembrem/aprendem como desenvolver um projeto de forma hierárquica. Nessa entrega vocês irão desenvolver um IP core (*intellectual property core*) dedicado para o controle de um motor de passos.
 
-Esse componente deve variar a frequência na qual os LEDs piscam com base um vetor de 4 bits, que deverá ser atribuido as chaves SW. E também deve possuir um sinal de enable (EN), que deve controlar se os LEDs piscam ou não. Esse sinal de EN será atribuido ao botão KEY0.
+Esse componente deve controlar as quatro fases de um motor de passos (vocês receberam junto ao kit) de forma a girar o motor nos dois sentidos e com algumas velocidades diferentes.
 
-Depois de criarem esse novo componente, vocês devem o utilizar no `topLevel` para controlar efetivamente os pinos. 
+## Exemplo
 
-![](figs/Entrega-1-diagrama.png)
+Para facilitar o desenvolvimento está disponível na pasta (`/Entrega1/`) no repositório da disciplina um projeto e um componente que controla o motor de passos, mas não realiza tudo o que está sendo pedido aqui. Nesse exemplo o motor de passos gira apenas para um sentido (`DIR` não funciona), o sinal de `EN` não controla se o motor vai estar ligado/desligar e o motor possui apenas duas velocidades (`VEL`).
+
+Os pinos já foram mapeados e vocês devem conectar o motor como indicado a seguir!
+
+![](figs/Entrega-1:montagem.png)
+
+!!! warning
+    Faça com atenção para evitar queimar a placa.
+
+Montagem final:
+
+[![](figs/Entrega-1:montagem2.png){width=200}](figs/Entrega-1:montagem2.png)
+
+>  Clique para ampliar
+
+??? note "GPIO esquemático"
+    Extraído do manual:
+
+    ![](figs/Entrega-1:gpio.png)
+
+!!! example "TODO"
+    Após montar, abra o projeto exemplo, compile e grave na FPGA. Você deve ver o motor girando.
+    
+    Mexa nas chaves 2 e 3, a velocidade do motor deve variar.
 
 ## Rubrica
 
 - A
-    - Entregue um testbench capaz de testar o projeto.
+    - aplica uma curva de aceleração na velocidade.
 - B 
-    - O componente faz uso de generics para configuração interna.
+    - possuir número de passos a serem executados.
 - C
-    - Criou um componente em VHDL que é responsável pelo controle do LED 
-    - Esse componente possui um sinal de entrada de 4 bits que controla a frequência do LEDs, mapeado para as chaves SW.
-    - Esse componente possui um sinal de EN, mapeado para o botão KEY0
+    - aciona o motor de passos e possui um sinal de: 
+        - EN (que liga e desliga o motor)
+        - DIR (que controla a direção na qual o motor gira)
+        - VEL[1:0] (quatro velocidades de rotação)
 - D 
     - Entregou o tutorial
 - I

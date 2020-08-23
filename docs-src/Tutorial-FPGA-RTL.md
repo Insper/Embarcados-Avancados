@@ -1,15 +1,10 @@
 # Tutorial 1 - FPGA - RTL
 
-!!! success "Revisão 2020-2"
-    - [x] quartus 20.01
-    - [x] passos
-    - [x] teoria/ texto
-    - [ ] spellcheck
-    
-    Melhorar como gravar FPGA.
+!!! success "2020-2"
+    - Material atualizado.
 
 Essa primeira entrega é um aquecimento de VHDL e FPGA, iremos criar um hardware dedicado na FPGA para controlar os LEDs com base nos sinais de entradas dos botões. 
-A ideia é passarmos por todo o processo de desenvolvimento de um projeto em FPGA.
+A ideia é passarmos por todo o processo de desenvolvimento de um projeto em FPGA e com VHDL.
 
 !!! tip 
     Para quem já fez Design de Computadores isso é uma revisão, quem ainda não fez vai ver isso lá.
@@ -230,7 +225,7 @@ Esse erro é referente a não termos indicado para o Quartus qual a frequência 
 !!! note ""
     Assembler aqui é diferente do assembler de um programa como **C**. De uma olhada nessa [referência](https://people.ece.cornell.edu/land/courses/ece5760/Quartus/Quartus_compile.html) para maiores detalhes.
 
-### Synopsys Design Constraints File - `.sdc`
+### Synopsys Design Constraints File: `.sdc`
 
 Devemos adicionar um novo arquivo ao projeto que irá indicar para a ferramenta quais são as condições de contorno do projeto. Para isso: `File` :arrow_right: `New File` :arrow_right: `Synopsys Design Constraints File` :arrow_right: `Save As`:
 
