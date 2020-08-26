@@ -56,7 +56,7 @@ Vamos adicionar um arquivo ao projeto recém criado:
 
 - `File` :arrow_right:  `New` :arrow_right:  `VHDL File`
 - `File` :arrow_right:  `save as` :arrow_right:   
-  - name: `Tutorial_FPGA_RTL.vhd` 
+  - name: `Lab1_FPGA_RTL.vhd` 
 - 🆗
      
 Inicialize o arquivo com o conteúdo a seguir:
