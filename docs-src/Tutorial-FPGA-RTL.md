@@ -283,7 +283,7 @@ Com o projeto compilando o Quartus gera um arquivo binário na pasta output_file
 Nessa etapa você deve clicar em Auto Detect, essa etapa irá ler via JTAG todos os dispositivos que estão conectados no **JTAG chain**, você irá notar que irão aparecer dois dispositivos:
 
 - `SOCVHPS`: ARM Cortex A7
-- `5CSXFC6D`: FPGA
+- `5CSXFC6D6`: FPGA
 
 > Talvez seja necessário configurar o Linux para reconhecer o JTAG, siga os passos em: [Configurando USB Blaster Linux](https://github.com/Insper/Z01.1/wiki/Infraestrutura-Detalhada#configurando-o-usb-blaster).
 
