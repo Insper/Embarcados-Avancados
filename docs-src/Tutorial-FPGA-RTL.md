@@ -43,6 +43,8 @@ No Quartus: `File` ➡️`New Project Wizard`
 ??? tip "Wizard"
     ![](figs/Tutorial-FPGA-RTL:wizard.png)
 
+<button class="button0" id="0:wizard" onClick="progressBut(this.id);">Cheguei Aqui!</button>
+
 !!! note "**Outras referências**"
     Se precisar de outro material como referência, tem um tutorial da Terasic: [DE10-Standard_My_First_Fpga.pdf	](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual)
 
@@ -103,6 +105,9 @@ Inicialize o arquivo com o conteúdo a seguir:
 
     end rtl;
     ```
+
+
+<button class="button0" id="1:toplevel" onClick="progressBut(this.id);">Cheguei Aqui!</button>
 
 !!! info
     Esse código poderia ser mais elegante, mas vamos deixar assim para facilitar o entendimento.
@@ -190,6 +195,9 @@ A interface do `Pin Planner` exibe os pinos/ bancos disponíveis da FPGA para se
 
 ![Pin Planner](figs/Tutorial-FPGA-RTL:Assigments.png)
 
+
+<button class="button0" id="2:pinplanner" onClick="progressBut(this.id);">Cheguei Aqui!</button>
+
 ??? note "Flexibilidade FPGA"
      Normalmente atribuímos a FPGA uma flexibilidade lógica, mas note a flexibilidade que ela possui quanto a definição de nível de sinal de cada pino. Isso permite ao desenvolvedor de hardware inúmeras opções de uso e de novas configurações. 
 
@@ -253,6 +261,8 @@ Essas linhas indicam para a ferramenta que o sinal `fpga_clk_50` é um sinal de 
     Recompile o projeto e note que não existe mais erros críticos no projeto.
 
 
+<button class="button0" id="3:sdc" onClick="progressBut(this.id);">Cheguei Aqui!</button>
+
 
 ### RTL Viewer 
 
@@ -279,6 +289,8 @@ Nessa etapa você deve clicar em Auto Detect, essa etapa irá ler via JTAG todos
 
 ![](figs/Tutorial-FPGA-RTL:programming.png)
 
+<button class="button0" id="4:gravando" onClick="progressBut(this.id);">Cheguei Aqui!</button>
+
 ## Exercícios
 
 :beginner: : Fácil
@@ -290,4 +302,4 @@ Nessa etapa você deve clicar em Auto Detect, essa etapa irá ler via JTAG todos
 
 ## Entrega 1
 
-:bangbang: Siga para a [Entrega 1](/Entrega-1)
+:bangbang: Siga para a [Entrega 1](Entrega-1)

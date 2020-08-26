@@ -2,8 +2,10 @@
 site_name: 'Eletiva: Embarcados Avançados (SoC e Linux Embarcado)'
 
 theme:
-  feature:
-    tabs: true
+  features:
+    - instant
+    - navigation.expand
+    - tabs: true
   name: 'material'
   palette:
       primary: 'white'
@@ -23,6 +25,7 @@ repo_name: 'Insper/Embarcados-Avancados'
 repo_url: 'https://github.com/insper/Embarcados-Avancados'
 edit_uri: 'https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/'
 site_url: 'https://insper.github.io/Embarcados-Avancados/'
+
 nav:
   - Home: index.md
   - Projeto:
@@ -66,6 +69,13 @@ nav:
       - '2019/Pedro-OpenCV.md'
       - '2019/Martim-F1.md'
       - '2019/Toranja-DevDriver.md'
+
+# extras
+extra_css:
+  - css/progress.css
+ 
+extra_javascript:
+  - 'js/progress.js'
 
 # Extensions
 markdown_extensions:
