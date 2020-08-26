@@ -48,7 +48,7 @@ tutoriais existe uma entrega com nota) e de um tutorial que deve ser criado ao l
   
 ## Infraestrutura
 
-Para facilitar o andamento do curso, estamos enviando um SSD com os softwares listados [aqui](/info-FPGA-e-Softwares/). Iremos com o kit [DE10-Standard](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1081).
+Para facilitar o andamento do curso, estamos enviando um SSD com os softwares listados [aqui](/info-FPGA-e-Softwares). Iremos com o kit [DE10-Standard](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1081).
  
 ##  Dinâmica
 
