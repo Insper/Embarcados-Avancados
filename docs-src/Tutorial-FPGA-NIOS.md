@@ -91,7 +91,7 @@ Nessa etapa iremos adicionar um processador e a infraestrutura mínima necessár
 Para começarmos:
 
 1. Copie a pasta da `Lab1_FPGA_RTL/` renomeando para `Lab2_FPGA_NIOS/`
-2. Abra o projeto dessa nova pasta `Lab2_FPGA_NIOS/` no Quartus
+2. Abra o projeto dessa nova pasta `Lab1_FPGA_RTL/` no Quartus
 3. Abra o Platform Designer:
     - **Quartus** :arrow_right: `Tools` :arrow_right: `Platform Designer`
 4. Adicione os seguintes periféricos e suas configurações:
