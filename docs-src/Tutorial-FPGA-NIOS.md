@@ -90,7 +90,7 @@ Nessa etapa iremos adicionar um processador e a infraestrutura mínima necessár
 
 Para começarmos:
 
-1. Copie a pasta da `Lab1_FPGA_NIOS/` renomeando para `Lab2_FPGA_NIOS/`
+1. Copie a pasta da `Lab1_FPGA_RTL/` renomeando para `Lab2_FPGA_NIOS/`
 2. Abra o projeto dessa nova pasta `Lab2_FPGA_NIOS/` no Quartus
 3. Abra o Platform Designer:
     - **Quartus** :arrow_right: `Tools` :arrow_right: `Platform Designer`
@@ -103,7 +103,7 @@ Para começarmos:
       - `PIO (Parallel I/O) Intel FPGA IP`
         - Width: **6**
         - Direction: **Output**
-    - `NIOS II`
+    - `NIOS II Processor`
         - Type: **NIOS II/e**
 
 Você deve obter algo similar a:
