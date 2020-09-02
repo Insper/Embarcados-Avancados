@@ -12,6 +12,8 @@ A ideia dessa entrega é que vocês trabalhem um pouco mais com o VHDL e que tam
 
 Esse componente deve controlar as quatro fases de um motor de passos (vocês receberam junto ao kit) de forma a girar o motor nos dois sentidos e com algumas velocidades diferentes.
 
+<button class="button0" id="0:comecando" onClick="progressBut(this.id);">Cheguei Aqui!</button>
+
 ## Exemplo
 
 Para facilitar o desenvolvimento está disponível na pasta (`/Entrega1/`) no repositório da disciplina um projeto e um componente que controla o motor de passos, mas não realiza tudo o que está sendo pedido aqui. Nesse exemplo o motor de passos gira apenas para um sentido (`DIR` não funciona), o sinal de `EN` não controla se o motor vai estar ligado/desligar e o motor possui apenas duas velocidades (`VEL`).

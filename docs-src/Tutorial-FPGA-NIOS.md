@@ -17,7 +17,7 @@ Entrega no git:
 
 - **Pasta:** `Lab2_FPGA_NIOS`
 
-## Soft processor
+### Soft processor
 
 Projetos em HDL (VHDL, Verilog, ... ) não são muito flexíveis, cada alteração no projeto implica na modificação do Hardware o que não é algo tão simples. Além da dificuldade de implementar as modificações, temos o tempo de teste e compilação do projeto que não é nada imediato.
 
@@ -42,23 +42,22 @@ A adição de periféricos e funcionalidades extras ao Soft Processor (podemos p
 !!! note ""
     Hard Processor são os microprocessadores tradicionais, que não sofrem alteração de HW.
 
-Existem SoCs que não são implementados em FPGAs, mas ainda assim concentram uma série de outros componentes em um único chip, é o caso dos SoCs utilizados em celulares. Esses dispositivos, muitas vezes utilizam SoCs que possuem além da parte de processamento, sistemas responsáveis pela comunicação pela: interface gráfica; gestão des câmeras; comunicação 4g; .... A Qualcomm é uma das empresas lideres do setor com o dispositivo [SnapDragon](https://www.qualcomm.com/snapdragon/processors/comparison).
 
-## Plataform Designer (**PD**)
+### Plataform Designer (**PD**)
 
 !!! note ""
-    O Platform Designer era chamado de **PD**, ainda da para achar muitas coisas com essa referência
+    O Platform Designer era chamado de **QSYS**, ainda da para achar muitas coisas com essa referência
 
 O Platform Designer é um software disponível pela Intel e integrado no Quartus que possibilita desenvolvermos sistemas complexos de forma simples e visual. Com ele podemos adicionar e conectar **Intellectual property cores** (IP Core) para desenvolvermos uma aplicação de maneira rápida e visual.
 
 Os IP cores podem ser da própria [Intel](https://www.intel.com/content/www/us/en/products/programmable/intellectual-property.html), de terceiros ou proprietários.
 
-??? note "Quer se aprofundar?"
+!!! note "Indo além"
     Tem um curso online que mostra como o PD funciona: [Introduction to Platform Designer](https://www.intel.com/content/www/us/en/programmable/support/training/course/iqsys101.html)
 
-## NIOS
+### NIOS
 
-[NIOS](https://en.wikipedia.org/wiki/Nios_II) é o soft processor fornecido pela Altera-Intel e integrado na ferramenta. O NIOS é baseado na arquitetura do MIPS com [arquitetura de 32 bits](https://www.intel.com/content/www/us/en/programmable/documentation/iga1420498949526.html#iga1409259423560) e controle de exceções, barramento de comunicação, controle de memória, ... .
+[NIOS](https://en.wikipedia.org/wiki/Nios_II) é o soft processor fornecido pela Altera-Intel e integrado na ferramenta. O NIOS é baseado na arquitetura do MIPS com [arquitetura de 32 bits](https://www.intel.com/content/www/us/en/programmable/documentation/iga1420498949526.html#iga1409259423560), controle de exceções, barramento de comunicação, controle de memória, ... .
 
 A figura a seguir descreve os componentes essenciais do NIOS (azul) e o que é customizável (cinza).
 
@@ -66,12 +65,20 @@ A figura a seguir descreve os componentes essenciais do NIOS (azul) e o que é c
 
 - Referência: [Processor Architecture](https://www.intel.com/content/www/us/en/programmable/documentation/iga1420498949526.html#iga1409259423560)
 
-O NIOS suporta que novas instruções sejam adicionadas a seu instruction set, essas instruções são implementadas em HDL e inseridas no core de forma transparente ao desenvolvedor. Existem graus de instruções customizadas: Combinacional; Multiciclo; Estendidas; Que faz uso do banco de registradores original ou aquelas que adicionam novos registradores. Para maiores detalhes consulte o documento:
+O NIOS suporta que novas instruções sejam adicionadas ao seu instruction set, essas instruções são implementadas em HDL e inseridas no core de forma transparente ao desenvolvedor. Existem graus de instruções customizadas: combinacional; multiciclo; estendidas; Que faz uso do banco de registradores original ou aquelas que adicionam novos registradores. 
 
-- [Nios II Custom Instruction User
-Guide](https://www.intel.com/content/dam/altera-www/global/en_US/pdfs/literature/ug/ug_nios2_custom_instruction.pdf)
+!!! note "Indo além"
+    Para maiores detalhes de como customizar o NIOS consulte o documento:
+
+    - [Nios II Custom Instruction User
+    Guide](https://www.intel.com/content/dam/altera-www/global/en_US/pdfs/literature/ug/ug_nios2_custom_instruction.pdf)
 
 ## Criando um simples SoC
+
+!!! success ""
+    Começando implementar.
+
+<button class="button0" id="0:comecando" onClick="progressBut(this.id);">Começando tutorial!</button>
 
 Nessa etapa iremos adicionar um processador e a infraestrutura mínima necessária para sua operação, iremos incluir no projeto:
 
@@ -103,35 +110,45 @@ Você deve obter algo similar a:
 
 ![Clock e Reset](figs/Tutorial-FPGA-NIOS:unconnected.png)
 
+
+<button class="button0" id="1:criando_SOP" onClick="progressBut(this.id);">Cheguei aqui!</button>
+
 ### Conectando Clock e Reset
 
 Os periféricos do **PD** são como sistemas independentes (pensem em cada bloco como um chip), que necessitam ser conectados no mínimo a um Clock e a um Reset. O sistema pode operar em diversos domínios de clocks e resets diferentes, portanto essa conexão deve ser feita pelo desenvolvedor.
 
-Pense nessa etapa como sendo similar ao `port map` do VHDL, porém em um nível superior. O **PD** será responsável por fazer a compatibilidade dos sinais para nós. Conecte todos os sinais de clocks  e reset aos sinais `clk` e `clk_rst` do periférico `clk_0` e também o `debug_reset` do NIOS, conforme figura a seguir:
+Pense nessa etapa como sendo similar ao `port map` do VHDL, porém em um nível de abstração superior. O **PD** será responsável por fazer a compatibilidade dos sinais para nós. Conecte todos os sinais de clocks  e reset aos sinais `clk` e `clk_rst` do periférico `clk_0` e também o `debug_reset` do NIOS, conforme figura a seguir:
 
 ![Clock e Reset](figs/Tutorial-FPGA-NIOS:rst.png)
 
+<button class="button0" id="2:clk_rst" onClick="progressBut(this.id);">Cheguei aqui!</button>
+
 ### Conectando barramento
 
-A Altera define dois tipos de barramento de dados para o **PD**: Avalon e AXI. O barramento Avalon é a principal maneira de conectar um periférico ao NIOS (processador), já o AXI é o padrão de barramento do ARM, que será utilizado posteriormente.
+A Intel define dois tipos de barramento de dados para o **PD**: Avalon e AXI (isso é herança da Altera). O barramento Avalon é a principal maneira de conectar um periférico ao NIOS (processador), já o AXI é o padrão de barramento do ARM, que será utilizado posteriormente.
 
-O barramento Avalon define basicamente dois tipos de comunicação: **Memory Mapped (MM)** e **Avalon Streaming Interface (ST)**. Para mais informações acesse o documento [Avalon Interface Specifications](https://www.altera.com/content/dam/altera-www/global/en_US/pdfs/literature/manual/mnl_avalon_spec.pdf).
+O barramento Avalon define basicamente dois tipos de comunicação: **Memory Mapped (MM)** e **Avalon Streaming Interface (ST)**. 
+
+!!! note "Indo além"
+    Para mais informações acesse o documento [Avalon Interface Specifications](https://www.altera.com/content/dam/altera-www/global/en_US/pdfs/literature/manual/mnl_avalon_spec.pdf).
 
 O principal barramento do NIOS é o [memory mapped](https://en.wikipedia.org/wiki/Memory-mapped_I/O), e todo periférico conectado ao **NIOS** (processador) deverá possuir esse barramento. A Altera disponibiliza conversores e adaptadores para podermos transformar uma forma de comunicação na outra.
 
 > No tutorial 3 iremos desenvolver um periférico proprietário que será conectado nesse barramento.
 
-Note que o NIOS possui dois barramentos do tipo **MM**: `data_master` e `intruction_master`. Como o NIOS II é um processador baseado na arquitetura  [harvard](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.faqs/ka3839.html) ele possui dois barramentos: um para dados e outro para o programa (instrução).
+Note que o NIOS possui dois barramentos do tipo **MM**: `data_master` e `intruction_master`. Como o NIOS II é um processador baseado na arquitetura  [harvard](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.faqs/ka3839.html) ele possui dois caminhos distintos de acesso a memória: um para dados e outro para o programa (instrução).
 
-Nessa nossa topologia de hardware só possuímos uma única memória (**on_chip_memory**) que será a princípio compartilhada entre o dado e programa (temos uma perda de eficiência aqui, já que a memória só poderá ser acessada por um barramento por vez), **depois vamos melhorar isso!**
+Nessa nossa topologia de hardware só possuímos uma única memória (**on_chip_memory**) que será a princípio compartilhada entre dados e programa (temos uma perda de eficiência aqui, já que a memória só poderá ser acessada por um barramento por vez), **depois vamos melhorar isso!**
 
-Vamos, portanto conectar todos os periféricos (**PIO**, **UART** e **OnChip Memory**) ao barramento `data_master` e vamos conectar somente a memória (**OnChip Memory**) ao barramento de instrução (`instruction_master`), resultando na montagem a seguir:
+Devemos conectar todos os periféricos (**PIO**, **UART** e **OnChip Memory**) ao barramento `data_master` e conectar ==somente a memória== (**OnChip Memory**) ao barramento de instrução (`instruction_master`), resultando na montagem a seguir:
 
 ![](figs/Tutorial-FPGA-NIOS:connected.png)
 
+<button class="button0" id="3:conectando_burramentos" onClick="progressBut(this.id);">Cheguei aqui!</button>
+
 ### Mapa de memória
 
-Após realizarmos as conexões, devemos especificar o endereço de memória de cada periférico. São duas as maneiras de realizarmos isso: manual ou automática.
+Após realizarmos as conexões, devemos especificar o endereço de memória de cada periférico. Existem duas maneiras de realizarmos isso: manual ou automática.
 
 Na manual, pode-se alocar os periféricos em endereços de memória a sua escolha, tomando os cuidados para não haver sobreposição dos endereços. Na automática, deixamos para a ferramenta alocar os periféricos nos endereços corretos.
 
@@ -139,20 +156,23 @@ Para realizar a alocação automática: `System` :arrow_right: `Assign Base Addr
 
 ![Automatic Memmory Map](figs/Tutorial-FPGA-NIOS:mem-mapped.png)
 
+<button class="button0" id="4:mapa de memoria" onClick="progressBut(this.id);">Cheguei aqui!</button>
+
 ### Configurando NIOS
 
 Agora precisamos configurar o NIOS para utilizar a memória recém conectada a ele, de um clique duplo no NIOS, para abrir a janela de **Parameters**.
 
-Em `Vector` :arrow_right: `configure`:
+Em `Parameters` :arrow_right: `Vector`, configure:
 
-- Configure:
-    - Reset vector memory: **onchip_memory**
-    - Execption vector memory: **onchip_memory**
+- Reset vector memory: **onchip_memory**
+- Execption vector memory: **onchip_memory**
 
 ![](figs/Tutorial-FPGA-NIOS:vector.png)
 
 !!! tip "Dica"
     O nome **onchip_memory** pode alterar de acordo com o seu projeto e o endereço também (isso depende da ordem na qual os componentes foram inseridos).
+
+<button class="button0" id="5:configurando_nios" onClick="progressBut(this.id);">Cheguei aqui!</button>
 
 ### Export
 
@@ -160,13 +180,17 @@ A coluna export do **Platform Designer** indica quais sinais serão exportados d
 
 De um clique duplo na coluna export na linha do sinal **external_connection** do component **PIO** e de o nome de LEDs para esse sinal.
 
+<button class="button0" id="6:export" onClick="progressBut(this.id);">Cheguei aqui!</button>
+
 ### Finalizando
 
 Ao final de tudo você deve obter algo como a figura a seguir:
 
 ![Qsys final](figs/Tutorial-FPGA-NIOS:MM.png)
 
-Salve o projeto com o nome `niosLab2.qsys` na pasta do projeto e clique em `Generate HDL`, para o Qsys gerar o projeto.
+Salve o projeto com o nome `niosLab2.qsys` na pasta do projeto e clique em `Generate HDL` para o **PD** gerar o projeto.
+
+<button class="button0" id="7:finalizando_fpga" onClick="progressBut(this.id);">Cheguei aqui!</button>
 
 ### Utilizando o componente
 
@@ -201,9 +225,12 @@ O esquemático (gerado pelo `Platform Designer` :arrow_right: `View` :arrow_righ
 
 ![Schematic](figs/Tutorial-FPGA-NIOS:schematic.png)
 
+
+<button class="button0" id="8:componente" onClick="progressBut(this.id);">Cheguei aqui!</button>
+
 ### Finalizando
 
-Clique em finish e deixe tudo como o padrão, agora o qsys irá criar o sistema e todos os componentes que nele foi configurado. O Quartus dará uma alerta indicando que é necessário incluir alguns arquivos no Quartus para que ele tenha acesso ao projeto recém criado no Qsys:
+Clique em finish e deixe tudo como o padrão, agora o qsys irá criar o sistema e todos os componentes que nele foram configurados. O Quartus dará uma alerta indicando que é necessário incluir alguns arquivos no Quartus para que ele tenha acesso ao projeto recém criado no **PD**:
 
 ![Add arquivos](figs/Tutorial-FPGA-NIOS:addQuartus.png)
 
@@ -214,6 +241,8 @@ No Quartus: `Project` :arrow_right: `Add/remove files in project` e adicione o a
 Resultando em:
 
 ![Files](figs/Tutorial-FPGA-NIOS:file.png)
+
+<button class="button0" id="9:add_qip_quartus" onClick="progressBut(this.id);">Cheguei aqui!</button>
 
 ### Criando o toplevel
 
@@ -262,10 +291,11 @@ Agora é necessário criar um vhdl que vai ser nosso toplevel `LAB2_VHDL_NIOS.vh
 !!! note
     Note que não estamos utilizando o sinal de reset (o `_n` indica que o reset é negativo, ou seja, em `0`). 
 
+<button class="button0" id="10:toplevel" onClick="progressBut(this.id);">Cheguei aqui!</button>
 
 ## Programando o NIOS - Soft processor
 
-Agora que temos o projeto criado e a FPGA gravada com o novo hardware, que inclui o processador NIOS. Precisamos gerar e gravar um programa que realiza o controle dos LEDs. Para isso iremos abrir a IDE **NIOS Software Build for Eclipse** (SBT) que possui todo o toolchain necessário para desenvolvermos firmware para o NIOS.
+Agora que temos o **projeto programado na FPGA**, com o hardware que inclui o processador NIOS. Precisamos gerar e gravar um programa que realiza o controle dos LEDs. Para isso iremos abrir a IDE **NIOS Software Build for Eclipse** (SBT) que possui todo o toolchain necessário para desenvolvermos firmware para o NIOS.
 
 No Quartus: `Tools` :arrow_right: `Nios II Software Build ...` e uma interface do eclipse será aberta.
 
@@ -285,7 +315,7 @@ A Altera resolveu isso criando uma camada de abstração de hardware ( **H** ard
 
 - `SOPC Information File Name`:
      - Na pasta do projeto, procure pelo arquivo : **niosLab2.sopc**
-        - Esse arquivo é criado pelo Qsys quando o projeto é compilado, e está na pasta do projeto.
+        - Esse arquivo é criado pelo **PD** quando o projeto é compilado, e está na pasta do projeto.
 - `Project name`: **niosLab2**
 
 - `Project template`: **Hello World**
@@ -300,6 +330,8 @@ A Altera resolveu isso criando uma camada de abstração de hardware ( **H** ard
 Você deve obter algo como:
 
 ![](figs/Tutorial-FPGA-NIOS:project.png)
+
+<button class="button0" id="11:nios_criando_projeto" onClick="progressBut(this.id);">Cheguei aqui!</button>
 
 ### Analisando e configurando o bsp
 
@@ -321,6 +353,8 @@ Isso abrirá uma interface de configuração para o bsp. Diversas são as opçõ
 
 ![](figs/Tutorial-FPGA-NIOS:bsp.png)
 
+<button class="button0" id="12:bsp" onClick="progressBut(this.id);">Cheguei aqui!</button>
+
 ### Jtag-UART small driver
 
 Note que no nosso projeto no **PD** o periférico jtag-uart não teve seu sinal de interrupção conectado no NIOS, isso dificulta o acesso a uart, já que o firmware não será interrompido caso um novo dado chegue (gets) ou na transmissão (puts). O driver deve ficar fazendo um polling no periférico para verificar o envio e recepção dos dados. Para isso funcionar, devemos ativar uma opção no driver do jtag_avalon no bsp:
@@ -329,9 +363,11 @@ Note que no nosso projeto no **PD** o periférico jtag-uart não teve seu sinal 
 
 ![Jtag Small Driver](figs/Tutorial-FPGA-NIOS:smallDriver.png)
 
+<button class="button0" id="13:jtab_small_driver" onClick="progressBut(this.id);">Cheguei aqui!</button>
+
 ### Gerando o bsp
 
-Toda vez que o bsp for editado ou o hardware alterado (qsys) deve-se regenerar o bsp :
+Toda vez que o bsp for editado ou o hardware alterado (**Platform Designer**) deve-se regenerar o bsp :
 
 De volta no eclipse, devemos gerar os arquivos bsp. Para isso clique em: `niosLab2_bsp` :arrow_right: `NIOS II` :arrow_right: `Generate BSP`
 
@@ -353,6 +389,13 @@ int main()
 Com o `hello_word.c` aberto (é necessário para o eclipse saber qual projeto você quer embarcar), clique em: `Run` :arrow_right: `Run` :arrow_right: `NIOS II Hardware`. Isso fará com que a aplicação seja descarregada na memória do Qsys que alocamos para o Nios e que o hardware seja, reiniciado para executar o firmware. Quando o firmware for executado, abra a aba do eclipse **NIOS II console**:
 
 ![printf](figs/Tutorial-FPGA-NIOS:console.png){width=500}
+
+<button class="button0" id="14:programando_nios" onClick="progressBut(this.id);">Cheguei aqui!</button>
+
+!!! tip "Programando"
+    <video width="660" height="360" controls>
+      <source src="http://54.162.111.146/shared/soc/SoC-Tutorial-FPGA-NIOS.mp4" type="video/mp4">
+    </video> 
 
 ### Blink LED
 
@@ -390,8 +433,6 @@ int main(void){
 }
 ```
 
-> Embarque no NIOS e veja o resultado nos LEDS!
+Embarque no NIOS e veja o resultado nos LEDS!
 
-## Entrega 2
-
-Siga para a [Entrega 2](/Entrega-2/)
+<button class="button0" id="15:piscaled" onClick="progressBut(this.id);">Cheguei aqui!</button>

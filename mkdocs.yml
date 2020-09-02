@@ -75,6 +75,7 @@ extra_css:
   - css/progress.css
  
 extra_javascript:
+  - 'js/dom-confetti.js'
   - 'js/progress.js'
 
 # Extensions
