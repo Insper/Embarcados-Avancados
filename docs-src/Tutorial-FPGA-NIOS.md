@@ -185,13 +185,16 @@ De um clique duplo na coluna export na linha do sinal **external_connection** do
 
 <button class="button0" id="6:export" onClick="progressBut(this.id);">Cheguei aqui!</button>
 
-### Finalizando
+### Salvando
 
 Ao final de tudo você deve obter algo como a figura a seguir:
 
 ![Qsys final](figs/Tutorial-FPGA-NIOS:MM.png)
 
-Salve o projeto com o nome `niosLab2.qsys` na pasta do projeto e clique em `Generate HDL` para o **PD** gerar o projeto.
+==Salve o projeto com o nome `niosLab2.qsys` na pasta do projeto e clique em `Generate HDL` para o **PD** gerar o projeto.==
+
+!!! tip
+    `File` :arrow_right: `Save_as`: `niosLab2.qsys`
 
 <button class="button0" id="7:finalizando_fpga" onClick="progressBut(this.id);">Cheguei aqui!</button>
 
