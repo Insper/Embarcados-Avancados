@@ -180,6 +180,9 @@ A coluna export do **Platform Designer** indica quais sinais serão exportados d
 
 De um clique duplo na coluna export na linha do sinal **external_connection** do component **PIO** e de o nome de LEDs para esse sinal.
 
+!!! note 
+    Repare que o componente `Clock Source` também possui o export dos sinais: `clk` e `reset`, isso foi feito automáticamente na criação do projeto.
+
 <button class="button0" id="6:export" onClick="progressBut(this.id);">Cheguei aqui!</button>
 
 ### Finalizando
