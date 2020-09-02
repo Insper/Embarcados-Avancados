@@ -320,7 +320,7 @@ A Altera resolveu isso criando uma camada de abstração de hardware ( **H** ard
 1. No **NIOS II Software Build for Eclipse** :arrow_right: `File` :arrow_right: `NIOS II Application and BSP from template`
 
 - `SOPC Information File Name`:
-     - Na pasta do projeto, procure pelo arquivo : **niosLab2.sopc**
+     - Na pasta do projeto, procure pelo arquivo : **niosLab2.sopcinfo**
         - Esse arquivo é criado pelo **PD** quando o projeto é compilado, e está na pasta do projeto.
 - `Project name`: **niosLab2**
 
