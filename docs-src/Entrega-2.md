@@ -34,11 +34,11 @@ Dicas:
     - Curva de aceleração no motor
 - B
     - Implementar `VEL` no SWx
+    - Interrupção na leitura do botão
 - C
     - Memória de dados separada da de programa
     - JTAG gerando interrupção.
     - PIO dedicado a ler botões (SWx) e controlar `EN` e `DIR`
-    - Interrupção na leitura do botão
 - D 
     - Entregou somente tutorial
 - I
