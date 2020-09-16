@@ -8,7 +8,7 @@
 
     Melhorar especificação de componente (mapa de registradores?)
 
-Nesse tutorial deseja-se desenvolver um periférico customizado para o processador NIOS, esse periférico será dedicado ao controle dos LEDs da placa, o periférico terá um banco de registradores interno para seu controle, e interface de "I/O mapeado em memória".
+Nesse tutorial iremos desenvolver um periférico customizado para o processador NIOS, esse periférico será dedicado ao controle dos LEDs da placa. O periférico terá um banco de registradores interno para seu controle, e interface de "I/O mapeado em memória" para que possamos controlar-lo do NIOS (pelo código em C).
 
 ## Começando
 
@@ -24,7 +24,7 @@ Entrega no git:
 
 ## IP Cores
 
-Intelectual Proprety Core ([IP Core](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/cgn_c_ip_overview.htm)) são componentes descritos em HDL que possibilitam ser utilizados em múltiplos projetos de Hardware. O Platform Designer (PD) fornece além da interface visual de conexão um padrão de comunicação entre os componentes, facilitando assim o uso desses IPs.
+Intelectual Proprety Core ([IP Core](https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/cgn_c_ip_overview.htm)) são componentes descritos em HDL que podem ser utilizados em múltiplos projetos de Hardware. O Platform Designer (PD) fornece além da interface visual de conexão entre esses IPs um padrão de comunicação entre os componentes, facilitando assim o uso desses IPs.
 
 Além das centenas de projetos espalhados pela internet (github), existe um repositório muito completo de IP cores opensource que concentra grande variedade de projeto:
 
@@ -46,19 +46,27 @@ A Intel-FPGA define duas categorias de barramento de dados para o PD: **Avalon**
 
 ### Avalon
 
-Documentação completa dos tipos do barramento AVALON:
+!!! info 
+    Documentação completa dos barramento AVALON:
 
-- https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/manual/mnl_avalon_spec.pdf
+    - https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/manual/mnl_avalon_spec.pdf
 
-O barramento Avalon define basicamente dois tipos de comunicação: **Memory Mapped (MM)** e **Avalon Streaming Interface (ST)**, conforme descrição a seguir extraído da documentação:
+O barramento Avalon define basicamente dois tipos de módulos: **Memory Mapped (MM)** e **Avalon Streaming Interface (ST)**, conforme descrição a seguir extraído da documentação:
 
--  **Avalon Streaming Interface (Avalon-ST)** — an interface that supports the unidirectional flow of data, including multiplexed streams, packets, and DSP data.
--  **Avalon Memory Mapped Interface (Avalon-MM)** — an address-based read/write interface typical of master–slave connections.
--  Avalon Conduit Interfae — an interface type that accommodates individual signals or groups of signals that do not fit into any of the other Avalon types. You can connect conduit interfaces inside a Platform Designer system. Or, you can export them to make connections to other modules in the design or to FPGA pins.
--  Avalon Tri-State Conduit Interface (an interface to support connections to off-chip peripherals. Multiple peripherals can share pins through signal multiplexing, reducing the pin count of the FPGA and the number of traces on the PCB.
--  Avalon Interrupt Interface — an interface that allows components to signal events to other components.
--  Avalon Clock Interface — an interface that drives or receives clocks.
--  Avalon Reset Interface — an interface that provides reset connectivity.
+-  **Avalon Streaming Interface (Avalon-ST)** — *an interface that supports the unidirectional flow of data, including multiplexed streams, packets, and DSP data.*
+
+-  **Avalon Memory Mapped Interface (Avalon-MM)** — *an address-based read/write interface typical of master–slave connections.*
+
+-  **Avalon Conduit Interfae** — *an interface type that accommodates individual signals or groups of signals that do not fit into any of the other Avalon types. You can connect conduit interfaces inside a Platform Designer system. Or, you can export them to make connections to other modules in the design or to FPGA pins.*
+
+-  **Avalon Tri-State Conduit Interface** - *(an interface to support connections to off-chip peripherals. Multiple peripherals can share pins through signal multiplexing, reducing the pin count of the FPGA and the number of traces on the PCB.*
+
+-  **Avalon Interrupt Interface** — *an interface that allows components to signal events to other components.*
+-  **Avalon Clock Interface*** — *an interface that drives or receives clocks.*
+-  **Avalon Reset Interface** — *an interface that provides reset connectivity.*
+
+!!! tip
+    Iremos trabalhar com o tipo: **Avalon-MM** como maneira de conectar o periférico ao NIOS.
 
 ## Projeto 
 
