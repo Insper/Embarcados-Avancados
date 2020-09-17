@@ -1,12 +1,7 @@
 # Tutorial 3 - FPGA - IP
 
-!!! success "Revisão 2020-2"
-    - [x] quartus 20.01
-    - [x] teoria/ texto
-    - [ ] passos validados 
-    - [x] spellcheck
-
-    Melhorar especificação de componente (mapa de registradores?)
+!!! success "2020-2"
+    - Material atualizado.
 
 Nesse tutorial iremos desenvolver um periférico customizado para o processador NIOS, esse periférico será dedicado ao controle dos LEDs da placa. O periférico terá um banco de registradores interno para seu controle, e interface de "I/O mapeado em memória" para que possamos controlar-lo do NIOS (pelo código em C).
 
@@ -533,6 +528,12 @@ Após adicionar todos os sinais que fazem parte do periférico `led_peripheral` 
 Após a simulação finalizar, note os valore dos sinais `avs_write`, `avs_writedata`, `avs_LEDs` e como eles mudam no tempo em respeito ao que foi feito no código.
 
 ![](figs/Tutorial-FPGA-IP:modelsim3.png)
+
+## Praticando
+
+1. Faça o periférico ter 6 saídas (6 LEDs)
+1. Faça os LEDs piscarem por HW, adicione um registrador para controlar a frequência.
+1. Como colocar as chaves no periférico para que o NIOS tenha acesso a elas?
 
 ## Entrega 3
 
