@@ -1,8 +1,7 @@
 # Visão geral
 
-!!! success "Revisão 2020-2"
-    - [x] teoria/ texto
-    - [x] spellcheck
+!!! success "2020-2"
+    - Material atualizado.
 
 A FPGA contida no kit DE10-Standard é um chip SoC que em um único dispositivo que possui duas partes: o fabric da FPGA e um Hardware Process System (HPS). HPS é o termo utilizado pela Intel-Altera para definir a parte da FPGA que é fixa e relativa ao processador ARM A9 (pode ser outro ARM, depende da família da FPGA).
  
@@ -69,16 +68,14 @@ A SDRAM deve ser usada com muita cautela, pois ela será compartilhada com o Lin
 
 ## Aplicações
 
-Com isso agora é possível unir o melhor dos dois mundos: flexibilidade e paralelismo da FPGA com o melhor dos processadores embarcados ARM. Nos nossos projetos, o NIOS será substituído pelo ARM, possibilitando maior poder de processamento e também suportando a execução de sistemas mais complexos, tal como o Linux.
+Agora é possível unir o melhor dos dois mundos: flexibilidade e paralelismo da FPGA com o melhor dos processadores embarcados, o ARM. Daqui para frente nossos projetos, **o NIOS será substituído pelo ARM**, possibilitando maior poder de processamento e também suportando a execução de sistemas operacionais mais complexos, tal como o Linux.
 
-Pense na aplicação de uma imagem que será processada pela FPGA de modo a aumentar o throughtput do sistema. Essa imagem seria lida, por exemplo por uma câmera USB conectada no HPS, como geralmente o HPS executa um Linux, temos facilidade de acesso ao driver desse dispositivo.
+Vamos fazer um exercício mental e imaginar uma aplicação que irá processar uma imagem em um sistema embarcada, com o SoC podemos fazer que a imagmem seja processada pela FPGA de modo a aumentar o throughtput do sistema. Essa imagem seria lida, por exemplo por uma câmera USB conectada no HPS (ARM), como geralmente o HPS executa um Linux, temos facilidade de acesso ao driver desse dispositivo.
 
-A imagem será então lida via o driver e então alocada na memória SDRAM, o endereço da memória assim como as propriedades do processamento serão transferidas para um periférico customizado no Fabric da FPGA via a interface LT-AXI. O periférico que está em modo wait, após ser configurado, começa a ler a imagem na memória SDRAM, processar e salvar o resultado na própria memória. Ao final da conversão uma interrupção é gerada e o Linux irá tratar o dado.
+A imagem será então lida via o driver e alocada na memória SDRAM, o endereço da memória assim como as propriedades do processamento serão transferidas para um periférico customizado no Fabric da FPGA via a interface LT-AXI. O periférico que está em modo wait, após ser configurado, começa a ler a imagem na memória SDRAM, processar e salvar o resultado na própria memória. Ao final da conversão uma interrupção é gerada e o Linux irá tratar o dado.
 
-Enquanto o periférico processa o dado, a aplicação pode de forma concorrente, ler uma nova imagem e já alocar em um novo endereço de memória, pois o processamento e a aquisição agora funcionam de forma simultânea.
+Enquanto o periférico processa a imagem, a aplicação pode de forma concorrente, ler uma nova imagem e já alocar em um novo endereço de memória, pois o processamento e a aquisição agora funcionam de forma simultânea.
 
 ## Próximos passos
 
-Vamos agora subir executar um Linux no ARM, iremos nesse momento trabalhar com uma imagem já pronta. Siga para o próximo tutorial, onde iremos  configurar nossa infra para podermos gerar códigos para o ARM.
-
-Siga para [Tutorial HPS BuildSystem](Tutorial-HPS-BuildSystem).
+Vamos agora executar um Linux no ARM, iremos nesse momento trabalhar com uma imagem já pronta e fornecida pelo fabricante do kit. Siga para o próximo tutorial, onde iremos configurar nossa infra para podermos gerar códigos para o ARM.

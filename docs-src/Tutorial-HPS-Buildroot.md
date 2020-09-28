@@ -42,6 +42,9 @@ Na pasta do buildroot recém clonada, execute o seguinte comando:
 $ make ARCH=arm menuconfig
 ```
 
+!!! tip
+    Se ser algum erro, talvez seja necessário instalar o `libncurses-dev` via apt.
+
 Ele irá abrir uma tela de configuração a seguir:
 
 ![](figs/Tutorial-HPS-Buildroot-7.png)

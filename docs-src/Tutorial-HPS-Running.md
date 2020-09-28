@@ -1,20 +1,19 @@
 # Tutorial 4 - HPS - Linux embarcado
 
-!!! success "Revisão 2020-2"
-    - [x] passos
-    - [x] teoria/ texto
-    - [x] spellcheck
+!!! success "2020-2"
+    - Material atualizado.
 
 !!! danger
      Nesse tutorial mexemos com gravação de disco, se errar o dispositivo pode corromper seus arquivos!!!
      
-Vamos nessa etapa executar um linux de exemplo fornecido pela Terasic, para isso, será necessário programarmos um SDcard com a imagem. Esse Linux é um ubuntu para sistemas embarcados. Vamos executar os seguintes passos:
+Vamos nessa etapa executar um linux de exemplo fornecido pela Terasic, para isso, será necessário programarmos um SDcard com a imagem. Vamos executar os seguintes passos para isso:
 
-1. Download e gravar a Imagem padrão (iso) no SDcard
+1. Download e gravar a Imagem da Teraisc (`.iso`) no SDcard
 1. Insira o SDCard na FPGA
 1. Conecte o USB na porta UART (perto da porta Ethernet)
 1. Conecte a alimentação
 1. Conecte-se ao terminal via UART
+1. Executar comandos
 
 ## Começando
 
@@ -26,7 +25,7 @@ Para seguir esse tutorial é necessário:
 
 ## Imagem padrão (sdcard) 
 
-Utilizaremos uma imagem (.iso) já gerado com as especificações e que já possui todo o sistema necessário para executar o linux no HPS (incluindo boot loader, kernel e filesystem), essa imagem é um ubuntu para ARM com algumas configurações específicas para FPGA Cyclone V (vamos ver isso mais para frente).
+Utilizaremos uma imagem (`.iso`) já gerada para o ARM da placa e que já possui todo o sistema necessário para executar o linux no HPS (incluindo boot loader, kernel e filesystem), essa imagem foi criada com a distribuição [Linaro](https://www.linaro.org/).
 
 !!! note "Download"
     Faça o download da imagem **Linux Console (Kernel 4.5)** do site da terasic:
@@ -36,6 +35,8 @@ Extraia o arquio `de10_standard_linux_console.img` do arquivo zipado, esse `.img
 
 !!! note ""
     Insira o cartão de memória no computador
+    
+    - Use o adaptador fornecido.
 
 Quando inserirmos um disco externo no linux o mesmo o associa a um 'device' na pasta `/dev/`, para sabermos qual o nome do device que foi atribuído ao SDcard, podemos usar o comando `dmesg`, que exibe o log do sistema operacional e nele podemos ver qual foi o último hardware detectado e qual device foi atribuído:
 
@@ -121,11 +122,9 @@ Para conectarmos nessa porta, precisamos usar um programa do tipo: emulador de t
 $ screen /dev/ttyUSB0 115200,cs8
 ```
 
-Para sair do terminal:
+!!! tip
+    Para sair do terminal: <kbd>ctr</kbd>+<kbd>A</kbd> : quit
 
-```
-ctrl+A : quit
-```
 
 !!! tip
     Se você usa um editor (emacs/ vscode/ ...) procure por plugins que fazem a conexão serial (`serial-term`), ai não precisa usar o `screen`.
@@ -135,6 +134,6 @@ ctrl+A : quit
 Faça o loggin no linux:
 
 - user: `root`
-- pass: ``
+- pass: 
 
 Legal! Vamos agora descobrir como criar programas para esse Linux!

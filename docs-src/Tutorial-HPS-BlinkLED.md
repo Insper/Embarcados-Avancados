@@ -1,9 +1,7 @@
 # Tutorial 6 - HPS - BlinkLED
 
-!!! success "Revisão 2020-2"
-    - [x] passos
-    - [x] teoria/ texto
-    - [ ] spellcheck
+!!! success "2020-2"
+    - Material atualizado.
 
 Nesse tutorial iremos compilar um programa para o HPS (Arm Cortex A) que será capaz de controlar os LEDs e ler os botões da placa que estão conectados ao HPS.
 
@@ -20,7 +18,7 @@ Faríamos um programa que seria executado no ARM HPS sem nenhum sistema operacio
 !!! note ""
     - [Altera Bare Metal User Guide](https://www.intel.com/content/www/us/en/programmable/documentation/lro1424280108409.html)
 
-Nessa maneira, a aplicação deve ser capaz de realizar toda a inicialização de HW necessária para que o processador rode corretamente. Se a aplicação for executada sobre um sistema operacional, toda essa etapa é de compilação é responsabilidade do SO. Para isso é aconselhável utilizar a IDE da ARM chamada de [DS-5](https://developer.arm.com/tools-and-software/embedded/legacy-tools/ds-5-development-studio)
+Nessa maneira a aplicação deve ser capaz de realizar toda a inicialização de HW necessária para que o processador rode corretamente. Se a aplicação for executada sobre um sistema operacional, toda essa etapa é de compilação é responsabilidade do SO. Para isso é aconselhável utilizar a IDE da ARM chamada de [DS-5](https://developer.arm.com/tools-and-software/embedded/legacy-tools/ds-5-development-studio)
 
 ## Sistema operacional
 
@@ -35,13 +33,11 @@ Com o uso de um sistema operacional a parte referente ao HW é responsabilidade 
 
  As perdas também são grandes: maior ocupação de memória, maior latências, **boot lento**...
 
-## Programa para piscar led!
+### Software pisca led
 
-Nesse tutorial iremos compilar um programa e executar no Linux Embarcado. esse programa será executado no [user space](http://www.linfo.org/kernel_space.html). Para isso iremos utilizar a toolchain definida no [tutorial anterior](Tutorial-HPS-BuildSystem).
+Iremos compilar um programa e executar no Linux Embarcado. esse programa será executado no [user space](http://www.linfo.org/kernel_space.html). Para isso iremos vamos usar a toolchain do [tutorial anterior](Tutorial-HPS-BuildSystem).
 
-Iremos utilizar como base o código exemplo da Terasic disponível no repositório: [DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC/my_first_hps](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/my_first_hps).
-
-E crosscopilar esse código para o nosso HPS utilizando o Makefile da pasta.
+Iremos utilizar como base o código exemplo da Terasic disponível no repositório: [DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC/my_first_hps](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/my_first_hps). E crosscopilar esse código para o nosso HPS utilizando o Makefile da pasta.
 
 ### Sobre o programa
 
@@ -54,7 +50,7 @@ Os pinos são controlados pelo [periférico GPIO](https://www.intel.com/content/
 
 ![](figs/Tutorial-HPS-SoC:gpio.png)
 
-Em sistemas baremetal podemos simplesmente criar um ponteiro que aponta para a região de memória que desejamos alterar, no linux não podemos fazer isso de forma direta pois os sistemas operacionais trabalham com mapa de memórias onde o endereço 'virtual' não representa o endereço real (lembre de Sys-HW-SW). No linux, para termos acesso a memória real devemos mapear real na virtual, usamos o comando `mmap`:
+Em sistemas baremetal podemos simplesmente criar um ponteiro que aponta para a região de memória que desejamos alterar, no linux não podemos fazer isso de forma direta (via userspace) pois os sistemas operacionais trabalham com mapa de memórias onde o endereço 'virtual' não representa o endereço real (lembre de Sys-HW-SW). No linux, para termos acesso a memória real devemos mapear a memória real na virtual usando o comando `mmap`:
 
 ```c
 int main(int argc, char **argv) {
@@ -68,20 +64,19 @@ int main(int argc, char **argv) {
 		printf( "ERROR: could not open \"/dev/mem\"...\n" );
 		return( 1 );
 	}
-
 	virtual_base = mmap( NULL, HW_REGS_SPAN, ( PROT_READ | PROT_WRITE ), MAP_SHARED, fd, HW_REGS_BASE );
 ```
 
 Agora o ponteiro `virtual_base` aponta para o periférico GPIO, e podemos manipular esse endereço igual fazíamos em Computação Embarcada.
 
 ```c
-	while(1){
-		scan_input = alt_read_word( ( virtual_base + ( ( uint32_t )(  ALT_GPIO1_EXT_PORTA_ADDR ) & ( uint32_t )( HW_REGS_MASK ) ) ) );		
-		//usleep(1000*1000);		
-		if(~scan_input&BUTTON_MASK)
-			alt_setbits_word( ( virtual_base + ( ( uint32_t )( ALT_GPIO1_SWPORTA_DR_ADDR ) & ( uint32_t )( HW_REGS_MASK ) ) ), BIT_LED );
-		else    alt_clrbits_word( ( virtual_base + ( ( uint32_t )( ALT_GPIO1_SWPORTA_DR_ADDR ) & ( uint32_t )( HW_REGS_MASK ) ) ), BIT_LED );
-	}	
+while(1){
+  scan_input = alt_read_word( ( virtual_base + ( ( uint32_t )(  ALT_GPIO1_EXT_PORTA_ADDR ) & ( uint32_t )( HW_REGS_MASK ) ) ) );		
+  if(~scan_input&BUTTON_MASK)
+    alt_setbits_word( ( virtual_base + ( ( uint32_t )( ALT_GPIO1_SWPORTA_DR_ADDR ) & ( uint32_t )( HW_REGS_MASK ) ) ), BIT_LED );
+  else    
+    alt_clrbits_word( ( virtual_base + ( ( uint32_t )( ALT_GPIO1_SWPORTA_DR_ADDR ) & ( uint32_t )( HW_REGS_MASK ) ) ), BIT_LED );
+}	
 ```
 
 !!! note
@@ -89,7 +84,7 @@ Agora o ponteiro `virtual_base` aponta para o periférico GPIO, e podemos manipu
     Por exemplo, a linha `SOCEDS_ROOT ?= $(SOCEDS_DEST_ROOT)` usa a variável `SOCEDS_DEST_ROOT` que foi configurara no tutorial anterior, assim como o `arm-linux-gnueabihf-`...
 
 !!! example "Tarefa"
-    1. clone o repositório
+    1. clone o repositório: https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD
     1. entre na pasta `Demonstration/SoC/hps_gpio`
     1. execute o comando `make`
     
@@ -135,11 +130,17 @@ Com o cartão de memória no `host` (seu computador) copie o arquivo binário: `
     
     > A função sync é blocante, ficará travada enquanto o linux faz o flush dos dados.
 
-
 !!! example "Tarefas"
-    1. Coloque o SDCARD de volta na fpga e veja se o programa executa (`/home/root/hps_gpio`)
+    1. coloque o SDCARD de volta na fpga 
+    1. acesse via terminal e execute o programa (`/home/root/hps_gpio`)
        - os leds da placa devem piscar.
-    1. Modifique o programa Faça o programa ler apenas duas vezes o botão, e depois disso termina a aplicação !
+       
+### Praticando
+
+Para praticar um pouco.
+
+!!! example "Tarefa"
+    - Faça o programa ler apenas duas vezes o botão, e depois disso termina a aplicação!
 
 ### Fluxo de desenvolvimento
 
