@@ -44,6 +44,7 @@ nav:
       - 'Tutorial-HPS-Running.md'
       - 'Tutorial-HPS-BuildSystem.md'
       - 'Tutorial-HPS-BlinkLED.md'
+      - 'Extra: configurando rede': 'info-HPS-ethernet.md'
       - 'Entrega-4.md'
       - 'Tutorial-HPS-Kernel.md'
       - 'Tutorial-HPS-Buildroot.md'

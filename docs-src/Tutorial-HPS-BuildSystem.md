@@ -1,10 +1,8 @@
 # Tutorial 5 - HPS - Infra
 
-!!! success "Revisão 2020-2"
-    - [x] passos
-    - [x] teoria/ texto
-    - [x] spellcheck
-
+!!! success "2020-2"
+    - Material atualizado.
+    
 Vamos instalar o ferramental (compiladores) que será utilizado para compilar o kernel e o filesystem. Deveremos instalar o `soceds` e o `linaro-gcc` .
 
 ## Intel SOCDES
