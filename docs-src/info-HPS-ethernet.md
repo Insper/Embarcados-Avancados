@@ -146,14 +146,14 @@ Crie um script com o nome `S60MAC.sh` na pasta `/etc/init.d` e adicione o códig
         printf "Setting ip: "
         ifconfig eth0 down
         ifconfig eth0 up
-        udchpc eth0
+        udhcpc eth0
         [ $? = 0 ] && echo "OK" || echo "FAIL"
         ;;
     *)
         exit 1
         ;;
 
-    easc
+    esac
     ```
     
 === "Cenário 2"
@@ -169,7 +169,7 @@ Crie um script com o nome `S60MAC.sh` na pasta `/etc/init.d` e adicione o códig
     *)
         exit 1
         ;;
-    easc
+    esac
     ```
 
 Torne o script executável: `chmod +x S60MAC.sh`
