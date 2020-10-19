@@ -133,7 +133,7 @@ Já reparou nas pastas `/etc/rc*` do seu sistema operacional? É lá que reside 
 
 Dentro de cada pasta `rc.x` os scripts possuem nomes que ditam a sequência na qual os scripts da pasta serão chamados.
 
-## Adicionando script ao boot 
+## Adicionando script ao boot - systemd
 
 Crie um script com o nome `S60MAC.sh` na pasta `/etc/init.d` e adicione o código a seguir (depende de qual cenário você irá usar):
 
