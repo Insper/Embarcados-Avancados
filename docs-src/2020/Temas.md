@@ -26,6 +26,7 @@ Trabalhar com preprocessamento e extração de features para uso de redes neurai
 Alunos:
 
 - Vinicius Gomes de Lima
+- Lucca Delchiaro Costabile
     
 ## DOOM
 
@@ -45,7 +46,7 @@ Alunos:
 
 - Antonio João Andraues Junior
 - Samuel Vinicius Granato de Barros
-- Lucca Delchiaro Costabile
+- Gabriel Francato
     
 ## PS3 Hack
 
