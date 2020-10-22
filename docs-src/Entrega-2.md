@@ -27,7 +27,8 @@ Dicas:
 
 ## Rubrica
 
-(incremental)
+??? tip "Entrega - google forms"
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfH7w1wPogmTPI-Vesg1lyC1sn3i7aVDBf8w5le2mImOCjZ8A/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 
 - A 
     - Insira um RTOS no NIOS para fazer o controle da aplicação, **ou**

@@ -43,6 +43,9 @@ Montagem final:
 
 ## Rubrica
 
+??? tip "Entrega - google forms"
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc3lJYnCC9-0_C7FLGhDyDKQJ1c73MlFih8AYnk1TKQOVpIEw/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
 - A
     - aplica uma curva de aceleração na velocidade.
 - B 

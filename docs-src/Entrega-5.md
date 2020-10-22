@@ -1,38 +1,31 @@
 # 👁 Entrega 5
 
-Nessa entrega iremos criar um webserver no `target` que exibirá uma imagem 
-capturada por uma câmera USB conectada ao SoC. Para isso será necessário 
-configurar o kernel para possuir o driver USB que lida com a câmera USB,
-o buildroot para ter os programas que serão usados para criar o server e 
-ler a imagem e um programa para orquestrar tudo isso.
+Vocês devem criar uma sistema embarcado que possui um webserver e uma página web que permita sensoriar e controlar o hardware por uma interface simples.
 
-!!! note "Dicas"
-    - Driver webcam
-        - Plug no seu PC com linux e verifique qual driver ele utiliza. 
-        Acrescente o mesmo no `target`
-    - Aquisição de imagens
-        - opencv
-        - [v4l2grab](https://github.com/twam/v4l2grab)
-    - Servidor web
-        - python flask 
-        - apache
-        - node
-        
-A entrega deve conter os arquivos de configuração (.config) do kernel e do
-buildroot assim como o programa do webserver.
+A página deve permitir:
 
-### Rubrica:
+1. Controlar o LED da placa
+1. Fazer a leitura do botão da placa
 
-- A+
-    - Detecta movimento na imagem e acende o LED do SoC
-- A
-    - Exibe a imagem em tempo real (vídeo)
-- B
-    - Exibe a imagem estática (foto)
-- C
-    - Captura uma imagem e a salva no embarcado (sem web server)
-- D 
-    - Entregou somente tutorial
-- I
-    - Não entregou nada
+## Rubrica:
 
+
+??? tip "Entrega - google forms"
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeNCO510HqudFuT0fVJJzuOhWue2AgHw5qwrE1C54XyjBLi8A/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
+### C
+
+- webserver que permite:
+    - controlar o botão do LED da placa
+    - leitura da chave da placa (status)
+
+### B
+
+- O deploy e configuração do webserver deve ser feito via um makefile 
+- O sistema deve ser inicializado automaticamente
+
+### A
+
+- Leitura e exibição da IMU da placa (dica: usar código exemplo ([hps_gsensor](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/hps_gsensor)))
+
+- Escrever no LCD da placa (dica: usar código exemplo [hps_lcd](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/hps_lcd))

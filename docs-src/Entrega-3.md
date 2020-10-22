@@ -34,6 +34,9 @@ A tabela anterior mapeia para cada endereço do periférico uma funcionalidade d
 
 ## (rubrica C) Software
 
+??? tip "Entrega - google forms"
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfQisAY242qZ7YgpRIeHXcmg_bz1qhaXUZAPM-HOlPiyYbWFQ/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
 Além da parte de HW, iremos desenvolver uma biblioteca em C que irá abstrair a interface com esse periférico. 
 O periférico deve possuir um driver capaz de interagir com o periférico. Iremos padronizar algumas funções a fim de definirmos um padrão de interface:
 
