@@ -7,6 +7,9 @@ Vamos instalar o ferramental (compiladores) que será utilizado para compilar o 
 
 ## Intel SOCDES
 
+!! ! warning
+    Usando o ssd fornecido? Pode pular essa parte de instalar o soceds, siga para instalar o toolchain
+
 Você irá precisar ter o software `SOCEDS` instalado, e ele precisa ser a mesma versão do Quartus. Link para download:
    
 - [Intel SoC FPGA Embedded Development Suite](http://fpgasoftware.intel.com/soceds/)

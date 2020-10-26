@@ -195,6 +195,12 @@ Uma vez acabado o processo de geração do FS, podemos gerar alguns gráficos mu
 
 Os gráficos são salvos na pasta: `output/graphs/`
 
+!!! tip
+    Instale as dependências
+    
+    ``` bash
+    sudo apt install graphviz python-matplotlib python-numpy
+    ```
 
 !!! example ""
     Gere os três gráficos e analise os resultados
