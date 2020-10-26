@@ -214,14 +214,22 @@ Esse comando faz com que o kernel do linux seja compilado em uma versão compact
 
 1^: https://stackoverflow.com/questions/22322304/image-vs-zimage-vs-uimage 
 
-o zImage é salvo em:
+!!! tip "Kernel compilado"
+    o zImage é salvo em:
 
-- `arch/arm/boot/zImage`
+    - `arch/arm/boot/zImage`
 
 !!! note "zImage"
     Esse arquivo é o binário que contém o kernel do linux e será executado no sistema embarcado.
  
-Agora devemos atualizar o kernel que está no SDCard, para isso segue o tutorial no `/info-SDcard.md/` : Atualizando o kernel
+!!! tip "Atualizando o SDCARD"
+    Agora devemos atualizar o kernel que está no SDCard, para isso basta:
+    
+    1. inserir o sdcard no pc
+    1. montar a partição 1
+    1. substituir o zImage que está no SDCARD pelo o gerado dentro da pata `arch/arm/boot/zImage`
+    1. ejetar o sdcard ou executar o comando `sync`
+    1. coloque o SDCARD na placa e ligar a FPGA
 
 ## Executando
 
@@ -232,8 +240,20 @@ $ uname -a
 Linux buildroot 4.14.0 #1 SMP Mon Jul 16 21:22:58 -03 2018 armv7l GNU/Linux
 ```
 
-### Mouse/ Teclado
+## Mouse/ Teclado?
 
-!!! example 
-    Plugue um mouse USB na placa e verifique se a mesma funciona! 
+Mouse e teclado funcionam de imediato? Tentei plugar um mouse USB na placa, ele é reconhecido pelo Linux? Não deveria. Para funcionar você deve voltar nas configurações do kernel do linux e inserir os drivers que gereciam USB e HID. Compilar, substituit o zImage no sdcard e testar novamente.
 
+!!! info "Como verificar se o mouse está funcionando?"
+    1. Digite 'lsusb', ele deve mostrar que reconheceu um mouse
+    1. Após conectar o mouse, digite `tail dmesg`, ele deve mostrar que reconheceu um novo device USB e que associou ele com um mouse
+    1. O mouse no linux é montado em `/dev/input/mice`, para ver se está funcionando você pode executar: `cat /dev/input/mice`, mexa o mouse para ver se aparece alguma coisa na tela
+
+!!! tip "Human Interface Devices (HID)"
+    HID é um tipo de dispositivo reconhecido pelo Kenel do Linux como um dispositivo de interface com o usuário, esse tipo de dispositivo é normalmente reconhecido automaticamente pelos kernels, poís eles implementam um padão de comunicação.
+    
+    - https://www.kernel.org/doc/html/latest/hid/index.html
+    
+    O USB também possui uma classificação de dispositivos do tipo HID, que facilita o uso dos mesmos pelo kernel:
+    
+    - https://en.wikipedia.org/wiki/USB_human_interface_device_class
