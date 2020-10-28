@@ -95,7 +95,7 @@ Para começarmos:
 3. Abra o Platform Designer:
     - **Quartus** :arrow_right: `Tools` :arrow_right: `Platform Designer`
 4. Adicione os seguintes periféricos e suas configurações:
-    - `On-Chip Memmory (RAM or ROM Intel FPGA IP)`
+    - `On-Chip Memory (RAM or ROM Intel FPGA IP)`
           - Type: **RAM**
           - Total Memory size: **32768 bytes**
     - `JTAG UART Intel FPGA IP`
