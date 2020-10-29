@@ -230,7 +230,7 @@ Para testarmos no nosso sistema embarcados, temos que extrair o arquivo `rootfs.
 
 ## Testando 
 
-Siga o tutorial em [SDCard - FileSystem](/info-SDcard/).
+Siga o tutorial em [SDCard - FileSystem](/Embarcados-Avancados/info-SDcard/).
 Lá está comentando como extrair o `rootfs.tar` para o nosso cartão de memória.
 
 

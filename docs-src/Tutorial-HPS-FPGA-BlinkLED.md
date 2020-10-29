@@ -99,7 +99,7 @@ Será necessário seguir os passos a seguir:
     que encontrava nos tutorias da internet não funcionavam.
 
 !!! note
-    Para funcionar é necessário realizar o comando via o shell do embedded
+    Para funcionar é necessário realizar o comando via o shell do oembedded
 
 Execute os seguintes comandos:
 

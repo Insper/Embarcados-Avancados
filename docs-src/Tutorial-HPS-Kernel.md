@@ -13,14 +13,14 @@ Nesse tutorial iremos compilar o kernel do Linux para o ARM do nosso SoC usando 
 Clone o kernel do linux :
 
 ``` bash
-$ git clone  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+$ git clone https://github.com/torvalds/linux 
 $ cd linux
 ```
 
 > Isso pode demorar um pouquinho, o kernel é um projeto grande.
 
 !!! tip
-    Também tem um mirror no github: https://github.com/torvalds/linux
+    O repositório oficial do kernel do linus é o : https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git porém clonar dele é normalmente muito mais lento que do github (que é apenas um mirror do repositório oficial).
 
 Vamos trabalhar com a versão `4.4` do kernel que é uma versão com: `Long Time Suport` (LTS), ou seja, será mantida por muito mais tempo que as outras versões. A versão 4.4 foi lançada em 10 de Janeiro e será mantida oficialmente até 2021, ela também é uma versão chamada de Super LTS, com suporte estendido até 2036. 
 
