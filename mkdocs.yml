@@ -49,6 +49,10 @@ nav:
       - 'Tutorial-HPS-Kernel.md'
       - 'Tutorial-HPS-Buildroot.md'
       - 'Entrega-5.md'
+      - 'Tutorial-HPS-DeviceDriver1.md'
+      - 'Tutorial-HPS-kernel-module.md'
+      - 'Tutorial-HPS-kernel-chardriver.md'
+        #      - 'Tutorial-HPS-kernel-chardriver-led.md'
   - 'HPS + FPGA':
       - 'Tutorial-HPS-FPGA-BlinkLED.md'
       - 'Tutorial-HPS-FPGA-VGA.md'
