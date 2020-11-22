@@ -28,10 +28,6 @@ site_url: 'https://insper.github.io/Embarcados-Avancados/'
 
 nav:
   - Home: index.md
-  - Projeto:
-      - 'Projeto-Overview.md'
-      - 'Projeto-Rubrica.md'
-      - 'Projeto-Entrega-1.md'
   - FPGA:
       - 'Tutorial-FPGA-RTL.md'
       - 'Entrega-1.md'
@@ -55,6 +51,7 @@ nav:
         #      - 'Tutorial-HPS-kernel-chardriver-led.md'
   - 'HPS + FPGA':
       - 'Tutorial-HPS-FPGA-BlinkLED.md'
+      - 'Tutorial-HPS-FPGA-kernel-char-led-driver.md'
       - 'Tutorial-HPS-FPGA-VGA.md'
       - 'Entrega-6.md'
       - 'Entrega-Extra-1.md'
@@ -67,6 +64,9 @@ nav:
       - 'info-HPS-Serial.md'
       - 'info-HPS-ethernet.md'
   - 'Tutoriais Alunos':
+      - 'Projeto-Overview.md'
+      - 'Projeto-Rubrica.md'
+      - 'Template markdown': 'https://github.com/Insper/Embarcados-Avancados-Template' 
       - 2020:
           - '2020/Temas.md'
       - 2019:
