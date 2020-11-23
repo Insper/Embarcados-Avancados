@@ -52,11 +52,12 @@ nav:
   - 'HPS + FPGA':
       - 'Tutorial-HPS-FPGA-BlinkLED.md'
       - 'Tutorial-HPS-FPGA-kernel-char-led-driver.md'
+  - 'Acelerando':
+      - 'Tutorial-Acelerando-HLS.md'
+  - 'Extras':
       - 'Tutorial-HPS-FPGA-VGA.md'
       - 'Entrega-6.md'
       - 'Entrega-Extra-1.md'
-  - 'Acelerando':
-      - 'Tutorial-Acelerando-HLS.md'
   - 'Úteis':
       - 'info-FPGA-e-Softwares.md'
       - 'info-VHDL.md'
