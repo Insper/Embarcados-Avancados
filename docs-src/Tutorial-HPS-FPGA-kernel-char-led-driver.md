@@ -18,7 +18,7 @@ $ sopc-create-header-files --single hps_0.h --module hps_0
 
 Esse comando irá gerar um arquivo `hps_0.h` que contém as informações de endereço de memória que podemos usar para acessar os periféricos na FPGA:
 
-```
+```c
 /*
  * Macros for device 'led_pio', class 'altera_avalon_pio'
  * The macros are prefixed with 'LED_PIO_'.
