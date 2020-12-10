@@ -18,7 +18,7 @@ $ sopc-create-header-files --single hps_0.h --module hps_0
 
 Esse comando irá gerar um arquivo `hps_0.h` que contém as informações de endereço de memória que podemos usar para acessar os periféricos na FPGA:
 
-```
+```c
 /*
  * Macros for device 'led_pio', class 'altera_avalon_pio'
  * The macros are prefixed with 'LED_PIO_'.
@@ -120,11 +120,12 @@ Com isso, podemos agora usar a função `iowrite32` e escrever no periférico PI
 
 A função deve ficar como:
 
-```
+``` c
 static ssize_t dev_write(struct file *filep, const char *buffer, size_t len, loff_t *offset){
    copy_from_user(message, buffer, len);
    size_of_message = len;                 // store the length of the stored message
    printk(KERN_INFO "EBBChar: Received %zu characters from the user\n", len);
+   
    // escreve no hardware!
    iowrite32(message[0], p_led);  // corsi: write to LED
    return len;
