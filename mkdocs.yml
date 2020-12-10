@@ -70,6 +70,7 @@ nav:
       - 'Template markdown': 'https://github.com/Insper/Embarcados-Avancados-Template' 
       - 2020:
           - '2020/Temas.md'
+          - '2020/PS3-Linux-Tutorial/index.md'
       - 2019:
           - '2019/Tutoriais.md'
           - '2019/Gabriel-TensorFlow.md'
