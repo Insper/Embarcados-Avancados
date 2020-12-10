@@ -229,8 +229,8 @@ We now have our file system properly ready to go. We are only left with the init
 
     cp /tmp/petitboot/mnt/sda/rootfs.cpio.gz /linux/boot
     
-    !!! warning
-        Check first if the /linux/boot doesn't already have the vmlinux(kernel) inside before executing the next command.
+!!! warning
+    Check first if the /linux/boot doesn't already have the vmlinux(kernel) inside before executing the next command.
 
     cp /tmp/petiboot/mnt/sda/vmlinux /linux/boot
 
