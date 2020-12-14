@@ -1,0 +1,1569 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://insper.github.io/Embarcados-Avancados/2020/python/">
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.7">
+    
+    
+      
+        <title>Soc & Python - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.19753c6b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../css/progress.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="pink">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#soc-python" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Soc & Python
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-RTL/" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-1/" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS/" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-2/" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS-IP/" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-3/" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      HPS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS/" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Running/" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BuildSystem/" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BlinkLED/" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Extra: configurando rede
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-4/" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Kernel/" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Buildroot/" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-5/" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-DeviceDriver1/" class="md-nav__link">
+      Device Driver
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-module/" class="md-nav__link">
+      Kernel module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-chardriver/" class="md-nav__link">
+      Char device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      HPS + FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS + FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-BlinkLED/" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-nav__link">
+      Char LED device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    <label class="md-nav__link" for="nav-5">
+      Acelerando
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Acelerando" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-Acelerando-HLS/" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+    <label class="md-nav__link" for="nav-6">
+      Extras
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Extras" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        Extras
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-VGA/" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-6/" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-Extra-1/" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+    <label class="md-nav__link" for="nav-7">
+      Úteis
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Úteis" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Úteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-FPGA-e-Softwares/" class="md-nav__link">
+      Infraestrutura de HW e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-VHDL/" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-SDcard/" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-Serial/" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" checked>
+    <label class="md-nav__link" for="nav-8">
+      Tutoriais Alunos
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutoriais Alunos" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Rubrica/" class="md-nav__link">
+      Rubrica
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/Insper/Embarcados-Avancados-Template" class="md-nav__link">
+      Template markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-4" type="checkbox" id="nav-8-4" checked>
+    <label class="md-nav__link" for="nav-8-4">
+      2020
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2020" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-4">
+        <span class="md-nav__icon md-icon"></span>
+        2020
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Temas/" class="md-nav__link">
+      Temas 20b
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PS3-Linux-Tutorial/" class="md-nav__link">
+      PS3 Hack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Android/" class="md-nav__link">
+      Android para Raspbery Pi 3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../LED-HW/" class="md-nav__link">
+      Periférico para controlar matriz de led da família WS281x
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../LED-Linux/" class="md-nav__link">
+      Driver linux para acender leds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Soc & Python
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Soc & Python
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#comecando" class="md-nav__link">
+    Começando
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivacao" class="md-nav__link">
+    Motivação
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introducao" class="md-nav__link">
+    Introdução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#montando-um-modulo" class="md-nav__link">
+    Montando um módulo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalando-o-modulo" class="md-nav__link">
+    Instalando o módulo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rapidez-do-modulo-comparacao-entre-c-e-python" class="md-nav__link">
+    Rapidez do módulo - comparação entre C e Python
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../metropolis/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Audio/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cripto/" class="md-nav__link">
+      Criptografia em Hardware Fpga
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-5" type="checkbox" id="nav-8-5" >
+    <label class="md-nav__link" for="nav-8-5">
+      2019
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2019" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-5">
+        <span class="md-nav__icon md-icon"></span>
+        2019
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Tutoriais/" class="md-nav__link">
+      Tutoriais 2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Gabriel-TensorFlow/" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Leo-OpenCL/" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Elisa-Yocto/" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Pedro-OpenCV/" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Martim-F1/" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Toranja-DevDriver/" class="md-nav__link">
+      Bruno Toranja - Linux Device Driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#comecando" class="md-nav__link">
+    Começando
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivacao" class="md-nav__link">
+    Motivação
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introducao" class="md-nav__link">
+    Introdução
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#montando-um-modulo" class="md-nav__link">
+    Montando um módulo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalando-o-modulo" class="md-nav__link">
+    Instalando o módulo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rapidez-do-modulo-comparacao-entre-c-e-python" class="md-nav__link">
+    Rapidez do módulo - comparação entre C e Python
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/2020/python/index.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="soc-python">Soc &amp; Python<a class="headerlink" href="#soc-python" title="Permanent link">&para;</a></h1>
+<ul>
+<li><strong>Alunos:</strong> Gustavo Braga, Henry Rocha e Thomas Queiroz</li>
+<li><strong>Curso:</strong> Engenharia da Computação</li>
+<li><strong>Semestre:</strong> 6</li>
+<li><strong>Contato:</strong> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#117;&#115;&#116;&#97;&#118;&#111;&#98;&#98;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#103;&#117;&#115;&#116;&#97;&#118;&#111;&#98;&#98;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#110;&#114;&#121;&#102;&#114;&#49;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#104;&#101;&#110;&#114;&#121;&#102;&#114;&#49;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#111;&#109;&#97;&#115;&#113;&#98;&#115;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#116;&#104;&#111;&#109;&#97;&#115;&#113;&#98;&#115;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
+<li><strong>Ano:</strong> 2020</li>
+</ul>
+<h2 id="comecando">Começando<a class="headerlink" href="#comecando" title="Permanent link">&para;</a></h2>
+<p>Para seguir esse tutorial é necessário:</p>
+<ul>
+<li><strong>Hardware:</strong> Raspberry Pi</li>
+<li><strong>Softwares:</strong> Python &gt;= 3.5</li>
+</ul>
+<h2 id="motivacao">Motivação<a class="headerlink" href="#motivacao" title="Permanent link">&para;</a></h2>
+<p>Os sistemas embarcados são utilizados com muita frequência no dia a dia para tarefas diversas. Para tarefas que exigem um alto processamento e alta performance, as linguagens que geralmente são utilizadas são as de baixo nível, como por exemplo o C. Por estar mais próxima da linguagem de máquina, isso a torna muito rápida, mas também muito mais complexa de ser utilizada para desenvolvimentos grandes. Por sua vez, o Python é considerado uma das linguagens mais fáceis e intuitivas de serem aprendidas. Porém, como o seu nével é alto, sua performance é muito pior do que outras linguagens, o que a impossibilita de ser utilizada em sistemas embarcados que exigem alta performance, principalmente por conta de restrições de hardware.</p>
+<p>Dito isso, seria muito bom conseguir o melhor dos dois mundos: uma linguagem rápida e que seja fácil de escrever. Para isso, devemos montar um módulo em Python escrito em C, dessa forma podemos utilizá-lo e não perder performance ao escrever Python. Em outras palavras, podemos escrever programas complexos que irão rodar em sistemas embarcados em Python, facilitando o desenvolvimento.</p>
+<h2 id="introducao">Introdução<a class="headerlink" href="#introducao" title="Permanent link">&para;</a></h2>
+<p>Existem diversos modos de extender as funcionalidades do Python. Um desses modos é criar uma biblioteca em C. Esse método leva a aumento de performance, além de possibilitar a chamada de funções e bibliotecas C, em um nível baixo.</p>
+<p>Um módulo em Python pode ser considerado como uma biblioteca, que pode ser importada e utilizada em código por um programa. Exemplos de módulos famosos em Python são <em>math</em>, <em>OpenCV</em>, <em>Numpy</em>, entre outros. O <em>OpenCV</em> por exemplo, exige muitas operações e poder computacional, por isso é implementada em C.</p>
+<p>Nesse tutorial, vamos ver como criar um módulo em C que implementa o Bubble Sort, e, posteriormente, comparar sua performance contra o mesmo algoritmo feito em Python na Raspberry Pi. O Bubble sort foi escolhido pois sua complexidade é O(n^2) no médio e no pior caso, por isso a comparação é muito mais fácil de ser visualizada.</p>
+<h2 id="montando-um-modulo">Montando um módulo<a class="headerlink" href="#montando-um-modulo" title="Permanent link">&para;</a></h2>
+<p>De modo a suportar extensões, o Python API defines um grupo de funções, macros e variáveis que proveem acesso a várias parte do <em>run-time</em> do Python. O Python API é incorporado em um arquivo em C usando o <em>header</em> "Python.h".</p>
+<p>Vamos começar criando um novo arquivo em C.
+<div class="highlight"><pre><span></span><code>touch pysoc.c
+</code></pre></div></p>
+<p>Devemos então incluir as bibliotecas Python. Basta colocar essas duas linhas no começo do arquivo.
+<div class="highlight"><pre><span></span><code><span class="c1">// Configura o tamanho das variáveis para</span>
+<span class="c1">// usar &quot;Py_ssize_t&quot; ao invés de &quot;int&quot; do C.</span>
+<span class="cp">#define PY_SSIZE_T_CLEAN</span>
+<span class="c1">// Inclui a biblioteca do Python.</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Python.h&gt;</span><span class="cp"></span>
+</code></pre></div></p>
+<p>Em seguida vamos definir a função responsável por realizar o Bubble Sort.
+Essa função é como qualquer outra função em C. Ela recebe um vetor (v) e o tamanho dele (n)
+<div class="highlight"><pre><span></span><code><span class="k">static</span> <span class="kt">void</span> <span class="n">bubble_sort</span><span class="p">(</span><span class="kt">long</span> <span class="n">v</span><span class="p">[],</span> <span class="kt">long</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">ssize_t</span> <span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">bool</span> <span class="n">swapped</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">ssize_t</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+                <span class="kt">long</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+                <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+                <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+                <span class="n">swapped</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">swapped</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Agora devemos criar uma função <em>wrapper</em> para essa função. Essa será a função que pode ser chamada dentro do Python.
+Para definir tal função, é necessário o uso de objetos especias, vindos do Python API.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Dentre os objetos especiais, o mais notável é o <code>PyObject</code>.</p>
+<p>Ele é uma estrutura de objeto usada para definir os tipos de objetos para o Python. Todos os objetos Python compartilham algumas informações que são definidas por essa estrutura e todos os outros objetos são uma extensão dela.</p>
+<p>Esse objeto diz ao interpretador do Python como ele deve tratar objetos e seus ponteiros. Por exemplo, configurar o retorno de uma função como um <code>PyObject</code> possibilita que o interpretador reconheca esse retorno um tipo de variável válido de Python.</p>
+</div>
+<p>Vamos começar definindo a função.</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyObject</span> <span class="o">*</span><span class="nf">pysoc_bubble_sort</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Aqui estamos criando uma função chamada <code>pysoc_bubble_sort</code>, que retorna um <code>PyObject</code> e tem dois parâmetros, <code>self</code> e <code>args</code>, ambos <code>PyObject</code>.</p>
+<p>O argumento <code>self</code> aponta para o objeto do módulo para funções nível módulo.
+Caso essa função fosse um método de uma clase, apontaria para uma instância do objeto.</p>
+<p>Já o argumento <code>args</code> é um ponteiro para uma tupla do Python, contendo todos os argumento da função.
+Todos os items da tupla são objetos Python e para que possam ser usados em nossa função C devemos convertê-los para valores C.
+Para realizar essa conversão existe a função <code>PyArg_ParseTuple()</code>. Ela checa os tipos dos argumetos e os converte para valores C.</p>
+<p>Como a função que vamos criar é o Bubble Sort, o único argumento que vamos receber será a própria lista de valores a serem ordenados.
+Vamos então pegar o tamanho da lista passada, que é o primeiro argumento da função <code>bubble_sort</code> definida anteriormente.</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyObject</span> <span class="o">*</span><span class="nf">pysoc_bubble_sort</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Declarando a variável que guardará a lista de valores.</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">int_list</span><span class="p">;</span>
+    <span class="c1">// Verificando se foi realmente passado uma lista como argumento</span>
+    <span class="c1">// caso contrário, retorne NULL.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">&quot;O&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">int_list</span><span class="p">))</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="c1">// Calculando o tamanho da lista passada.</span>
+    <span class="n">Py_ssize_t</span> <span class="n">n</span> <span class="o">=</span> <span class="n">PyObject_Length</span><span class="p">(</span><span class="n">int_list</span><span class="p">);</span>
+    <span class="c1">// Caso o tamanho seja negativo, retorne NULL.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">-1</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Como a API do Python não disponibiliza uma função que converta uma lista de Python para um vetor em C, devemos fazer tal conversão manualmente.
+O código a seguir realiza essa conversão.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Declarando o vetor em C. O tamanho foi obtido anteriormente.</span>
+<span class="kt">long</span> <span class="n">v</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+<span class="c1">// Loop que passa por todos os items da lista passada.</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">Py_ssize_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Pegando o item &quot;i&quot; da lista.</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">val</span> <span class="o">=</span> <span class="n">PyList_GetItem</span><span class="p">(</span><span class="n">int_list</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+    <span class="c1">// Transformando esse item em um &quot;long&quot; do C.</span>
+    <span class="kt">long</span> <span class="n">lval</span> <span class="o">=</span> <span class="n">PyLong_AsLong</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+    <span class="c1">// Caso esse valor seja negativo, ocorreu um erro e devemos retornar NULL.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">lval</span> <span class="o">==</span> <span class="mi">-1</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="c1">// Inserir o item convertido na lista.</span>
+    <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lval</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Agora que temos o tamanho do vetor (<code>n</code>) e o vetor em si (<code>v</code>) podemos chamar a função <code>bubble_sort</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">bubble_sort</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+</code></pre></div>
+<p>Com o término da função, teremos um vetor em C ordenado em ordem crescente.</p>
+<p>Agora devemos retornar esse vetor ordenado. Para que o valor retornado possa ser interpretado pelo Python posteriormente devemos transformar esse vetor em um PyObject, mais especificamente, uma lista.</p>
+<p>Para isso vamos criar uma nova lista com o tamanho <code>n</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyObject</span> <span class="o">*</span><span class="n">ret_list</span> <span class="o">=</span> <span class="n">PyList_New</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</code></pre></div>
+<p>Em seguida, vamos passar por cada item do vetor em C e convertê-lo em PyObject também, mas dessa vez passando para um tipo <em>Long</em> do Python.</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="p">(</span><span class="n">Py_ssize_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Converte o valor em C para um tipo Long do Python.</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">pl</span> <span class="o">=</span> <span class="n">PyLong_FromLong</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="c1">// Caso esse valor seja NULL, ocorreu um erro</span>
+    <span class="c1">// e devemos sair da função.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pl</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="c1">// Inserindo o valor convertido na lista do Python</span>
+    <span class="c1">// e verificando se o retorno dessa função foi -1,</span>
+    <span class="c1">// indicando um erro.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyList_SetItem</span><span class="p">(</span><span class="n">ret_list</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">pl</span><span class="p">)</span> <span class="o">==</span> <span class="mi">-1</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Feito isso, já podemos retornar a lista ordenada.</p>
+<div class="highlight"><pre><span></span><code><span class="k">return</span> <span class="n">ret_list</span><span class="p">;</span>
+</code></pre></div>
+<p>Após declarar a função <code>pysoc_bubble_sort</code> precisamos também indicar ao Python a função de inicialização do módulo.
+Todo módulo precisa de uma função que retorna um <code>PyMODINIT_FUNC</code> e que, por convenção, vamos chamá-la de <code>PyInit_pysoc</code>.</p>
+<p>A seguir está a função mais simples que incializa um módulo. Ela apenas chama o <code>PyModule_Create</code> e retorna o resultado dessa função.</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyMODINIT_FUNC</span> <span class="nf">PyInit_pysoc</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">m</span> <span class="o">=</span> <span class="n">PyModule_Create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pysocmodule</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">m</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Se quisermos inicializar o módulo de uma forma que tenha um erro específico ao módulo precisamos realizar
+alumos outras etapas durante na função <code>PyInit_pysoc</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyMODINIT_FUNC</span> <span class="nf">PyInit_pysoc</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">m</span> <span class="o">=</span> <span class="n">PyModule_Create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pysocmodule</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">PysocError</span> <span class="o">=</span> <span class="n">PyErr_NewException</span><span class="p">(</span><span class="s">&quot;pysoc.PysocError&quot;</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">Py_XINCREF</span><span class="p">(</span><span class="n">PysocError</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyModule_AddObject</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;PysocError&quot;</span><span class="p">,</span> <span class="n">PysocError</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Py_XDECREF</span><span class="p">(</span><span class="n">PysocError</span><span class="p">);</span>
+        <span class="n">Py_CLEAR</span><span class="p">(</span><span class="n">PysocError</span><span class="p">);</span>
+        <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">m</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Nesse caso foi definido um erro chamado de PysocError. Apenas toda chamada de função devemos verificar se ela sucediu e, caso contrário, retornamos NULL.</p>
+<p>A seguir está uma função se sempre da raise no erro PysocError</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyObject</span> <span class="o">*</span><span class="nf">pysoc_raise_pysoc_error</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PysocError</span><span class="p">,</span> <span class="s">&quot;Error from C&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sempre que uma função falha/dá raise em um erro ela deve retornar NULL.</p>
+</div>
+<p>Se você parou para ler o código do PyInit_pysoc pode ter percebido que há uma coisa estranha,
+a variável <code>PysocError</code> não tem um tipo definido. Isto é porque ela está no arquivo <code>pysoc.h</code>.
+Pelo fato da variável <code>PysocError</code> indicar um erro, ela precisa ser acessada por várias funções que
+não recebem nenhuma variável extra como argumento e, por isso, é necessário que a variável seja
+global.</p>
+<p>Aqui está o início de do arquivo <code>pysoc.h</code>
+<div class="highlight"><pre><span></span><code><span class="cp">#define PY_SSIZE_T_CLEAN</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Python.h&gt;</span><span class="cp"></span>
+
+<span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">PysocError</span><span class="p">;</span>
+</code></pre></div></p>
+<p>Nesse arquivo também estão todas as definições (prototypes) das funções.
+Quase todas as funções retornam um <code>PyObject *</code> e recebem <code>PyObject *self</code> e <code>PyObject *args</code>
+como parâmetros.</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyObject</span> <span class="o">*</span><span class="nf">pysoc_bubble_sort</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">);</span>
+<span class="n">PyObject</span> <span class="o">*</span><span class="nf">pysoc_raise_pysoc_error</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">);</span>
+</code></pre></div>
+<p>Depois disso precisamos definir um array que vai indicar ao Python informações importantes sobre
+todas as funções do módulo.</p>
+<div class="highlight"><pre><span></span><code><span class="k">static</span> <span class="n">PyMethodDef</span> <span class="n">PysocMethods</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span><span class="s">&quot;bubble_sort&quot;</span><span class="p">,</span> <span class="n">pysoc_bubble_sort</span><span class="p">,</span> <span class="n">METH_VARARGS</span><span class="p">,</span> <span class="s">&quot;Bubble sort in c&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;raise_pysoc_error&quot;</span><span class="p">,</span> <span class="n">pysoc_raise_pysoc_error</span><span class="p">,</span> <span class="n">METH_NOARGS</span><span class="p">,</span> <span class="s">&quot;Raises PysocError&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">}</span> <span class="cm">/* Sentinel */</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>O array <code>PysocMethods</code> é composto de objetos <code>PyMethodDef</code>. Esse objeto tem como seu primeiro
+parâmetro o nome da função que vai ser utilizado dentro do Python. O segundo parâmetro é um
+ponteiro que indica onde está a função (em C isso significa apenas passar o nome da função).
+O terceiro parâmetro é o mais importante, ele define a quantidade de argumentos que a função recebe.
+No caso a função <code>pysoc_bubble_sort</code> recebe algum argumento e, então, tem o tipo <code>METH_VARARGS</code>.
+Se houvesse uma função que não recebe nenhum argumento seria <code>METH_NOARGS</code>. O quarto parâmetro é
+apenas uma string de help que indica o que a função faz.</p>
+<p>É possível fazer coisas muito mais específicas, porém não é necessário cobrir tudo para fazer um
+simples bubble sort. A documentação mais detalhada do <code>PyMethodDef</code> pode ser encontrada
+<a href="https://docs.python.org/3/c-api/structures.html?highlight=pymethoddef#c.PyMethodDef">aqui</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Se o terceiro parâmetro não for especificado corretamente, uma função que não recebe argumentos
+vai rodar apenas se um argumento (ou mais) for passado e uma função que recebe argumentos vai
+rodar apenas se não receber argumentos.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>O array de <code>PyMethodDef</code> deve sempre terminar com <code>{NULL, NULL, 0, NULL}</code>. Isso acontece porque em C quando um vetor é referenciado não é possível saber seu tamanho e, por isso, é necessário ter alguma coisa que determina o seu fim. Algo muito parecido é feito com strings em C (um vetor de chars), já que todas possuem um byte 0 ('\0') para indicar que ela acabou.</p>
+</div>
+<p>Para finilizar a declaração do módulo é necessário declarar o seguinte struct que referencia a
+variável <code>PysocMethods</code> explicada acima.</p>
+<div class="highlight"><pre><span></span><code><span class="k">static</span> <span class="k">struct</span> <span class="nc">PyModuleDef</span> <span class="n">pysocmodule</span> <span class="o">=</span> <span class="p">{</span><span class="n">PyModuleDef_HEAD_INIT</span><span class="p">,</span> <span class="s">&quot;pysoc&quot;</span><span class="p">,</span> <span class="cm">/* name of module */</span>
+                                         <span class="nb">NULL</span><span class="p">,</span> <span class="cm">/* module documentation, may be NULL */</span>
+                                         <span class="mi">-1</span><span class="p">,</span>   <span class="cm">/* size of per-interpreter state of the module, or -1</span>
+<span class="cm">                                                  if the module keeps state in global variables. */</span>
+                                         <span class="n">PysocMethods</span><span class="p">};</span>
+</code></pre></div>
+<p>Mais informações a criação de um módulo podem ser achadas na
+<a href="https://docs.python.org/3/extending/extending.html?highlight=pymoduledef">documentação oficial do Python</a></p>
+<p>E com isso a parte em C do nosso módulo está completo!</p>
+<h2 id="instalando-o-modulo">Instalando o módulo<a class="headerlink" href="#instalando-o-modulo" title="Permanent link">&para;</a></h2>
+<p>Existem alguns jeitos para realizar a compilação e instalação do módulo, porém o
+melhor documentado é o <code>distutils</code>. Ele funciona a partir de um arquivo <code>setup.py</code> que especifica
+como o projeto é estruturado.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">Extension</span>
+
+<span class="n">module1</span> <span class="o">=</span> <span class="n">Extension</span><span class="p">(</span><span class="s2">&quot;pysoc&quot;</span><span class="p">,</span> <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pysoc.c&quot;</span><span class="p">])</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;pysoc&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Python module for SoC subject&quot;</span><span class="p">,</span> <span class="n">ext_modules</span><span class="o">=</span><span class="p">[</span><span class="n">module1</span><span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Para esse caso foi necessário apenas utilizar um módulo que constitui de apenas um arquivo, o
+<code>pysoc.c</code> (apesar de essencial o arquivo <code>pysoc.h</code> não é utilizado nessa parte). A classe
+Extension é bem versátil e nela podem ser espeficadas bibliotecas externas e flags de compilação.</p>
+<p>Para compilar e instalar é necessário rodar os seguintes comandos</p>
+<div class="highlight"><pre><span></span><code>python3 setup.py build
+python3 setup.py install --user
+</code></pre></div>
+<h2 id="rapidez-do-modulo-comparacao-entre-c-e-python">Rapidez do módulo - comparação entre C e Python<a class="headerlink" href="#rapidez-do-modulo-comparacao-entre-c-e-python" title="Permanent link">&para;</a></h2>
+<p>Para iniciar a comparação, necessitamos de uma implementação do bubble sort em Python. Ela pode ser vista a seguir:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="k">def</span> <span class="nf">bubble_sort</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">swapped</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">swapped</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">swapped</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">v</span>
+</code></pre></div>
+<p>Com o bubble sort em Python e o bubble sort em C, podemos comecar a comparação. Configuracoes iniciais do arquivo:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pysoc</span>
+<span class="kn">import</span> <span class="nn">bubble</span>
+</code></pre></div>
+<p>Utilizaremos agora a implementação em Python primeiro. Como pode ser visto abaixo, foi criada uma lista de 0 ate 100000 ao contrario, para podermos pegar o pior caso do algoritmo. Logo em seguida marcamos o tempo inicial e chamamos a função. Assim que ele termina, marcamos o tempo final e printamos o tempo que o codigo levou para rodar.</p>
+<div class="highlight"><pre><span></span><code><span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e5</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;== Python ==&quot;</span><span class="p">)</span>
+<span class="n">time1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">l1</span> <span class="o">=</span> <span class="n">bubble</span><span class="o">.</span><span class="n">bubble_sort</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">time0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; </span><span class="si">{</span><span class="n">time0</span> <span class="o">-</span> <span class="n">time1</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Agora para nosso módulo implementado em C, faremos quase o mesmo codigo, que pode ser visto a seguir.</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e5</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;== C ==&quot;</span><span class="p">)</span>
+<span class="n">time3</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="n">pysoc</span><span class="o">.</span><span class="n">bubble_sort</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">time2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; </span><span class="si">{</span><span class="n">time2</span> <span class="o">-</span> <span class="n">time3</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</code></pre></div>
+Juntando todo programa em um so:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pysoc</span>
+<span class="kn">import</span> <span class="nn">bubble</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e5</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;== Python ==&quot;</span><span class="p">)</span>
+<span class="n">time1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">l1</span> <span class="o">=</span> <span class="n">bubble</span><span class="o">.</span><span class="n">bubble_sort</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">time0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; </span><span class="si">{</span><span class="n">time0</span> <span class="o">-</span> <span class="n">time1</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e5</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;== C ==&quot;</span><span class="p">)</span>
+<span class="n">time3</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="n">pysoc</span><span class="o">.</span><span class="n">bubble_sort</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">time2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; </span><span class="si">{</span><span class="n">time2</span> <span class="o">-</span> <span class="n">time3</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&gt; C is </span><span class="si">{</span><span class="p">(</span><span class="n">time0</span> <span class="o">-</span> <span class="n">time1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">time2</span> <span class="o">-</span> <span class="n">time3</span><span class="p">)</span><span class="si">}</span><span class="s2"> times faster&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Com uma lista de tamanho 1e5 (100000) o código em Python leva aproximadamente 16 minutos
+para rodar. Para rodar apenas um simples teste considere mudar as ocorrências de 1e5 para 1e4</p>
+</div>
+<p>Se rodarmos o codigo</p>
+<div class="highlight"><pre><span></span><code>python3 comparacao.py
+</code></pre></div>
+<p>Conseguimos observar o seguinte output:</p>
+<div class="codehilite"><pre><span></span><code>== Python ==
+&gt; 1059.0849022865295 seconds
+== C ==
+&gt; 10.741474628448486 seconds
+
+&gt; C is 98.59771948644497 times faster
+</code></pre></div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../LED-Linux/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Driver linux para acender leds
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../metropolis/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Coloque aqui o nome do tutorial de vocês
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.0ac82a11.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['instant', 'navigation.expand', {'tabs': True}],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../../js/dom-confetti.js"></script>
+      
+        <script src="../../js/progress.js"></script>
+      
+    
+  </body>
+</html>

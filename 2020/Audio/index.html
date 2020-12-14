@@ -1,0 +1,1645 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://insper.github.io/Embarcados-Avancados/2020/Audio/">
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.7">
+    
+    
+      
+        <title>Coloque aqui o nome do tutorial de vocês - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.19753c6b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../css/progress.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="pink">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#coloque-aqui-o-nome-do-tutorial-de-voces" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Coloque aqui o nome do tutorial de vocês
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-RTL/" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-1/" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS/" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-2/" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS-IP/" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-3/" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      HPS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS/" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Running/" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BuildSystem/" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BlinkLED/" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Extra: configurando rede
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-4/" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Kernel/" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Buildroot/" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-5/" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-DeviceDriver1/" class="md-nav__link">
+      Device Driver
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-module/" class="md-nav__link">
+      Kernel module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-chardriver/" class="md-nav__link">
+      Char device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      HPS + FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS + FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-BlinkLED/" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-nav__link">
+      Char LED device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    <label class="md-nav__link" for="nav-5">
+      Acelerando
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Acelerando" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-Acelerando-HLS/" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+    <label class="md-nav__link" for="nav-6">
+      Extras
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Extras" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        Extras
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-VGA/" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-6/" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-Extra-1/" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+    <label class="md-nav__link" for="nav-7">
+      Úteis
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Úteis" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Úteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-FPGA-e-Softwares/" class="md-nav__link">
+      Infraestrutura de HW e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-VHDL/" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-SDcard/" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-Serial/" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" checked>
+    <label class="md-nav__link" for="nav-8">
+      Tutoriais Alunos
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutoriais Alunos" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Rubrica/" class="md-nav__link">
+      Rubrica
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/Insper/Embarcados-Avancados-Template" class="md-nav__link">
+      Template markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-4" type="checkbox" id="nav-8-4" checked>
+    <label class="md-nav__link" for="nav-8-4">
+      2020
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2020" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-4">
+        <span class="md-nav__icon md-icon"></span>
+        2020
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Temas/" class="md-nav__link">
+      Temas 20b
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PS3-Linux-Tutorial/" class="md-nav__link">
+      PS3 Hack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Android/" class="md-nav__link">
+      Android para Raspbery Pi 3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../LED-HW/" class="md-nav__link">
+      Periférico para controlar matriz de led da família WS281x
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../LED-Linux/" class="md-nav__link">
+      Driver linux para acender leds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../python/" class="md-nav__link">
+      Soc & Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../metropolis/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Coloque aqui o nome do tutorial de vocês
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#comecando" class="md-nav__link">
+    Começando
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivacao" class="md-nav__link">
+    Motivação
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#periferico-inicial" class="md-nav__link">
+    Periférico Inicial
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-designer" class="md-nav__link">
+    Platform Designer
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-vhdl" class="md-nav__link">
+    Main VHDL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software" class="md-nav__link">
+    Software
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cripto/" class="md-nav__link">
+      Criptografia em Hardware Fpga
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-5" type="checkbox" id="nav-8-5" >
+    <label class="md-nav__link" for="nav-8-5">
+      2019
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2019" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-5">
+        <span class="md-nav__icon md-icon"></span>
+        2019
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Tutoriais/" class="md-nav__link">
+      Tutoriais 2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Gabriel-TensorFlow/" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Leo-OpenCL/" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Elisa-Yocto/" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Pedro-OpenCV/" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Martim-F1/" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Toranja-DevDriver/" class="md-nav__link">
+      Bruno Toranja - Linux Device Driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#comecando" class="md-nav__link">
+    Começando
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivacao" class="md-nav__link">
+    Motivação
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#periferico-inicial" class="md-nav__link">
+    Periférico Inicial
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-designer" class="md-nav__link">
+    Platform Designer
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-vhdl" class="md-nav__link">
+    Main VHDL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software" class="md-nav__link">
+    Software
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/2020/Audio/index.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="coloque-aqui-o-nome-do-tutorial-de-voces">Coloque aqui o nome do tutorial de vocês<a class="headerlink" href="#coloque-aqui-o-nome-do-tutorial-de-voces" title="Permanent link">&para;</a></h1>
+<ul>
+<li><strong>Alunes:</strong> Francisco Ciol R. Aveiro</li>
+<li><strong>Curso:</strong> Engenharia da Computação</li>
+<li><strong>Semestre:</strong> 9</li>
+<li><strong>Contato:</strong> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#97;&#110;&#99;&#105;&#115;&#99;&#111;&#99;&#114;&#97;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#102;&#114;&#97;&#110;&#99;&#105;&#115;&#99;&#111;&#99;&#114;&#97;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
+<li><strong>Ano:</strong> 2020</li>
+</ul>
+<h2 id="comecando">Começando<a class="headerlink" href="#comecando" title="Permanent link">&para;</a></h2>
+<p>Para seguir esse tutorial é necessário:</p>
+<ul>
+<li><strong>Hardware:</strong> <ul>
+<li>DE10-Standard e acessórios</li>
+<li>Cabo auxiliar de audio(P2)</li>
+</ul>
+</li>
+<li><strong>Softwares:</strong> Quartus 18.01</li>
+<li><strong>Documentos:</strong> <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual">DE10-Standard_User_manual.pdf</a></li>
+</ul>
+<h2 id="motivacao">Motivação<a class="headerlink" href="#motivacao" title="Permanent link">&para;</a></h2>
+<p>A motivação desse projeto é poder trabalhar com processamento de Audio em tempo real usando o o CODEC de audio do DE10-Standard. Por conta da complexidade necessária para desenvolver todas as partes necessárias para esse projeto, esse tutorial vai se basear no exemplo de Audio da propria placa 'Audio Recording and Playing', e com isso criar um projeto que dê base para tratar o audio em tempo real.</p>
+<hr />
+<h2 id="periferico-inicial">Periférico Inicial<a class="headerlink" href="#periferico-inicial" title="Permanent link">&para;</a></h2>
+<p>Para começar, crie um novo projeto vazio no Quartus. Uma vez criado o projeto, vamos começar criando o IP do próprio exemplo da Terasic('Audio Recording and Playing'). Para criar o IP, baixe o arquivo compactado a seguir: </p>
+<p><a href="Files/TERASIC_.zip">TERASIC AUDIO</a></p>
+<p>Descompacte e coloque a pasta dentro do diretório <strong>IP</strong> do projeto(caso não exista, crie ele). Dentro de <strong>TERASIC_AUDIO</strong> use os arquivos <strong>AUDIO_IF.v</strong>, <strong>AUDIO_DAC.v</strong>, <strong>AUDIO_ADC.v</strong> e <strong>audio_fifo.v</strong> na criação do IP, garantindo que o <strong>AUDIO_IF.v</strong> seja o <strong>TOP level</strong>. </p>
+<h2 id="platform-designer">Platform Designer<a class="headerlink" href="#platform-designer" title="Permanent link">&para;</a></h2>
+<p>Uma vez que o IP foi adicionado ao projeto, dentro da pasta 'IP', vamos cuidar do PD(Platform Designer) desse projeto.
+Para isso precisamos adicionar os seguintes componentes:</p>
+<ul>
+<li>
+<p>AUDIO_IF: (<strong>AUDIO_IF</strong>)</p>
+</li>
+<li>
+<p>On-Chip Memory(RAM or ROM) Intel FPGA IP: (<strong>onchip_memory</strong>)</p>
+<ul>
+<li>Alterar o <strong>Total memory size</strong> para <strong>64000</strong>.</li>
+</ul>
+</li>
+<li>
+<p>PLL Intel FPGA IP: (<strong>audio_pll</strong>)</p>
+<ul>
+<li>PLL de Audio.</li>
+<li>Alterar o <strong>PLL Mode</strong> para <strong>Fractional-N PLL</strong>.</li>
+<li>Alterar <strong>Reference Clock Frequency</strong> para <strong>50.0 MHz</strong>.</li>
+<li>Alterar <strong>Number of Clocks</strong> para <strong>1</strong>.</li>
+<li>Alterar o <strong>Desired Frequency</strong> para <strong>18.432 MHz</strong>.</li>
+</ul>
+</li>
+<li>
+<p>PLL Intel FPGA IP: (<strong>pll_0</strong>)</p>
+<ul>
+<li>PLL dos outros componentes.</li>
+<li>Alterar o <strong>PLL Mode</strong> para <strong>Fractional-N PLL</strong>.</li>
+<li>Alterar <strong>Reference Clock Frequency</strong> para <strong>50.0 MHz</strong>.</li>
+<li>Alterar <strong>Number of Clocks</strong> para <strong>3</strong>.</li>
+<li>Alterar o <strong>Desired Frequency</strong> do <strong>outclk0</strong> para <strong>100 MHz</strong>.</li>
+<li>Alterar o <strong>Desired Frequency</strong> do <strong>outclk1</strong> para <strong>100 MHz</strong>.<ul>
+<li>Alterar o <strong>Phase Shift units</strong> do <strong>outclk1</strong> para <strong>degrees</strong>.</li>
+<li>Alterar o <strong>Phase Shift</strong> do <strong>outclk1</strong> para <strong>-90</strong>.</li>
+</ul>
+</li>
+<li>Alterar o <strong>Desired Frequency</strong> do <strong>outclk2</strong> para <strong>10 MHz</strong>.</li>
+</ul>
+</li>
+<li>
+<p>Nios II Processor: (<strong>nios2_gen2</strong>)</p>
+<ul>
+<li>Precessador NIOS.</li>
+<li>Escolher o <strong>Nios II/e</strong>.</li>
+</ul>
+</li>
+<li>
+<p>SDRAM Controller Intel FPGA IP: (<strong>sdram_controller</strong>)</p>
+<ul>
+<li>Alterar <strong>Data Width</strong> para <strong>16 Bits</strong>.</li>
+<li>Alterar <strong>ROW</strong> para <strong>13</strong>.</li>
+<li>Alterar <strong>Column</strong> para <strong>10</strong>.</li>
+</ul>
+</li>
+<li>
+<p>PIO (Parallel I/O) Intel FPGA IP: (<strong>i2c_sclk</strong>)</p>
+<ul>
+<li>Alterar <strong>Width</strong> para <strong>1</strong>.</li>
+<li>Alterar <strong>Direction</strong> para <strong>Output</strong>.</li>
+</ul>
+</li>
+<li>
+<p>PIO (Parallel I/O) Intel FPGA IP: (<strong>i2c_sdat</strong>)</p>
+<ul>
+<li>Alterar <strong>Width</strong> para <strong>1</strong>.</li>
+<li>Alterar <strong>Direction</strong> para <strong>Bidir</strong>.</li>
+</ul>
+</li>
+<li>
+<p>Avalon-MM Clock Crossing Bridge: (<strong>crossing_bridge</strong>)</p>
+<ul>
+<li>Alterar <strong>Data width</strong> para <strong>32</strong>.</li>
+<li>Alterar <strong>Symbol width</strong> para <strong>8</strong>.</li>
+<li>Alterar <strong>Address width</strong> para <strong>9</strong>.</li>
+<li>Alterar <strong>Command FIFO depth</strong> para <strong>32</strong>.</li>
+<li>Alterar <strong>Response FIFO depth</strong> para <strong>64</strong>.</li>
+<li>Alterar <strong>Master clock domainsynchronizer depth</strong> para <strong>3</strong>.</li>
+<li>Alterar <strong>Slave clock domainsynchronizer depth</strong> para <strong>3</strong>.</li>
+</ul>
+</li>
+<li>
+<p>JTAG UART Intel FPGA IP: (<strong>jtag_uart_0</strong>)</p>
+</li>
+</ul>
+<p>Conectar as periféricos conforme as seguintes imagens:</p>
+<p><img alt="PD1" src="img/PD1.png" />
+<img alt="PD2" src="img/PD3.png" /></p>
+<p>Uma vez feito isso, gere o HDL. </p>
+<p>Esse projeto faz uso do <mark>Avalon-MM Clock Crossing Bridge</mark> para que os dados do periférico de audio fiquem assincronos ao processador. Então o PIO <mark>I2C</mark> alimenta o  <mark>Avalon-MM Clock Crossing Bridge</mark> e quando o 'buffer' dele estiver cheio, o processador pode puxar essa informação. Da mesma forma o processador pode enviar toda a informação de audio em um grande pacote e esse pacote é então tocado de forma assincrona do processador.</p>
+<h2 id="main-vhdl">Main VHDL<a class="headerlink" href="#main-vhdl" title="Permanent link">&para;</a></h2>
+<p>Assim que for gerado o PD, volte para o <strong>TOP-FILE</strong> do seu projeto VHDL e coloque o seguinte código</p>
+<details class="codigo"><summary>Codigo</summary><div class="highlight"><pre><span></span><code><span class="k">library</span> <span class="nn">IEEE</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">IEEE.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span> <span class="nc">AUDIO_LIVE</span> <span class="k">is</span>
+    <span class="k">port</span> <span class="p">(</span>
+        <span class="n">fpga_clk_50</span>         <span class="o">:</span>   <span class="k">in</span>      <span class="kt">std_logic</span><span class="p">;</span>
+
+        <span class="n">AUD_XCK</span>             <span class="o">:</span>   <span class="k">out</span>     <span class="kt">std_logic</span><span class="p">;</span>
+        <span class="n">AUD_ADCDAT</span>          <span class="o">:</span>   <span class="k">in</span>      <span class="kt">std_logic</span><span class="p">;</span>
+        <span class="n">AUD_ADCLRC</span>          <span class="o">:</span>   <span class="k">in</span>      <span class="kt">std_logic</span><span class="p">;</span>
+        <span class="n">AUD_DACDAT</span>          <span class="o">:</span>   <span class="k">out</span> <span class="kt">std_logic</span><span class="p">;</span>
+        <span class="n">AUD_DACLRC</span>          <span class="o">:</span>   <span class="k">in</span>      <span class="kt">std_logic</span><span class="p">;</span>
+        <span class="n">AUD_BCLK</span>                <span class="o">:</span>   <span class="k">in</span>      <span class="kt">std_logic</span><span class="p">;</span>
+
+        <span class="n">I2C_AUD_DATA</span>        <span class="o">:</span>   <span class="k">inout</span>   <span class="kt">std_logic</span><span class="p">;</span>
+        <span class="n">I2C_AUD_CLK</span>         <span class="o">:</span>   <span class="k">out</span> <span class="kt">std_logic</span><span class="p">;</span>
+
+        <span class="n">sdram_addr</span>          <span class="o">:</span>   <span class="k">out</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">12</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">sdram_ba</span>                <span class="o">:</span>   <span class="k">out</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">sdram_cas_n</span>         <span class="o">:</span>   <span class="k">out</span> <span class="kt">std_logic</span><span class="p">;</span>
+        <span class="n">sdram_cke</span>           <span class="o">:</span>   <span class="k">out</span> <span class="kt">std_logic</span><span class="p">;</span>
+        <span class="n">sdram_cs_n</span>          <span class="o">:</span>   <span class="k">out</span> <span class="kt">std_logic</span><span class="p">;</span>
+        <span class="n">sdram_dq</span>                <span class="o">:</span>   <span class="k">inout</span>   <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">)</span> <span class="o">:=</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;X&#39;</span><span class="p">);</span>
+        <span class="n">sdram_dqm</span>           <span class="o">:</span>   <span class="k">out</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">sdram_ras_n</span>         <span class="o">:</span>   <span class="k">out</span> <span class="kt">std_logic</span><span class="p">;</span>
+        <span class="n">sdram_ew_n</span>          <span class="o">:</span>   <span class="k">out</span> <span class="kt">std_logic</span><span class="p">;</span>
+
+        <span class="n">sdram_pll</span>           <span class="o">:</span>   <span class="k">out</span> <span class="kt">std_logic</span>
+        <span class="p">);</span>
+
+
+<span class="k">end</span> <span class="k">entity</span><span class="p">;</span>
+
+<span class="k">architecture</span> <span class="nc">lv1</span> <span class="k">of</span> <span class="nc">AUDIO_LIVE</span> <span class="k">is</span>
+
+    <span class="k">component</span> <span class="nc">PD_AUDIO_LIVE_F</span> <span class="k">is</span>
+        <span class="k">port</span> <span class="p">(</span>
+            <span class="n">audio_if_conduit_end_XCK</span>          <span class="o">:</span> <span class="k">out</span>   <span class="kt">std_logic</span><span class="p">;</span>                                        <span class="c1">-- XCK</span>
+            <span class="n">audio_if_conduit_end_ADCDAT</span>       <span class="o">:</span> <span class="k">in</span>    <span class="kt">std_logic</span>                     <span class="o">:=</span> <span class="sc">&#39;X&#39;</span><span class="p">;</span>             <span class="c1">-- ADCDAT</span>
+            <span class="n">audio_if_conduit_end_ADCLRC</span>       <span class="o">:</span> <span class="k">in</span>    <span class="kt">std_logic</span>                     <span class="o">:=</span> <span class="sc">&#39;X&#39;</span><span class="p">;</span>             <span class="c1">-- ADCLRC</span>
+            <span class="n">audio_if_conduit_end_DACDAT</span>       <span class="o">:</span> <span class="k">out</span>   <span class="kt">std_logic</span><span class="p">;</span>                                        <span class="c1">-- DACDAT</span>
+            <span class="n">audio_if_conduit_end_DACLRC</span>       <span class="o">:</span> <span class="k">in</span>    <span class="kt">std_logic</span>                     <span class="o">:=</span> <span class="sc">&#39;X&#39;</span><span class="p">;</span>             <span class="c1">-- DACLRC</span>
+            <span class="n">audio_if_conduit_end_BCLK</span>         <span class="o">:</span> <span class="k">in</span>    <span class="kt">std_logic</span>                     <span class="o">:=</span> <span class="sc">&#39;X&#39;</span><span class="p">;</span>             <span class="c1">-- BCLK</span>
+
+            <span class="n">clk_clk</span>                             <span class="o">:</span> <span class="k">in</span>    <span class="kt">std_logic</span>                     <span class="o">:=</span> <span class="sc">&#39;X&#39;</span><span class="p">;</span>             <span class="c1">-- clk</span>
+
+            <span class="n">i2c_sclk_external_connection_export</span> <span class="o">:</span> <span class="k">out</span>   <span class="kt">std_logic</span><span class="p">;</span>                                        <span class="c1">-- export</span>
+            <span class="n">i2c_sdat_external_connection_export</span> <span class="o">:</span> <span class="k">inout</span> <span class="kt">std_logic</span>                     <span class="o">:=</span> <span class="sc">&#39;X&#39;</span><span class="p">;</span>             <span class="c1">-- export</span>
+
+            <span class="n">sdram_controller_wire_addr</span>    <span class="o">:</span> <span class="k">out</span>   <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">12</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>                    <span class="c1">-- addr</span>
+            <span class="n">sdram_controller_wire_ba</span>      <span class="o">:</span> <span class="k">out</span>   <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>                     <span class="c1">-- ba</span>
+            <span class="n">sdram_controller_wire_cas_n</span>   <span class="o">:</span> <span class="k">out</span>   <span class="kt">std_logic</span><span class="p">;</span>                                        <span class="c1">-- cas_n</span>
+            <span class="n">sdram_controller_wire_cke</span>     <span class="o">:</span> <span class="k">out</span>   <span class="kt">std_logic</span><span class="p">;</span>                                        <span class="c1">-- cke</span>
+            <span class="n">sdram_controller_wire_cs_n</span>    <span class="o">:</span> <span class="k">out</span>   <span class="kt">std_logic</span><span class="p">;</span>                                        <span class="c1">-- cs_n</span>
+            <span class="n">sdram_controller_wire_dq</span>      <span class="o">:</span> <span class="k">inout</span> <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">15</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">)</span> <span class="o">:=</span> <span class="p">(</span><span class="k">others</span> <span class="o">=&gt;</span> <span class="sc">&#39;X&#39;</span><span class="p">);</span> <span class="c1">-- dq</span>
+            <span class="n">sdram_controller_wire_dqm</span>     <span class="o">:</span> <span class="k">out</span>   <span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>                     <span class="c1">-- dqm</span>
+            <span class="n">sdram_controller_wire_ras_n</span>   <span class="o">:</span> <span class="k">out</span>   <span class="kt">std_logic</span><span class="p">;</span>                                        <span class="c1">-- ras_n</span>
+            <span class="n">sdram_controller_wire_we_n</span>    <span class="o">:</span> <span class="k">out</span>   <span class="kt">std_logic</span><span class="p">;</span>                                        <span class="c1">-- we_n</span>
+
+            <span class="n">pll_sdam_clk</span>                        <span class="o">:</span> <span class="k">out</span>   <span class="kt">std_logic</span><span class="p">;</span>                                        <span class="c1">-- clk</span>
+
+            <span class="n">reset_reset_n</span>                       <span class="o">:</span> <span class="k">in</span>    <span class="kt">std_logic</span>                     <span class="o">:=</span> <span class="sc">&#39;X&#39;</span>              <span class="c1">-- reset_n</span>
+        <span class="p">);</span>
+    <span class="k">end</span> <span class="k">component</span> <span class="nc">PD_AUDIO_LIVE_F</span><span class="p">;</span>
+<span class="k">begin</span>
+    <span class="n">u0</span> <span class="o">:</span> <span class="k">component</span> <span class="nc">PD_AUDIO_LIVE_F</span>
+        <span class="k">port</span> <span class="k">map</span> <span class="p">(</span>
+            <span class="n">audio_if_conduit_end_XCK</span>          <span class="o">=&gt;</span> <span class="n">AUD_XCK</span><span class="p">,</span>          <span class="c1">--       audio_if_0_conduit_end.XCK</span>
+            <span class="n">audio_if_conduit_end_ADCDAT</span>       <span class="o">=&gt;</span> <span class="n">AUD_ADCDAT</span><span class="p">,</span>       <span class="c1">--                             .ADCDAT</span>
+            <span class="n">audio_if_conduit_end_ADCLRC</span>       <span class="o">=&gt;</span> <span class="n">AUD_ADCLRC</span><span class="p">,</span>       <span class="c1">--                             .ADCLRC</span>
+            <span class="n">audio_if_conduit_end_DACDAT</span>       <span class="o">=&gt;</span> <span class="n">AUD_DACDAT</span><span class="p">,</span>       <span class="c1">--                             .DACDAT</span>
+            <span class="n">audio_if_conduit_end_DACLRC</span>       <span class="o">=&gt;</span> <span class="n">AUD_DACLRC</span><span class="p">,</span>       <span class="c1">--                             .DACLRC</span>
+            <span class="n">audio_if_conduit_end_BCLK</span>         <span class="o">=&gt;</span> <span class="n">AUD_BCLK</span><span class="p">,</span>         <span class="c1">--                             .BCLK</span>
+            <span class="n">clk_clk</span>                             <span class="o">=&gt;</span> <span class="n">fpga_clk_50</span><span class="p">,</span>                             <span class="c1">--                          clk.clk</span>
+            <span class="n">i2c_sclk_external_connection_export</span> <span class="o">=&gt;</span> <span class="n">I2C_AUD_CLK</span><span class="p">,</span> <span class="c1">-- i2c_sclk_external_connection.export</span>
+            <span class="n">i2c_sdat_external_connection_export</span> <span class="o">=&gt;</span> <span class="n">I2C_AUD_DATA</span><span class="p">,</span> <span class="c1">-- i2c_sdat_external_connection.export</span>
+
+            <span class="n">sdram_controller_wire_addr</span>    <span class="o">=&gt;</span> <span class="n">sdram_addr</span><span class="p">,</span>    <span class="c1">--  new_sdram_controller_0_wire.addr</span>
+            <span class="n">sdram_controller_wire_ba</span>      <span class="o">=&gt;</span> <span class="n">sdram_ba</span><span class="p">,</span>      <span class="c1">--                             .ba</span>
+            <span class="n">sdram_controller_wire_cas_n</span>   <span class="o">=&gt;</span> <span class="n">sdram_cas_n</span><span class="p">,</span>   <span class="c1">--                             .cas_n</span>
+            <span class="n">sdram_controller_wire_cke</span>     <span class="o">=&gt;</span> <span class="n">sdram_cke</span><span class="p">,</span>     <span class="c1">--                             .cke</span>
+            <span class="n">sdram_controller_wire_cs_n</span>    <span class="o">=&gt;</span> <span class="n">sdram_cs_n</span><span class="p">,</span>    <span class="c1">--                             .cs_n</span>
+            <span class="n">sdram_controller_wire_dq</span>      <span class="o">=&gt;</span> <span class="n">sdram_dq</span><span class="p">,</span>      <span class="c1">--                             .dq</span>
+            <span class="n">sdram_controller_wire_dqm</span>     <span class="o">=&gt;</span> <span class="n">sdram_dqm</span><span class="p">,</span>     <span class="c1">--                             .dqm</span>
+            <span class="n">sdram_controller_wire_ras_n</span>   <span class="o">=&gt;</span> <span class="n">sdram_ras_n</span><span class="p">,</span>   <span class="c1">--                             .ras_n</span>
+            <span class="n">sdram_controller_wire_we_n</span>    <span class="o">=&gt;</span> <span class="n">sdram_ew_n</span><span class="p">,</span>    <span class="c1">--                             .we_n</span>
+
+            <span class="n">pll_sdam_clk</span>                        <span class="o">=&gt;</span> <span class="n">sdram_pll</span><span class="p">,</span>                        <span class="c1">--                     pll_sdam.clk</span>
+            <span class="n">reset_reset_n</span>                       <span class="o">=&gt;</span> <span class="sc">&#39;1&#39;</span>                        <span class="c1">--                        reset.reset_n</span>
+        <span class="p">);</span>
+
+<span class="k">end</span> <span class="nc">lv1</span><span class="p">;</span>
+</code></pre></div>
+</details>
+<p>Esse código faz a ligação de todas as portas do PD que foi feito, com as saídas necessárias para funcionar o projeto. </p>
+<p>Após isso, faça o <strong>PIN PLANNER</strong> da conforme a seguinte imagem:</p>
+<p><img alt="PINPLANNER" src="img/PINPLANNER.png" /></p>
+<div class="admonition nota">
+<p class="admonition-title">Nota</p>
+<p>Essa parte pode demorar por volta de 10 minutos, portanto aproveite para tomar uma água.</p>
+</div>
+<h2 id="software">Software<a class="headerlink" href="#software" title="Permanent link">&para;</a></h2>
+<p>Abra o <strong>NIOS II SOdtware build tools for Eclipse</strong> e inicie um projeto novo com template de <strong>hello_world</strong>. Feito isso, configure o <strong>BSP_EDITOR</strong>. Com o BSP configurado e gerado, adicione os arquivos a seguir no projeto. </p>
+<ul>
+<li><a href="Files/SOFTWARE.zip">Software</a></li>
+</ul>
+<p>Esse arquivos são os que interfaceiam diretamente com o hardware e é a partir das funções deles que faremos o projeto. 
+    - O <strong>AUDIO_REG.h</strong> serve para interfacear diretamente com o componente <strong>AUDIO_IF</strong>. Dali ele busca os dados de audio e envia de volta.
+    - O <strong>I2C.h</strong> e o <strong>I2C.c</strong> servem para fazer a configuração e interface com os componentes <strong>I2C</strong>. 
+    - O <strong>AUDIO.c</strong> e o <strong>AUDIO.h</strong> usam as funções dos arquivos acima para facilitar e criar as funções que usaremos diretamente no nosso código. A partir deles configuraremos o hardware de audio.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Talvez seja necessário verificar nos arquivos que vieram do projeto original, se os endereços de <strong>SDRAM</strong>, <strong>AUDIO_IF</strong>, e outros periféricos estão definidos corretamente, conforme apresentado no arquivo <strong>system.h</strong>.</p>
+</div>
+<p>Para começar, importamos tudo o que é preciso e definimos o tamnho dos blocos associados 
+<div class="highlight"><pre><span></span><code>    <span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+    <span class="cp">#include</span> <span class="cpf">&quot;terasic_includes.h&quot;</span><span class="cp"></span>
+    <span class="cp">#include</span> <span class="cpf">&quot;AUDIO.h&quot;</span><span class="cp"></span>
+    <span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp"></span>
+
+
+    <span class="cp">#define RECORD_BLOCK_SIZE   250    </span><span class="c1">// ADC FIFO: 512 byte</span>
+    <span class="cp">#define PLAY_BLOCK_SIZE     250    </span><span class="c1">// DAC FIFO: 512 byte</span>
+</code></pre></div></p>
+<p>Depois entramos na função <mark>main</mark>. Começamos declarando as variaveis a serem usadas, e tambem já usamos as funções dos arquivos de cima para configurar a interface.</p>
+<div class="highlight"><pre><span></span><code>    <span class="n">alt_u32</span> <span class="o">*</span><span class="n">pBuf</span><span class="p">,</span> <span class="o">*</span><span class="n">pPlaying</span><span class="p">,</span> <span class="o">*</span><span class="n">pRecording</span><span class="p">,</span> <span class="n">buf_sample_size</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">RecordLen</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">pBuf</span> <span class="o">=</span> <span class="p">(</span><span class="n">alt_u32</span> <span class="o">*</span><span class="p">)</span><span class="n">NEW_SDRAM_CONTROLLER_0_BASE</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from THE Nios II!</span><span class="se">\n\n</span><span class="s">a</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">alt_u16</span> <span class="n">ch_right</span><span class="p">,</span> <span class="n">ch_left</span><span class="p">;</span>
+
+    <span class="n">AUDIO_Init</span><span class="p">();</span> <span class="c1">// Inicializa a interface</span>
+    <span class="n">AUDIO_FifoClear</span><span class="p">();</span> <span class="c1">// Limpa o Buffer do FIFO</span>
+    <span class="n">AUDIO_InterfaceActive</span><span class="p">(</span><span class="n">FALSE</span><span class="p">);</span> <span class="c1">// Desabilita a interface para poder alterar configuração</span>
+    <span class="n">AUDIO_SetInputSource</span><span class="p">(</span><span class="n">SOURCE_LINEIN</span><span class="p">);</span> <span class="c1">// seleciona o input</span>
+    <span class="n">AUDIO_DacEnableSoftMute</span><span class="p">(</span><span class="n">TRUE</span><span class="p">);</span> <span class="c1">// muta para não dar picos no audio</span>
+    <span class="n">AUDIO_MicMute</span><span class="p">(</span><span class="n">TRUE</span><span class="p">);</span> <span class="c1">// Muta a entrada que não vai usar</span>
+    <span class="n">AUDIO_LineInMute</span><span class="p">(</span><span class="n">FALSE</span><span class="p">);</span> <span class="c1">// Deixa aberta aentrada a ser usada</span>
+    <span class="n">AUDIO_SetLineInVol</span><span class="p">(</span><span class="mh">0x17</span><span class="p">,</span> <span class="mh">0x17</span><span class="p">);</span> <span class="c1">// Configura o volume de saída</span>
+    <span class="n">AUDIO_SetSampleRate</span><span class="p">(</span><span class="n">RATE_ADC32K_DAC32K</span><span class="p">);</span> <span class="c1">// Configura o Sample rate a ser usado</span>
+    <span class="n">AUDIO_DacEnableZeroCross</span><span class="p">(</span><span class="n">FALSE</span><span class="p">);</span> 
+    <span class="n">AUDIO_SetLineOutVol</span><span class="p">(</span><span class="mh">0x64</span><span class="p">,</span> <span class="mh">0x7F</span><span class="p">);</span> <span class="c1">// max 7F, min: 30, 0x79: 0 db</span>
+    <span class="n">AUDIO_DacEnableSoftMute</span><span class="p">(</span><span class="n">FALSE</span><span class="p">);</span> <span class="c1">// Desabilita o mute pós configuracao</span>
+    <span class="n">AUDIO_FifoClear</span><span class="p">();</span> <span class="c1">// Limpa o Buffer do FIFO</span>
+    <span class="n">AUDIO_InterfaceActive</span><span class="p">(</span><span class="n">TRUE</span><span class="p">);</span> <span class="c1">// Ativa a interface</span>
+
+    <span class="kt">int</span> <span class="n">idx_1</span><span class="p">,</span><span class="n">idx_2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Index dentro da memoria</span>
+    <span class="n">pRecording</span> <span class="o">=</span> <span class="n">pBuf</span><span class="p">;</span> <span class="c1">// espaco de memoria a receber a gravacao</span>
+    <span class="n">pPlaying</span> <span class="o">=</span> <span class="n">pBuf</span><span class="p">;</span> <span class="c1">// Espaco da memoria a ser lido</span>
+</code></pre></div>
+<p>Depois disso, entramos no loop que vai ficar rodando. Nele podemos verificar se tem dados de audio para puxar, e então enviar de volta para a saída esses dados.</p>
+<p><div class="highlight"><pre><span></span><code>    <span class="k">if</span><span class="p">(</span><span class="n">AUDIO_AdcFifoNotEmpty</span><span class="p">()){</span> <span class="c1">// verifica se tem informação de audio a ser lida</span>
+        <span class="n">AUDIO_AdcFifoGetData</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ch_left</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ch_right</span><span class="p">);</span> <span class="c1">// le o audio</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">AUDIO_DacFifoNotFull</span><span class="p">())</span> <span class="p">{</span> <span class="c1">// verifica se pode escrever na entrada</span>
+        <span class="n">AUDIO_DacFifoSetData</span><span class="p">(</span><span class="n">ch_right</span><span class="p">,</span> <span class="n">ch_left</span><span class="p">);</span> <span class="c1">// envia o audio </span>
+    <span class="p">}</span>
+</code></pre></div>
+Nesse formato, os dados de audio vão passar diretamente pelo sistema, sem alterar. Nesse momento pode já tentar alterar o dado de áudio, caso a alteração seja feita em menos tempo que uma nova leitura. Se a alteração for muito devagar, dá para alterar o "sampleRate" do projeto nas configurações acima. Outra forma de trabalhar com o audio é salvar esse audio na memoria e processar ele com um certo delay. Para isso seria nescessario salvar essa informação na SDRAM, pois é a forma mais rapida de armazenar esses dados.</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="p">(</span><span class="n">AUDIO_AdcFifoNotEmpty</span><span class="p">()){</span> <span class="c1">// verifica se tem informação de audio a ser lida</span>
+    <span class="n">AUDIO_AdcFifoGetData</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ch_left</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ch_right</span><span class="p">);</span> <span class="c1">// le o audio</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch_left</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">|</span> <span class="n">ch_right</span><span class="p">;</span> <span class="c1">// prepara para gravar</span>
+    <span class="o">*</span><span class="n">pRecording</span><span class="o">++</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span> <span class="c1">// grava e já ajusta para a proxima posição</span>
+    <span class="n">idx_1</span><span class="o">++</span><span class="p">;</span> <span class="c1">// move o indice 1</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">idx_1</span><span class="o">&gt;=</span><span class="n">RECORD_BLOCK_SIZE</span><span class="p">){</span> <span class="c1">// caso termine o espaco de memoria, volte para o comeco e sobreescreve lá</span>
+        <span class="n">idx_1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">pRecording</span> <span class="o">=</span> <span class="n">pBuf</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="c1">// Espaço de processamento do audio</span>
+
+
+
+<span class="k">if</span><span class="p">(</span><span class="n">AUDIO_DacFifoNotFull</span><span class="p">()</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">idx_1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;</span> <span class="n">idx_1</span><span class="o">-</span><span class="n">idx_2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span> <span class="c1">// verifica se pode escrever na entrada e se já tem o que ler na memoria</span>
+<span class="p">{</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="o">*</span><span class="n">pPlaying</span><span class="o">++</span><span class="p">;</span> <span class="c1">// le a memoria e prepara para proximo pedaco de memoria</span>
+
+    <span class="n">ch_left</span> <span class="o">=</span> <span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">;</span> <span class="c1">// separa os canais</span>
+    <span class="n">ch_right</span> <span class="o">=</span> <span class="n">data</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">;</span>
+
+    <span class="n">AUDIO_DacFifoSetData</span><span class="p">(</span><span class="n">ch_right</span><span class="p">,</span> <span class="n">ch_left</span><span class="p">);</span> <span class="c1">// envia o audio </span>
+
+    <span class="n">idx_2</span><span class="o">++</span><span class="p">;</span> <span class="c1">// atualiza o index do player</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">idx_2</span><span class="o">&gt;=</span><span class="n">PLAY_BLOCK_SIZE</span><span class="p">){</span>  <span class="c1">// caso termine o espaco de memoria, volte para o comeco e lê de lá</span>
+        <span class="n">idx_2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">pPlaying</span> <span class="o">=</span> <span class="n">pBuf</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Assim salvamos esses dados na sdram, e podemos processar eles a parte, causando um pequeno atraso na saída do sinal.</p>
+<p>Abaixo segue o código completo.</p>
+<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">C</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;terasic_includes.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;AUDIO.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp"></span>
+
+
+<span class="cp">#define RECORD_BLOCK_SIZE   250    </span><span class="c1">// ADC FIFO: 512 byte</span>
+<span class="cp">#define PLAY_BLOCK_SIZE     250    </span><span class="c1">// DAC FIFO: 512 byte</span>
+
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="n">alt_u32</span> <span class="o">*</span><span class="n">pBuf</span><span class="p">,</span> <span class="o">*</span><span class="n">pPlaying</span><span class="p">,</span> <span class="o">*</span><span class="n">pRecording</span><span class="p">,</span> <span class="n">buf_sample_size</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">RecordLen</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">pBuf</span> <span class="o">=</span> <span class="p">(</span><span class="n">alt_u32</span> <span class="o">*</span><span class="p">)</span><span class="n">NEW_SDRAM_CONTROLLER_0_BASE</span><span class="p">;</span>
+
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from THE Nios II!</span><span class="se">\n\n</span><span class="s">a</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="n">alt_u16</span> <span class="n">ch_right</span><span class="p">,</span> <span class="n">ch_left</span><span class="p">;</span>
+
+<span class="n">AUDIO_Init</span><span class="p">();</span> <span class="c1">// Inicializa a interface</span>
+<span class="n">AUDIO_FifoClear</span><span class="p">();</span> <span class="c1">// Limpa o Buffer do FIFO</span>
+<span class="n">AUDIO_InterfaceActive</span><span class="p">(</span><span class="n">FALSE</span><span class="p">);</span> <span class="c1">// Desabilita a interface para poder alterar configuração</span>
+<span class="n">AUDIO_SetInputSource</span><span class="p">(</span><span class="n">SOURCE_LINEIN</span><span class="p">);</span> <span class="c1">// seleciona o input</span>
+<span class="n">AUDIO_DacEnableSoftMute</span><span class="p">(</span><span class="n">TRUE</span><span class="p">);</span> <span class="c1">// muta para não dar picos no audio</span>
+<span class="n">AUDIO_MicMute</span><span class="p">(</span><span class="n">TRUE</span><span class="p">);</span> <span class="c1">// Muta a entrada que não vai usar</span>
+<span class="n">AUDIO_LineInMute</span><span class="p">(</span><span class="n">FALSE</span><span class="p">);</span> <span class="c1">// Deixa aberta aentrada a ser usada</span>
+<span class="n">AUDIO_SetLineInVol</span><span class="p">(</span><span class="mh">0x17</span><span class="p">,</span> <span class="mh">0x17</span><span class="p">);</span> <span class="c1">// Configura o volume de saída</span>
+<span class="n">AUDIO_SetSampleRate</span><span class="p">(</span><span class="n">RATE_ADC32K_DAC32K</span><span class="p">);</span> <span class="c1">// Configura o Sample rate a ser usado</span>
+<span class="n">AUDIO_DacEnableZeroCross</span><span class="p">(</span><span class="n">FALSE</span><span class="p">);</span> 
+<span class="n">AUDIO_SetLineOutVol</span><span class="p">(</span><span class="mh">0x64</span><span class="p">,</span> <span class="mh">0x7F</span><span class="p">);</span> <span class="c1">// max 7F, min: 30, 0x79: 0 db</span>
+<span class="n">AUDIO_DacEnableSoftMute</span><span class="p">(</span><span class="n">FALSE</span><span class="p">);</span> <span class="c1">// Desabilita o mute pós configuracao</span>
+<span class="n">AUDIO_FifoClear</span><span class="p">();</span> <span class="c1">// Limpa o Buffer do FIFO</span>
+<span class="n">AUDIO_InterfaceActive</span><span class="p">(</span><span class="n">TRUE</span><span class="p">);</span> <span class="c1">// Ativa a interface</span>
+
+<span class="kt">int</span> <span class="n">idx_1</span><span class="p">,</span><span class="n">idx_2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Index dentro da memoria</span>
+<span class="n">pRecording</span> <span class="o">=</span> <span class="n">pBuf</span><span class="p">;</span> <span class="c1">// espaco de memoria a receber a gravacao</span>
+<span class="n">pPlaying</span> <span class="o">=</span> <span class="n">pBuf</span><span class="p">;</span> <span class="c1">// Espaco da memoria a ser lido</span>
+
+<span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">AUDIO_AdcFifoNotEmpty</span><span class="p">()){</span> <span class="c1">// verifica se tem informação de audio a ser lida</span>
+        <span class="n">AUDIO_AdcFifoGetData</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ch_left</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ch_right</span><span class="p">);</span> <span class="c1">// le o audio</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch_left</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">|</span> <span class="n">ch_right</span><span class="p">;</span> <span class="c1">// prepara para gravar</span>
+        <span class="o">*</span><span class="n">pRecording</span><span class="o">++</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span> <span class="c1">// grava e já ajusta para a proxima posição</span>
+        <span class="n">idx_1</span><span class="o">++</span><span class="p">;</span> <span class="c1">// move o indice 1</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">idx_1</span><span class="o">&gt;=</span><span class="n">RECORD_BLOCK_SIZE</span><span class="p">){</span> <span class="c1">// caso termine o espaco de memoria, volte para o comeco e sobreescreve lá</span>
+            <span class="n">idx_1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">pRecording</span> <span class="o">=</span> <span class="n">pBuf</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+
+    <span class="c1">// Espaço de processamento do audio</span>
+
+
+
+    <span class="k">if</span><span class="p">(</span><span class="n">AUDIO_DacFifoNotFull</span><span class="p">()</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">idx_1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;</span> <span class="n">idx_1</span><span class="o">-</span><span class="n">idx_2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span> <span class="c1">// verifica se pode escrever na entrada e se já tem o que ler na memoria</span>
+    <span class="p">{</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="o">*</span><span class="n">pPlaying</span><span class="o">++</span><span class="p">;</span> <span class="c1">// le a memoria e prepara para proximo pedaco de memoria</span>
+
+        <span class="n">ch_left</span> <span class="o">=</span> <span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">;</span> <span class="c1">// separa os canais</span>
+        <span class="n">ch_right</span> <span class="o">=</span> <span class="n">data</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">;</span>
+
+        <span class="n">AUDIO_DacFifoSetData</span><span class="p">(</span><span class="n">ch_right</span><span class="p">,</span> <span class="n">ch_left</span><span class="p">);</span> <span class="c1">// envia o audio </span>
+
+        <span class="n">idx_2</span><span class="o">++</span><span class="p">;</span> <span class="c1">// atualiza o index do player</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">idx_2</span><span class="o">&gt;=</span><span class="n">PLAY_BLOCK_SIZE</span><span class="p">){</span>  <span class="c1">// caso termine o espaco de memoria, volte para o comeco e lê de lá</span>
+            <span class="n">idx_2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">pPlaying</span> <span class="o">=</span> <span class="n">pBuf</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../metropolis/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Coloque aqui o nome do tutorial de vocês
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../cripto/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Criptografia em Hardware Fpga
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.0ac82a11.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['instant', 'navigation.expand', {'tabs': True}],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../../js/dom-confetti.js"></script>
+      
+        <script src="../../js/progress.js"></script>
+      
+    
+  </body>
+</html>

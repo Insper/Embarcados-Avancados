@@ -1,0 +1,1575 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://insper.github.io/Embarcados-Avancados/2020/Android/">
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.7">
+    
+    
+      
+        <title>Android para Raspbery Pi 3 - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.19753c6b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../css/progress.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="pink">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#android-para-raspbery-pi-3" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Android para Raspbery Pi 3
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-RTL/" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-1/" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS/" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-2/" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS-IP/" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-3/" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      HPS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS/" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Running/" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BuildSystem/" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BlinkLED/" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Extra: configurando rede
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-4/" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Kernel/" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Buildroot/" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-5/" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-DeviceDriver1/" class="md-nav__link">
+      Device Driver
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-module/" class="md-nav__link">
+      Kernel module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-chardriver/" class="md-nav__link">
+      Char device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      HPS + FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS + FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-BlinkLED/" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-nav__link">
+      Char LED device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    <label class="md-nav__link" for="nav-5">
+      Acelerando
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Acelerando" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-Acelerando-HLS/" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+    <label class="md-nav__link" for="nav-6">
+      Extras
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Extras" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        Extras
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-VGA/" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-6/" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-Extra-1/" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+    <label class="md-nav__link" for="nav-7">
+      Úteis
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Úteis" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Úteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-FPGA-e-Softwares/" class="md-nav__link">
+      Infraestrutura de HW e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-VHDL/" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-SDcard/" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-Serial/" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" checked>
+    <label class="md-nav__link" for="nav-8">
+      Tutoriais Alunos
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutoriais Alunos" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Rubrica/" class="md-nav__link">
+      Rubrica
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/Insper/Embarcados-Avancados-Template" class="md-nav__link">
+      Template markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-4" type="checkbox" id="nav-8-4" checked>
+    <label class="md-nav__link" for="nav-8-4">
+      2020
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2020" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-4">
+        <span class="md-nav__icon md-icon"></span>
+        2020
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Temas/" class="md-nav__link">
+      Temas 20b
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PS3-Linux-Tutorial/" class="md-nav__link">
+      PS3 Hack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Android para Raspbery Pi 3
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Android para Raspbery Pi 3
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#comecando" class="md-nav__link">
+    Começando
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivacao" class="md-nav__link">
+    Motivação
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contexto" class="md-nav__link">
+    Contexto
+  </a>
+  
+    <nav class="md-nav" aria-label="Contexto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#android" class="md-nav__link">
+    Android
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raspberry-pi" class="md-nav__link">
+    Raspberry Pi
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalacao" class="md-nav__link">
+    Instalação
+  </a>
+  
+    <nav class="md-nav" aria-label="Instalação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configurando-o-ambiente" class="md-nav__link">
+    Configurando o ambiente
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configurando-o-u-boot" class="md-nav__link">
+    Configurando o U-boot
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compilando-o-kernel" class="md-nav__link">
+    Compilando o kernel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compilando-o-android" class="md-nav__link">
+    Compilando o Android
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-card" class="md-nav__link">
+    SD Card
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalando-android-na-nuvem" class="md-nav__link">
+    Instalando Android na nuvem
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalando-android-localmente" class="md-nav__link">
+    Instalando Android localmente
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rodando-android-na-raspberry" class="md-nav__link">
+    Rodando Android na Raspberry
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../LED-HW/" class="md-nav__link">
+      Periférico para controlar matriz de led da família WS281x
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../LED-Linux/" class="md-nav__link">
+      Driver linux para acender leds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../python/" class="md-nav__link">
+      Soc & Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../metropolis/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Audio/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cripto/" class="md-nav__link">
+      Criptografia em Hardware Fpga
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-5" type="checkbox" id="nav-8-5" >
+    <label class="md-nav__link" for="nav-8-5">
+      2019
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2019" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-5">
+        <span class="md-nav__icon md-icon"></span>
+        2019
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Tutoriais/" class="md-nav__link">
+      Tutoriais 2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Gabriel-TensorFlow/" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Leo-OpenCL/" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Elisa-Yocto/" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Pedro-OpenCV/" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Martim-F1/" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Toranja-DevDriver/" class="md-nav__link">
+      Bruno Toranja - Linux Device Driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#comecando" class="md-nav__link">
+    Começando
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivacao" class="md-nav__link">
+    Motivação
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contexto" class="md-nav__link">
+    Contexto
+  </a>
+  
+    <nav class="md-nav" aria-label="Contexto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#android" class="md-nav__link">
+    Android
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raspberry-pi" class="md-nav__link">
+    Raspberry Pi
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalacao" class="md-nav__link">
+    Instalação
+  </a>
+  
+    <nav class="md-nav" aria-label="Instalação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configurando-o-ambiente" class="md-nav__link">
+    Configurando o ambiente
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configurando-o-u-boot" class="md-nav__link">
+    Configurando o U-boot
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compilando-o-kernel" class="md-nav__link">
+    Compilando o kernel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compilando-o-android" class="md-nav__link">
+    Compilando o Android
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-card" class="md-nav__link">
+    SD Card
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalando-android-na-nuvem" class="md-nav__link">
+    Instalando Android na nuvem
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalando-android-localmente" class="md-nav__link">
+    Instalando Android localmente
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rodando-android-na-raspberry" class="md-nav__link">
+    Rodando Android na Raspberry
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/2020/Android/index.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="android-para-raspbery-pi-3">Android para Raspbery Pi 3<a class="headerlink" href="#android-para-raspbery-pi-3" title="Permanent link">&para;</a></h1>
+<ul>
+<li><strong>Alunes:</strong> Emanuelle Moço / Leonardo Mendes / Lucas Leal</li>
+<li><strong>Curso:</strong> Engenharia da Computação</li>
+<li><strong>Semestre:</strong> 6</li>
+<li><strong>Contato:</strong> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#115;&#105;&#102;&#101;&#114;&#114;&#97;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#99;&#111;&#114;&#115;&#105;&#102;&#101;&#114;&#114;&#97;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>, <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#109;&#97;&#110;&#117;&#101;&#108;&#108;&#101;&#115;&#109;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#101;&#109;&#97;&#110;&#117;&#101;&#108;&#108;&#101;&#115;&#109;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a>, <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#111;&#110;&#97;&#114;&#100;&#111;&#109;&#109;&#52;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#108;&#101;&#111;&#110;&#97;&#114;&#100;&#111;&#109;&#109;&#52;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a>, <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#117;&#99;&#97;&#115;&#108;&#118;&#49;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#108;&#117;&#99;&#97;&#115;&#108;&#118;&#49;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
+<li><strong>Ano:</strong> 2020</li>
+</ul>
+<h2 id="comecando">Começando<a class="headerlink" href="#comecando" title="Permanent link">&para;</a></h2>
+<p>Para seguir esse tutorial é necessário:</p>
+<ul>
+<li><strong>Hardware</strong> <ul>
+<li>Raspberry Pi 3 </li>
+<li>Micro SD Card de 8 GB ou maior</li>
+<li>Monitor com entrada   </li>
+<li>Mouse </li>
+<li>Adaptador Micro SD para USB </li>
+<li>Cabo Micro USB</li>
+<li>Computador com pelo menos 150GB de armazenamento disponível   </li>
+</ul>
+</li>
+<li><strong>Softwares</strong> <ul>
+<li>Ubuntu 18.04</li>
+</ul>
+</li>
+<li><strong>Referências:</strong> <a href="https://github.com/android-rpi/device_brcm_rpi3">device_brcm_rpi3</a>, <a href="https://github.com/tab-pi/platform_manifest">Build Android for Raspberry Pi3</a>, <a href="https://github.com/csimmonds/a4rpi-local-manifest/">Building Android for Raspberry Pi</a></li>
+</ul>
+<h2 id="motivacao">Motivação<a class="headerlink" href="#motivacao" title="Permanent link">&para;</a></h2>
+<p>A motivação inicial era compilar Android em uma FPGA e o tema foi escolhido pois o grupo tinha o desejo de compilar um software de alto nível em uma placa de desenvolvimento. Entretanto, por dificuldades técnicas, foi decidido migrar para uma Raspberry Pi, que por ser mais barata e acessível ao público, existe uma quantidade significativa de referências, viabilizando a criação de aplicações.</p>
+<hr />
+<h2 id="contexto">Contexto<a class="headerlink" href="#contexto" title="Permanent link">&para;</a></h2>
+<p>O sistema operacional Android é extremamente popular e muito presente em dispositivos mobile, presente em cerca de 70% de celulares no mundo. Este tutorial consiste em embarcar o Android utilizando LineageOS, uma distribuição open source de Android, numa Raspberry Pi 3 B+. </p>
+<h3 id="android">Android<a class="headerlink" href="#android" title="Permanent link">&para;</a></h3>
+<p>Android é um sistema operacional baseado no kernel do linux no qual é possível compilar o seu próprio sistema para utilizar em um celular ou placas de desenvolvimento.  </p>
+<h3 id="raspberry-pi">Raspberry Pi<a class="headerlink" href="#raspberry-pi" title="Permanent link">&para;</a></h3>
+<p>Raspberry Pi é um <em>microcomputador</em> do estilo <em>System On a Chip</em> que permite fazer tudo que um computador faz com baixo custo.
+O modelo utilizado neste roteiro é o Raspberry Pi 3 B+, a qual possui um processador 64-bit quad-core de 1.4GHz, dual-band wireless e bluetooth. Ou seja, adequada para aplicações de automação e IOT.</p>
+<p><center><img alt="Raspberry PI3" src="https://uploads.filipeflop.com/2017/07/DRA01_01.jpg" width="300" /></center></p>
+<hr />
+<h2 id="instalacao">Instalação<a class="headerlink" href="#instalacao" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Alguns dos passos exigem alto poder computacional, caso você não tenha uma máquina com o armazenamento mínimo necessário ou com um bom processador, sugerimos a utilização de uma máquina na nuvem.</p>
+<div class="admonition example">
+<p class="admonition-title">Sugestão</p>
+<p>Para esse tutorial, utilizamos uma instância da AWS t2.2xlarge.</p>
+</div>
+</div>
+<h3 id="configurando-o-ambiente">Configurando o ambiente<a class="headerlink" href="#configurando-o-ambiente" title="Permanent link">&para;</a></h3>
+<p>Uma vez no Ubuntu 18.04, será necessário a instalação de alguns pacotes essênciais, para saber mais, entre na página disponibilizada pelo <a href="https://source.android.com/setup/build/initializing">Andoid</a>.
+<div class="highlight"><pre><span></span><code>$ sudo apt-get install git-core gnupg flex bison build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig openjdk-8-jdk gcc-arm-linux-gnueabihf libssl-dev python-mako
+</code></pre></div>
+Instale também o <a href="https://source.android.com/setup/develop#installing-repo">repo</a> e rode o comando:
+<div class="highlight"><pre><span></span><code>$ repo init --depth=1 -u https://android.googlesource.com/platform/manifest -b android-10.0.0_r25
+</code></pre></div></p>
+<p>Clone o repositório com as configurações da Raspberry para Android:</p>
+<div class="highlight"><pre><span></span><code>$ git clone https://github.com/csimmonds/a4rpi-local-manifest .repo/local_manifests -b android10
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Para aumentar a velocidade de instalação use o argumento -c (branch atual) e -j<code>threadcount</code> </p>
+</div>
+<div class="highlight"><pre><span></span><code>$ repo sync -c j8
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Pausa para café, esta etapa demora cerca de 1-      2 horas.</p>
+</div>
+<h3 id="configurando-o-u-boot">Configurando o U-boot<a class="headerlink" href="#configurando-o-u-boot" title="Permanent link">&para;</a></h3>
+<p>U-boot é um bootloader Opens Source utilizado em sistemas de linux embarcados. Os comandos abaixo criam a nossa imagem <em>boot</em> que será utilizada para carregar o Android.
+<div class="highlight"><pre><span></span><code>$ cd $ANDROID_BUILD_TOP/u-boot
+$ PATH=$HOME/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin:$PATH
+$ export ARCH=arm
+$ export CROSS_COMPILE=arm-linux-gnueabihf-
+$ cp $ANDROID_BUILD_TOP/device/rpiorg/rpi3/u-boot/rpi_3_32b_android_defconfig configs
+$ make rpi_3_32b_android_defconfig
+$ make
+</code></pre></div></p>
+<h3 id="compilando-o-kernel">Compilando o kernel<a class="headerlink" href="#compilando-o-kernel" title="Permanent link">&para;</a></h3>
+<p>É necessário compilar o Kernel que será responsável pela criação do Android. Também é criada a partição DTBS, <em>device tree blob source</em>, que é responsável por disponibilizar a estrutura do hardware. Como Android pode ser utilizado em dispositivos diferentes, Device Tree Overlays (DTOs) são necessários para mapear o hardware para o sistema.  </p>
+<p>Rode os comandos: 
+<div class="highlight"><pre><span></span><code>$ PATH=$HOME/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin:$PATH
+$ export ARCH=arm
+$ export CROSS_COMPILE=arm-linux-gnueabihf-
+$ cd $ANDROID_BUILD_TOP/kernel/rpi
+$ scripts/kconfig/merge_config.sh arch/arm/configs/bcm2709_defconfig \
+kernel/configs/android-base.config kernel/configs/android-recommended.config
+$ make -j $(nproc) zImage
+$ cp arch/arm/boot/zImage $ANDROID_BUILD_TOP/device/rpiorg/rpi3
+$ make dtbs
+$ croot
+</code></pre></div></p>
+<h3 id="compilando-o-android">Compilando o Android<a class="headerlink" href="#compilando-o-android" title="Permanent link">&para;</a></h3>
+<p>Com as imagens criadas anteriormente (zImage, boot e dtbs), agora temos tudo pronto para compilar o Android em si. Para isso, é necessário configurar as variáveis de ambiente e fazer a montagem.  </p>
+<div class="highlight"><pre><span></span><code>$ source build/envsetup.sh
+$ lunch aosp_rpi3-eng
+$ m
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Esta etapa pode demorar em torno de 2 horas.</p>
+</div>
+<p>A explicação dos comandos utilizadas pode ser encontrada <a href="https://source.android.com/setup/build/building">aqui</a>. <br />
+É criado as imagens <em>VendorImage</em>, <em>SystemImage</em> e <em>UserData</em> que posteriormente serão escritas no cartão de memória. </p>
+<h3 id="sd-card">SD Card<a class="headerlink" href="#sd-card" title="Permanent link">&para;</a></h3>
+<p>A última etapa é  criar as partições e passar as imagens criadas no passo anterior para partições no SD card, que são elas:</p>
+<ul>
+<li>Vendor:  Drivers que conectam hardware e software;</li>
+<li>System: Sistema Android;</li>
+<li>UserData: Usado para resetar as configurações;</li>
+<li>Boot: Arquivos de inicialização, como os DTOs e configurações do Uboot.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Caso você tenha feito as etapas anteriores em uma instância virtual, siga os passos abaixo, caso contrário, siga para a etapa <strong><em>Instalando Android localmente</em></strong>.</p>
+</div>
+<h3 id="instalando-android-na-nuvem">Instalando Android na nuvem<a class="headerlink" href="#instalando-android-na-nuvem" title="Permanent link">&para;</a></h3>
+<p>Como não é possível conectar um cartão SD diretamente em uma instância na nuvem, deve ser criado uma partição virtual para simular um cartão SD.   <br />
+Primeiro, é necessário criar uma imagem vazia com o tamanho disponível do seu cartão SD.</p>
+<div class="highlight"><pre><span></span><code>$ dd <span class="k">if</span><span class="o">=</span>/dev/zero <span class="nv">of</span><span class="o">=</span>zero.img <span class="nv">bs</span><span class="o">=</span>4M <span class="nv">count</span><span class="o">=</span><span class="m">1536</span>
+</code></pre></div>
+<p>Com isso, criaremos a partição virtual a partir dessa imagem:   </p>
+<p><div class="highlight"><pre><span></span><code>$ sudo losetup -P -f --show zero.img
+</code></pre></div>
+Ao término do comando, a sua saída será o nome da sua partição virtual. No nosso caso, obtivemos <strong><em>loop6</em></strong>.  </p>
+<p>Dentro da pasta do Android, modifique o arquivo /scripts/write-sdcard-rpi3.sh, alterando <strong><em>mmcblk0</em></strong> para o nome da sua partição virtual.</p>
+<div class="highlight"><pre><span></span><code>...
+
+<span class="c1"># Unmount any partitions that have been automounted</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$DRIVE</span> <span class="o">==</span> <span class="s2">&quot;loop6&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        sudo umount /dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span>*
+        <span class="nv">BOOT_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span>p1
+        <span class="nv">SYSTEM_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span>p3
+        <span class="nv">VENDOR_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span>p4
+        <span class="nv">USER_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span>p5
+<span class="k">else</span>
+        sudo umount /dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span><span class="o">[</span><span class="m">1</span>-9<span class="o">]</span>
+        <span class="nv">BOOT_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span><span class="m">1</span>
+        <span class="nv">SYSTEM_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span><span class="m">3</span>
+        <span class="nv">VENDOR_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span><span class="m">4</span>
+        <span class="nv">USER_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span><span class="m">5</span>
+<span class="k">fi</span>
+
+...
+</code></pre></div>
+<p>Faça um <em>dd</em> para transformar o Android instalado na partição virtual em uma imagem. 
+<div class="highlight"><pre><span></span><code>$ dd <span class="k">if</span><span class="o">=</span>/dev/loop6 <span class="nv">of</span><span class="o">=</span>android.img <span class="nv">bs</span><span class="o">=</span>4M
+</code></pre></div></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Mais uma vez, troque <strong><em>loop6</em></strong> pelo nome de sua partição virtual.</p>
+</div>
+<p>Existem várias maneiras para transferir arquivos de uma instância virtual para outra máquina, indicamos utilizar Secure Copy Protocol (SCP).<br />
+Na sua máquina, de posse da key utilizada na instância, basta rodar o comando abaixo:</p>
+<div class="highlight"><pre><span></span><code>$ scp -i &lt;chave_de_acesso&gt; ubuntu@&lt;ip_maquina&gt;:/home/ubuntu/android.img .
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Note que <em>/home/ubuntu/android.img</em> é o nosso <em>path</em> da imagem criada pelo <em>dd</em>, mude para o seu <em>path</em> correspondente.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Essa etapa pode demorar em torno de 10 minutos dependendo da sua conexão.</p>
+</div>
+<p>O último passo é transferir o arquivo <em>android.img</em>, que foi copiado para a sua máquina, para o SD card. Para isso, insira o cartão de memória e utilize o comando <em>lsblk</em>  para saber o nome do seu dispositivo e rode:</p>
+<div class="highlight"><pre><span></span><code>$ dd <span class="k">if</span><span class="o">=</span>android.img <span class="nv">of</span><span class="o">=</span>/dev/&lt;nome_SDcard&gt; <span class="nv">bs</span><span class="o">=</span>4M
+</code></pre></div>
+<h3 id="instalando-android-localmente">Instalando Android localmente<a class="headerlink" href="#instalando-android-localmente" title="Permanent link">&para;</a></h3>
+<div class="admonition nota">
+<p class="admonition-title">Nota</p>
+<p>Este tópico só deve ser realizado se você está fazendo localmente. </p>
+</div>
+<p>Insira o SD Card no seu computador e use comando <em>lsblk</em> para saber o nome do dispositivo. 
+No exemplo abaixo, o nome do dispositivo é <em>sdc</em>.</p>
+<p><center><img alt="" src="https://media.discordapp.net/attachments/727592935054639194/786344627417382912/unknown.png" width="500" /></center></p>
+<p>Agora, para instalar o Android no SD Card é necessário rodar o comando na pasta <em>root</em> do projeto:
+<div class="highlight"><pre><span></span><code>$ scripts/write-sdcard-rpi3.sh &lt;nome_SDcard&gt;
+</code></pre></div></p>
+<hr />
+<h2 id="rodando-android-na-raspberry">Rodando Android na Raspberry<a class="headerlink" href="#rodando-android-na-raspberry" title="Permanent link">&para;</a></h2>
+<p>Ao inserir o SD Card na Raspberry e conectá-la à uma fonte de energia via cabo Micro USB, se tudo foi feito corretamente, o Android deve inicializar, podendo ser observado ao conectar uma da saída de vídeo (HDMI), como visto abaixo:</p>
+<p><center><img alt="" src="https://media.discordapp.net/attachments/727592935054639194/786364456643985440/IMG_5310.jpg?width=625&amp;height=469" width="600" /> <br />
+<img alt="" src="https://media.discordapp.net/attachments/727592935054639194/786364450633678888/IMG_5312.jpg?width=625&amp;height=469" width="600" /> <br />
+<img alt="" src="https://media.discordapp.net/attachments/727592935054639194/786364441004474378/IMG_5313.jpg?width=625&amp;height=469" width="600" /> </center></p>
+<p>Pronto! Você tem um Andoid rodando em uma Raspberry Pi. Para utilização completa dos recursos disponibilizados pelo Android, o usuário pode optar por utilizar um mouse com entrada USB ou até mesmo uma tela touch, ambos conectados diretamente na Raspberry. </p>
+<hr />
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../PS3-Linux-Tutorial/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                PS3 Hack
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../LED-HW/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Periférico para controlar matriz de led da família WS281x
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.0ac82a11.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['instant', 'navigation.expand', {'tabs': True}],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../../js/dom-confetti.js"></script>
+      
+        <script src="../../js/progress.js"></script>
+      
+    
+  </body>
+</html>

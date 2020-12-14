@@ -1,0 +1,1762 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://insper.github.io/Embarcados-Avancados/Tutorial-Acelerando-HLS/">
+      
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.7">
+    
+    
+      
+        <title>Tutorial - Acelerando - HLS - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.19753c6b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/progress.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="pink">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tutorial-acelerando-hls" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Tutorial - Acelerando - HLS
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-FPGA-RTL/" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-1/" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-FPGA-NIOS/" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-2/" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-FPGA-NIOS-IP/" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-3/" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      HPS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS/" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-Running/" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-BuildSystem/" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-BlinkLED/" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-HPS-ethernet/" class="md-nav__link">
+      Extra: configurando rede
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-4/" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-Kernel/" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-Buildroot/" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-5/" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-DeviceDriver1/" class="md-nav__link">
+      Device Driver
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-kernel-module/" class="md-nav__link">
+      Kernel module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-kernel-chardriver/" class="md-nav__link">
+      Char device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      HPS + FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS + FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-FPGA-BlinkLED/" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-nav__link">
+      Char LED device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    <label class="md-nav__link" for="nav-5">
+      Acelerando
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Acelerando" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Tutorial - Acelerando - HLS
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Tutorial - Acelerando - HLS
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intel" class="md-nav__link">
+    Intel
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#centos" class="md-nav__link">
+    centos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hls" class="md-nav__link">
+    HLS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#offset" class="md-nav__link">
+    Offset
+  </a>
+  
+    <nav class="md-nav" aria-label="Offset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#imgin-imgout" class="md-nav__link">
+    imgIn , imgOut
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pxtomem" class="md-nav__link">
+    pxToMem()
+  </a>
+  
+    <nav class="md-nav" aria-label="pxToMem()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#printf" class="md-nav__link">
+    printf()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offset-n" class="md-nav__link">
+    offSet, n
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mainc" class="md-nav__link">
+    main.c
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testando-x86" class="md-nav__link">
+    Testando (x86)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acelerando-na-fpga" class="md-nav__link">
+    Acelerando na FPGA
+  </a>
+  
+    <nav class="md-nav" aria-label="Acelerando na FPGA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#image-cyclonevprj-pasta" class="md-nav__link">
+    image-CycloneV.prj (pasta)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testando" class="md-nav__link">
+    testando
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#report" class="md-nav__link">
+    report
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#otimizando" class="md-nav__link">
+    Otimizando
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criando-um-hardware" class="md-nav__link">
+    Criando um hardware
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+    <label class="md-nav__link" for="nav-6">
+      Extras
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Extras" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        Extras
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-FPGA-VGA/" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-6/" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-Extra-1/" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+    <label class="md-nav__link" for="nav-7">
+      Úteis
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Úteis" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Úteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-FPGA-e-Softwares/" class="md-nav__link">
+      Infraestrutura de HW e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-VHDL/" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-SDcard/" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-HPS-Serial/" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-HPS-ethernet/" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+    <label class="md-nav__link" for="nav-8">
+      Tutoriais Alunos
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutoriais Alunos" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Projeto-Overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Projeto-Rubrica/" class="md-nav__link">
+      Rubrica
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/Insper/Embarcados-Avancados-Template" class="md-nav__link">
+      Template markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-4" type="checkbox" id="nav-8-4" >
+    <label class="md-nav__link" for="nav-8-4">
+      2020
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2020" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-4">
+        <span class="md-nav__icon md-icon"></span>
+        2020
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/Temas/" class="md-nav__link">
+      Temas 20b
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/PS3-Linux-Tutorial/" class="md-nav__link">
+      PS3 Hack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/Android/" class="md-nav__link">
+      Android para Raspbery Pi 3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/LED-HW/" class="md-nav__link">
+      Periférico para controlar matriz de led da família WS281x
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/LED-Linux/" class="md-nav__link">
+      Driver linux para acender leds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/python/" class="md-nav__link">
+      Soc & Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/metropolis/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/Audio/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/cripto/" class="md-nav__link">
+      Criptografia em Hardware Fpga
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-5" type="checkbox" id="nav-8-5" >
+    <label class="md-nav__link" for="nav-8-5">
+      2019
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2019" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-5">
+        <span class="md-nav__icon md-icon"></span>
+        2019
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Tutoriais/" class="md-nav__link">
+      Tutoriais 2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Gabriel-TensorFlow/" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Leo-OpenCL/" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Elisa-Yocto/" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Pedro-OpenCV/" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Martim-F1/" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Toranja-DevDriver/" class="md-nav__link">
+      Bruno Toranja - Linux Device Driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intel" class="md-nav__link">
+    Intel
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#centos" class="md-nav__link">
+    centos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hls" class="md-nav__link">
+    HLS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#offset" class="md-nav__link">
+    Offset
+  </a>
+  
+    <nav class="md-nav" aria-label="Offset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#imgin-imgout" class="md-nav__link">
+    imgIn , imgOut
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pxtomem" class="md-nav__link">
+    pxToMem()
+  </a>
+  
+    <nav class="md-nav" aria-label="pxToMem()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#printf" class="md-nav__link">
+    printf()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offset-n" class="md-nav__link">
+    offSet, n
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mainc" class="md-nav__link">
+    main.c
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testando-x86" class="md-nav__link">
+    Testando (x86)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acelerando-na-fpga" class="md-nav__link">
+    Acelerando na FPGA
+  </a>
+  
+    <nav class="md-nav" aria-label="Acelerando na FPGA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#image-cyclonevprj-pasta" class="md-nav__link">
+    image-CycloneV.prj (pasta)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testando" class="md-nav__link">
+    testando
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#report" class="md-nav__link">
+    report
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#otimizando" class="md-nav__link">
+    Otimizando
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criando-um-hardware" class="md-nav__link">
+    Criando um hardware
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/Tutorial-Acelerando-HLS.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="tutorial-acelerando-hls">Tutorial - Acelerando - HLS<a class="headerlink" href="#tutorial-acelerando-hls" title="Permanent link">&para;</a></h1>
+<p>HLS (High-Level Synthesis Compiler) é uma ferramenta de compilação que permite
+criarmos um componente (hardware/ HDL) a partir de uma linguagem de programação
+de alto nível (no caso c++). Essa ferramenta facilita muito o desenvolvimento, e
+abstrai o hardware para software, porém ainda é preciso ter um conhecimento de
+hardware para utilizar-lha.</p>
+<h2 id="intel">Intel<a class="headerlink" href="#intel" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>The Intel® HLS Compiler is a high-level synthesis (HLS) tool that takes in untimed C++ as input and generates production-quality register transfer level (RTL) code that is optimized for Intel® FPGAs. This tool accelerates verification time over RTL by raising the abstraction level for FPGA hardware design. Models developed in C++ are typically verified orders of magnitude faster than RTL.</p>
+</blockquote>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hEbfAU_1x8k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h2 id="centos">centos<a class="headerlink" href="#centos" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Eu só consegui fazer funcionar no centos6, minha solução foi a de executar
+um docker com centos, e instalar as dependências nele. Eu executo o HLS via o
+docker CLI. </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Para facilitar a vida, vamos disponibilizar uma imagem do docker já configurada.
+Veja com o seu professor como conseguir.</p>
+</div>
+<h2 id="hls">HLS<a class="headerlink" href="#hls" title="Permanent link">&para;</a></h2>
+<p>Vamos gerar um componente que aplica um offset (proc) em uma imagem, para isso, esse
+componente terá duas interfaces avalon de acesso a memória (AVALON-MM), na
+primeira interface, iremos acessar a imagem original e na outra iremos escrever
+a imagem processada. </p>
+<p>O nosso hardware terá o seguinte formato:</p>
+<div class="highlight"><pre><span></span><code>    |-----|         AXI
+    | ARM | ===========================
+    |-----|            |             |
+                       |             |
+                   |-------|     |-------|
+                   |  Min  |     |  Mout |
+                   |-------|     |-------|
+           AVALON-MM   |             ^
+                       V             |
+                   |-------|         |
+                   |  Proc |---------- AVALON-MM
+                   | (HLS) |
+                   |-------|  
+</code></pre></div>
+<ul>
+<li>Min: Memória da FPGA onde iremos salvar a imagem original</li>
+<li>Mout: Memória na FPGA onde iremos salvar a imagem processada</li>
+<li>TH: Periférico criado pelo HLS</li>
+</ul>
+<p>Para isso, iremos utilizar um sintax própria do HLS que define como em C qual
+tipo de interface será utilizada no componente (lembre das interfaces AVALON,
+memmory maped e streaming).</p>
+<p>O HLS permite que validemos o código em duas camadas distintas: a primeira é
+compilando o mesmo código que será sintetizado para arquitetura x86, com isso
+conseguimos validar o algorítimo de forma mais rápida, a segunda é gerando o HDL
+do componente e simulando via modelsim, tudo isso é feito de forma transparente
+e automática pela ferramenta.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A simulação do hardware é custosa em termos de tempo de processamento e
+poder computacional, ela deve ser a ultima coisa a ser feita, antes de usar
+o componente no hardware. Valide antes compilando para x86 e então simule.</p>
+</div>
+<h2 id="offset">Offset<a class="headerlink" href="#offset" title="Permanent link">&para;</a></h2>
+<p>A função a ser acelerada é a seguinte (<code>imgOffSet</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#define OFFSET 50</span>
+
+<span class="k">typedef</span> <span class="n">ihc</span><span class="o">::</span><span class="n">mm_master</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="p">,</span> <span class="n">ihc</span><span class="o">::</span><span class="n">aspace</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span>
+                       <span class="n">ihc</span><span class="o">::</span><span class="n">awidth</span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="p">,</span>
+                       <span class="n">ihc</span><span class="o">::</span><span class="n">dwidth</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">Master1</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ihc</span><span class="o">::</span><span class="n">mm_master</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="p">,</span> <span class="n">ihc</span><span class="o">::</span><span class="n">aspace</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span>
+                       <span class="n">ihc</span><span class="o">::</span><span class="n">awidth</span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="p">,</span>
+                       <span class="n">ihc</span><span class="o">::</span><span class="n">dwidth</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">Master2</span><span class="p">;</span>
+
+
+
+
+<span class="c1">// just for a NxN image</span>
+<span class="kr">inline</span> <span class="n">uint</span> <span class="n">pxToMem</span><span class="p">(</span><span class="n">uint</span> <span class="n">x</span><span class="p">,</span> <span class="n">uint</span> <span class="n">y</span><span class="p">,</span> <span class="n">uint</span> <span class="n">N</span><span class="p">){</span>
+  <span class="k">return</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">N</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// px + OFFSET</span>
+<span class="n">hls_avalon_slave_component</span>
+<span class="n">component</span> <span class="kt">void</span> <span class="n">imgOffSet</span><span class="p">(</span><span class="n">Master1</span><span class="o">&amp;</span> <span class="n">imgIn</span><span class="p">,</span>
+                         <span class="n">Master2</span><span class="o">&amp;</span> <span class="n">imgOut</span><span class="p">,</span>
+                         <span class="n">hls_avalon_slave_register_argument</span> <span class="kt">int</span> <span class="n">offSet</span><span class="p">,</span>
+                         <span class="n">hls_avalon_slave_register_argument</span> <span class="kt">int</span> <span class="n">N</span>
+                         <span class="p">){</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">y</span><span class="o">++</span><span class="p">){</span>
+      <span class="cp">#pragma unroll 8</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">){</span>
+        <span class="kt">int</span> <span class="n">px</span> <span class="o">=</span> <span class="n">pxToMem</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">tpx</span> <span class="o">=</span> <span class="p">((</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span> <span class="n">imgIn</span><span class="p">[</span><span class="n">px</span><span class="p">])</span><span class="o">+</span><span class="n">offSet</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">tpx</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">)</span>
+          <span class="n">imgOut</span><span class="p">[</span><span class="n">px</span><span class="p">]</span><span class="o">=</span> <span class="mi">255</span><span class="p">;</span>
+        <span class="k">else</span>
+          <span class="n">imgOut</span><span class="p">[</span><span class="n">px</span><span class="p">]</span><span class="o">=</span> <span class="n">tpx</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Note que a função <code>imgOffSet</code> possui quatro argumentos: <code>imgIn</code>, <code>imgOut</code>, <code>offSet</code> e <code>N</code>.
+Os dois primeiros são ponteiros de memória, que é respectivamente onde o
+componente vai fazer a leitura da imagem e onde ele vai fazer a escrita da
+imagem. Já os argumentos <code>offSet</code> e <code>N</code> são: valor a ser aplicado de offSet no px e o tamanho
+da imagem em pxs, esse argumentos são do tipo <code>hls_avalon_slave_register_argument</code>, que será
+convertido para um banco de registradores.</p>
+<p>Além dessas entradas e saídas, para cada interface do tipo <code>mm_master</code> o HLS vai
+criar mais um <code>conduit</code>, que será o offset de endereço na qual ele deve acessar
+o dado (para a função o endereço 0 é relativo). E mais dois <code>conduits</code>, um para
+controlar o inicio do processamento (chamada de função/ <code>call</code>) e outro para
+informar sobre o status do processamento (<code>return</code>).</p>
+<h3 id="imgin-imgout"><code>imgIn</code> , <code>imgOut</code><a class="headerlink" href="#imgin-imgout" title="Permanent link">&para;</a></h3>
+<p>Os dois primeiros argumento são do tipo <code>ihc::mm_master&lt; unsigned char,</code> que significa que serão
+traduzidos para um barramento do tipo <code>Avalon</code> e que devem ser tradados como
+<code>unsigned char</code>. </p>
+<ul>
+<li><code>ihc::aspace&lt;n&gt;</code>: e um identificador único do barramento (1,2,3,4,...)</li>
+<li><code>ihc::awidth&lt;32&gt;</code>: Define o tamanho do barramento de endereço, nesse caso 32 bits</li>
+<li><code>ihc::dwidth&lt;8&gt;</code>: Define o tamanho do barramento de dados, nesse caso 8
+  (leitura de 8 bits)</li>
+<li>Existem outras configurações do barramento que podem ser feitas nessa
+  declaração: latência/ waitrequest/ burst/ (<code>, ihc::latency&lt;0&gt;, ihc::maxburst&lt;8&gt;, ihc::waitrequest&lt;true&gt;</code>)...</li>
+</ul>
+<h3 id="pxtomem"><code>pxToMem()</code><a class="headerlink" href="#pxtomem" title="Permanent link">&para;</a></h3>
+<p>Para facilitar o desenvolvimento, a função <code>pxToMem(x,y,N)</code> traduz um acesso a
+px por endereço na matriz para o endereço de memória do px.</p>
+<h4 id="printf"><code>printf()</code><a class="headerlink" href="#printf" title="Permanent link">&para;</a></h4>
+<p>Essa função será removida quando a função for compilada para hardware, ela só
+está disponível para simulação e testes.</p>
+<h3 id="offset-n"><code>offSet</code>, <code>n</code><a class="headerlink" href="#offset-n" title="Permanent link">&para;</a></h3>
+<p>Precisamos lembrar que estamos criando um componente que resolverá um código em C, e a maneira de conseguirmos
+passar argumentos para um componente é criando uma memória interna, que chamamos normalmente de banco de 
+registrador e dando funcionalidade para eles. É dessa maneira, que os parâmetros <code>offSet</code> e <code>n</code> serão criados.
+Na geração do componente, uma memória será inicializada e endereços serão reservados para o <code>offSet</code> e <code>n</code>, como
+no exemplo a seguir:</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/******************************************************************************/</span>
+<span class="cm">/* Memory Map Summary                                                         */</span>
+<span class="cm">/******************************************************************************/</span>
+
+<span class="cm">/*</span>
+<span class="cm">  Register  | Access  |   Register Contents      | Description</span>
+<span class="cm">  Address   |         |      (64-bits)           | </span>
+<span class="cm">------------|---------|--------------------------|-----------------------------</span>
+<span class="cm">        0x0 |       R |         {reserved[62:0], |     Read the busy status of</span>
+<span class="cm">            |         |               busy[0:0]} |               the component</span>
+<span class="cm">            |         |                          |  0 - the component is ready</span>
+<span class="cm">            |         |                          |       to accept a new start</span>
+<span class="cm">            |         |                          |    1 - the component cannot</span>
+<span class="cm">            |         |                          |          accept a new start</span>
+<span class="cm">------------|---------|--------------------------|-----------------------------</span>
+<span class="cm">        0x8 |       W |         {reserved[62:0], |  Write 1 to signal start to</span>
+<span class="cm">            |         |              start[0:0]} |               the component</span>
+<span class="cm">------------|---------|--------------------------|-----------------------------</span>
+<span class="cm">       0x10 |     R/W |         {reserved[62:0], |      0 - Disable interrupt,</span>
+<span class="cm">            |         |   interrupt_enable[0:0]} |        1 - Enable interrupt</span>
+<span class="cm">------------|---------|--------------------------|-----------------------------</span>
+<span class="cm">       0x18 |  R/Wclr |         {reserved[61:0], | Signals component completion</span>
+<span class="cm">            |         |               done[0:0], |       done is read-only and</span>
+<span class="cm">            |         |   interrupt_status[0:0]} | interrupt_status is write 1</span>
+<span class="cm">            |         |                          |                    to clear</span>
+<span class="cm">------------|---------|--------------------------|-----------------------------</span>
+<span class="cm">       0x20 |     R/W |         {reserved[31:0], |             Argument offSet</span>
+<span class="cm">            |         |            offSet[31:0]} |                            </span>
+<span class="cm">------------|---------|--------------------------|-----------------------------</span>
+<span class="cm">       0x28 |     R/W |         {reserved[31:0], |                  Argument N</span>
+<span class="cm">            |         |                 N[31:0]} |                            </span>
+<span class="cm">*/</span>
+</code></pre></div>
+<h3 id="mainc">main.c<a class="headerlink" href="#mainc" title="Permanent link">&para;</a></h3>
+<p>A fim de validarmos o projeto, devemos criar uma função main (que não será
+compilada para o hardware). Nessa função, abrimos um arquivo de imagem no
+formato <code>.pgm</code> ("in.pgm")  e geramos outro arquivo de imagem, com a imagem
+original processada ("out.pgm"). A fim de validarmos o componente a ser gerado (
+<code>offSetImg()</code> ) devemos alocar duas regiões de memórias contínuas (<code>in[M_SIZE]</code>
+e <code>out[M_SIZE)</code> que serão utilizadas como input do componente (simulando o
+barramento AVALON).</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">IMG_W</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">M_SIZE</span> <span class="o">=</span> <span class="n">N</span><span class="o">*</span><span class="n">N</span><span class="p">;</span>
+
+  <span class="c1">// create memorys</span>
+  <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">in</span><span class="p">[</span><span class="n">M_SIZE</span><span class="p">];</span>
+  <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">out</span><span class="p">[</span><span class="n">M_SIZE</span><span class="p">];</span>
+  <span class="n">memset</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">out</span><span class="p">));</span>
+
+  <span class="cm">/* -------------------------- */</span>
+  <span class="cm">/* reading img to mem */</span>
+  <span class="cm">/* -------------------------- */</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;loading img</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+  <span class="n">readImgPgm</span><span class="p">(</span><span class="n">IMG_IN</span><span class="p">,</span> <span class="n">in</span><span class="p">,</span> <span class="n">M_SIZE</span><span class="p">);</span>
+
+  <span class="cm">/* -------------------------- */</span>
+  <span class="cm">/* create fake memorys components*/</span>
+  <span class="cm">/* -------------------------- */</span>
+  <span class="n">Master1</span> <span class="n">mm_in</span><span class="p">(</span><span class="n">in</span><span class="p">,</span> <span class="n">M_SIZE</span><span class="p">);</span>
+  <span class="n">Master2</span> <span class="n">mm_out</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">M_SIZE</span><span class="p">);</span>
+
+  <span class="cm">/* -------------------------- */</span>
+  <span class="cm">/* process with kernel */</span>
+  <span class="cm">/* -------------------------- */</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;kernel</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+  <span class="n">imgOffSet</span><span class="p">(</span><span class="n">mm_in</span><span class="p">,</span> <span class="n">mm_out</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+
+  <span class="cm">/* -------------------------- */</span>
+  <span class="cm">/* img out */</span>
+  <span class="cm">/* -------------------------- */</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;outputing </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+  <span class="n">writeImgPgm</span><span class="p">(</span><span class="n">IMG_OUT</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Quando formos executar a função <code>imgOffSet</code> no nosso hardware, não será tão simples 
+ quanto apenas uma chamada de função.</p>
+</div>
+<h3 id="testando-x86">Testando (x86)<a class="headerlink" href="#testando-x86" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Deve ser feito no centos (docker)</p>
+</div>
+<p>Para testar, vamos compilar o nosso projeto para <code>x86</code> (não será um hardware) e validar 
+se nossa lógica está correta. Se funcionar, compilamos para hardware.</p>
+<p>Para compilar basta usarmos o compilador <code>i++</code> como no exemplo a seguir:</p>
+<div class="highlight"><pre><span></span><code>$ i++ image.cpp -march<span class="o">=</span>x86-64 -o image_x86
+</code></pre></div>
+<p>E testar o programa gerado:</p>
+<div class="highlight"><pre><span></span><code>$ ./image_x86
+</code></pre></div>
+<p>O resultado deve ser a belíssima foto <code>img.ppm</code> do seu professor, processada com um offset (<code>out.ppm</code>):</p>
+<p><img alt="" src="../figs/Tutorial-Acelerando-HLS%3AresultadoSW.png" /></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Para gerar uma imagem do tipo <code>ppm</code> você pode usar o Gimp</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Essa execução é como se tivéssemos compilado com gcc, só serve para validar lógica</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>input</th>
+<th>output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>img.pgm</td>
+<td>image    (binário)</td>
+</tr>
+<tr>
+<td>image.cpp</td>
+<td>out.pgm</td>
+</tr>
+</tbody>
+</table>
+<h2 id="acelerando-na-fpga">Acelerando na FPGA<a class="headerlink" href="#acelerando-na-fpga" title="Permanent link">&para;</a></h2>
+<p>Para acelerar na FPGA, vamos compilar novamente a aplicação, porém agora com a flag <code>-march=CycloneV</code> 
+que representa a nossa FPGA</p>
+<div class="highlight"><pre><span></span><code>$ i++ image.cpp -march<span class="o">=</span>CycloneV -o image-CycloneV
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Isso pode bastante tempo, o que ele vai fazer é:</p>
+<ol>
+<li>Gerar um HDL a partir da sua função</li>
+<li>Criar um componente para o Platform Designer</li>
+</ol>
+</div>
+<table>
+<thead>
+<tr>
+<th>input</th>
+<th>output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>img.pgm</td>
+<td>image-CycloneV.prj (pasta)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="image-cyclonevprj-pasta">image-CycloneV.prj (pasta)<a class="headerlink" href="#image-cyclonevprj-pasta" title="Permanent link">&para;</a></h3>
+<p>Se reparar na pasta do projeto, deve ter uma pasta nova: <strong>image-CycloneV.prj</strong>, com o seguinte conteúdo:</p>
+<ul>
+<li><strong>components</strong>: Pasta com o componente criado (para ser usado no Platform designer)</li>
+<li><strong>quartus</strong>: Pasta do projeto Quartus utilizado para compilar o componente, <strong>não vamos usar</strong></li>
+<li><strong>report</strong>: Pasta com reports gerado pela ferramenta (html)</li>
+<li><strong>report</strong>: Pasta para simular o projeto</li>
+</ul>
+<h3 id="testando">testando<a class="headerlink" href="#testando" title="Permanent link">&para;</a></h3>
+<p>Agora podemos testar nossa aplicação utilizando o hardware criado pelo HLS, para isso basta executar
+o novo binário criado quando compilamos para a arquitetura <code>CycloneV</code>. </p>
+<div class="highlight"><pre><span></span><code>$ ./image-CycloneV
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Isso vai levar muito tempo! No monstrinho do lab de Arquitetura, levou mais de 1 hora!</p>
+</div>
+<p>Essa simulação é realizada no modelsim! A nível de hardware. O resultado será o esperado quando formos embarcar
+na FPGA. Com essa simulação conseguimos verificar erros de arredondamento, acesso a memória, entre outros.</p>
+<div class="admonition tipa">
+<p class="admonition-title">Tipa</p>
+<p>A imagem <code>out-CycloneV.pgm</code> que está na pasta do projeto, é o resultado dessa simulação.</p>
+</div>
+<h3 id="report">report<a class="headerlink" href="#report" title="Permanent link">&para;</a></h3>
+<p>O HLS gera um relatório da compilação do hardware, ele pode ser encontrado em: <a href="/Tutorial-Acelerando-HLS-reports/report.html"><code>reports/report.html</code></a>. Um report interessante de se analisar é o <strong>Loops analysis</strong>, que demonstra os loops do programa:</p>
+<p><img alt="" src="../figs/Tutorial-Acelerando-HLS%3Areport.png" /></p>
+<h3 id="otimizando">Otimizando<a class="headerlink" href="#otimizando" title="Permanent link">&para;</a></h3>
+<p>Podemos aplicar diversas técnicas de paralelização no software que irá impactar no hardware criado (área e performance), no manual do HLS (<a href="https://www.intel.com/content/www/us/en/programmable/documentation/ewa1462824960255.html#ewa1462826976357">Intel High Level Synthesis Compiler: Reference Manual</a>) tem a documentação que descreve cada uma das técnicas.</p>
+<p>Vamos utilizar a do <strong>Loop Unrolling</strong>, que permite executarmos um loop paralelo:</p>
+<div class="highlight"><pre><span></span><code> <span class="cp">#pragma unroll &lt;N&gt;</span>
+ <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">M</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+     <span class="c1">// Some useful work</span>
+ <span class="p">}</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>N</strong> é a quantidade de loops a serem executado em //.</p>
+</div>
+<p>Vamos paralelizar a varredura da linha em 8 execuções em paralelo, para isso adicione no for que varre a linha (x):</p>
+<div class="highlight"><pre><span></span><code> <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">y</span><span class="o">++</span><span class="p">){</span>
+      <span class="cp">#pragma unroll 8</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">){</span>
+</code></pre></div>
+<h3 id="criando-um-hardware">Criando um hardware<a class="headerlink" href="#criando-um-hardware" title="Permanent link">&para;</a></h3>
+<p>Agora com o componente criado é necessário adicionarmos ele no hardware, isso será feito via Plataform Design.
+Para facilitar o desenvolvimento, vamos usar o projeto de hw exemplo da <code>Terasic</code>: <code>DE10_Standard_FB</code> e modificar
+inserindo o componente e duas memórias, como indicado a seguir:</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Char LED device driver
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../Tutorial-HPS-FPGA-VGA/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Tutorial - HPS + FPGA - VGA
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.0ac82a11.min.js"></script>
+      <script src="../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: ['instant', 'navigation.expand', {'tabs': True}],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../js/dom-confetti.js"></script>
+      
+        <script src="../js/progress.js"></script>
+      
+    
+  </body>
+</html>

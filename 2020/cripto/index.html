@@ -1,0 +1,1596 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://insper.github.io/Embarcados-Avancados/2020/cripto/">
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.7">
+    
+    
+      
+        <title>Criptografia em Hardware Fpga - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.19753c6b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../css/progress.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="pink">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#criptografia-em-hardware-fpga" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Criptografia em Hardware Fpga
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-RTL/" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-1/" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS/" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-2/" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS-IP/" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-3/" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      HPS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS/" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Running/" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BuildSystem/" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BlinkLED/" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Extra: configurando rede
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-4/" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Kernel/" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Buildroot/" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-5/" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-DeviceDriver1/" class="md-nav__link">
+      Device Driver
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-module/" class="md-nav__link">
+      Kernel module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-chardriver/" class="md-nav__link">
+      Char device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      HPS + FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS + FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-BlinkLED/" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-nav__link">
+      Char LED device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    <label class="md-nav__link" for="nav-5">
+      Acelerando
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Acelerando" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-Acelerando-HLS/" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+    <label class="md-nav__link" for="nav-6">
+      Extras
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Extras" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        Extras
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-VGA/" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-6/" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-Extra-1/" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+    <label class="md-nav__link" for="nav-7">
+      Úteis
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Úteis" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Úteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-FPGA-e-Softwares/" class="md-nav__link">
+      Infraestrutura de HW e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-VHDL/" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-SDcard/" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-Serial/" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" checked>
+    <label class="md-nav__link" for="nav-8">
+      Tutoriais Alunos
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutoriais Alunos" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Rubrica/" class="md-nav__link">
+      Rubrica
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/Insper/Embarcados-Avancados-Template" class="md-nav__link">
+      Template markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-4" type="checkbox" id="nav-8-4" checked>
+    <label class="md-nav__link" for="nav-8-4">
+      2020
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2020" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-4">
+        <span class="md-nav__icon md-icon"></span>
+        2020
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Temas/" class="md-nav__link">
+      Temas 20b
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PS3-Linux-Tutorial/" class="md-nav__link">
+      PS3 Hack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Android/" class="md-nav__link">
+      Android para Raspbery Pi 3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../LED-HW/" class="md-nav__link">
+      Periférico para controlar matriz de led da família WS281x
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../LED-Linux/" class="md-nav__link">
+      Driver linux para acender leds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../python/" class="md-nav__link">
+      Soc & Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../metropolis/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Audio/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Criptografia em Hardware Fpga
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Criptografia em Hardware Fpga
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#comecando" class="md-nav__link">
+    Começando
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivacao" class="md-nav__link">
+    Motivação
+  </a>
+  
+    <nav class="md-nav" aria-label="Motivação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tipos-de-encriptografia" class="md-nav__link">
+    Tipos de Encriptografia
+  </a>
+  
+    <nav class="md-nav" aria-label="Tipos de Encriptografia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simetrica" class="md-nav__link">
+    Simetrica:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assimetrica" class="md-nav__link">
+    Assimetrica:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementacao" class="md-nav__link">
+    Implementação
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-designer-como-achar-e-utilizar-um-core-de-criptografia" class="md-nav__link">
+    Platform Designer como achar e utilizar um core de criptografia
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform Designer como achar e utilizar um core de criptografia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-achar-um-componente" class="md-nav__link">
+    Como achar um componente:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilizando-um-core-de-criptografia" class="md-nav__link">
+    Utilizando um core de criptografia
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avalon-aes-ecb-core-128192256-bit" class="md-nav__link">
+    Avalon AES ECB-Core (128,192,256 Bit)
+  </a>
+  
+    <nav class="md-nav" aria-label="Avalon AES ECB-Core (128,192,256 Bit)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-avs_aespdf" class="md-nav__link">
+    manual ("avs_aes.pdf")
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sw-manual-do-driver-para-uso-do-componte-via-c-pelo-barramento-avalon" class="md-nav__link">
+    sw (manual do driver para uso do componte via C++ pelo barramento Avalon)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final" class="md-nav__link">
+    Final
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-5" type="checkbox" id="nav-8-5" >
+    <label class="md-nav__link" for="nav-8-5">
+      2019
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2019" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-5">
+        <span class="md-nav__icon md-icon"></span>
+        2019
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Tutoriais/" class="md-nav__link">
+      Tutoriais 2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Gabriel-TensorFlow/" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Leo-OpenCL/" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Elisa-Yocto/" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Pedro-OpenCV/" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Martim-F1/" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Toranja-DevDriver/" class="md-nav__link">
+      Bruno Toranja - Linux Device Driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#comecando" class="md-nav__link">
+    Começando
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivacao" class="md-nav__link">
+    Motivação
+  </a>
+  
+    <nav class="md-nav" aria-label="Motivação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tipos-de-encriptografia" class="md-nav__link">
+    Tipos de Encriptografia
+  </a>
+  
+    <nav class="md-nav" aria-label="Tipos de Encriptografia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simetrica" class="md-nav__link">
+    Simetrica:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assimetrica" class="md-nav__link">
+    Assimetrica:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementacao" class="md-nav__link">
+    Implementação
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-designer-como-achar-e-utilizar-um-core-de-criptografia" class="md-nav__link">
+    Platform Designer como achar e utilizar um core de criptografia
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform Designer como achar e utilizar um core de criptografia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-achar-um-componente" class="md-nav__link">
+    Como achar um componente:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilizando-um-core-de-criptografia" class="md-nav__link">
+    Utilizando um core de criptografia
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avalon-aes-ecb-core-128192256-bit" class="md-nav__link">
+    Avalon AES ECB-Core (128,192,256 Bit)
+  </a>
+  
+    <nav class="md-nav" aria-label="Avalon AES ECB-Core (128,192,256 Bit)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-avs_aespdf" class="md-nav__link">
+    manual ("avs_aes.pdf")
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sw-manual-do-driver-para-uso-do-componte-via-c-pelo-barramento-avalon" class="md-nav__link">
+    sw (manual do driver para uso do componte via C++ pelo barramento Avalon)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final" class="md-nav__link">
+    Final
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/2020/cripto/index.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="criptografia-em-hardware-fpga">Criptografia em Hardware Fpga<a class="headerlink" href="#criptografia-em-hardware-fpga" title="Permanent link">&para;</a></h1>
+<ul>
+<li><strong>Alunos:</strong> <ul>
+<li>Antonio Andraues </li>
+<li>Gabriel Francato</li>
+<li>Samuel Granato</li>
+</ul>
+</li>
+<li><strong>Curso:</strong> Engenharia da Computação</li>
+<li><strong>Semestre:</strong> 8</li>
+<li><strong>Contato:</strong><ul>
+<li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#98;&#114;&#105;&#101;&#108;&#118;&#102;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#103;&#97;&#98;&#114;&#105;&#101;&#108;&#118;&#102;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
+<li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#109;&#117;&#101;&#108;&#118;&#103;&#98;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#115;&#97;&#109;&#117;&#101;&#108;&#118;&#103;&#98;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
+<li><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#110;&#116;&#111;&#110;&#105;&#111;&#106;&#97;&#106;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#65;&#110;&#116;&#111;&#110;&#105;&#111;&#106;&#97;&#106;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
+</ul>
+</li>
+<li><strong>Ano:</strong> 2020
+&nbsp;</li>
+</ul>
+<h2 id="comecando">Começando<a class="headerlink" href="#comecando" title="Permanent link">&para;</a></h2>
+<p>Para seguir esse tutorial é necessário:</p>
+<ul>
+<li><strong>Hardware:</strong> DE10-Standard e acessórios</li>
+<li><strong>Softwares:</strong> Quartus 18.01</li>
+<li><strong>Documentos:</strong> <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual">DE10-Standard_User_manual.pdf</a>
+&nbsp;</li>
+</ul>
+<h2 id="motivacao">Motivação<a class="headerlink" href="#motivacao" title="Permanent link">&para;</a></h2>
+<p align="center">
+  <img width="600" height="300" src="https://www.estudopratico.com.br/wp-content/uploads/2015/08/criptografia-1200x675.jpg">
+</p>
+
+<div style="text-align: justify"> 
+&nbsp;&nbsp;&nbsp;Segurança de dados é um dos principais pilares da Tecnologia da Informação, e existem várias formas em que ela está presente no nosso cotidiano, desde autenticações com usuário e senha, limite de tentativas de acesso, reconhecimento facial entre muitos outros métodos utilizados hoje em dia. 
+</div>
+
+<div style="text-align: justify"> 
+&nbsp;&nbsp;&nbsp;A criptografia tem como principal motivo oferecer segurança algum dado ou fluxo de dados, fazendo com que só quem tenha a devida permissão consiga ler e modificar esses dados. 
+</div>
+<p><br></p>
+<h3 id="tipos-de-encriptografia">Tipos de Encriptografia<a class="headerlink" href="#tipos-de-encriptografia" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<h4 id="simetrica">Simetrica:<a class="headerlink" href="#simetrica" title="Permanent link">&para;</a></h4>
+</li>
+</ul>
+<div style="text-align: justify"> 
+&nbsp;&nbsp;&nbsp; O processo de encripto grafia simétrico é caracterizado pelo fato de que ambas as operações tanto encriptar quanto decriptar utilizam a mesma chave, um fator crítico desse processo é o fato de que para isso acontecer é necessário que a chave seja transferida junto ao montante de dados que está sendo transferido, deixando o processo mais vulnerável
+</div>
+<p>&nbsp;</p>
+<ul>
+<li>
+<h4 id="assimetrica">Assimetrica:<a class="headerlink" href="#assimetrica" title="Permanent link">&para;</a></h4>
+</li>
+</ul>
+<div style="text-align: justify"> 
+&nbsp;&nbsp;&nbsp;Por consequência o processo assimétrico se caracteriza pelo fato de utilizar duas chaves sincronizadas. Nesse processo são criadas duas chaves uma privada que será mantida com o dono do arquivo e outra publica que estará exposta para o mundo ver. O ponto é que o único método de decriptar a chave pública é com a chave privada que esta resguardada pelo responsável da encriptação.
+</div>
+<p>&nbsp;
+<br></p>
+<div style="text-align: justify"> 
+&nbsp;&nbsp;Nesse tutorial a criptografia que iremos apresentar será em hardware, pois tem a capacidade de oferecer um nível de segurança muito alto, já que os métodos utilizados na encriptografia, como a chave de segurança pode estar muito menos acessível a um possível invasor.
+
+</div>
+<div style="text-align: justify"> 
+&nbsp;&nbsp;Além disso, um fator muito relevante para utilização de encriptografia e decriptografia em hardware é a velocidade que o algoritmo vai levar para realizar tal ações. Isso acontece porque haverá a utilização de um processador dedicado que alivia a carga do resto do dispositivo.
+</div>
+<p>&nbsp;</p>
+<h2 id="implementacao">Implementação<a class="headerlink" href="#implementacao" title="Permanent link">&para;</a></h2>
+<div style="text-align: justify"> 
+&nbsp;&nbsp;&nbsp;Nosso hardware vai funcionar como um dispositivo que recebe um arquivo via USB, e devolve esse arquivo encriptado, também sendo capaz de fazer a operação inversa. Para isso utilizaremos uma FPGA, que tem a capacidade de formar hardwares dinâmicos e programáveis. Após finalizado o projeto, conseguimos criar essa estrutura estática para o uso sem a necessidade de toda a FPGA.
+</div>
+<div style="text-align: justify">
+&nbsp;&nbsp;&nbsp;Para essa implementação utilizaremos um dispositivo de criptografia disponibilizado pela INTEL 
+</div>
+<p>&nbsp;</p>
+<h2 id="platform-designer-como-achar-e-utilizar-um-core-de-criptografia">Platform Designer como achar e utilizar um core de criptografia<a class="headerlink" href="#platform-designer-como-achar-e-utilizar-um-core-de-criptografia" title="Permanent link">&para;</a></h2>
+<h3 id="como-achar-um-componente">Como achar um componente:<a class="headerlink" href="#como-achar-um-componente" title="Permanent link">&para;</a></h3>
+<div style="text-align: justify"> 
+&nbsp;&nbsp;&nbsp;A própria interface possui o chamado IP cores (integrating custom IP components) fornece componentes bem encapsulados que são justamente feitos para serem facilmente conectados e inicializados.
+</div>
+
+<p align="center">
+  <img width="350" height="350" src="https://i.postimg.cc/1XBn9nyk/IP.png">
+</p>
+
+<p>&nbsp;&nbsp;&nbsp;Permitindo importar componentes personalizados produzidos pela comunidade e amplamente utilizado no mercado. </p>
+<p>No site: <a href="https://opencores.org/">https://opencores.org/</a></p>
+<p>&nbsp;&nbsp;&nbsp;Também é possível por exemplo, encontrar componentes diversos ja prontos para utilizar e com documentação de uso.</p>
+<p>&nbsp;&nbsp;&nbsp;Componentes estes disponibilizados e mantidos pela comunidade. </p>
+<p>Imagem referente a Aba <a href="https://opencores.org/projects">https://opencores.org/projects</a>:</p>
+<p align="center">
+  <img width="350" height="350" src="https://i.postimg.cc/cJcNkQTG/projects.png">
+</p>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Como podemos perceber existem <p style="color: green">77 cores diferentes somente na aba de Criptografia.</p></p>
+</div>
+<h3 id="utilizando-um-core-de-criptografia">Utilizando um core de criptografia<a class="headerlink" href="#utilizando-um-core-de-criptografia" title="Permanent link">&para;</a></h3>
+<div style="text-align: justify"> 
+&nbsp;&nbsp;&nbsp;Uma boa forma de filtrar e encontrar algo bem estruturado e bem documentado é utilizando o filtro disponível pelo OpenCores:
+</div>
+
+<p><img alt="" src="certific.PNG" width="200" /></p>
+<p><img alt="" src="CryptoIP.PNG" width="1200" /></p>
+<div class="admonition example">
+<p class="admonition-title">Atencao</p>
+<p>Perceba que a quantidade de cores disponíveis diminui bruscamente.</p>
+<p><P style="color: red">Isso não significa que os outros 75 cores não possam ser uteis para você.<P> </p>
+<p>Apenas que os mesmos ainda não foram de certa forma revisados pela OpenCores.</p>
+</div>
+<h3 id="avalon-aes-ecb-core-128192256-bit">Avalon AES ECB-Core (128,192,256 Bit)<a class="headerlink" href="#avalon-aes-ecb-core-128192256-bit" title="Permanent link">&para;</a></h3>
+<p>&nbsp;&nbsp;&nbsp;Vamos pegar de exemplo este "Avalon AES ECB-Core (128,192,256 Bit)"</p>
+<p>&nbsp;&nbsp;&nbsp;Baixar a pasta e analisar algumas informações relevantes.</p>
+<p><img alt="" src="arvore.PNG" width="300" /></p>
+<div style="text-align: justify">
+&nbsp;&nbsp;&nbsp; Umas das partes mais importantes ao pegar um componente novo é a documentação dele.
+</div>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;No caso deste componente a pasta "doc".</p>
+<p><img alt="" src="docsw.PNG" width="300" /></p>
+<p>&nbsp;&nbsp;&nbsp;Onde encontramos dois segmentos importantes da documentação:</p>
+<h4 id="manual-avs_aespdf">manual ("avs_aes.pdf")<a class="headerlink" href="#manual-avs_aespdf" title="Permanent link">&para;</a></h4>
+<p>&nbsp;&nbsp;&nbsp;Sessões importantes do pdf:</p>
+<div class="codehilite"><pre><span></span><code>- Configuration Generics
+</code></pre></div>
+
+<p><img alt="" src="generic.PNG" width="600" /></p>
+<p>&nbsp;&nbsp;&nbsp;Mostra as opções genéricas que podem ser modificadas no componente.</p>
+<div style="text-align: justify">
+&nbsp;&nbsp;&nbsp;Neste caso, por exemplo, KEYLENGTH pode 128,192 ou 256 que são os tamanhos de chaves que o componente está preparado para receber.
+</div>
+
+<div class="codehilite"><pre><span></span><code>-Signals
+</code></pre></div>
+
+<p><img alt="" src="signal.PNG" width="600" /></p>
+<div style="text-align: justify">
+&nbsp;&nbsp;&nbsp;Tabela que mostra todos os barramentos que o Avalon irá utilizar e para que serve cada um deles. Os mesmos devem ser conectados corretamente no PD (platform designer).
+</div>
+
+<p>&nbsp;&nbsp;&nbsp;Imagem de exemplo da intel:</p>
+<p><img alt="" src="conection.PNG" width="600" /></p>
+<div class="codehilite"><pre><span></span><code>-Memory Map
+</code></pre></div>
+
+<p><img alt="" src="memory.PNG" width="600" /></p>
+<p>&nbsp;&nbsp;&nbsp;Mapa de memória.</p>
+<div style="text-align: justify">
+&nbsp;&nbsp;&nbsp;Normalmente isso é útil para quando queremos saber em qual offset do base adresses atribuído pelo PD (plataform designer) as informações podem ser lidas ou escritas.
+</div>
+
+<div class="codehilite"><pre><span></span><code>-Control Register
+</code></pre></div>
+
+<p><img alt="" src="re.PNG" width="600" />
+<img alt="" src="re2.PNG" width="600" /></p>
+<p>&nbsp;&nbsp;&nbsp;Descrição melhor dos pontos de controle (CTRL da tabela de Mapa de memória)</p>
+<h4 id="sw-manual-do-driver-para-uso-do-componte-via-c-pelo-barramento-avalon">sw (manual do driver para uso do componte via C++ pelo barramento Avalon)<a class="headerlink" href="#sw-manual-do-driver-para-uso-do-componte-via-c-pelo-barramento-avalon" title="Permanent link">&para;</a></h4>
+<div style="text-align: justify">
+&nbsp;&nbsp;&nbsp;Basicamente nesta pasta possui um docHTML da "API" do driver disponibilizado pelo fabricante do componente.
+</div>
+<p><img alt="" src="docsw.PNG" width="300" /></p>
+<p>&nbsp;&nbsp;&nbsp;O driver pode ser localizado na pasta SW:</p>
+<p><img alt="" src="sw.PNG" width="300" /></p>
+<p>&nbsp;&nbsp;&nbsp;Parte do arquivo do driver:</p>
+<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">C++</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">avs_aes_init</span><span class="p">(</span><span class="n">avs_aes_handle</span><span class="o">*</span> <span class="n">context</span><span class="p">){</span>
+    <span class="n">context</span><span class="o">-&gt;</span><span class="n">key</span>    <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span><span class="p">)</span> <span class="n">KEY_ADDR</span><span class="p">;</span>
+    <span class="n">context</span><span class="o">-&gt;</span><span class="n">payload</span><span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span><span class="p">)</span> <span class="n">DATA_ADDR</span><span class="p">;</span>
+    <span class="n">context</span><span class="o">-&gt;</span><span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span><span class="p">)</span> <span class="n">RESULT_ADDR</span><span class="p">;</span>
+    <span class="n">context</span><span class="o">-&gt;</span><span class="n">control</span>    <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span><span class="p">)</span> <span class="n">AESCTRLWD</span><span class="p">;</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">context</span><span class="o">-&gt;</span><span class="n">control</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x00000000</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">void</span> <span class="nf">avs_aes_setKey</span><span class="p">(</span><span class="n">avs_aes_handle</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">key</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">target_ptr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="p">)</span><span class="n">context</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">;</span>
+    <span class="cm">/* Invalidate old key; */</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">context</span><span class="o">-&gt;</span><span class="n">control</span><span class="p">)</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="o">~</span><span class="n">KEY_VALID</span><span class="p">);</span>
+    <span class="k">asm</span> <span class="n">__volatile</span><span class="p">(</span><span class="s">&quot;sync&quot;</span> <span class="o">:::</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">KEYWORDS</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="o">*</span><span class="p">(</span><span class="n">target_ptr</span><span class="o">++</span><span class="p">)</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">key</span><span class="o">++</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">asm</span> <span class="n">__volatile</span><span class="p">(</span><span class="s">&quot;sync&quot;</span> <span class="o">:::</span><span class="p">);</span>
+    <span class="cm">/* validate key */</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">context</span><span class="o">-&gt;</span><span class="n">control</span><span class="p">)</span> <span class="o">|=</span> <span class="n">KEY_VALID</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+<h2 id="final">Final<a class="headerlink" href="#final" title="Permanent link">&para;</a></h2>
+<div style="text-align: justify">
+&nbsp;&nbsp;&nbsp;Com o driver em mãos, o arquivo de Teste "AEStester.c" e o platform design corretamente conectado. Você teoricamente já tem seu componente pronta para encriptar e decriptar em FPGA.
+<div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../Audio/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Coloque aqui o nome do tutorial de vocês
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../../2019/Tutoriais/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Tutoriais 2019
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.0ac82a11.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['instant', 'navigation.expand', {'tabs': True}],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../../js/dom-confetti.js"></script>
+      
+        <script src="../../js/progress.js"></script>
+      
+    
+  </body>
+</html>

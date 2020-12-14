@@ -1,0 +1,1619 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://insper.github.io/Embarcados-Avancados/2019/Martim-F1/">
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.7">
+    
+    
+      
+        <title>Martim F. José - FPGA na AWS - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.19753c6b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../css/progress.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="pink">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#martim-f-jose-fpga-na-aws" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Martim F. José - FPGA na AWS
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-RTL/" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-1/" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS/" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-2/" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS-IP/" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-3/" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      HPS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS/" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Running/" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BuildSystem/" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BlinkLED/" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Extra: configurando rede
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-4/" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Kernel/" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Buildroot/" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-5/" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-DeviceDriver1/" class="md-nav__link">
+      Device Driver
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-module/" class="md-nav__link">
+      Kernel module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-chardriver/" class="md-nav__link">
+      Char device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      HPS + FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS + FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-BlinkLED/" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-nav__link">
+      Char LED device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    <label class="md-nav__link" for="nav-5">
+      Acelerando
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Acelerando" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-Acelerando-HLS/" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+    <label class="md-nav__link" for="nav-6">
+      Extras
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Extras" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        Extras
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-VGA/" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-6/" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-Extra-1/" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+    <label class="md-nav__link" for="nav-7">
+      Úteis
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Úteis" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Úteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-FPGA-e-Softwares/" class="md-nav__link">
+      Infraestrutura de HW e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-VHDL/" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-SDcard/" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-Serial/" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" checked>
+    <label class="md-nav__link" for="nav-8">
+      Tutoriais Alunos
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutoriais Alunos" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Rubrica/" class="md-nav__link">
+      Rubrica
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/Insper/Embarcados-Avancados-Template" class="md-nav__link">
+      Template markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-4" type="checkbox" id="nav-8-4" >
+    <label class="md-nav__link" for="nav-8-4">
+      2020
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2020" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-4">
+        <span class="md-nav__icon md-icon"></span>
+        2020
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/Temas/" class="md-nav__link">
+      Temas 20b
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/PS3-Linux-Tutorial/" class="md-nav__link">
+      PS3 Hack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/Android/" class="md-nav__link">
+      Android para Raspbery Pi 3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/LED-HW/" class="md-nav__link">
+      Periférico para controlar matriz de led da família WS281x
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/LED-Linux/" class="md-nav__link">
+      Driver linux para acender leds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/python/" class="md-nav__link">
+      Soc & Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/metropolis/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/Audio/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/cripto/" class="md-nav__link">
+      Criptografia em Hardware Fpga
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-5" type="checkbox" id="nav-8-5" checked>
+    <label class="md-nav__link" for="nav-8-5">
+      2019
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2019" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-5">
+        <span class="md-nav__icon md-icon"></span>
+        2019
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutoriais/" class="md-nav__link">
+      Tutoriais 2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Gabriel-TensorFlow/" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Leo-OpenCL/" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Elisa-Yocto/" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Pedro-OpenCV/" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Martim F. José - FPGA na AWS
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Martim F. José - FPGA na AWS
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introducao" class="md-nav__link">
+    Introdução
+  </a>
+  
+    <nav class="md-nav" aria-label="Introdução">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aplicacoes" class="md-nav__link">
+    Aplicações
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custos" class="md-nav__link">
+    Custos
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passo-a-passo" class="md-nav__link">
+    Passo a passo
+  </a>
+  
+    <nav class="md-nav" aria-label="Passo a passo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-requisitos" class="md-nav__link">
+    Pré-requisitos
+  </a>
+  
+    <nav class="md-nav" aria-label="Pré-requisitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configurando-a-aws" class="md-nav__link">
+    Configurando a AWS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instancia-de-desenvolvedor" class="md-nav__link">
+    Instância de desenvolvedor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bucket-setup" class="md-nav__link">
+    Bucket setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-the-dev-house" class="md-nav__link">
+    Setting up the dev house
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-up" class="md-nav__link">
+    Check up
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compilando" class="md-nav__link">
+    Compilando!
+  </a>
+  
+    <nav class="md-nav" aria-label="Compilando!">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#criacao-da-amazon-fpga-image-afi" class="md-nav__link">
+    Criação da Amazon FPGA Image (AFI)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exportando-o-programa" class="md-nav__link">
+    Exportando o programa
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criando-a-instancia-f1" class="md-nav__link">
+    Criando a instância F1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#executando" class="md-nav__link">
+    Executando
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Toranja-DevDriver/" class="md-nav__link">
+      Bruno Toranja - Linux Device Driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introducao" class="md-nav__link">
+    Introdução
+  </a>
+  
+    <nav class="md-nav" aria-label="Introdução">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aplicacoes" class="md-nav__link">
+    Aplicações
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custos" class="md-nav__link">
+    Custos
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passo-a-passo" class="md-nav__link">
+    Passo a passo
+  </a>
+  
+    <nav class="md-nav" aria-label="Passo a passo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-requisitos" class="md-nav__link">
+    Pré-requisitos
+  </a>
+  
+    <nav class="md-nav" aria-label="Pré-requisitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configurando-a-aws" class="md-nav__link">
+    Configurando a AWS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instancia-de-desenvolvedor" class="md-nav__link">
+    Instância de desenvolvedor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bucket-setup" class="md-nav__link">
+    Bucket setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-the-dev-house" class="md-nav__link">
+    Setting up the dev house
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-up" class="md-nav__link">
+    Check up
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compilando" class="md-nav__link">
+    Compilando!
+  </a>
+  
+    <nav class="md-nav" aria-label="Compilando!">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#criacao-da-amazon-fpga-image-afi" class="md-nav__link">
+    Criação da Amazon FPGA Image (AFI)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exportando-o-programa" class="md-nav__link">
+    Exportando o programa
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#criando-a-instancia-f1" class="md-nav__link">
+    Criando a instância F1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#executando" class="md-nav__link">
+    Executando
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/2019/Martim-F1.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="martim-f-jose-fpga-na-aws">Martim F. José - FPGA na AWS<a class="headerlink" href="#martim-f-jose-fpga-na-aws" title="Permanent link">&para;</a></h1>
+<ul>
+<li>Aluno: Martim Ferreira José</li>
+<li>Curso: Engenharia da Computação</li>
+<li>Semestre: 9</li>
+<li>Contato: </li>
+<li>Link tutorial oficial: </li>
+<li>Ano: 2019</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Hardware utilizado no tutorial</p>
+<ul>
+<li>Instância F1 na AWS</li>
+</ul>
+</div>
+<h2 id="introducao">Introdução<a class="headerlink" href="#introducao" title="Permanent link">&para;</a></h2>
+<p>A AWS dispõem de instâncias F1, que são máquinas de alta performance que contém uma FPGA no barramento PCI, permitindo a execução de programas acelerados por meio de hardware personalizado. Para executar um programa em uma FPGA na nuvem, é preciso primeiro desenvolver, simular, depurar e compilar o código. Tudo isso é feito em uma instância de desenvolvimento, predefinida por uma <a href="https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/AMIs.html">AMI</a> (Amazon Machine Image) fornecida pela AWS. Na instância de desenvolvedor, o programa é compilado e é gerada uma imagem para a FPGA Xilinx presente na instância F1.</p>
+<p>O programa a ser implementado na FPGA pode ser desenvolvido utilizando três ambientes de desenvolvimento diferentes, documentados a seguir:</p>
+<table>
+<thead>
+<tr>
+<th align="center">Development Environment</th>
+<th align="center">Description</th>
+<th align="center">Accelerator Language</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Software Defined Accelerator Development - SDAccel</td>
+<td align="center">Development experience leverages an optimized compiler to allow easy new accelerator development or migration of existing C/C++/openCL, Verilog/VHDL to AWS FPGA instances</td>
+<td align="center">C/C++/OpenCL, Verilog/VHDL (RTL)</td>
+</tr>
+<tr>
+<td align="center">Hardware Accelerator Development - HDK</td>
+<td align="center">Fully custom hardware development experience provides hardware developers with the tools required for developing AFIs for AWS FPGA instances</td>
+<td align="center">Verilog/VHDL</td>
+</tr>
+<tr>
+<td align="center">IP Integrator or High Level Synthesis (HLx)</td>
+<td align="center">Graphical interface development experience for integrating IP and high level synthesis development</td>
+<td align="center">Verilog/VHDL/C</td>
+</tr>
+</tbody>
+</table>
+<p>Pela facilidade e maior conhecimento de C++, opta-se pela escolha do ambiente SDAccel. Portando, o programa a ser implementado é programado em sua maioria em C++ utilizando a arquitetura OpenCL, que é amplamente utilizada na programação de alto desempenho em diversas plataformas.</p>
+<p>Este tutorial faz a implementação do exemplo Hello World, que consiste na adição de dois vetores. O código deste exemplo pode ser examinado a fundo no seguinte repositório: <a href="https://github.com/Xilinx/SDAccel_Examples/tree/a41b58921188ad90ace2d34a22a2513d8f74b549/getting_started/host/helloworld_ocl">https://github.com/Xilinx/SDAccel_Examples/tree/a41b58921188ad90ace2d34a22a2513d8f74b549/getting_started/host/helloworld_ocl</a></p>
+<p>No repositório há dois arquivos na pasta <code>src</code>: <code>host.cpp</code> e <code>vector_addition.cl</code>, que correspondem ao programa da máquina e ao kernel da FPGA, respectivamente. </p>
+<p>O arquivo host consiste em um programa C++ em que:</p>
+<ul>
+<li>São definidos três vetores: A, B e results.</li>
+<li>A placa Xilinx é selecionada e adicionada para o contexto da execução. </li>
+<li>O binário do kernel é carregado e adicionado para um programa</li>
+<li>Para migrar os dados entre host e device, são criados dois buffers de leitura referenciando A e B; E um buffer de escrita referenciando result. </li>
+<li>Os dados armazenados nos buffers de leitura são transferidos da memória da máquina para memória da FPGA.</li>
+<li>O kernel é extraído do programa, os argumentos são determinados (result, A, B, tamanho) e ele é lançado.</li>
+<li>Os resultados são requisitados da FPGA e armazenados no buffer de escrita.</li>
+<li>E por fim, o resultado recebido é comparados com o resultado esperado.</li>
+</ul>
+<p>O arquivo do kernel consiste em uma função em OpenCL que:</p>
+<ul>
+<li>Recebe quatro argumentos (result, A, B, tamanho)</li>
+<li>Define os arrays A e B</li>
+<li>Percorre os arrays recebidos como argumento, populando os arrays declarados</li>
+<li>Percorre o tamanho das arrays escrevendo no buffer de escrita (result) a soma de A e B em cada índice.</li>
+</ul>
+<h3 id="aplicacoes">Aplicações<a class="headerlink" href="#aplicacoes" title="Permanent link">&para;</a></h3>
+<p>As instâncias com FPGA são amplamente utilizadas em situações em que há uma grande quantidade de dados e o processamento precisa ser feito com rapidez. O desenvolvimento de um hardware personalizado para executar um programa fornece um custo de computação 30x melhor comparado com instâncias de CPU. Entre essas aplicações pode-se citar o encoding de video em tempo real e análise de risco financeiro.</p>
+<h3 id="custos">Custos<a class="headerlink" href="#custos" title="Permanent link">&para;</a></h3>
+<p>A instância de desenvolvimento m5.xlarge custa US<span><span class="MathJax_Preview">0.1920 por hora. E a instância f1.2xlarge custa US</span><script type="math/tex">0.1920 por hora. E a instância f1.2xlarge custa US</script></span>1.65 por hora. A implementação deste exemplo é estimada consumir por volta de 3hrs da instância de desenvolvimento e meia hora da instância F1. Totalizando US$1.5.</p>
+<h2 id="passo-a-passo">Passo a passo<a class="headerlink" href="#passo-a-passo" title="Permanent link">&para;</a></h2>
+<h3 id="referencias">Referências<a class="headerlink" href="#referencias" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://aws.amazon.com/pt/ec2/instance-types/f1/">https://aws.amazon.com/pt/ec2/instance-types/f1/</a></li>
+<li><a href="https://github.com/aws/aws-fpga/blob/master/SDAccel/README.md#overview">https://github.com/aws/aws-fpga/blob/master/SDAccel/README.md#overview</a></li>
+<li><a href="https://github.com/Xilinx/SDAccel_Examples/tree/a41b58921188ad90ace2d34a22a2513d8f74b549/getting_started/host/helloworld_ocl/src">https://github.com/Xilinx/SDAccel_Examples/tree/a41b58921188ad90ace2d34a22a2513d8f74b549/getting_started/host/helloworld_ocl/src</a></li>
+</ul>
+<h3 id="pre-requisitos">Pré-requisitos<a class="headerlink" href="#pre-requisitos" title="Permanent link">&para;</a></h3>
+<p>Pré-requisitos: Ter uma conta na AWS com acesso ao EC2 e S3.</p>
+<h4 id="configurando-a-aws">Configurando a AWS<a class="headerlink" href="#configurando-a-aws" title="Permanent link">&para;</a></h4>
+<p>Em seu computador, baixe a CLI da AWS configure suas credenciais:</p>
+<p><code>$ aws configure</code></p>
+<h4 id="instancia-de-desenvolvedor">Instância de desenvolvedor<a class="headerlink" href="#instancia-de-desenvolvedor" title="Permanent link">&para;</a></h4>
+<p>Para criar a instância de desenvolvimento, clique em Launch Instance e:
+- Utilize a AMI chamada “FPGA Developer AMI”. 
+- Utilize o flavor m5.xlarge ou m5.2xlarge (quanto mais núcleos e memória, mais rápido será a compilacão).
+- Crie e salve sua Keypair.</p>
+<h4 id="bucket-setup">Bucket setup<a class="headerlink" href="#bucket-setup" title="Permanent link">&para;</a></h4>
+<p>Para utilizar a imagem compilada da F1, é necessário salvá-la em um bucket, permitindo o seu acesso pelo serviço EC2. O bucket e suas pastas podem ser criados manualmente pela dashboard ou pela CLI:</p>
+<div class="highlight"><pre><span></span><code>$ aws s3 mb s3://embarcados-f1-tutorial --region us-east-1
+$ touch FILES_GO_HERE.txt 
+$ aws s3 cp FILES_GO_HERE.txt s3://embarcados-f1-tutorial/files/
+$ touch LOGS_FILES_GO_HERE.txt 
+$ aws s3 cp LOGS_FILES_GO_HERE.txt s3://embarcados-f1-tutorial/logs/
+</code></pre></div>
+<h4 id="setting-up-the-dev-house">Setting up the dev house<a class="headerlink" href="#setting-up-the-dev-house" title="Permanent link">&para;</a></h4>
+<p>Acesse a instância de desenvolvimento:</p>
+<p><code>ssh -i "&lt;sua-keypair&gt;.pem" &lt;ip-da-máquina&gt;</code></p>
+<p>Dentro da instância, clone o repositório, instale os drivers e bibliotecas necessárias e determine a plataforma de desenvolvimento:</p>
+<div class="highlight"><pre><span></span><code>$ git clone https://github.com/aws/aws-fpga.git <span class="nv">$AWS_FPGA_REPO_DIR</span>
+$ <span class="nb">cd</span> <span class="nv">$AWS_FPGA_REPO_DIR</span>
+$ <span class="nb">source</span> sdaccel_setup.sh
+$ <span class="nb">export</span> <span class="nv">AWS_PLATFORM</span><span class="o">=</span><span class="nv">$AWS_PLATFORM_DYNAMIC_5_0</span> 
+</code></pre></div>
+<p>Acesse a pasta do exemplo no diretório:</p>
+<p><code>$ cd $SDACCEL_DIR/examples/xilinx/getting_started/host/helloworld_ocl/</code></p>
+<div class="admonition warning">
+<p>Hora de compilar? NÃO</p>
+</div>
+<h4 id="check-up">Check up<a class="headerlink" href="#check-up" title="Permanent link">&para;</a></h4>
+<p>A compilação do programa demora 2h06min. Já imaginou desenvolver algo e cada vez que quiser testar ter que esperar 2h? E por isso que existem o emulador de software, que realiza uma rápida compilação e executa nos ciclos da CPU. E o emulador de hardware, que invoca o simulador de hardware do ambiente SDAccel e testa a funcionalidade do código a ser executado na FPGA.</p>
+<p>Para emular o software:</p>
+<div class="highlight"><pre><span></span><code>$ make clean
+$ make check <span class="nv">TARGETS</span><span class="o">=</span>sw_emu <span class="nv">DEVICES</span><span class="o">=</span><span class="nv">$AWS_PLATFORM</span> all
+</code></pre></div>
+<p>Para emular o hardware:</p>
+<div class="highlight"><pre><span></span><code>$ make clean
+$ make check <span class="nv">TARGETS</span><span class="o">=</span>hw_emu <span class="nv">DEVICES</span><span class="o">=</span><span class="nv">$AWS_PLATFORM</span> all 
+</code></pre></div>
+<h3 id="compilando">Compilando!<a class="headerlink" href="#compilando" title="Permanent link">&para;</a></h3>
+<p>O ambiente SDAccel também permite que o desenvolvedor compile tanto o binário da placa FPGA, quanto a aplicação host. Isso é feito por meio do mesmo Makefile:</p>
+<div class="highlight"><pre><span></span><code>$ make clean
+$ make <span class="nv">TARGETS</span><span class="o">=</span>hw <span class="nv">DEVICES</span><span class="o">=</span><span class="nv">$AWS_PLATFORM</span> all 
+</code></pre></div>
+<p>A compilação gera o arquivo binário para a FPGA Xilinx (*.xclbin) e o executável do programa host (exe), no nosso caso: <code>helloworld</code>.</p>
+<h4 id="criacao-da-amazon-fpga-image-afi">Criação da Amazon FPGA Image (AFI)<a class="headerlink" href="#criacao-da-amazon-fpga-image-afi" title="Permanent link">&para;</a></h4>
+<p>Agora, é preciso gerar uma imagem FPGA que será inserida na placa presente na PCI da instância. O script abaixo salva o kernel da FPGA no bucket, cria a AMI no servidor da AWS e salva um arquivo de metadados com informações da imagem (<code>*.awsxclbin</code>), que também pode ser vistas no arquivo <code>*_afi_id.txt</code>.</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nv">$SDACCEL_DIR</span>/tools/create_sdaccel_afi.sh -xclbin<span class="o">=</span> xclbin/vector_addition.hw.xilinx_aws-vu9p-f1-04261818_dynamic_5_0.xclbin -o<span class="o">=</span>vector_addition.hw.xilinx_aws-vu9p-f1-04261818_dynamic_5_0 <span class="se">\ </span>-s3_bucket<span class="o">=</span>embarcados-f1-tutorial -s3_dcp_key<span class="o">=</span>files -s3_logs_key<span class="o">=</span>logs
+</code></pre></div>
+<p>A criação da imagem não é imediata, seu processo demora e pode ser acompanhado pela CLI da AWS:
+<div class="highlight"><pre><span></span><code>aws ec2 describe-fpga-images --fpga-image-ids &lt;AFI ID <span class="o">(</span>eg: afi-06d0ffc989feeea2a<span class="o">)</span>&gt;
+</code></pre></div></p>
+<p>Quando a criação da imagem for concluída, o <em>output</em> deverá ser:
+<div class="highlight"><pre><span></span><code>                ...
+                &quot;State&quot;: {
+                    &quot;Code&quot;: &quot;available&quot;
+                },
+                ...
+</code></pre></div></p>
+<p>Caso o código do status retorne como "failed", procure os logs em: <code>s3://embarcados-f1-tutorial/logs/</code></p>
+<h4 id="exportando-o-programa">Exportando o programa<a class="headerlink" href="#exportando-o-programa" title="Permanent link">&para;</a></h4>
+<p>Os arquivos necessários para executar o exemplo na FPGA são:</p>
+<ul>
+<li><code>&lt;nome-do-arquivo&gt;.awsxclbin</code></li>
+<li><code>helloworld</code></li>
+</ul>
+<p>Portanto, copie-os para o bucket:</p>
+<div class="highlight"><pre><span></span><code>$ aws s3 cp &lt;nome-do-arquivo&gt;.awsxclbin s3://embarcados-f1-tutorial/files/
+$ aws s3 cp helloworld s3://embarcados-f1-tutorial/files/
+</code></pre></div>
+<h3 id="criando-a-instancia-f1">Criando a instância F1<a class="headerlink" href="#criando-a-instancia-f1" title="Permanent link">&para;</a></h3>
+<p>Para criar a instância F1, clique em Launch Instance e:</p>
+<ul>
+<li>Utilize a AMI chamada “FPGA Developer AMI”. </li>
+<li>Utilize o flavor f1.2xlarge.</li>
+<li>Crie e salve sua Keypair.</li>
+</ul>
+<h3 id="executando">Executando<a class="headerlink" href="#executando" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Acesse a instância F1</li>
+<li>Repita o passo <strong>Setting up the dev house</strong></li>
+<li>Acesse o diretório do repositório <code>cd $AWS_FPGA_REPO_DIR</code></li>
+<li>Copie os arquivos salvos no bucket:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ aws s3 cp s3://embarcados-f1-tutorial/files/&lt;nome-do-arquivo&gt;.awsxclbin ./
+$ aws s3 cp s3://embarcados-f1-tutorial/files/helloworld ./
+</code></pre></div>
+<ul>
+<li>Certifique-se que todos os arquivos possam ser achados na raiz do respositório</li>
+<li><code>$ sudo -E /bin/bash</code></li>
+<li><code>$ source $AWS_FPGA_REPO_DIR/sdaccel_runtime_setup.sh</code></li>
+<li><code>chmod +x helloworld</code></li>
+<li><code>./helloworld</code></li>
+</ul>
+<p>Pronto! O programa host importou a imagem da FPGA do serviço AMI da AWS, criou os buffers para fazer a transferência de dados, determinou os argumentos e inseriu todo o kernel na placa.</p>
+<div class="admonition notes">
+<p class="admonition-title">Notes</p>
+<p>Adicionar log do resultado</p>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../Pedro-OpenCV/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Pedro de la Penã - Jetson Nano GPU
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../Toranja-DevDriver/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Bruno Toranja - Linux Device Driver
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.0ac82a11.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['instant', 'navigation.expand', {'tabs': True}],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../../js/dom-confetti.js"></script>
+      
+        <script src="../../js/progress.js"></script>
+      
+    
+  </body>
+</html>

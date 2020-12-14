@@ -1,0 +1,1508 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://insper.github.io/Embarcados-Avancados/Tutorial-HPS-FPGA-BlinkLED/">
+      
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.7">
+    
+    
+      
+        <title>Tutorial - HPS + FPGA - Blink LED - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.19753c6b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/progress.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="pink">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tutorial-hps-fpga-blink-led" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Tutorial - HPS + FPGA - Blink LED
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-FPGA-RTL/" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-1/" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-FPGA-NIOS/" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-2/" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-FPGA-NIOS-IP/" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-3/" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      HPS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS/" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-Running/" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-BuildSystem/" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-BlinkLED/" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-HPS-ethernet/" class="md-nav__link">
+      Extra: configurando rede
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-4/" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-Kernel/" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-Buildroot/" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-5/" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-DeviceDriver1/" class="md-nav__link">
+      Device Driver
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-kernel-module/" class="md-nav__link">
+      Kernel module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-kernel-chardriver/" class="md-nav__link">
+      Char device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    <label class="md-nav__link" for="nav-4">
+      HPS + FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS + FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Tutorial - HPS + FPGA - Blink LED
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#entendendo-o-hw" class="md-nav__link">
+    Entendendo o HW
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parte-2" class="md-nav__link">
+    Parte 2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gerando-o-rbf-imagem-da-fpga" class="md-nav__link">
+    Gerando o .rbf (imagem da FPGA)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtb-informacoes-de-hardware-para-o-kernel" class="md-nav__link">
+    dtb (informações de hardware para o Kernel)
+  </a>
+  
+    <nav class="md-nav" aria-label="dtb (informações de hardware para o Kernel)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gerando-o-dts" class="md-nav__link">
+    Gerando o dts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gerando-o-dtb" class="md-nav__link">
+    Gerando o dtb
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testando" class="md-nav__link">
+    Testando
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-nav__link">
+      Char LED device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    <label class="md-nav__link" for="nav-5">
+      Acelerando
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Acelerando" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-Acelerando-HLS/" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+    <label class="md-nav__link" for="nav-6">
+      Extras
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Extras" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        Extras
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-FPGA-VGA/" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-6/" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-Extra-1/" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+    <label class="md-nav__link" for="nav-7">
+      Úteis
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Úteis" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Úteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-FPGA-e-Softwares/" class="md-nav__link">
+      Infraestrutura de HW e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-VHDL/" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-SDcard/" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-HPS-Serial/" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-HPS-ethernet/" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+    <label class="md-nav__link" for="nav-8">
+      Tutoriais Alunos
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutoriais Alunos" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Projeto-Overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Projeto-Rubrica/" class="md-nav__link">
+      Rubrica
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/Insper/Embarcados-Avancados-Template" class="md-nav__link">
+      Template markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-4" type="checkbox" id="nav-8-4" >
+    <label class="md-nav__link" for="nav-8-4">
+      2020
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2020" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-4">
+        <span class="md-nav__icon md-icon"></span>
+        2020
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/Temas/" class="md-nav__link">
+      Temas 20b
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/PS3-Linux-Tutorial/" class="md-nav__link">
+      PS3 Hack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/Android/" class="md-nav__link">
+      Android para Raspbery Pi 3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/LED-HW/" class="md-nav__link">
+      Periférico para controlar matriz de led da família WS281x
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/LED-Linux/" class="md-nav__link">
+      Driver linux para acender leds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/python/" class="md-nav__link">
+      Soc & Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/metropolis/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/Audio/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/cripto/" class="md-nav__link">
+      Criptografia em Hardware Fpga
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-5" type="checkbox" id="nav-8-5" >
+    <label class="md-nav__link" for="nav-8-5">
+      2019
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2019" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-5">
+        <span class="md-nav__icon md-icon"></span>
+        2019
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Tutoriais/" class="md-nav__link">
+      Tutoriais 2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Gabriel-TensorFlow/" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Leo-OpenCL/" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Elisa-Yocto/" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Pedro-OpenCV/" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Martim-F1/" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Toranja-DevDriver/" class="md-nav__link">
+      Bruno Toranja - Linux Device Driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#entendendo-o-hw" class="md-nav__link">
+    Entendendo o HW
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parte-2" class="md-nav__link">
+    Parte 2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gerando-o-rbf-imagem-da-fpga" class="md-nav__link">
+    Gerando o .rbf (imagem da FPGA)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtb-informacoes-de-hardware-para-o-kernel" class="md-nav__link">
+    dtb (informações de hardware para o Kernel)
+  </a>
+  
+    <nav class="md-nav" aria-label="dtb (informações de hardware para o Kernel)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gerando-o-dts" class="md-nav__link">
+    Gerando o dts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gerando-o-dtb" class="md-nav__link">
+    Gerando o dtb
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testando" class="md-nav__link">
+    Testando
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/Tutorial-HPS-FPGA-BlinkLED.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="tutorial-hps-fpga-blink-led">Tutorial - HPS + FPGA - Blink LED<a class="headerlink" href="#tutorial-hps-fpga-blink-led" title="Permanent link">&para;</a></h1>
+<p>Nesse tutorial vamos ver como interfacear o ARM com a FPGA (fabric). Nesse
+tutorial,  optei por deixar vocês seguirem o tutorial oficial da Terasic:
+<code>Examples for using both HPS SoC and FGPA</code> [capítulo 7], que se encontra 
+no manual do usuário, no CD do kit.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Retomar a essa página quando acabar o tutorial da Terasic, ele não cobre tudo.</p>
+</div>
+<ul>
+<li><a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual">https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual</a></li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Execute</p>
+<p>Copie o binário compilado no tutorial <code>HPS_FPGA_LED</code> para o SDCard</p>
+</div>
+<h2 id="entendendo-o-hw">Entendendo o HW<a class="headerlink" href="#entendendo-o-hw" title="Permanent link">&para;</a></h2>
+<p>Muito importante você parar e refletir o que aconteceu, para isso segue algumas
+perguntas:</p>
+<ol>
+<li>Quais são as interfaces ente o ARM e a FPGA? (são 4 no total)</li>
+<li>Qual a diferença entre elas?</li>
+<li>Como o HPS aparece no Platform Designer (PD)?<ul>
+<li>Você abriu as configurações do HPS no PD? O que pode ser configurado?</li>
+</ul>
+</li>
+<li>Como essa interface é utilizada no Platform Designer?</li>
+<li>Porque no projeto ele utilizou um <code>clock bridge?</code></li>
+</ol>
+<h2 id="parte-2">Parte 2<a class="headerlink" href="#parte-2" title="Permanent link">&para;</a></h2>
+<p>Esse tutorial não é completo, ele pula uma coisa muito importante:</p>
+<ol>
+<li>
+<p>Como programar a FPGA automaticamente para quando o Linux inicializar, 
+o hardware já estar programando  para poder executar o programa <code>HPS_FPGA_LED</code>.</p>
+</li>
+<li>
+<p>Como o Kernel do linux sabe em qual hardware ele está sendo executado?
+   (Possui vídeo? Ethernet? ...)</p>
+</li>
+</ol>
+<p>A programação da FPGA é realizada pelo u-boot, antes da inicialização do
+Kernel do Linux.  No nosso caso, o u-boot foi pré configurado para ler o arquivo
+<code>soc_system.rbf</code> que está na partição do SDCARD junto com o kernel (<code>zImage</code>).</p>
+<div class="admonition note">
+<p class="admonition-title">Explicação do processo de boot - até 1:50 minutos</p>
+<p><iframe width="560" height="315" src="https://www.youtube.com/embed/vS7pvefsbRM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+</div>
+<p>O u-boot antes de inicializar o kernel do Linux, busca esse arquivo na partição do SDCARD, o extraí e programa <a href="https://github.com/u-boot/u-boot/blob/94905e1db8d8d42c4f39f14dbee2f9788390db5e/drivers/fpga/socfpga.c">"magicamente"</a> a FPGA. Nessa mesma partição temos mais dois arquivos: <code>u-boot.scr</code> e <code>socfpga.dtb</code>. O primeiro é um script de inicialização do boot na qual o u-boot lê para saber quais passos ele deve executar (se precisa carregar a fpga, onde está o kernel, ..., são os passos de inicialização), já o <code>socfpga.dtb</code> é o <strong>device tree do Linux</strong>, o dtb é um binário, que foi criado a partir de outro arquivo, o <code>.dts</code>, e ele contém informações sobre o hardware que é passado para o kernel no momento de inicialização.</p>
+<div class="admonition note">
+<p class="admonition-title">Device Tree for Dummies! - Thomas Petazzoni, Free Electrons</p>
+<p><iframe width="560" height="315" src="https://www.youtube.com/embed/m_NyYEBxfn8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+</div>
+<h2 id="gerando-o-rbf-imagem-da-fpga">Gerando o <code>.rbf</code> (imagem da FPGA)<a class="headerlink" href="#gerando-o-rbf-imagem-da-fpga" title="Permanent link">&para;</a></h2>
+<p>O <code>rbf</code> é o arquivo <code>.sof</code> gerado pelo Quartus na compilação só que comprimido e
+com algumas modificações.  Para gerar o arquivo <code>.rbf</code>  a partir do <code>.sof</code>
+basta executarmos na pasta <code>output_files</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Você deve executar esse comando na pasta <code>output_files</code> do seu projeto Quartus!</p>
+</div>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> output_files
+$ quartus_cpf -c DE10_Standard_FB.sof -o <span class="nv">bitstream_compression</span><span class="o">=</span>on soc_system.rbf
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>note que o arquivo gerado pelo Quartus chama <code>DE10_Standard_FB.sof</code>,
+você deve editar para o seu caso.</p>
+</div>
+<p>Com o arquivo <code>soc_system.rbf</code> criado, é só copiarmos ele para o SDCARD,
+substituindo o anterior.</p>
+<div class="admonition example">
+<p class="admonition-title">Execute</p>
+<ul>
+<li>Gere o <code>soc_system.rbf</code> do projeto (COMPILAR O QUARTUS!)</li>
+<li>Grave o novo <code>rbf</code> no SDCard (mesma partição do kernel)</li>
+</ul>
+</div>
+<h2 id="dtb-informacoes-de-hardware-para-o-kernel"><code>dtb</code> (informações de hardware para o Kernel)<a class="headerlink" href="#dtb-informacoes-de-hardware-para-o-kernel" title="Permanent link">&para;</a></h2>
+<p>O <code>dtb</code> é utilizado como ferramenta para indicar ao kernel quais são as
+configurações de hardware disponíveis, você não precisa recompilar o kernel caso
+o endereço de memória de algum periférico mudar, basta informar no <code>dts</code>. Essa
+ferramenta é muito importante para sistemas embarcados, na qual, cada hardware
+possui sua especificidade.</p>
+<p>O <code>dtb</code> é gerado a partir de arquivo texto no formato <code>dts</code> que é então gerado
+pelas informações  de hardware extraída do <strong>Platform Designer</strong> que são salvas
+no arquivo: <code>.sopcinfo</code>, o mesmo arquivo que é utilizado pelo Eclipse-NIOS para
+gerar o BSP nos tutoriais passados. O BSP no Linux é chamado de <code>dts</code>  e
+possui um formato padrão que deve ser seguido!</p>
+<p>Será necessário seguir os passos a seguir:</p>
+<ol>
+<li>Gere o <code>.sopcinfo</code> (platform designer) (<strong>já está pronto, não precisa mexer</strong>)</li>
+<li>Gere o <code>dts</code></li>
+<li>Compile o <code>dts</code> para <code>dtb</code></li>
+</ol>
+<h3 id="gerando-o-dts">Gerando o <code>dts</code><a class="headerlink" href="#gerando-o-dts" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p>Eu consegui esse comando via trocado com engenheiros da Terasic, os exemplos
+que encontrava nos tutorias da internet não funcionavam.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Para funcionar é necessário realizar o comando via o shell do oembedded</p>
+</div>
+<p>Execute os seguintes comandos:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="c1"># Devemos executar os comandos dentro do shell do embedded (quartus)</span>
+$ embedded_command_shell.sh
+$ sopc2dts --input soc_system.sopcinfo --output soc_system.dts --type dts --board soc_system_board_info.xml --board hps_common_board_info.xml --bridge-removal all --clocks
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Você deve executar esse comando na pasta raiz do seu projeto Quartus!</p>
+</div>
+<p>Agora com o <code>.dts</code> gerado, vamos dar uma olhada em seu conteúdo e como o
+interpretar. O <code>dts</code> possui a anatomia a seguir: </p>
+<p><img alt="" src="../figs/Tutorial-HLS-FPGA-BlinkLED-devicetree.png" /></p>
+<ul>
+<li>ref: <a href="https://developer.toradex.com/device-tree-customization">https://developer.toradex.com/device-tree-customization</a></li>
+</ul>
+<p>O começo do nosso <code>.dts</code> tem a definição das CPUs que estão
+disponíveis no CHIP:</p>
+<div class="highlight"><pre><span></span><code>    <span class="nf">cpus</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">#address-cells</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="kr">#size-cells</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">enable-method</span> <span class="o">=</span> <span class="s">&quot;altr,socfpga-smp&quot;</span><span class="p">;</span> <span class="cm">/* appended from boardinfo */</span>
+
+        <span class="nl">hps_0_arm_a9_0</span><span class="p">:</span> <span class="na">cpu</span><span class="err">@</span><span class="nf">0x0</span><span class="cm"> </span><span class="p">{</span>
+            <span class="kr">device_type</span> <span class="o">=</span> <span class="s">&quot;cpu&quot;</span><span class="p">;</span>
+            <span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;arm,cortex-a9-16.1&quot;</span><span class="p">,</span> <span class="s">&quot;arm,cortex-a9&quot;</span><span class="p">;</span>
+            <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mh">0x00000000</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">next-level-cache</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">hps_0_L2</span><span class="o">&gt;</span><span class="p">;</span> <span class="cm">/* appended from boardinfo */</span>
+        <span class="p">};</span> <span class="c1">//end cpu@0x0 (hps_0_arm_a9_0)</span>
+
+        <span class="nl">hps_0_arm_a9_1</span><span class="p">:</span> <span class="na">cpu</span><span class="err">@</span><span class="nf">0x1</span><span class="cm"> </span><span class="p">{</span>
+            <span class="kr">device_type</span> <span class="o">=</span> <span class="s">&quot;cpu&quot;</span><span class="p">;</span>
+            <span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;arm,cortex-a9-16.1&quot;</span><span class="p">,</span> <span class="s">&quot;arm,cortex-a9&quot;</span><span class="p">;</span>
+            <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mh">0x00000001</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">next-level-cache</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">hps_0_L2</span><span class="o">&gt;</span><span class="p">;</span> <span class="cm">/* appended from boardinfo */</span>
+        <span class="p">};</span> <span class="c1">//end cpu@0x1 (hps_0_arm_a9_1)</span>
+    <span class="p">};</span> <span class="c1">//end cpus</span>
+</code></pre></div>
+<p>Vamos ver em mais detalhes o <code>hps_0_uart0</code> do nosso <code>dts</code>:</p>
+<div class="highlight"><pre><span></span><code>        <span class="nl">hps_0_uart0</span><span class="p">:</span> <span class="na">serial</span><span class="err">@</span><span class="mh">0xffc02000</span> <span class="p">{</span>
+            <span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;snps,dw-apb-uart-16.1&quot;</span><span class="p">,</span> <span class="s">&quot;snps,dw-apb-uart&quot;</span><span class="p">;</span>
+            <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mh">0xffc02000</span> <span class="mh">0x00000100</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">interrupt-parent</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">hps_0_arm_gic_0</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">interrupts</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span> <span class="mi">162</span> <span class="mi">4</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">clocks</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">l4_sp_clk</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="kr">reg</span><span class="o">-</span><span class="n">io-width</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;</span><span class="p">;</span> <span class="cm">/* embeddedsw.dts.params.reg-io-width type NUMBER */</span>
+            <span class="kr">reg</span><span class="o">-</span><span class="n">shift</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">;</span>    <span class="cm">/* embeddedsw.dts.params.reg-shift type NUMBER */</span>
+            <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>    <span class="cm">/* embeddedsw.dts.params.status type STRING */</span>
+        <span class="p">};</span> <span class="c1">//end serial@0xffc02000 (hps_0_uart0)</span>
+<span class="p">};</span> <span class="c1">//end serial@0x100020000 (jtag_uart)</span>
+</code></pre></div>
+<p>Ele indica que no nosso hardware, temos um componente serial no endereço
+<code>0xffc02000</code> que é compatível com os drivers: <code>snps,dw-apb-uart-16.1</code> e.ou
+<code>snps,dw-apb-uart</code>, que é implementado no Driver: 8250 no kernel do Linux:
+<a href="https://github.com/torvalds/linux/blob/master/drivers/tty/serial/8250/8250_dw.c">https://github.com/torvalds/linux/blob/master/drivers/tty/serial/8250/8250_dw.c</a>.
+E esse driver está configurado como ativo no nosso kernel:</p>
+<p><img alt="" src="../figs/Tutorial-HLS-FPGA-BlinkLED-uart.png" /></p>
+<p>E é por conta disso que conseguimos acessar o kit com USB (screen).</p>
+<details class="note"><summary>Parâmetro CONFIG_SERIAL_8250_CONSOLE</summary><div class="highlight"><pre><span></span><code> CONFIG_SERIAL_8250_CONSOLE:                                                 │  
+  │                                                                             │  
+  │ If you say Y here, it will be possible to use a serial port as the          │  
+  │ system console (the system console is the device which receives all         │  
+  │ kernel messages and warnings and which allows logins in single user         │  
+  │ mode). This could be useful if some terminal or printer is connected        │  
+  │ to that serial port.                                                        │  
+  │                                                                             │  
+  │ Even if you say Y here, the currently visible virtual console               │  
+  │ (/dev/tty0) will still be used as the system console by default, but        │  
+  │ you can alter that using a kernel command line option such as               │  
+  │ &quot;console=ttyS1&quot;. (Try &quot;man bootparam&quot; or see the documentation of           │  
+  │ your boot loader (grub or lilo or loadlin) about how to pass options        │  
+  │ to the kernel at boot time.)                                                │  
+  │                                                                             │  
+  │ If you don&#39;t have a VGA card installed and you say Y here, the              │  
+  │ kernel will automatically use the first serial line, /dev/ttyS0, as         │  
+  │ system console.                                                             │  
+  │                                                                             │  
+  │ You can set that using a kernel command line option such as                 │  
+  │ &quot;console=uart8250,io,0x3f8,9600n8&quot;                                          │  
+  │ &quot;console=uart8250,mmio,0xff5e0000,115200n8&quot;.                                │  
+  │ and it will switch to normal serial console when the corresponding          │  
+  │ port is ready.                                                              │  
+  │ &quot;earlycon=uart8250,io,0x3f8,9600n8&quot;                                         │  
+  │ &quot;earlycon=uart8250,mmio,0xff5e0000,115200n8&quot;.                               │  
+  │ it will not only setup early console.                                       │  
+  │                                                                             │  
+  │ If unsure, say N.                                                           │  
+  │                                                                             │  
+  │ Symbol: SERIAL_8250_CONSOLE [=y]                                            │  
+  │ Type  : boolean                                                             │  
+  │ Prompt: Console on 8250/16550 and compatible serial port              
+  │   Location:                                                                 │  
+  │     -&gt; Device Drivers                                                       │  
+  │       -&gt; Character devices                                                  │  
+  │         -&gt; Serial drivers                                                   │  
+  │           -&gt; 8250/16550 and compatible serial support (SERIAL_8250 [=y])    │  
+  │   Defined at drivers/tty/serial/8250/Kconfig:60                             │  
+  │   Depends on: TTY [=y] &amp;&amp; HAS_IOMEM [=y] &amp;&amp; SERIAL_8250 [=y]=y              │  
+  │   Selects: SERIAL_CORE_CONSOLE [=y] &amp;&amp; SERIAL_EARLYCON [=y]                 │  
+  │                                                                        
+</code></pre></div>
+</details>
+<div class="admonition note">
+<p class="admonition-title">Para mais informações sobre o <code>dts</code>:</p>
+<ul>
+<li><a href="https://elinux.org/Device_Tree_Usage">https://elinux.org/Device_Tree_Usage</a></li>
+<li><a href="https://elinux.org/Device_Tree_Reference">https://elinux.org/Device_Tree_Reference</a></li>
+<li><a href="https://developer.toradex.com/device-tree-customization#Device_Tree_Anatomy">https://developer.toradex.com/device-tree-customization#Device_Tree_Anatomy</a></li>
+<li><a href="https://bootlin.com/pub/conferences/2014/elc/petazzoni-device-tree-dummies/petazzoni-device-tree-dummies.pdf">https://bootlin.com/pub/conferences/2014/elc/petazzoni-device-tree-dummies/petazzoni-device-tree-dummies.pdf</a></li>
+</ul>
+</div>
+<h3 id="gerando-o-dtb">Gerando o <code>dtb</code><a class="headerlink" href="#gerando-o-dtb" title="Permanent link">&para;</a></h3>
+<p>Execute os seguintes comandos (ainda dentro do embedded shell)</p>
+<div class="highlight"><pre><span></span><code>$ dtc -I dts -O dtb -o soc_system.dtb soc_system.dts
+$ <span class="c1">#Agora você pode sair do embedded shell:</span>
+$ <span class="nb">exit</span>
+</code></pre></div>
+<div class="admonition example">
+<p class="admonition-title">Execute</p>
+<ul>
+<li>Gere o <code>soc_system.dtb</code> do projeto </li>
+<li>Grave o novo <code>soc_system.dtb</code> no SDCard (mesma partição do kernel)</li>
+</ul>
+</div>
+<h2 id="testando">Testando<a class="headerlink" href="#testando" title="Permanent link">&para;</a></h2>
+<p>Agora plugue o SDcard no kit de desenvolvimento, e após inicialização do kernel
+execute o programa <code>blink led</code> e veja os LEDs da FPGA piscarem!</p>
+<p>Interessante né? Agora vamos fazer algo mais útil com isso..</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../Tutorial-HPS-kernel-chardriver/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Char device driver
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Char LED device driver
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.0ac82a11.min.js"></script>
+      <script src="../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: ['instant', 'navigation.expand', {'tabs': True}],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../js/dom-confetti.js"></script>
+      
+        <script src="../js/progress.js"></script>
+      
+    
+  </body>
+</html>

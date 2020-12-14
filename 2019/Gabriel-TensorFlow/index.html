@@ -1,0 +1,1745 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://insper.github.io/Embarcados-Avancados/2019/Gabriel-TensorFlow/">
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.7">
+    
+    
+      
+        <title>Gabriel Moreira - TensorFlow - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.19753c6b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../css/progress.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="pink">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gabriel-moreira-tensorflow" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Gabriel Moreira - TensorFlow
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-RTL/" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-1/" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS/" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-2/" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS-IP/" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-3/" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      HPS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS/" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Running/" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BuildSystem/" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BlinkLED/" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Extra: configurando rede
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-4/" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Kernel/" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Buildroot/" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-5/" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-DeviceDriver1/" class="md-nav__link">
+      Device Driver
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-module/" class="md-nav__link">
+      Kernel module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-chardriver/" class="md-nav__link">
+      Char device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      HPS + FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS + FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-BlinkLED/" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-nav__link">
+      Char LED device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    <label class="md-nav__link" for="nav-5">
+      Acelerando
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Acelerando" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-Acelerando-HLS/" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+    <label class="md-nav__link" for="nav-6">
+      Extras
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Extras" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        Extras
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-VGA/" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-6/" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-Extra-1/" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+    <label class="md-nav__link" for="nav-7">
+      Úteis
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Úteis" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Úteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-FPGA-e-Softwares/" class="md-nav__link">
+      Infraestrutura de HW e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-VHDL/" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-SDcard/" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-Serial/" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" checked>
+    <label class="md-nav__link" for="nav-8">
+      Tutoriais Alunos
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutoriais Alunos" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Rubrica/" class="md-nav__link">
+      Rubrica
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/Insper/Embarcados-Avancados-Template" class="md-nav__link">
+      Template markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-4" type="checkbox" id="nav-8-4" >
+    <label class="md-nav__link" for="nav-8-4">
+      2020
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2020" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-4">
+        <span class="md-nav__icon md-icon"></span>
+        2020
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/Temas/" class="md-nav__link">
+      Temas 20b
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/PS3-Linux-Tutorial/" class="md-nav__link">
+      PS3 Hack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/Android/" class="md-nav__link">
+      Android para Raspbery Pi 3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/LED-HW/" class="md-nav__link">
+      Periférico para controlar matriz de led da família WS281x
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/LED-Linux/" class="md-nav__link">
+      Driver linux para acender leds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/python/" class="md-nav__link">
+      Soc & Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/metropolis/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/Audio/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2020/cripto/" class="md-nav__link">
+      Criptografia em Hardware Fpga
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-5" type="checkbox" id="nav-8-5" checked>
+    <label class="md-nav__link" for="nav-8-5">
+      2019
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2019" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-5">
+        <span class="md-nav__icon md-icon"></span>
+        2019
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutoriais/" class="md-nav__link">
+      Tutoriais 2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Gabriel Moreira - TensorFlow
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Gabriel Moreira - TensorFlow
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configurando-jetson-nano" class="md-nav__link">
+    Configurando Jetson Nano
+  </a>
+  
+    <nav class="md-nav" aria-label="Configurando Jetson Nano">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iso" class="md-nav__link">
+    ISO
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conectar-o-hardware" class="md-nav__link">
+    Conectar o hardware
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atualizando-e-instalando-dependencias" class="md-nav__link">
+    Atualizando e instalando dependências
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testando" class="md-nav__link">
+    Testando
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#download-do-exemplo-do-tensorflow" class="md-nav__link">
+    Download do exemplo do TensorFlow
+  </a>
+  
+    <nav class="md-nav" aria-label="Download do exemplo do TensorFlow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modificando-o-script" class="md-nav__link">
+    Modificando o script
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-controle-do-jetbot-por-comando-de-voz" class="md-nav__link">
+    Extra - controle do JetBot por comando de voz
+  </a>
+  
+    <nav class="md-nav" aria-label="Extra - controle do JetBot por comando de voz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intalar-bibliotecas-adicionais" class="md-nav__link">
+    Intalar bibliotecas adicionais
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalar-biblioteca-do-jetbot" class="md-nav__link">
+    Instalar biblioteca do JetBot
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Leo-OpenCL/" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Elisa-Yocto/" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Pedro-OpenCV/" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Martim-F1/" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Toranja-DevDriver/" class="md-nav__link">
+      Bruno Toranja - Linux Device Driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configurando-jetson-nano" class="md-nav__link">
+    Configurando Jetson Nano
+  </a>
+  
+    <nav class="md-nav" aria-label="Configurando Jetson Nano">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iso" class="md-nav__link">
+    ISO
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conectar-o-hardware" class="md-nav__link">
+    Conectar o hardware
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atualizando-e-instalando-dependencias" class="md-nav__link">
+    Atualizando e instalando dependências
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testando" class="md-nav__link">
+    Testando
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#download-do-exemplo-do-tensorflow" class="md-nav__link">
+    Download do exemplo do TensorFlow
+  </a>
+  
+    <nav class="md-nav" aria-label="Download do exemplo do TensorFlow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modificando-o-script" class="md-nav__link">
+    Modificando o script
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-controle-do-jetbot-por-comando-de-voz" class="md-nav__link">
+    Extra - controle do JetBot por comando de voz
+  </a>
+  
+    <nav class="md-nav" aria-label="Extra - controle do JetBot por comando de voz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intalar-bibliotecas-adicionais" class="md-nav__link">
+    Intalar bibliotecas adicionais
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalar-biblioteca-do-jetbot" class="md-nav__link">
+    Instalar biblioteca do JetBot
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/2019/Gabriel-TensorFlow.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="gabriel-moreira-tensorflow">Gabriel Moreira - TensorFlow<a class="headerlink" href="#gabriel-moreira-tensorflow" title="Permanent link">&para;</a></h1>
+<ul>
+<li>Aluno: Gabriel Moreira</li>
+<li>Curso: Engenharia da Computação</li>
+<li>Semestre: 9</li>
+<li>Contato: </li>
+<li>Link tutorial oficial: <a href="https://github.com/gabsmoreira/speech_recognition">https://github.com/gabsmoreira/speech_recognition</a></li>
+<li>Ano: 2019</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Hardware utilizado no tutorial</p>
+<ul>
+<li>Jetson Nano</li>
+<li>JetBot</li>
+</ul>
+</div>
+<p>O objetivo do tutorial é implementar um simples sistema de reconhecimento de comandos por voz com alguns ajustes em uma placa da NVIDIA Jetson Nano.
+Tal placa possui uma GPU incluida, o que a torna ideal para executar programas que fazem uso de redes neurais.</p>
+<p><img alt="Alt" src="../imgs/Gabriel/jetson_nano.png" /></p>
+<h2 id="configurando-jetson-nano">Configurando Jetson Nano<a class="headerlink" href="#configurando-jetson-nano" title="Permanent link">&para;</a></h2>
+<h3 id="iso">ISO<a class="headerlink" href="#iso" title="Permanent link">&para;</a></h3>
+<p>Antes de tudo, precisamos preparar a placa Jetson Nano para a prototipação. Para isso, é necessário fazer o download da imagem do sistema operacional oferecido pela própria NVIDIA.</p>
+<p>Faça o download da imagem nesse link: <a href="https://developer.nvidia.com/jetson-nano-sd-card-image-r3223">https://developer.nvidia.com/jetson-nano-sd-card-image-r3223</a></p>
+<p>Em seguida, faça o download do programa que escreve a imagem no cartão SD, chamado Etcher. Isso facilitará muito o desenvolvimento.</p>
+<p>Link do Etcher: <a href="https://www.balena.io/etcher">https://www.balena.io/etcher</a></p>
+<p>Instale o Etcher e execute-o. A seguinte tela irá aparecer.</p>
+<p><img alt="Alt" src="../imgs/Gabriel/etcher1.png" /></p>
+<p>Selecione a imagem e o disco corretamente e clique em Flash!</p>
+<p><img alt="Alt" src="../imgs/Gabriel/etcher2.png" /></p>
+<p>Isso pode levar de 10-15 minutos para ser feito. Vá tomar um café! ☕</p>
+<p>Assim que o processo for concluído, remova o cartão do computador e coloque na placa.</p>
+<h3 id="conectar-o-hardware">Conectar o hardware<a class="headerlink" href="#conectar-o-hardware" title="Permanent link">&para;</a></h3>
+<p>Antes de tudo, conecte a placa Jetson em um monitor usando a saída HDMI. Conecte também o mouse, teclado e o cabo Ethernet.</p>
+<p>Está na hora de completar os passos para a configuração do sistema operacional. Isso requer a escolha de um usuário, senha e mais algumas configurações que não são relevantes para o projeto.</p>
+<p>Conecte agora o microfone na placa usando um adaptador USB. Para verificar se o microfone foi devidamente reconhecido pelo sistema operacional execute o comando <code>dmesg</code>.</p>
+<div class="highlight"><pre><span></span><code>$ sudo dmesg <span class="p">|</span> tail -n10
+</code></pre></div>
+<h3 id="atualizando-e-instalando-dependencias">Atualizando e instalando dependências<a class="headerlink" href="#atualizando-e-instalando-dependencias" title="Permanent link">&para;</a></h3>
+<p>No linux da Jetson Nano, executar:</p>
+<p>Update de libs e packages:</p>
+<div class="highlight"><pre><span></span><code>$ sudo apt update
+$ sudo apt upgrade
+</code></pre></div>
+<p>Instalar Pip3: </p>
+<div class="highlight"><pre><span></span><code>$ sudo apt install python3-pip
+$ sudo pip3 install -U pip
+</code></pre></div>
+<ul>
+<li>Instalar dependências do TensorFlow:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ sudo apt install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev
+$ sudo pip3 install -U <span class="nv">numpy</span><span class="o">==</span><span class="m">1</span>.16.1 <span class="nv">future</span><span class="o">==</span><span class="m">0</span>.17.1 <span class="nv">mock</span><span class="o">==</span><span class="m">3</span>.0.5 <span class="nv">h5py</span><span class="o">==</span><span class="m">2</span>.9.0 <span class="nv">keras_preprocessing</span><span class="o">==</span><span class="m">1</span>.0.5 <span class="nv">keras_applications</span><span class="o">==</span><span class="m">1</span>.0.6 enum34 futures testresources setuptools protobuf
+</code></pre></div>
+<ul>
+<li>Instalar Tensorflow:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu
+$ sudo pip3 install -U pip
+</code></pre></div>
+<h3 id="testando">Testando<a class="headerlink" href="#testando" title="Permanent link">&para;</a></h3>
+<p>Testar instalação do TensorFlow:</p>
+<p><div class="highlight"><pre><span></span><code>$ python3
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+</code></pre></div></p>
+<p>O comando acima deve executar sem nenhum erro se o TensorFlow tiver sido instalado corretamente.</p>
+<h2 id="download-do-exemplo-do-tensorflow">Download do exemplo do TensorFlow<a class="headerlink" href="#download-do-exemplo-do-tensorflow" title="Permanent link">&para;</a></h2>
+<p>O TensorFlow possui um exemplo em seu repositório de utilização de redes neurais para reconhecimento de comandos por voz. Nesse tutorial, utilizaremos esse mesmo exemplo com algumas adaptações, uma vez que o modelo fornecido recebe como input um arquivo de áudio <em>.wav</em>. Nosso objetivo é criar um programa que recebe um stream de áudio que deve ser processado continuamente, assim como é visto em assistentes de voz (Google e Siri).</p>
+<p>O primeiro passo é clonar o repositório raiz do TensorFlow.</p>
+<p><div class="highlight"><pre><span></span><code>$ git clone https://github.com/tensorflow/tensorflow.git
+</code></pre></div>
+Esse comando pode demorar um pouco para ser executado, uma vez que o repositório é grande. Vá tomar um café! ☕</p>
+<p>Vá até a pasta do exemplo que queremos executar.</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> tensorflow/tensorflow/examples/speech_commands/
+</code></pre></div>
+<p>Note que na pasta existem diversos arquivos, os principais são:</p>
+<ul>
+<li>
+<p><code>train.py</code> : utilizado para treinar o modelo.</p>
+</li>
+<li>
+<p><code>freeze.py</code> : utilizado para compilar o modelo treinado.</p>
+</li>
+<li>
+<p><code>label_wav.py</code> : utilizado para reconhecer um comando, dado um arquivo .wav de input e um modelo previamente treinado</p>
+</li>
+</ul>
+<p>O segundo passo é treinar a rede neural para que fique com uma boa acurácia e consiga processar os nossos comandos de voz. Para isso execute o script <code>train.py</code> com os seguintes parâmetros.</p>
+<div class="highlight"><pre><span></span><code>$ python3 train.py
+</code></pre></div>
+<p>Para que o modelo fique aceitável, é necessário deixar pelo menos 8 horas treinando. Caso você não tenha esse tempo, o link para o modelo treinado (e compilado) está aqui: <a href="https://github.com/gabsmoreira/speech_recognition/raw/master/my_frozen_graph.pb">https://github.com/gabsmoreira/speech_recognition/raw/master/my_frozen_graph.pb</a></p>
+<p>A placa Jetson não foi projetada para treinar redes neurais, o ideal seria fazer isso em um computador mais potente e depois transferir o arquivo contento os pesos da rede neural via <em>SCP</em>.</p>
+<p>Com o modelo treinado, agora compile usando o checkpoint que quiser:</p>
+<div class="highlight"><pre><span></span><code>$ python3 freeze.py --start_checkpoint<span class="o">=</span>conv.ckpt-12000 --output_file<span class="o">=</span>my_frozen_graph.pb
+</code></pre></div>
+<p>Agora teste o modelo treinado. Para isso, é necessário ter o path das labels do modelo (que normalmente está localizado no <code>/tmp/speech_commands_train/conv_labels.txt</code>)</p>
+<div class="highlight"><pre><span></span><code>$  python3 label_wav.py --graph<span class="o">=</span>my_frozen_graph.pb --labels<span class="o">={</span>PATH DAS LABELS<span class="o">}</span> --wav<span class="o">={</span>PATH DO WAV FILE<span class="o">}</span>
+</code></pre></div>
+<h3 id="modificando-o-script">Modificando o script<a class="headerlink" href="#modificando-o-script" title="Permanent link">&para;</a></h3>
+<p>O primeiro passo é criar um pequeno exemplo de captura e processamento de stream de áudio usando o <code>pyaudio</code>.
+Antes de criar o novo arquivo, instale a biblioteca acima.</p>
+<div class="highlight"><pre><span></span><code>$ pip3 install pyaudio
+</code></pre></div>
+<p>Crie um arquivo com o nome audio_stream.py e coloque o seguinte código:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">pyaudio</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">audioop</span>
+<span class="kn">import</span> <span class="nn">wave</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">FLAGS</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">CHUNK</span> <span class="o">=</span> <span class="mi">4096</span> <span class="c1"># number of data points to read at a time</span>
+<span class="n">RATE</span> <span class="o">=</span> <span class="mi">16000</span> <span class="c1"># time resolution of the recording device (Hz)</span>
+<span class="n">CHANNELS</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># number of channels</span>
+
+<span class="n">FORMAT</span> <span class="o">=</span> <span class="n">pyaudio</span><span class="o">.</span><span class="n">paInt16</span> <span class="c1"># audio format from pyaudio</span>
+<span class="n">p</span><span class="o">=</span><span class="n">pyaudio</span><span class="o">.</span><span class="n">PyAudio</span><span class="p">()</span> <span class="c1"># start the PyAudio class</span>
+<span class="n">devinfo</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_device_info_by_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># get the first recorder device</span>
+
+<span class="c1"># stream from pyaudio</span>
+<span class="n">stream</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">CHANNELS</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">RATE</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+              <span class="n">frames_per_buffer</span><span class="o">=</span><span class="n">CHUNK</span><span class="p">)</span>
+
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># transform data into a numpy array</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">CHUNK</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+
+    <span class="c1"># get audio rms</span>
+    <span class="n">rms</span> <span class="o">=</span> <span class="n">audioop</span><span class="o">.</span><span class="n">rms</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># if audio rms reaches 900 or more set recording for true</span>
+    <span class="c1"># and start appending the data into the frames array.</span>
+
+    <span class="c1"># this means someone is talking </span>
+    <span class="k">if</span> <span class="n">rms</span> <span class="o">&gt;</span> <span class="mi">900</span><span class="p">:</span> 
+        <span class="k">if</span> <span class="n">recording</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">recording</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">recording</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">time_from_previous</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+            <span class="c1"># get data from stream for the next 0.5 seconds</span>
+            <span class="c1"># after the volume </span>
+            <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_from_previous</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">CHUNK</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+                <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+            <span class="c1"># write frames inside wav file</span>
+            <span class="n">_file</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;out.wav&quot;</span><span class="p">,</span><span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+            <span class="n">_file</span><span class="o">.</span><span class="n">setnchannels</span><span class="p">(</span><span class="n">CHANNELS</span><span class="p">)</span>
+            <span class="n">_file</span><span class="o">.</span><span class="n">setsampwidth</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_sample_size</span><span class="p">(</span><span class="n">FORMAT</span><span class="p">))</span>
+            <span class="n">_file</span><span class="o">.</span><span class="n">setframerate</span><span class="p">(</span><span class="n">RATE</span><span class="p">)</span>
+            <span class="n">_file</span><span class="o">.</span><span class="n">writeframes</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">frames</span><span class="p">))</span>
+            <span class="n">_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="c1"># clear frames array since the data was</span>
+            <span class="c1"># written inside wav file</span>
+            <span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">recording</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div>
+<p>A ideia é criar um stream que comeca a gravar os dados do áudio em uma array assim que o "volume" do áudio passa de 900 (isso pode depender do microfone usado) e para depois de 0.5 segundos assim que o audio volta a ficar com um valor menor que 900. Tal array é escrita em um arquivo .wav constantemente.</p>
+<p>Com esse código, transformamos um stream de áudio em diversos .wav que agora podem ser usados no modelo treinado. O que falta então é unir esse código do stream de áudio com a predição do modelo.</p>
+<details class="note"><summary>Código fonte, python</summary><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">pyaudio</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">audioop</span>
+<span class="kn">import</span> <span class="nn">wave</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">FLAGS</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">CHUNK</span> <span class="o">=</span> <span class="mi">4096</span> <span class="c1"># number of data points to read at a time</span>
+<span class="n">RATE</span> <span class="o">=</span> <span class="mi">16000</span> <span class="c1"># time resolution of the recording device (Hz)</span>
+<span class="n">CHANNELS</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># number of channels</span>
+
+<span class="n">FORMAT</span> <span class="o">=</span> <span class="n">pyaudio</span><span class="o">.</span><span class="n">paInt16</span> <span class="c1"># audio format from pyaudio</span>
+<span class="n">p</span><span class="o">=</span><span class="n">pyaudio</span><span class="o">.</span><span class="n">PyAudio</span><span class="p">()</span> <span class="c1"># start the PyAudio class</span>
+<span class="n">devinfo</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_device_info_by_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># get the first recorder device</span>
+
+<span class="c1"># stream from pyaudio</span>
+<span class="n">stream</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">CHANNELS</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">RATE</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+              <span class="n">frames_per_buffer</span><span class="o">=</span><span class="n">CHUNK</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">load_graph</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Unpersists graph from file as default graph.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">gfile</span><span class="o">.</span><span class="n">GFile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">graph_def</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">GraphDef</span><span class="p">()</span>
+        <span class="n">graph_def</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">import_graph_def</span><span class="p">(</span><span class="n">graph_def</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">load_labels</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read in labels, one label per line.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">gfile</span><span class="o">.</span><span class="n">GFile</span><span class="p">(</span><span class="n">filename</span><span class="p">)]</span>
+
+
+<span class="k">def</span> <span class="nf">run_graph</span><span class="p">(</span><span class="n">wav_data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">input_layer_name</span><span class="p">,</span> <span class="n">output_layer_name</span><span class="p">,</span>
+              <span class="n">num_top_predictions</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Runs the audio data through the graph and prints predictions.&quot;&quot;&quot;</span>
+  <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="c1"># Feed the audio data as input to the graph.</span>
+    <span class="c1">#   predictions  will contain a two-dimensional array, where one</span>
+    <span class="c1">#   dimension represents the input image count, and the other has</span>
+    <span class="c1">#   predictions per class</span>
+    <span class="n">softmax_tensor</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_tensor_by_name</span><span class="p">(</span><span class="n">output_layer_name</span><span class="p">)</span>
+    <span class="n">predictions</span><span class="p">,</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">softmax_tensor</span><span class="p">,</span> <span class="p">{</span><span class="n">input_layer_name</span><span class="p">:</span> <span class="n">wav_data</span><span class="p">})</span>
+
+    <span class="c1"># Sort to show labels in order of confidence</span>
+    <span class="n">top_k</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[</span><span class="o">-</span><span class="n">num_top_predictions</span><span class="p">:][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="n">top_k</span><span class="p">:</span>
+        <span class="n">human_string</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> (score = </span><span class="si">%.5f</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">human_string</span><span class="p">,</span> <span class="n">score</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="mi">0</span>
+
+
+<span class="k">def</span> <span class="nf">label_wav</span><span class="p">(</span><span class="n">wav</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">input_name</span><span class="p">,</span> <span class="n">output_name</span><span class="p">,</span> <span class="n">how_many_labels</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads the model and labels, and runs the inference to print predictions.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">wav</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">gfile</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">wav</span><span class="p">):</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s1">&#39;Audio file does not exist </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">wav</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">labels</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">gfile</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s1">&#39;Labels file does not exist </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">graph</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">gfile</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s1">&#39;Graph file does not exist </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">graph</span><span class="p">)</span>
+
+    <span class="n">labels_list</span> <span class="o">=</span> <span class="n">load_labels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+
+    <span class="c1"># load graph, which is stored in the default session</span>
+    <span class="n">load_graph</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">wav</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">wav_file</span><span class="p">:</span>
+        <span class="n">wav_data</span> <span class="o">=</span> <span class="n">wav_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="n">run_graph</span><span class="p">(</span><span class="n">wav_data</span><span class="p">,</span> <span class="n">labels_list</span><span class="p">,</span> <span class="n">input_name</span><span class="p">,</span> <span class="n">output_name</span><span class="p">,</span> <span class="n">how_many_labels</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads data labels and tensor graphs&quot;&quot;&quot;</span>
+    <span class="n">labels_list</span> <span class="o">=</span> <span class="n">load_labels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+    <span class="n">load_graph</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">labels_list</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+
+    <span class="c1"># initialize variables and prepare graph</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">prepare</span><span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="n">FLAGS</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+    <span class="n">recording</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">time_from_previous</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+
+        <span class="c1"># loads softmax tensor</span>
+        <span class="n">softmax_tensor</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_tensor_by_name</span><span class="p">(</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">output_name</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># transform data into a numpy array</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">CHUNK</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+
+            <span class="c1"># get audio rms</span>
+            <span class="n">rms</span> <span class="o">=</span> <span class="n">audioop</span><span class="o">.</span><span class="n">rms</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+            <span class="c1"># if audio rms reaches 900 or more set recording for true</span>
+            <span class="c1"># and start appending the data into the frames array.</span>
+
+            <span class="c1"># this means someone is talking </span>
+            <span class="k">if</span> <span class="n">rms</span> <span class="o">&gt;</span> <span class="mi">900</span><span class="p">:</span> 
+                <span class="k">if</span> <span class="n">recording</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="n">recording</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">recording</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">time_from_previous</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+                    <span class="c1"># get data from stream for the next 0.5 seconds</span>
+                    <span class="c1"># after the volume </span>
+                    <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_from_previous</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">CHUNK</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+                        <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+                    <span class="c1"># write frames inside wav file</span>
+                    <span class="n">_file</span> <span class="o">=</span> <span class="n">wave</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;out.wav&quot;</span><span class="p">,</span><span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+                    <span class="n">_file</span><span class="o">.</span><span class="n">setnchannels</span><span class="p">(</span><span class="n">CHANNELS</span><span class="p">)</span>
+                    <span class="n">_file</span><span class="o">.</span><span class="n">setsampwidth</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_sample_size</span><span class="p">(</span><span class="n">FORMAT</span><span class="p">))</span>
+                    <span class="n">_file</span><span class="o">.</span><span class="n">setframerate</span><span class="p">(</span><span class="n">RATE</span><span class="p">)</span>
+                    <span class="n">_file</span><span class="o">.</span><span class="n">writeframes</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">frames</span><span class="p">))</span>
+                    <span class="n">_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+                    <span class="c1"># clear frames array since the data was</span>
+                    <span class="c1"># written inside wav file</span>
+                    <span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+
+                    <span class="c1"># read wav file to get the input data for</span>
+                    <span class="c1"># our neural network</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;out.wav&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">wav_file</span><span class="p">:</span>
+                        <span class="n">wav_data</span> <span class="o">=</span> <span class="n">wav_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+                    <span class="c1"># this is where the model predicts based on the input data</span>
+                    <span class="n">predictions</span><span class="p">,</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">softmax_tensor</span><span class="p">,</span> <span class="p">{</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">input_name</span><span class="p">:</span> <span class="n">wav_data</span><span class="p">})</span>
+
+                    <span class="c1"># Sort to show labels in order of confidence</span>
+                    <span class="n">top_k</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[</span><span class="o">-</span><span class="n">FLAGS</span><span class="o">.</span><span class="n">how_many_labels</span><span class="p">:][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="n">top_k</span><span class="p">:</span>
+                        <span class="n">human_string</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
+                        <span class="n">score</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> (score = </span><span class="si">%.5f</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">human_string</span><span class="p">,</span> <span class="n">score</span><span class="p">))</span>
+                <span class="n">recording</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--wav&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Audio file to be identified.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--graph&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Model to use for identification.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--labels&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to file containing labels.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--input_name&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;wav_data:0&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Name of WAVE data input node in model.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--output_name&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;labels_softmax:0&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Name of node outputting a prediction in the model.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--how_many_labels&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Number of results to show.&#39;</span><span class="p">)</span>
+
+    <span class="n">FLAGS</span><span class="p">,</span> <span class="n">unparsed</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="o">=</span><span class="n">main</span><span class="p">,</span> <span class="n">argv</span><span class="o">=</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">unparsed</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<p>Agora para testar o script, basta executar o arquivo python.</p>
+<div class="highlight"><pre><span></span><code>$ python3 audio_stream.py
+</code></pre></div>
+<p>Veja o vídeo da demonstração</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7bi1eVpFSaA?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h2 id="extra-controle-do-jetbot-por-comando-de-voz">Extra - controle do JetBot por comando de voz<a class="headerlink" href="#extra-controle-do-jetbot-por-comando-de-voz" title="Permanent link">&para;</a></h2>
+<p>Para fazer essa parte do tutorial, é necessário ter o mesmo material/recursos propostos no link do JetBot.</p>
+<p>Link do tutorial do JetBot: <a href="https://github.com/NVIDIA-AI-IOT/jetbot/wiki/bill-of-materials">https://github.com/NVIDIA-AI-IOT/jetbot/wiki/bill-of-materials</a></p>
+<p>Para montar a parte de hardware, basta seguir esse tutorial: <a href="https://github.com/NVIDIA-AI-IOT/jetbot/wiki/Hardware-Setup">https://github.com/NVIDIA-AI-IOT/jetbot/wiki/Hardware-Setup</a></p>
+<p>A parte de software já temos, basta instalar só mais alguns pacotes.</p>
+<h3 id="intalar-bibliotecas-adicionais">Intalar bibliotecas adicionais<a class="headerlink" href="#intalar-bibliotecas-adicionais" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> 
+$ wget https://nvidia.box.com/shared/static/phqe92v26cbhqjohwtvxorrwnmrnfx1o.whl -O torch-1.3.0-cp36-cp36m-linux_aarch64.whl
+$ pip3 install numpy torch-1.3.0-cp36-cp36m-linux_aarch64.whl
+$ pip3 install traitlets
+</code></pre></div>
+<h3 id="instalar-biblioteca-do-jetbot">Instalar biblioteca do JetBot<a class="headerlink" href="#instalar-biblioteca-do-jetbot" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code>$ git clone https://github.com/NVIDIA-AI-IOT/jetbot
+$ <span class="nb">cd</span> jetbot
+$ sudo python3 setup.py install
+</code></pre></div>
+Para transformar o código anterior que temos para controlar o robo é bem simples:</p>
+<p>Basta instanciar um objeto <code>robot</code> antes de todo o script, lembrando sempre de importar a biblioteca do JetBot.
+Eu também optei por fazer um dicionário de ações possíveis do robô, para ser mais econômico nos "ifs".</p>
+<p><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">jetbot</span> <span class="kn">import</span> <span class="n">Robot</span>
+<span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">()</span>
+<span class="n">function_chooser</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="n">robot</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="n">robot</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="s1">&#39;go&#39;</span><span class="p">:</span> <span class="n">robot</span><span class="o">.</span><span class="n">forward</span><span class="p">,</span> <span class="s1">&#39;down&#39;</span><span class="p">:</span> <span class="n">robot</span><span class="o">.</span><span class="n">backward</span><span class="p">}</span>
+</code></pre></div>
+Agora o que resta é fazer o robô executar a ação assim que ele reconhece o comando.</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="n">top_k</span><span class="p">:</span>
+    <span class="n">human_string</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">human_string</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;down&#39;</span><span class="p">]:</span>
+
+        <span class="c1"># run robot action</span>
+        <span class="n">function_chooser</span><span class="p">[</span><span class="n">human_string</span><span class="p">](</span><span class="n">velocity</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">robot</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</code></pre></div>
+<p>O código inteiro do movimento do robô está no arquivo chamado <code>robot_control.py</code></p>
+<p>A foto da montagem final ficou assim:</p>
+<p><img alt="Montagem Final" src="../imgs/Gabriel/robot.jpeg" /></p>
+<p>Veja o vídeo da demonstração: </p>
+<iframe width="630" height="315" src="https://www.youtube.com/embed/PZBYRiQEusU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../Tutoriais/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Tutoriais 2019
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../Leo-OpenCL/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Leonardo Medeiros  - Tutorial OpenCL
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.0ac82a11.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['instant', 'navigation.expand', {'tabs': True}],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../../js/dom-confetti.js"></script>
+      
+        <script src="../../js/progress.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1523 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://insper.github.io/Embarcados-Avancados/2020/PS3-Linux-Tutorial/">
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.7">
+    
+    
+      
+        <title>PS3 Hack - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.19753c6b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../css/progress.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="pink">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ps3-hack" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              PS3 Hack
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-RTL/" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-1/" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS/" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-2/" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-FPGA-NIOS-IP/" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-3/" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      HPS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS/" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Running/" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BuildSystem/" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-BlinkLED/" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Extra: configurando rede
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-4/" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Kernel/" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-Buildroot/" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-5/" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-DeviceDriver1/" class="md-nav__link">
+      Device Driver
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-module/" class="md-nav__link">
+      Kernel module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-kernel-chardriver/" class="md-nav__link">
+      Char device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      HPS + FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS + FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-BlinkLED/" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-nav__link">
+      Char LED device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    <label class="md-nav__link" for="nav-5">
+      Acelerando
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Acelerando" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-Acelerando-HLS/" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+    <label class="md-nav__link" for="nav-6">
+      Extras
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Extras" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        Extras
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Tutorial-HPS-FPGA-VGA/" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-6/" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Entrega-Extra-1/" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+    <label class="md-nav__link" for="nav-7">
+      Úteis
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Úteis" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Úteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-FPGA-e-Softwares/" class="md-nav__link">
+      Infraestrutura de HW e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-VHDL/" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-SDcard/" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-Serial/" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../info-HPS-ethernet/" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" checked>
+    <label class="md-nav__link" for="nav-8">
+      Tutoriais Alunos
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutoriais Alunos" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Projeto-Rubrica/" class="md-nav__link">
+      Rubrica
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/Insper/Embarcados-Avancados-Template" class="md-nav__link">
+      Template markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-4" type="checkbox" id="nav-8-4" checked>
+    <label class="md-nav__link" for="nav-8-4">
+      2020
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2020" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-4">
+        <span class="md-nav__icon md-icon"></span>
+        2020
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Temas/" class="md-nav__link">
+      Temas 20b
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        PS3 Hack
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      PS3 Hack
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#starting" class="md-nav__link">
+    Starting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    Motivation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-on-the-ps3" class="md-nav__link">
+    Linux on the PS3
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-ps3-and-booting-from-a-live-image" class="md-nav__link">
+    Setting Up the PS3 and Booting from a Live Image
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up the PS3 and Booting from a Live Image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#downgrade-ps3-version" class="md-nav__link">
+    Downgrade PS3 version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repartitioning-ps3-hard-drive" class="md-nav__link">
+    Repartitioning PS3 Hard Drive
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-petitboot" class="md-nav__link">
+    Installing Petitboot
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-red-ribbon-linux" class="md-nav__link">
+    Installing Red Ribbon Linux
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-buildroot-for-cross-compilation" class="md-nav__link">
+    Using buildroot for Cross-Compilation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Android/" class="md-nav__link">
+      Android para Raspbery Pi 3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../LED-HW/" class="md-nav__link">
+      Periférico para controlar matriz de led da família WS281x
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../LED-Linux/" class="md-nav__link">
+      Driver linux para acender leds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../python/" class="md-nav__link">
+      Soc & Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../metropolis/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Audio/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cripto/" class="md-nav__link">
+      Criptografia em Hardware Fpga
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-5" type="checkbox" id="nav-8-5" >
+    <label class="md-nav__link" for="nav-8-5">
+      2019
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2019" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-5">
+        <span class="md-nav__icon md-icon"></span>
+        2019
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Tutoriais/" class="md-nav__link">
+      Tutoriais 2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Gabriel-TensorFlow/" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Leo-OpenCL/" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Elisa-Yocto/" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Pedro-OpenCV/" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Martim-F1/" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2019/Toranja-DevDriver/" class="md-nav__link">
+      Bruno Toranja - Linux Device Driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#starting" class="md-nav__link">
+    Starting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    Motivation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-on-the-ps3" class="md-nav__link">
+    Linux on the PS3
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-ps3-and-booting-from-a-live-image" class="md-nav__link">
+    Setting Up the PS3 and Booting from a Live Image
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up the PS3 and Booting from a Live Image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#downgrade-ps3-version" class="md-nav__link">
+    Downgrade PS3 version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repartitioning-ps3-hard-drive" class="md-nav__link">
+    Repartitioning PS3 Hard Drive
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-petitboot" class="md-nav__link">
+    Installing Petitboot
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-red-ribbon-linux" class="md-nav__link">
+    Installing Red Ribbon Linux
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-buildroot-for-cross-compilation" class="md-nav__link">
+    Using buildroot for Cross-Compilation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/2020/PS3-Linux-Tutorial/index.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="ps3-hack">PS3 Hack<a class="headerlink" href="#ps3-hack" title="Permanent link">&para;</a></h1>
+<ul>
+<li><strong>Alunes:</strong> Gabriel Monteiro / Guilherme Leite / Hugo Carl</li>
+<li><strong>Curso:</strong> Engenharia da Computação</li>
+<li><strong>Semestre:</strong> 9</li>
+<li><strong>Contato:</strong> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#115;&#105;&#102;&#101;&#114;&#114;&#97;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#99;&#111;&#114;&#115;&#105;&#102;&#101;&#114;&#114;&#97;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>, <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#117;&#105;&#108;&#104;&#101;&#114;&#109;&#101;&#112;&#108;&#51;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#103;&#117;&#105;&#108;&#104;&#101;&#114;&#109;&#101;&#112;&#108;&#51;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
+<li><strong>Ano:</strong> 2020</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Original repo: <a href="https://github.com/guipleite/PS3-Linux-Tutorial">https://github.com/guipleite/PS3-Linux-Tutorial</a></p>
+</div>
+<h2 id="starting">Starting<a class="headerlink" href="#starting" title="Permanent link">&para;</a></h2>
+<p>To follow this tutorial you will need:</p>
+<ul>
+<li><strong>Hardware:</strong> PS3 (Jailbroken), USB Flash Drive, Keyboard, Mouse</li>
+<li><strong>Software:</strong> A Linux distribution, we will be using Ubuntu</li>
+</ul>
+<details class="info"><summary>Info</summary><p>If you need to Jailbreak your PS3 you can follow this tutorial:</p>
+<p><a href="https://www.youtube.com/watch?v=q-06YPB18N4&amp;t=12s&amp;has_verified=1">https://www.youtube.com/watch?v=q-06YPB18N4&amp;t=12s&amp;has_verified=1</a></p>
+</details>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>Many people tend to buy new gaming consoles in their launch, meanig a large number of obsolete consoles are left unused the objective of this tutorial is to repurpose these old pieces of hardware by installing GNU/Linux enabliing them to be used for a vast number of applications.</p>
+<hr />
+<h2 id="linux-on-the-ps3">Linux on the PS3<a class="headerlink" href="#linux-on-the-ps3" title="Permanent link">&para;</a></h2>
+<p>The history of Linux in PlayStation started with researchers messing with ideas of using graphics processors to boost their computing powers for years. The main idea is that you can use the same power that is used to run heavy games to run nearly everything, including massive calculations like complicated mathematic models. The necessity of cheap hardware in a moment when supercomputers were very expensive created the plan to use PlayStations as cluster computers. This idea born in 2002 when Sony released a kit called Linux for the Playstation 2, making it easy to create applications using PS2. Things didn't go very well for the PS2 since they started to get unstable when used as clusters to process any kind of data. Only with the PS3 entering the scene in 2006 the applications started to get more interesting.  </p>
+<p>PlayStations 3 have more powerful and stable hardware in comparison to PlayStation 2, and also Sony made available a feature called OtherOS, capable of booting Linux in an easy way. With this new piece of hardware, a lot of researches tried to work with PS3 in order to build supercomputers, like Gaurav Khanna at UMass Dartmouth, that built a cluster of PS3s to make a pure period simulation work on black holes and the United States Air Force that made a project with more than 1700 PS3s to process images of surveillance drones. Things didn't go very well for the PlayStations 3 also, because in March 2010 Sony removed the OtherOS feature due to security concerns. This pretty much ended the era of PlayStation supercomputers because when Sony blocked the use of the OtherOS they also blocked the access of the RSX Nvidia GPU chip, making unable to use any kind of hardware acceleration limiting the use of Linux in PS3s as only a regular not so much powerful computer. </p>
+<p>So the idea of making a PS3 boot a Linux kernel is possible but not so powerful or interesting if you want to play with more complex applications, but for any uses in general you can turn a PS3 into a fully functional PC as shown in this tutorial. </p>
+<details class="info"><summary>Info</summary><p>If you want to know more about the history of PlayStations as supercomputers check out the link below:</p>
+<p><a href="https://www.theverge.com/2019/12/3/20984028/playstation-supercomputer-ps3-umass-dartmouth-astrophysics-25th-anniversary">https://www.theverge.com/2019/12/3/20984028/playstation-supercomputer-ps3-umass-dartmouth-astrophysics-25th-anniversary</a></p>
+</details>
+<hr />
+<h2 id="setting-up-the-ps3-and-booting-from-a-live-image">Setting Up the PS3 and Booting from a Live Image<a class="headerlink" href="#setting-up-the-ps3-and-booting-from-a-live-image" title="Permanent link">&para;</a></h2>
+<p>To follow this part of the tutorial you will need:</p>
+<ul>
+<li><strong>Download:</strong> REBUG 4.81.2 Linux package. <a href="https://mega.nz/#!tTBl3CxA!Zr4cqwmFUsfq_oZi89JZWKmJ1pJWXCV-o7WLH2IU09k">https://mega.nz/#!tTBl3CxA!Zr4cqwmFUsfq_oZi89JZWKmJ1pJWXCV-o7WLH2IU09k</a></li>
+</ul>
+<h3 id="downgrade-ps3-version">Downgrade PS3 version<a class="headerlink" href="#downgrade-ps3-version" title="Permanent link">&para;</a></h3>
+<p>In this part of the tutorial we need to install REBUG_4.81.2.PUP in the PS3, this file should be inside the downloaded archive.</p>
+<p><img alt="" src="rebug-archive.PNG" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In order to downgrade the firmware of the PS3 you need to have the package <code>Rebug Toolbox</code>installed in the PS3.</p>
+</div>
+<p>First of all you need to check in your device if it is possible to downgrade your firmware:</p>
+<ol>
+<li><code>Game</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Rebug Toolbox</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Utilities</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Toggle QA.Flag</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Enabled</code></li>
+<li><code>Game</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Rebug Toolbox</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>System</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Information system</code>  <ul>
+<li>Make sure the line <code>PS3 System: Firmware [version] DEX</code> contains DEX.</li>
+<li>In case the version of the firmware is CEX you will need to change the version. This following tutorial can be useful: <a href="https://www.youtube.com/watch?v=0YJBCl4PjCo&amp;t=758s">https://www.youtube.com/watch?v=0YJBCl4PjCo&amp;t=758s</a>.</li>
+</ul>
+</li>
+</ol>
+<p>After making sure your device match the downgrade requeriments you can proceed the tutorial.</p>
+<p><strong>1. In your computer:</strong></p>
+<ul>
+<li>Plug in your empty USB stick in your PC and crate the folder <code>PS3</code>. Inside of the <code>PS3</code> folder create another folder <code>UPDATE</code>.</li>
+<li>Extract the file <code>REBUG_4.81.2_D-REX_EMER_INIT_PS3UPDAT.PUP</code> into your <code>../PS3/UPDATE</code> folder.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure your USB drive is formatted to <code>FAT32</code> before extracting the file. If not you can do so by using the option format in any OS or by using a third-party format software like <code>Rufus</code>.</p>
+</div>
+<p><strong>2. In your PS3:</strong></p>
+<ul>
+<li>Plug your USB drive with the file <code>.PUP</code> file on it.</li>
+<li>Go to  <code>Settings</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>System Update</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Update via Storage Media</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>4.81.2 PS3UPDAT.PUP</code>.</li>
+</ul>
+<p>When the installation completes, check if the older version is installed correctly at: <code>Settings</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>System Settings</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>System Information</code>.</p>
+<h3 id="repartitioning-ps3-hard-drive">Repartitioning PS3 Hard Drive<a class="headerlink" href="#repartitioning-ps3-hard-drive" title="Permanent link">&para;</a></h3>
+<p>In this section of the tutorial we will format our device in order to create a second partition to hold our Linux, so make sure you make a backup of all the data inside the PS3. </p>
+<ul>
+<li>Turn Off your PS3 and boot it in the <code>Safe Mode</code>.</li>
+<li>Press the <code>PS Button</code>(controller) and then go to: <code>Restore PS3 System</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Yes</code>.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After finishing the reset you will notice a decrease in the PS3 storage space, this happens because the 4.81.2 update is a modified version of the system that creates a new partition when formated.</p>
+</div>
+<h3 id="installing-petitboot">Installing Petitboot<a class="headerlink" href="#installing-petitboot" title="Permanent link">&para;</a></h3>
+<p><strong>1. In your computer:</strong></p>
+<ul>
+<li>To install petitboot first delete the <code>../PS3</code> folder in the USB drive. </li>
+<li>In the downloaded archive you have 2 folders <code>Petitboot NOR/</code> and <code>Petitboot NAND/</code> you need to find out what architeture correspond correspond to your model of PS3 you can do so by checking your model number in this link: <a href="https://www.psdevwiki.com/ps3/SKU_Models">https://www.psdevwiki.com/ps3/SKU_Models</a> (All Slim models are NOR).</li>
+<li>With this information copy the binary file inside the corect petitboot folder to your empty <code>../USB</code> folder.</li>
+</ul>
+<p><strong>2. In your PS3:</strong></p>
+<ul>
+<li>You can now plug the USB in your PS3 but first you will need to install again the <code>Rebug Toolbox</code>, aceess: <code>Game</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Package Manager</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Install Package Files</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>PS3 System Storage</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>REBUG_TOOLBOX</code>.</li>
+<li>With Rebug Toolbox installed: <code>Game</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Rebug Toolbox</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Utilities</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Resize VFLASH/NAND Regions</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Yes</code>.</li>
+<li>Reboot the PS3. </li>
+<li><code>Game</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Rebug Toolbox</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Utilities</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Install petitboot</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Yes</code>.</li>
+<li>Reboot again. </li>
+</ul>
+<h3 id="installing-red-ribbon-linux">Installing Red Ribbon Linux<a class="headerlink" href="#installing-red-ribbon-linux" title="Permanent link">&para;</a></h3>
+<p>After installing petitboot in our PS3 we basically installed OtherOS in the system creating the possibility to boot another OS inside the created partition on the PS3 Hard Drive so now we can proceed to install our Linux version.</p>
+<p><strong>1. In your computer:</strong></p>
+<ul>
+<li>Delete again the file from the <code>../USB</code> folder and extract the contents inside the <code>red_ribbon_lxde_14.03.iso</code> from the archive to the <code>../USB</code> folder.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can use Winrar to extract the contents from the <code>.iso</code> to the desired folder.</p>
+</div>
+<ul>
+<li>Copy also the file <code>create_hdd_region.sh</code> from the archive to <code>../USB</code>.</li>
+</ul>
+<p><strong>2. In your PS3:</strong></p>
+<p>In this moment we will boot a live version of linux in the PS3 so you need to use a mouse and a keyboard in order to navigate in the Red Ribbon interface.</p>
+<ul>
+<li>Plug the USB Stick, the mouse and the keyboard into the PS3.</li>
+<li><code>Game</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Rebug Toolbox</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>System</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Boot OtherOS</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Boot (LV1 patches: Use current)</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Yes</code>.</li>
+</ul>
+<p>At this point you will be able to see the Petitboot screen with some boot options.</p>
+<p><img alt="" src="petitboot-screen.PNG" /></p>
+<p>Press <code>ESC</code> on the plugged keyboard, you should be able to access this Linux terminal.</p>
+<p><img alt="" src="ps3-terminal.PNG" /></p>
+<p>In the terminal execute:</p>
+<div class="codehilite"><pre><span></span><code>$ cd /tmp/petitboot/mnt/sda1/ (sda1 for NOR PS3 if you have a NAND PS3 replace sda1 for sdd1)
+$ ./create_hdd_region.sh
+$ exit
+$ petitboot
+</code></pre></div>
+
+<details class="info"><summary>Info</summary><p>If you are interested in compilating your own Linux Kernel, stop right here and jump to read the section "Using buildroot for Cross-Compilation", this tutorial did not achieve complete success, but shows some possible ways to start.</p>
+</details>
+<p>Executing these commands will take you back to the Petitboot screen with the boot options, select with the keyboard the first one (Live) and press <code>Enter</code>. If everything goes right you will boot the live version of Red Ribbon Linux in the PS3.</p>
+<p><img alt="" src="linux-desktop.PNG" /></p>
+<p>The live version of linux doesn't give full access to the system and format the system after a normal reboot so we still need to install the full version of linux into the system.</p>
+<ul>
+<li>At the Desktop click in the only icon <code>Install Red Ribbon</code>, it should open the installation screen.</li>
+</ul>
+<p><img alt="" src="installation-linux.PNG" /></p>
+<ul>
+<li><code>Select continent</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Select language</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Enter system's hostname</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Automatic partitioning</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Yes</code>.</li>
+<li>Finish the installation process and press the upper right On/Off icon in the taskbar, you will be able to see the Logout Menu.</li>
+</ul>
+<p><img alt="" src="logout-linux.PNG" /></p>
+<p>When selecting the <code>Boot GameOS</code> option you will need to remove the USB Stick from the PS3 and you won't need to use it again to boot the linux because now it is installed inside the PS3 partition. If everything goes as planned you shoud be back to the PS3 main OS screen and be able to go back to Linux easily from OtherOS.</p>
+<p><img alt="" src="ps-screen.PNG" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After finishing the installation process you can update your old PS3 firmware version installed in the process back to a newer version if you want to. This change will not affect the new installed system.</p>
+</div>
+<hr />
+<h2 id="using-buildroot-for-cross-compilation">Using buildroot for Cross-Compilation<a class="headerlink" href="#using-buildroot-for-cross-compilation" title="Permanent link">&para;</a></h2>
+<p>Buildroot is a set of Makefiles and patches that simplifies and automates the process of building a complete and bootable Linux environment for an embedded system, while using cross-compilation to allow building for multiple target platforms on a single Linux-based development system. Buildroot can automatically build the required cross-compilation toolchain, create a root file system, compile a Linux kernel image, and generate a boot loader for the targeted embedded system, or it can perform any independent combination of these steps. For example, an already installed cross-compilation toolchain can be used independently, while Buildroot only creates the root file system.</p>
+<p>This means we can create compile a Linux enviroment that will run on the PS3 from our Desktop, this is great because now we don't need to rely on whatever packages, applications and configurations the pre-compiled distribution comes with.</p>
+<p>We will be using the <a href="https://github.com/glevand/petitboot--buildroot">petitboot--buildroot</a> project wich is basically buildroot with updates to generate a bootable <em>petitboot</em> image. This is because the bootloader, wich is a progtam that loads the operating system into the working memory of a computer on start-up, is called petitboot and is not availabe on the original buildroot</p>
+<div class="codehilite"><pre><span></span><code>$ git clone https://github.com/glevand/petitboot--buildroot.git
+$ cd petitboot--buildroot
+</code></pre></div>
+
+<p>Now we can configure what we want the buildroot to include in our own linux</p>
+<div class="codehilite"><pre><span></span><code>$ make menuconfig
+</code></pre></div>
+
+<p>This command should bring up an interface like the one shown below that can be navigated using the arrow keys, Enter and Esc:</p>
+<p><img alt="" src="buildroot.png" /></p>
+<p>Under Target options we need to change the <strong>Target Architecture</strong> to the one of the PS3, wich is big endian PowerPC64.</p>
+<p><img alt="" src="br-target-opt.png" /></p>
+<p>After that you can press the Escape key twice to go back to the main menu and then enter the <strong>Kernel</strong> submenu. There we can select our kernel's verion or specify one to be downloaded. We will also set the Defconfig name as PS3 under the Kernel Configuration option, this will automatically set some configurations specific to the PS3. Also change the Kernel binary format to <strong>vmlinux</strong> and enable the <strong>Install kernel image to /boot in target</strong>  option.</p>
+<p><img alt="" src="br-kernel.png" /></p>
+<p>You can also change options under <strong>System Configurations</strong> and <strong>Target packages</strong> to personalize your linux and also compile it with some additional programs such as Python or even some emulators.</p>
+<p>Finally we can compile it, fot that we will use the commands bellow, the <code>clean</code> argument is important if you've alredy tried to compile the os before since it will delete the files generated from previous attempts. The <code>-j 8</code> argument means the compiller will use 8 threads from the CPU to compile everything, you can change that value depending on your hardware, the more threads you give the compiller the faster the processing will be.</p>
+<div class="codehilite"><pre><span></span><code>$ make clean
+$ make all -j 8
+</code></pre></div>
+
+<p>The compiled Filesystem and kernel will be in <code>/output/images/</code> .Inside there, we can find this three outputs:</p>
+<ul>
+<li>
+<p>rootfs.tar: This is just our Linux Filesystem</p>
+</li>
+<li>
+<p>vmlinux: This archive can be found in the /output/images folder like the others or already inside the /rootfs/boot/. This is essentially our kernel .</p>
+</li>
+<li>
+<p>rootfs.cpio.gz: This archive relates to the initial ramdisk for our filesystem. This stands for a temporary root file system that will load in memory to help the Linux startup process.</p>
+</li>
+</ul>
+<p>Now, to finalize we need to copy all this to the PS3. First we will put everything in a pen drive and plug in. At the PS3 shell, we should find the pendrive content in the path /tmp/petitboot/mnt/sda(this name can variate)/. </p>
+<p>First we need to mount where our linux will be located.</p>
+<div class="codehilite"><pre><span></span><code>mkfs.ext4 -m 0 /dev/ps3dd2
+mkswap /dev/ps3dd1
+mkdir linux
+mount /dev/ps3dd2 /linux
+</code></pre></div>
+
+<p>Now we should tar our file system into /dev/ps3dd2 which is mounted at /linux.</p>
+<div class="codehilite"><pre><span></span><code>tar xvf /tmp/petitboot/mnt/sda/rootfs.tar -C /linux
+</code></pre></div>
+
+<p>We now have our file system properly ready to go. We are only left with the initial ramdisk image and possibly the kernel to finalize.</p>
+<div class="codehilite"><pre><span></span><code>cp /tmp/petitboot/mnt/sda/rootfs.cpio.gz /linux/boot
+</code></pre></div>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Check first if the /linux/boot doesn't already have the vmlinux(kernel) inside before executing the next command.</p>
+<p>cp /tmp/petiboot/mnt/sda/vmlinux /linux/boot</p>
+</div>
+<p>Nice, we should have all set to boot our linux right? Yeah kind of....
+If you followed our advice, you know that we didn't succeed in this last attempt and here where things went wrong. To boot our own cross-compiled kernel we needed to only execute the next line:</p>
+<div class="codehilite"><pre><span></span><code>kexec -l /linux/boot/vmlinux --initrd=/linux/boot/rootfs.cpio.gz --append=&quot;root=/dev/ps3dd2&quot;
+</code></pre></div>
+
+<p>Kexec is the bootloader which petitboot is based on. But this didn't work out for us. So now you can choose between searching on how to make it work, or install an already stable distro for the ps3 called Red Ribbon that you saw in the first part of this tutorial. If you are a thrilled to make this work, we recommend René Rebe works to follow on:</p>
+<ul>
+<li><a href="https://www.youtube.com/user/renerebe">https://www.youtube.com/user/renerebe</a></li>
+<li><a href="https://rene.rebe.de/?s=ps3">https://rene.rebe.de/?s=ps3</a></li>
+<li><a href="http://t2sde.org/hardware/console/Sony/PS3/">http://t2sde.org/hardware/console/Sony/PS3/</a></li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FgktHdfhw4g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<hr />
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../Temas/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Temas 20b
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../Android/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Android para Raspbery Pi 3
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.0ac82a11.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['instant', 'navigation.expand', {'tabs': True}],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../../js/dom-confetti.js"></script>
+      
+        <script src="../../js/progress.js"></script>
+      
+    
+  </body>
+</html>

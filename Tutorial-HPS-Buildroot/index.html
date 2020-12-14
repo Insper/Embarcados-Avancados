@@ -1,0 +1,1387 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://insper.github.io/Embarcados-Avancados/Tutorial-HPS-Buildroot/">
+      
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.7">
+    
+    
+      
+        <title>Tutorial 8 - HPS -Buildroot - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.19753c6b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/progress.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="pink">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tutorial-8-hps-buildroot" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Tutorial 8 - HPS -Buildroot
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-FPGA-RTL/" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-1/" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-FPGA-NIOS/" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-2/" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-FPGA-NIOS-IP/" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-3/" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    <label class="md-nav__link" for="nav-3">
+      HPS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS/" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-Running/" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-BuildSystem/" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-BlinkLED/" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-HPS-ethernet/" class="md-nav__link">
+      Extra: configurando rede
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-4/" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-Kernel/" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-5/" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-DeviceDriver1/" class="md-nav__link">
+      Device Driver
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-kernel-module/" class="md-nav__link">
+      Kernel module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-kernel-chardriver/" class="md-nav__link">
+      Char device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      HPS + FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS + FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-FPGA-BlinkLED/" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-nav__link">
+      Char LED device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    <label class="md-nav__link" for="nav-5">
+      Acelerando
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Acelerando" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-Acelerando-HLS/" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+    <label class="md-nav__link" for="nav-6">
+      Extras
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Extras" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        Extras
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-FPGA-VGA/" class="md-nav__link">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-6/" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-Extra-1/" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+    <label class="md-nav__link" for="nav-7">
+      Úteis
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Úteis" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Úteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-FPGA-e-Softwares/" class="md-nav__link">
+      Infraestrutura de HW e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-VHDL/" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-SDcard/" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-HPS-Serial/" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-HPS-ethernet/" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+    <label class="md-nav__link" for="nav-8">
+      Tutoriais Alunos
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutoriais Alunos" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Projeto-Overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Projeto-Rubrica/" class="md-nav__link">
+      Rubrica
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/Insper/Embarcados-Avancados-Template" class="md-nav__link">
+      Template markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-4" type="checkbox" id="nav-8-4" >
+    <label class="md-nav__link" for="nav-8-4">
+      2020
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2020" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-4">
+        <span class="md-nav__icon md-icon"></span>
+        2020
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/Temas/" class="md-nav__link">
+      Temas 20b
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/PS3-Linux-Tutorial/" class="md-nav__link">
+      PS3 Hack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/Android/" class="md-nav__link">
+      Android para Raspbery Pi 3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/LED-HW/" class="md-nav__link">
+      Periférico para controlar matriz de led da família WS281x
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/LED-Linux/" class="md-nav__link">
+      Driver linux para acender leds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/python/" class="md-nav__link">
+      Soc & Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/metropolis/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/Audio/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/cripto/" class="md-nav__link">
+      Criptografia em Hardware Fpga
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-5" type="checkbox" id="nav-8-5" >
+    <label class="md-nav__link" for="nav-8-5">
+      2019
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2019" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-5">
+        <span class="md-nav__icon md-icon"></span>
+        2019
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Tutoriais/" class="md-nav__link">
+      Tutoriais 2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Gabriel-TensorFlow/" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Leo-OpenCL/" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Elisa-Yocto/" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Pedro-OpenCV/" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Martim-F1/" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Toranja-DevDriver/" class="md-nav__link">
+      Bruno Toranja - Linux Device Driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/Tutorial-HPS-Buildroot.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="tutorial-8-hps-buildroot">Tutorial 8 - HPS -Buildroot<a class="headerlink" href="#tutorial-8-hps-buildroot" title="Permanent link">&para;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Buildroot wikipidia</p>
+<p>Buildroot is a set of Makefiles and patches that simplifies and automates the process of building a complete and bootable Linux environment for an embedded system, while using cross-compilation to allow building for multiple target platforms on a single Linux-based development system. Buildroot can automatically build the required cross-compilation toolchain, create a root file system, compile a Linux kernel image, and generate a boot loader for the targeted embedded system, or it can perform any independent combination of these steps. For example, an already installed cross-compilation toolchain can be used independently, while Buildroot only creates the root file system</p>
+<ul>
+<li>ref: <a href="https://en.wikipedia.org/wiki/Buildroot">https://en.wikipedia.org/wiki/Buildroot</a></li>
+</ul>
+</div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0LJHx09RF80" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>Iremos utilizar o <a href="https://buildroot.org/">buildroot</a> para gerar o filesystem (<code>/bin</code>, <code>/etc</code>, ...) do nosso sistema embarcado. No buildroot teremos a opção de configurar quais softwares queremos no dispositivo. Por exemplo, se desejarmos acessar o HPS via ssh, teremos que no buildroot adicionar um ssh server para ser compilado e adicionado ao filesystem e executado no boot.</p>
+<p>O buildroot é uma alternativa a outro projeto bem conhecido: Yocto. O vídeo a seguir são dois desenvolvedores, um de cada projeto, fazendo a comparação entre as duas ferramentas:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>O Yocto está se consolidando como ferramenta padrão da industria, tomando o lugar do buildroot. A escolha pelo buildroot na eletiva é pela facilidade de criar um sistema, o yocto é mais complexo e cheio de terminologias. Nessa eletiva iremos trabalhar com o buildroot, mas para quem quer se aprofundar/especializar no tema, tem que aprender o yocto.</p>
+<p><iframe width="560" height="315" src="https://www.youtube.com/embed/wCVYQWFIvBs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+</div>
+<h1 id="buildroot">buildroot<a class="headerlink" href="#buildroot" title="Permanent link">&para;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Leitura recomendada</p>
+<ul>
+<li><a href="https://buildroot.org/downloads/manual/manual.html#_getting_started">https://buildroot.org/downloads/manual/manual.html#_getting_started</a></li>
+</ul>
+</div>
+<h2 id="download">Download<a class="headerlink" href="#download" title="Permanent link">&para;</a></h2>
+<p>Primeiramente devemos fazer o download do <code>buildroot</code>:</p>
+<div class="highlight"><pre><span></span><code>$ git clone https://github.com/buildroot/buildroot
+$ <span class="nb">cd</span> buildroot/
+</code></pre></div>
+<p>O buildroot possui uma ferramenta de configuração similar ao do kernel do linux (<code>menuconfig</code> / <code>nconfig</code>) iremos utilizar-la para configurar o filesystem assim como quais programas serão compilados e inseridos no <code>/root/</code>. Lembre que já possuímos um toolchain (o que compilamos o kernel) configurado no <code>.bashrc</code>, iremos o utilizar para a compilação de todos os programas que iremos carregar no embarcado. </p>
+<p>O buildroot tem a opção de fazer o download do toolchain (ele também pode compilar o kernel e gerar o uboot, é uma ferramenta bem completa), mas dessa vez iremos utilizar o que já temos (para manter a compatibilidade).</p>
+<h2 id="configurando">Configurando<a class="headerlink" href="#configurando" title="Permanent link">&para;</a></h2>
+<p>Na pasta do buildroot recém clonada, execute o seguinte comando:</p>
+<div class="highlight"><pre><span></span><code>$ make <span class="nv">ARCH</span><span class="o">=</span>arm menuconfig
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Se ser algum erro, talvez seja necessário instalar o <code>libncurses-dev</code> via apt.</p>
+</div>
+<p>Ele irá abrir uma tela de configuração a seguir:</p>
+<p><img alt="" src="../figs/Tutorial-HPS-Buildroot-7.png" /></p>
+<div class="admonition note">
+<p>para voltar para essa tela, basta aperta duas vezes a tecla <code>&lt;ESC&gt;</code></p>
+</div>
+<hr />
+<h3 id="1-target-options">1. Target Options<a class="headerlink" href="#1-target-options" title="Permanent link">&para;</a></h3>
+<p>A primeira parte que iremos configurar é o alvo da geração do filesystem (<em>Target options</em>), devemos informar para o buildroot que ele está gerando arquivos para um ARM e indicar algumas opções do nosso compilador. Para isso:</p>
+<div class="admonition note">
+<p class="admonition-title">Config. final</p>
+<p><img alt="" src="../figs/Tutorial-HPS-Buildroot-2.png" /></p>
+</div>
+<ul>
+<li>Menu principal <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> Target Options<ul>
+<li>Target Architecture: <strong>ARM (little endian)</strong>  <ul>
+<li>Essa opção já deve estar certa pois passamos via a chamada do make (make ARCH=ARM ...)</li>
+</ul>
+</li>
+<li>Target Architecture Variant: <strong>cortex-A9</strong></li>
+<li><strong>Enable</strong> NEON SIMD extension support</li>
+<li><strong>Enable</strong> VFP extension support</li>
+<li>Floating point strategy: <strong>NEON</strong><ul>
+<li><a href="https://developer.arm.com/technologies/neon">https://developer.arm.com/technologies/neon</a></li>
+</ul>
+</li>
+<li>Target ABI: <strong>EABIhf</strong><ul>
+<li>Indicamos ao buildroot que nossa arquitetura possui ponto flutuante em HW.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="2-build-options">2. Build options<a class="headerlink" href="#2-build-options" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Config. Final</p>
+<p><img alt="" src="../figs/Tutorial-HPS-Buildroot-5.png" /></p>
+</div>
+<p>Deixe padrão como o padrão.</p>
+<hr />
+<h3 id="3-toolchain">3. Toolchain<a class="headerlink" href="#3-toolchain" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">config. Final</p>
+<p><img alt="" src="../figs/Tutorial-HPS-Buildroot-4.png" /></p>
+</div>
+<p>Vamos indicar agora para o buildroot qual toolchain que ele deve utilizar e suas configurações:</p>
+<ul>
+<li>Menu principal <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> Toolchain<ul>
+<li>Toolchain type: <strong>External toolchain</strong><ul>
+<li>o buildroot irá usar o toolchain que especificarmos. Note que dentro dessa opção existe a : <em>Buildroot toolchain</em>, que se ativada faria com que o buildroot baixasse de forma automática todo o toolchain.</li>
+</ul>
+</li>
+<li>Toolchain: <strong>Custom toolchain</strong></li>
+<li>Toolchain path: <strong>$(ARM_GCC)</strong><ul>
+<li>o buildroot irá usar essa variável do sistema como path do toolchain. Temos duas opções aqui :<ol>
+<li>Podemos declarar essa variável no bash</li>
+<li>Podemos editar essa opção já com o path do nosso toolchain</li>
+<li>Vamos escolher por hora a opção 1.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Toolchain prefix: <strong>$(ARCH)-linux-gnueabihf</strong><ul>
+<li>o prefix é como o toolchain irá ser chamado, por exemplo para acessar o gcc:<ul>
+<li><code>$(ARM_GCC)/bin/$(ARCH)-linux-gnueabihf-gcc</code></li>
+<li>Sendo :<ul>
+<li>ARM_GCC = <code>/home/corsi/work/gcc-linaro-7.2.1-2017.11-x86_64_arm-linux-gnueabihf</code></li>
+<li>ARCH = arm (passado no call do make)</li>
+</ul>
+</li>
+<li>Resulta em: <code>/home/corsi/work/gcc-linaro-7.1-2017.11-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Toolchain gcc version: <strong>7.x</strong></li>
+<li>Toolchain kernel headers series: <strong>4.10.x</strong></li>
+<li>External toolchain C library: <strong>glibc/eglibc</strong></li>
+<li><strong>Ativar</strong>: Toolchain has SSP support</li>
+<li><strong>Ativar</strong>: Toolchain has SSP support</li>
+<li><strong>Ativar</strong>: Toolchain has RCP support</li>
+<li><strong>Ativar</strong>: Toolchain has C++ support </li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="4-system-configuration">4. System Configuration<a class="headerlink" href="#4-system-configuration" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">config. Final</p>
+<p><img alt="" src="../figs/Tutorial-HPS-Buildroot-3.png" /></p>
+</div>
+<p>Nessa etapa vamos configurar informações como: hostname, user, password gerenciador de inicialização (init)...</p>
+<ul>
+<li>Menu principal <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> System Configuration<ul>
+<li>System hostname: <strong>SoC-Corsi</strong> (escolha o que preferir) </li>
+<li>System banner: <strong>Embarcados Avancados!! SoC Cyclone V</strong></li>
+<li>Init system: <strong>BusyBox</strong><ul>
+<li>systemd é uma alternativa, só que mais complexa!</li>
+</ul>
+</li>
+<li>Root password: <strong>1234</strong> (escolha o que preferir)</li>
+<li>/bin/sh: <strong>busybox</strong> <ul>
+<li>O shell a ser inserido no sistema, temos várias outras opções: bash, zsh. Todas elas irão aumentar o tamanho e a complexidade da imagem. </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="5-kernel-bootloader">5. Kernel / bootloader<a class="headerlink" href="#5-kernel-bootloader" title="Permanent link">&para;</a></h3>
+<p>O busybox pode baixar e compilar o kernel e o uboot para nós.</p>
+<div class="admonition nonte">
+<p class="admonition-title">Nonte</p>
+<p>Não vamos usar essa configuração. <strong>Deixe não checado!</strong></p>
+</div>
+<ul>
+<li>Menu principal <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> Kernel</li>
+</ul>
+<hr />
+<h3 id="6-target-packages">6. Target packages<a class="headerlink" href="#6-target-packages" title="Permanent link">&para;</a></h3>
+<p>Nesse menu temos a opção de quais programas e sistemas serão inseridos na imagem para o target. Se quisermos por exemplo inserir um webserver (apache ?) no nosso linux embarcado, devemos selecionar aqui.</p>
+<p>Vamos deixar como padrão por hora. Mais tarde iremos voltar a essa etapa mais tarde.</p>
+<hr />
+<h3 id="7-filesystem-images">7. Filesystem images<a class="headerlink" href="#7-filesystem-images" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p><img alt="" src="../figs/Tutorial-HPS-Buildroot-1.png" /></p>
+</div>
+<ul>
+<li>Menu principal <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> Filesystem images<ul>
+<li>Selecionar: <strong>tar the root filesystem</strong></li>
+</ul>
+</li>
+</ul>
+<p>Esse menu descreve para o busybox como deve ser a saída final da imagem do filesystem gerada. O busybox necessita gerar filesystem que é capaz de configurar as permissões dos arquivos corretamente (ele não pode simplesmente gerar uma pasta com todos os arquivos e programas). </p>
+<hr />
+<h2 id="8-finalizando">8. Finalizando<a class="headerlink" href="#8-finalizando" title="Permanent link">&para;</a></h2>
+<p>Salve a sua configuração (ESC ESC save) e volte ao terminal. Vamos agora gerar a imagem do nosso filesystem.</p>
+<h3 id="compilando">Compilando<a class="headerlink" href="#compilando" title="Permanent link">&para;</a></h3>
+<p>Para compilar e gerar o filesystem :</p>
+<div class="highlight"><pre><span></span><code>$ make <span class="nv">ARCH</span><span class="o">=</span>arm all -j <span class="m">4</span>
+</code></pre></div>
+<p>Nessa etapa o buildroot irá baixar da web todos os pacotes e programas que foram
+selecionados no menu de configuração, 
+e irá compilar o source code com o toolchain que passamos para ele. <strong>Isso pode levar um tempinho</strong>.</p>
+<h3 id="graficos">Gráficos !<a class="headerlink" href="#graficos" title="Permanent link">&para;</a></h3>
+<p>Uma vez acabado o processo de geração do FS, podemos gerar alguns gráficos muito importantes:</p>
+<ul>
+<li>
+<p><a href="https://buildroot.org/downloads/manual/manual.html#_graphing_the_filesystem_size_contribution_of_packages">https://buildroot.org/downloads/manual/manual.html#_graphing_the_filesystem_size_contribution_of_packages</a></p>
+</li>
+<li>
+<p>Dependência dos pacotes: <code>make graph-depends</code></p>
+</li>
+<li>Tempo de compilação: <code>make graph-build</code></li>
+<li>Contribuição do tamanho do FS de cada pacote: <code>make graph-size</code></li>
+</ul>
+<p>Os gráficos são salvos na pasta: <code>output/graphs/</code></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Instale as dependências</p>
+<div class="highlight"><pre><span></span><code>sudo apt install graphviz python-matplotlib python-numpy
+</code></pre></div>
+</div>
+<div class="admonition example">
+<p>Gere os três gráficos e analise os resultados</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Exemplo do gráfico do tamanho dos pacotes no fs:</p>
+<p><img alt="" src="../figs/Tutorial-HPS-Buildroot-graph-size.png" /></p>
+</div>
+<h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<p>Existem duas saídas do buildroot na pasta: <code>buildroot/output/**</code></p>
+<ol>
+<li>O arquivo <code>./images/rootfs.tar</code>: que contém o fileSystem do target (com as permissões corretas)</li>
+<li>A pasta <code>./images/target/</code>: com os arquivos contidos no <code>.tar</code> mas sem as
+ permissões corretas para
+ executar no target. Inclusive essa pasta possui um arquivo:</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>THIS_IS_NOT_YOUR_ROOT_FILESYSTEM</strong></p>
+<p>Warning!</p>
+<p>This directory does <em>not</em> contain the root filesystem that you can use on your embedded system. Since Buildroot does not run as root, it    cannot create device files and set the permissions and ownership of    files correctly in this directory to make it usable as a root    filesystem.
+....</p>
+</div>
+<p>Para testarmos no nosso sistema embarcados, temos que extrair o arquivo <code>rootfs.tar</code> para o nosso cartão de memória. </p>
+<h2 id="testando">Testando<a class="headerlink" href="#testando" title="Permanent link">&para;</a></h2>
+<p>Siga o tutorial em <a href="/Embarcados-Avancados/info-SDcard/">SDCard - FileSystem</a>.
+Lá está comentando como extrair o <code>rootfs.tar</code> para o nosso cartão de memória.</p>
+<div class="admonition example">
+<ol>
+<li>o boot ficou mais rápido?</li>
+<li>Tente plugar um pendrive, funciona?</li>
+</ol>
+</div>
+<h2 id="estudando">Estudando<a class="headerlink" href="#estudando" title="Permanent link">&para;</a></h2>
+<div class="admonition example">
+<p class="admonition-title">Responda:</p>
+<ul>
+<li>descreva o que é o root file system</li>
+<li>initd process</li>
+<li>para que serve e como funciona o /linuxrc</li>
+<li>para que serve  o /proc</li>
+</ul>
+</div>
+<h2 id="referencias">Referências<a class="headerlink" href="#referencias" title="Permanent link">&para;</a></h2>
+<ul>
+<li>dtb : <a href="https://rocketboards.org/foswiki/Documentation/HOWTOCreateADeviceTree">https://rocketboards.org/foswiki/Documentation/HOWTOCreateADeviceTree</a></li>
+<li>Generating and Compiling the Preloader : <a href="https://rocketboards.org/foswiki/Documentation/GSRD141Preloader">https://rocketboards.org/foswiki/Documentation/GSRD141Preloader</a></li>
+<li>Compilando o kernel : <a href="https://rocketboards.org/foswiki/Documentation/EmbeddedLinuxBeginnerSGuide#8">https://rocketboards.org/foswiki/Documentation/EmbeddedLinuxBeginnerSGuide#8</a></li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../Tutorial-HPS-Kernel/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Tutorial 7 - HPS - Compilando o kernel
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../Entrega-5/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                👁 Entrega 5
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.0ac82a11.min.js"></script>
+      <script src="../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: ['instant', 'navigation.expand', {'tabs': True}],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../js/dom-confetti.js"></script>
+      
+        <script src="../js/progress.js"></script>
+      
+    
+  </body>
+</html>

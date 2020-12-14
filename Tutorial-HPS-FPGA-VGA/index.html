@@ -1,0 +1,1584 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://insper.github.io/Embarcados-Avancados/Tutorial-HPS-FPGA-VGA/">
+      
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.7">
+    
+    
+      
+        <title>Tutorial - HPS + FPGA - VGA - Eletiva: Embarcados Avançados (SoC e Linux Embarcado)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.19753c6b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.196e0c26.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffffff">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/progress.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="white" data-md-color-accent="pink">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tutorial-hps-fpga-vga" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-header-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Tutorial - HPS + FPGA - VGA
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://insper.github.io/Embarcados-Avancados/" title="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)" class="md-nav__button md-logo" aria-label="Eletiva: Embarcados Avançados (SoC e Linux Embarcado)">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Eletiva: Embarcados Avançados (SoC e Linux Embarcado)
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/insper/Embarcados-Avancados/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Insper/Embarcados-Avancados
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-FPGA-RTL/" class="md-nav__link">
+      Tutorial 1 - FPGA - RTL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-1/" class="md-nav__link">
+      👁 Entrega 1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-FPGA-NIOS/" class="md-nav__link">
+      Tutorial 2 - FPGA - NIOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-2/" class="md-nav__link">
+      👁 Entrega 2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-FPGA-NIOS-IP/" class="md-nav__link">
+      Tutorial 3 - FPGA - IP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-3/" class="md-nav__link">
+      👁 Entrega 3
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    <label class="md-nav__link" for="nav-3">
+      HPS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        HPS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS/" class="md-nav__link">
+      Visão geral
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-Running/" class="md-nav__link">
+      Tutorial 4 - HPS - Linux embarcado
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-BuildSystem/" class="md-nav__link">
+      Tutorial 5 - HPS - Infra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-BlinkLED/" class="md-nav__link">
+      Tutorial 6 - HPS - BlinkLED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-HPS-ethernet/" class="md-nav__link">
+      Extra: configurando rede
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-4/" class="md-nav__link">
+      👁 Entrega 4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-Kernel/" class="md-nav__link">
+      Tutorial 7 - HPS - Compilando o kernel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-Buildroot/" class="md-nav__link">
+      Tutorial 8 - HPS -Buildroot
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-5/" class="md-nav__link">
+      👁 Entrega 5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-DeviceDriver1/" class="md-nav__link">
+      Device Driver
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-kernel-module/" class="md-nav__link">
+      Kernel module
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-kernel-chardriver/" class="md-nav__link">
+      Char device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      HPS + FPGA
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="HPS + FPGA" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        HPS + FPGA
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-FPGA-BlinkLED/" class="md-nav__link">
+      Tutorial - HPS + FPGA - Blink LED
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/" class="md-nav__link">
+      Char LED device driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+    <label class="md-nav__link" for="nav-5">
+      Acelerando
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Acelerando" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Acelerando
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tutorial-Acelerando-HLS/" class="md-nav__link">
+      Tutorial - Acelerando - HLS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+    <label class="md-nav__link" for="nav-6">
+      Extras
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Extras" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        Extras
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Tutorial - HPS + FPGA - VGA
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Tutorial - HPS + FPGA - VGA
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#frame-buffer" class="md-nav__link">
+    Frame Buffer
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware" class="md-nav__link">
+    Hardware
+  </a>
+  
+    <nav class="md-nav" aria-label="Hardware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#entendo-o-hw" class="md-nav__link">
+    Entendo o HW
+  </a>
+  
+    <nav class="md-nav" aria-label="Entendo o HW">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alt_vip_vfr_vga" class="md-nav__link">
+    alt_vip_vfr_vga
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alt_vip_itc" class="md-nav__link">
+    alt_vip_itc
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compilando" class="md-nav__link">
+    Compilando
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#driver" class="md-nav__link">
+    Driver
+  </a>
+  
+    <nav class="md-nav" aria-label="Driver">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dts" class="md-nav__link">
+    dts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#driver_1" class="md-nav__link">
+    driver
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#buildroot" class="md-nav__link">
+    Buildroot
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-6/" class="md-nav__link">
+      👁 Entrega 6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Entrega-Extra-1/" class="md-nav__link">
+      👁 Entrega Opcional 1
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+    <label class="md-nav__link" for="nav-7">
+      Úteis
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Úteis" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Úteis
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-FPGA-e-Softwares/" class="md-nav__link">
+      Infraestrutura de HW e SWs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-VHDL/" class="md-nav__link">
+      VHDL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-SDcard/" class="md-nav__link">
+      Atualizando o SDCARD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-HPS-Serial/" class="md-nav__link">
+      Screen
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../info-HPS-ethernet/" class="md-nav__link">
+      Ethernet
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+    <label class="md-nav__link" for="nav-8">
+      Tutoriais Alunos
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Tutoriais Alunos" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        <span class="md-nav__icon md-icon"></span>
+        Tutoriais Alunos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Projeto-Overview/" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Projeto-Rubrica/" class="md-nav__link">
+      Rubrica
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/Insper/Embarcados-Avancados-Template" class="md-nav__link">
+      Template markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-4" type="checkbox" id="nav-8-4" >
+    <label class="md-nav__link" for="nav-8-4">
+      2020
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2020" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-4">
+        <span class="md-nav__icon md-icon"></span>
+        2020
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/Temas/" class="md-nav__link">
+      Temas 20b
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/PS3-Linux-Tutorial/" class="md-nav__link">
+      PS3 Hack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/Android/" class="md-nav__link">
+      Android para Raspbery Pi 3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/LED-HW/" class="md-nav__link">
+      Periférico para controlar matriz de led da família WS281x
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/LED-Linux/" class="md-nav__link">
+      Driver linux para acender leds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/python/" class="md-nav__link">
+      Soc & Python
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/metropolis/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/Audio/" class="md-nav__link">
+      Coloque aqui o nome do tutorial de vocês
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2020/cripto/" class="md-nav__link">
+      Criptografia em Hardware Fpga
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8-5" type="checkbox" id="nav-8-5" >
+    <label class="md-nav__link" for="nav-8-5">
+      2019
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="2019" data-md-level="2">
+      <label class="md-nav__title" for="nav-8-5">
+        <span class="md-nav__icon md-icon"></span>
+        2019
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Tutoriais/" class="md-nav__link">
+      Tutoriais 2019
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Gabriel-TensorFlow/" class="md-nav__link">
+      Gabriel Moreira - TensorFlow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Leo-OpenCL/" class="md-nav__link">
+      Leonardo Medeiros  - Tutorial OpenCL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Elisa-Yocto/" class="md-nav__link">
+      Elisa Malzoni - Yocto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Pedro-OpenCV/" class="md-nav__link">
+      Pedro de la Penã - Jetson Nano GPU
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Martim-F1/" class="md-nav__link">
+      Martim F. José - FPGA na AWS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2019/Toranja-DevDriver/" class="md-nav__link">
+      Bruno Toranja - Linux Device Driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#frame-buffer" class="md-nav__link">
+    Frame Buffer
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware" class="md-nav__link">
+    Hardware
+  </a>
+  
+    <nav class="md-nav" aria-label="Hardware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#entendo-o-hw" class="md-nav__link">
+    Entendo o HW
+  </a>
+  
+    <nav class="md-nav" aria-label="Entendo o HW">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alt_vip_vfr_vga" class="md-nav__link">
+    alt_vip_vfr_vga
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alt_vip_itc" class="md-nav__link">
+    alt_vip_itc
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compilando" class="md-nav__link">
+    Compilando
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#driver" class="md-nav__link">
+    Driver
+  </a>
+  
+    <nav class="md-nav" aria-label="Driver">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dts" class="md-nav__link">
+    dts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#driver_1" class="md-nav__link">
+    driver
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#buildroot" class="md-nav__link">
+    Buildroot
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/Tutorial-HPS-FPGA-VGA.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="tutorial-hps-fpga-vga">Tutorial - HPS + FPGA - VGA<a class="headerlink" href="#tutorial-hps-fpga-vga" title="Permanent link">&para;</a></h1>
+<p>Se repararem em nosso hardware verificamos que o mesmo possui uma saída de vídeo
+VGA, porém os sinais do VGA foram conectados nos pinos da FPGA! Tornando
+necessário a criação de um hardware e sua conexão com o HPS para que possamos
+fazer com que nosso Linux tenha uma saída de vídeo.</p>
+<div class="admonition note">
+<p class="admonition-title">Diagrama</p>
+<p><img alt="" src="../figs/DE10-Standard-blockdiagram.jpg" /></p>
+</div>
+<p>Para conseguirmos ter uma saída de vídeo no nosso sistema embarcado, teremos que
+realizar os seguintes passos:</p>
+<ol>
+<li>Configurar um hw que gerencie VGA <ul>
+<li><a href="https://www.intel.com.br/content/www/br/pt/programmable/products/intellectual-property/ip/dsp/m-alt-vipsuite.html">alt_vip_*</a></li>
+<li>pense que vamos adicionar na FPGA uma 'placa de vídeo' muito simples</li>
+</ul>
+</li>
+<li>Adicionar ao kernel um device driver para gerenciar esse hardware</li>
+<li>Configurar o kernel adicionando a parte de FB<ul>
+<li>compilar o kernel </li>
+</ul>
+</li>
+<li>Configurar no buildroot um programa capaz de manipular o FB e exibir uma imagem</li>
+</ol>
+<h2 id="frame-buffer">Frame Buffer<a class="headerlink" href="#frame-buffer" title="Permanent link">&para;</a></h2>
+<p>Antes de mexermos com o hardware, vamos ver como o Linux trata uma saída de
+vídeo! Você já ouviu falar de <a href="https://en.wikipedia.org/wiki/Framebuffer">frame
+buffer</a> (FB)? Verifique que o seu PC
+possui um:</p>
+<div class="highlight"><pre><span></span><code>$ ls /dev <span class="p">|</span> grep fb
+</code></pre></div>
+<p>O FB é uma região da memória RAM  reservada e que contém um bitmap (se tiver uma 
+placa de vídeo, essa memória pode estar localizada nela),
+esse bitmap é convertido (por hardware ou software)  para a saída de vídeo em
+questão. Essa conversão de bitmap para saída de vídeo depende do driver de vídeo que foi
+carregado para gerenciar (e criar) o FB, no caso de placas de vídeo intel, é utilizado o
+driver <a href="https://www.kernel.org/doc/html/latest/fb/vesafb.html">vesa</a>.</p>
+<p>Porém nem tudo que é exibido passa diretamente pelo FB, alguns programas podem
+querer maior performance e podem acessar o display direto (<a href="https://en.wikipedia.org/wiki/Direct_Graphics_Access">Direct Graphics
+Access</a>), como demonstrado no diagrama a seguir:</p>
+<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Linux_graphics_drivers_Utah_GLX.svg/600px-Linux_graphics_drivers_Utah_GLX.svg.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Framebuffer Console</p>
+<p>O Linux possui um driver (fbcon) que exibe um console em um framebuffer,
+para usar, basta ativar na configuração do kernel:</p>
+<ul>
+<li>
+<p>Device Drivers<img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />Graphics Support-&gt;Frame buffer Devices-&gt;Console display
+  driver support <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> Framebuffer Console Support</p>
+</li>
+<li>
+<p>Para mais detalhes: <a href="https://www.kernel.org/doc/html/latest/fb/fbcon.html">https://www.kernel.org/doc/html/latest/fb/fbcon.html</a></p>
+</li>
+</ul>
+</div>
+<h2 id="hardware">Hardware<a class="headerlink" href="#hardware" title="Permanent link">&para;</a></h2>
+<p>Como no exemplo anterior (para ganhar tempo), vamos utilizar um hardware da
+Terasic que já possui a parte da FPGA configurada para trabalharmos com o VGA.
+Copie a pasta <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC_FPGA/DE10_Standard_FB">DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC_FPGA/DE10_Standard_FB/
+</a>
+para o seu repositório.</p>
+<p>Com o projeto <code>DE10_Standard_FB</code> copiado, abra o projeto no quartus e analise o
+<code>soc_system.qsys</code> no Platform Designer, você deve ver algo como:</p>
+<div class="admonition note">
+<p>Eu deixei a mostra somente as partes referentes ao vídeo!</p>
+</div>
+<p><img alt="" src="../figs/Tutorial-HPS-FPGA-vga-qsys.png" /></p>
+<h3 id="entendo-o-hw">Entendo o HW<a class="headerlink" href="#entendo-o-hw" title="Permanent link">&para;</a></h3>
+<p>O projeto de HW possui dois componentes para tratar o VGA: <code>alt_vip_vfr_vga</code> e
+<code>alt_vip_itc_0</code>, ambos fazem parte do pacote de IPs: 'Video and Image Processing
+Suite Intel FPGA' específico para processamento de vídeo (já suporta 8K e +60Hz)</p>
+<details class="note"><summary>Video and Image Process (<strong>VIP</strong>) Suite Intel FPGA</summary><ul>
+<li>Retirado do site da Intel:</li>
+</ul>
+<p>The Intel® FPGA Video and Image Processing Suite is a collection of Intel FPGA IP functions that you can use to facilitate the development of custom video and image processing (VIP) designs. These Intel FPGA IP functions are suitable for use in a wide variety of image processing and display applications, such as video surveillance, broadcast, video conferencing, and medical and military imaging.</p>
+<p>The Video and Image Processing Suite features cores that range from simple building block functions, such as color space conversion to sophisticated video scaling functions that can implement programmable polyphase scaling. </p>
+<ul>
+<li>All the VIP cores use an open, low-overhead Avalon® Streaming (Avalon-ST) interface standard so that they can be easily connected</li>
+<li>You can use VIP cores to quickly build a custom video processing signal chain using the Intel Quartus® Prime Lite or Standard Edition software and the associated Platform Designer</li>
+<li>You can mix and match VIP cores with your own proprietary intellectual property (IP)</li>
+<li>You can use the Platform Designer to automatically integrate embedded processors and peripherals and generate arbitration logic</li>
+<li>
+<p>Capable of supporting 8K video at 60fps and above</p>
+</li>
+<li>
+<p><a href="https://www.intel.com.br/content/www/br/pt/programmable/products/intellectual-property/ip/dsp/m-alt-vipsuite.html">https://www.intel.com.br/content/www/br/pt/programmable/products/intellectual-property/ip/dsp/m-alt-vipsuite.html</a></p>
+</li>
+</ul>
+<p><img alt="" src="https://www.intel.com.br/content/dam/altera-www/global/en_US/images/products/ip/dsp/images/blockdiagram-dsp-fig1-vip.gif" /></p>
+</details>
+<h4 id="alt_vip_vfr_vga">alt_vip_vfr_vga<a class="headerlink" href="#alt_vip_vfr_vga" title="Permanent link">&para;</a></h4>
+<p>É um periférico do tipo <strong>Frame Reader</strong> e é responsável por fazer a leitura de
+um Frame Buffer alocado em memória (<code>avalon_master</code>) e o transformar em um
+<strong>Streaming</strong> (<code>avalon_streaming</code>).</p>
+<p>A maioria dos IP do VIP  operam no barramento de dados do
+tipo:<code>avalon_streaming</code>, por isso é necessário fazer a leitura do FB (que está
+alocado na memória DDR3, conectada ao ARM). Os dados da DDR3 são transferidos
+para  o <code>alt_vip_vfr_vga</code> via DMA pelo ARM/Linux, inicializado pelo device
+driver carregado no Linux!</p>
+<h3 id="alt_vip_itc">alt_vip_itc<a class="headerlink" href="#alt_vip_itc" title="Permanent link">&para;</a></h3>
+<p>É um periférico de vídeo que faz a conversão do <code>streaming</code> de pixels para a
+saída de vídeo em questão (VGA). O VGA é um formato de saída de vídeo DIGITA que
+possui 5 sinais: HSYNC/ VSYNC/ R/G/B. </p>
+<ul>
+<li>HSYNC: indica o fim da linha</li>
+<li>VSYNC: indica o fim da tela</li>
+<li>R/G/B: são os valores dos pixels.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>O sinal VGA é simples. que até da para gerar via arduino:</p>
+<p>-
+<a href="http://labdegaragem.com/profiles/blogs/gerando-sinal-vga-colorido-com-arduino-completo">http://labdegaragem.com/profiles/blogs/gerando-sinal-vga-colorido-com-arduino-completo</a></p>
+</div>
+<h3 id="compilando">Compilando<a class="headerlink" href="#compilando" title="Permanent link">&para;</a></h3>
+<p>Agora que analisamos o HW, podemos compilar e utilizar no nosso SoC! </p>
+<div class="admonition example">
+<p class="admonition-title">Execute</p>
+<ul>
+<li>Gere o <code>soc_system.dtb</code> do projeto <ul>
+<li>Grave o novo <code>soc_system.dtb</code> no SDCard (mesma partição do kernel)</li>
+</ul>
+</li>
+<li>Gere o <code>soc_system.rbf</code> do projeto (COMPILAR O QUARTUS!)<ul>
+<li>Grave o novo <code>rbf</code> no SDCard (mesma partição do kernel)</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="driver">Driver<a class="headerlink" href="#driver" title="Permanent link">&para;</a></h2>
+<p>Será necessário carregarmos um device driver no kernel do linux para que
+possamos utilizar essa saída de vídeo recém criada. Porém o driver do IP
+<code>alt_vip_vfr_vga</code> não é oficial do kernel, vamos ter que adicionar manualmente!</p>
+<h3 id="dts">dts<a class="headerlink" href="#dts" title="Permanent link">&para;</a></h3>
+<p>Mas como o linux sabe que existe uma saída de vídeo? No nosso caso será via o
+<em>device tree</em> (.dtb) que é passado pelo u-boot na inicialização do kernel, se
+repararmos no novo <code>.dts</code> gerado com o hardware, existe um novo componente
+chamado de <code>alt_vip_vfr_vga</code>, que é compatível com o driver <code>vip-frame-reader-9.1</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nl">alt_vip_vfr_vga</span><span class="p">:</span> <span class="na">vip</span><span class="err">@</span><span class="mh">0x100031000</span> <span class="p">{</span>
+    <span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;ALTR,vip-frame-reader-14.0&quot;</span><span class="p">,</span> <span class="s">&quot;ALTR,vip-frame-reader-9.1&quot;</span><span class="p">;</span>
+    <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mh">0x00000001</span> <span class="mh">0x00031000</span> <span class="mh">0x00000080</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="n">clocks</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">clk_0</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="n">max-width</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span><span class="p">;</span> <span class="cm">/* MAX_IMAGE_WIDTH type NUMBER */</span>
+    <span class="n">max-height</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">768</span><span class="o">&gt;</span><span class="p">;</span> <span class="cm">/* MAX_IMAGE_HEIGHT type NUMBER */</span>
+    <span class="n">bits-per-color</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">;</span>   <span class="cm">/* BITS_PER_PIXEL_PER_COLOR_PLANE type NUMBER */</span>
+    <span class="n">colors-per-beat</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;</span><span class="p">;</span>  <span class="cm">/* NUMBER_OF_CHANNELS_IN_PARALLEL type NUMBER */</span>
+    <span class="n">beats-per-pixel</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>  <span class="cm">/* NUMBER_OF_CHANNELS_IN_SEQUENCE type NUMBER */</span>
+    <span class="n">mem-word-width</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">128</span><span class="o">&gt;</span><span class="p">;</span> <span class="cm">/* MEM_PORT_WIDTH type NUMBER */</span>
+<span class="p">};</span> <span class="c1">//end vip@0x100031000 (alt_vip_vfr_vga)</span>
+</code></pre></div>
+<h3 id="driver_1">driver<a class="headerlink" href="#driver_1" title="Permanent link">&para;</a></h3>
+<p>O driver <code>vip-frame-reader-9.1</code> não é oficial do linux, vamos ter que pegar uma
+implementação realizada pelo o pessoal da Altera e utilizar. Os drivers no
+repositório do Linux ficam na pasta: <code>linux/drivers</code>. No caso do vídeo/
+framebuffer, em: <code>linux/drivers/video/fbdev</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Adicionando o driver altvipfb</p>
+<p>Siga o roteiro em:
+<a href="https://github.com/Insper/Embarcados-Avancados/blob/master/driver/altvipfb/README.md">https://github.com/Insper/Embarcados-Avancados/blob/master/driver/altvipfb/README.md</a> e
+depois volte para essa página!</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Esse tutorial incluiu o driver do fb no kernel, outra opção seria criar um
+módulo (module) que poderia ser carregado conforme a necessidade.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Testando</p>
+<ol>
+<li>Compile o kernel</li>
+<li>Copie o zImage novo para o SDCARD</li>
+<li>Liga um monitor a VGA</li>
+<li>Inicialize o linux embarcado</li>
+</ol>
+</div>
+<p>Se tudo der certo, você deve ver dois pinguins no canto esquerdo do monitor.
+Cada pinguim representa um core do sistema, como nosso ARM é um dual core, temos
+dois. Esse pinguins aparecem porque ativamos essa opção no kernel:</p>
+<div class="highlight"><pre><span></span><code>CONFIG_LOGO=y
+CONFIG_LOGO_LINUX_MONO=y
+CONFIG_LOGO_LINUX_VGA16=y
+CONFIG_LOGO_LINUX_CLUT224=y
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>É possível editar o pinguim e fazer por exemplo, aparecer a carinha de
+vocês! Os arquivos <code>ppm</code> ficam na pasta <code>/drivers/video/logo/</code>, esses são
+então compilados na compilação do kernel.</p>
+</div>
+<p>Quer fazer umas coisas legais com o FB? Tenta o seguinte:</p>
+<ul>
+<li>Exibir imagem randômica no FB:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>sudo cat /dev/urandom &gt; /dev/fb0
+</code></pre></div>
+<ul>
+<li>ref: <a href="http://seenaburns.com/2018/04/04/writing-to-the-framebuffer/">http://seenaburns.com/2018/04/04/writing-to-the-framebuffer/</a></li>
+</ul>
+<h2 id="buildroot">Buildroot<a class="headerlink" href="#buildroot" title="Permanent link">&para;</a></h2>
+<p>São diversas as soluções de desenvolvimento de interface gráfica para Linux
+embarcado, e nem todas envolvem um gerenciador de janelas. A seguir uma lista de
+ferramentas que podem ser utilizadas:</p>
+<ul>
+<li>GUI:<ul>
+<li>LittlevGL: <a href="https://littlevgl.com/">https://littlevgl.com/</a></li>
+<li>QT: <a href="https://www.qt.io/">https://www.qt.io/</a></li>
+<li>emWin (comercial): <a href="https://www.segger.com/products/user-interface/emwin/">https://www.segger.com/products/user-interface/emwin/</a></li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+<p>Existem outras soluções, vamos usar uma delas para exibir uma imagem na nossa
+tela! Quando eu estava fazendo esse roteiro, queria algo mais simples, em uma
+busca  (não muito rápida) na internet (keyword: <code>linux frame buffer show image</code>)
+eu encontrei esse programa: <code>fbv</code>, que por sorte está no <code>buildroot</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">fbv</p>
+<ol>
+<li>
+<p>OVERVIEW
+    fbv (FrameBuffer Viewer) is a simple program to view pictures on
+a linux framebuffer device. In 2000, when fbv was created, there
+were no other situable programs performing the same task, so the
+authors decided to follow the rule: 'If you need a tool - write
+it yourself!' :-)</p>
+</li>
+<li>
+<p><a href="https://github.com/smokku/fbv">https://github.com/smokku/fbv</a></p>
+</li>
+</ol>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Faça</p>
+<ol>
+<li>Adicione o programa <code>fbv</code> ao buildroot</li>
+<li>Compile o novo fs</li>
+<li>Grave no SDCard</li>
+<li>Grave uma imagem no SDCard</li>
+<li>No target, exiba a imagem usando o <code>fbv</code></li>
+</ol>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../Tutorial-Acelerando-HLS/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Tutorial - Acelerando - HLS
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../Entrega-6/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                👁 Entrega 6
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.0ac82a11.min.js"></script>
+      <script src="../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: ['instant', 'navigation.expand', {'tabs': True}],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../js/dom-confetti.js"></script>
+      
+        <script src="../js/progress.js"></script>
+      
+    
+  </body>
+</html>
