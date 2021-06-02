@@ -4,8 +4,6 @@ site_name: 'Eletiva: Embarcados Avançados (SoC e Linux Embarcado)'
 theme:
   features:
     - instant
-    - navigation.expand
-    - tabs: true
   name: 'material'
   palette:
       primary: 'white'
