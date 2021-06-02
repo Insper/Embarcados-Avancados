@@ -1,4 +1,4 @@
-# Coloque aqui o nome do tutorial de vocês
+# SDAccel / Vitis - Algoritmo metropolis
 
 - **Alunos:** Vinicius Gomes de Lima / Lucca Delchiaro Costabile
 - **Curso:** Engenharia da Computação

@@ -1,4 +1,4 @@
-# Coloque aqui o nome do tutorial de vocês
+# Áudio na DE10
 
 - **Alunes:** Francisco Ciol R. Aveiro
 - **Curso:** Engenharia da Computação
