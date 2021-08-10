@@ -6,7 +6,7 @@ theme:
     - instant
   name: 'material'
   palette:
-      primary: 'white'
+      primary: 'black'
       accent: 'pink'
   font:
     text: Roboto
@@ -86,12 +86,10 @@ nav:
           - '2019/Toranja-DevDriver.md'
 
 # extras
-extra_css:
-  - css/progress.css
- 
 extra_javascript:
-  - 'js/dom-confetti.js'
-  - 'js/progress.js'
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML
+  - https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.0.0/js-yaml.min.js
+  - js/markdown-enhancer.js
 
 # Extensions
 markdown_extensions:
