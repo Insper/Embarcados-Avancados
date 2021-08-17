@@ -1,8 +1,5 @@
 # Tutorial 2 - FPGA - NIOS
 
-!!! success "2020-2"
-    - Material atualizado.
-
 Nesse tutorial iremos criar e customizar um soft processor com o NIOS (sistema embarcado com um processador e periférico), embarcar na FPGA e escrever um código para ele. Ao final, vamos ter os mesmos LEDs que do projeto anterior, com operação simular, mas agora sendo controlados por um programa e não por um hardware dedicado.
 
 ## Começando
@@ -73,12 +70,13 @@ O NIOS suporta que novas instruções sejam adicionadas ao seu instruction set, 
     - [Nios II Custom Instruction User
     Guide](https://www.intel.com/content/dam/altera-www/global/en_US/pdfs/literature/ug/ug_nios2_custom_instruction.pdf)
 
+!!! progress
+    Cheguei aqui!
+
 ## Criando um simples SoC
 
 !!! success ""
     Começando implementar.
-
-<button class="button0" id="0:comecando" onClick="progressBut(this.id);">Começando tutorial!</button>
 
 Nessa etapa iremos adicionar um processador e a infraestrutura mínima necessária para sua operação, iremos incluir no projeto:
 
@@ -110,8 +108,8 @@ Você deve obter algo similar a:
 
 ![Clock e Reset](figs/Tutorial-FPGA-NIOS:unconnected.png)
 
-
-<button class="button0" id="1:criando_SOP" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ### Conectando Clock e Reset
 
@@ -121,7 +119,8 @@ Pense nessa etapa como sendo similar ao `port map` do VHDL, porém em um nível 
 
 ![Clock e Reset](figs/Tutorial-FPGA-NIOS:rst.png)
 
-<button class="button0" id="2:clk_rst" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ### Conectando barramento
 
@@ -144,7 +143,8 @@ Devemos conectar todos os periféricos (**PIO**, **UART** e **OnChip Memory**) a
 
 ![](figs/Tutorial-FPGA-NIOS:connected.png)
 
-<button class="button0" id="3:conectando_burramentos" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ### Mapa de memória
 
@@ -156,7 +156,8 @@ Para realizar a alocação automática: `System` :arrow_right: `Assign Base Addr
 
 ![Automatic Memmory Map](figs/Tutorial-FPGA-NIOS:mem-mapped.png)
 
-<button class="button0" id="4:mapa de memoria" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ### Configurando NIOS
 
@@ -172,7 +173,8 @@ Em `Parameters` :arrow_right: `Vector`, configure:
 !!! tip "Dica"
     O nome **onchip_memory** pode alterar de acordo com o seu projeto e o endereço também (isso depende da ordem na qual os componentes foram inseridos).
 
-<button class="button0" id="5:configurando_nios" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ### Export
 
@@ -183,7 +185,8 @@ De um clique duplo na coluna export na linha do sinal **external_connection** do
 !!! note 
     Repare que o componente `Clock Source` também possui o export dos sinais: `clk` e `reset`, isso foi feito automáticamente na criação do projeto.
 
-<button class="button0" id="6:export" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ### Salvando
 
@@ -196,7 +199,8 @@ Ao final de tudo você deve obter algo como a figura a seguir:
 !!! tip
     `File` :arrow_right: `Save_as`: `niosLab2.qsys`
 
-<button class="button0" id="7:finalizando_fpga" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ### Utilizando o componente
 
@@ -231,8 +235,8 @@ O esquemático (gerado pelo `Platform Designer` :arrow_right: `View` :arrow_righ
 
 ![Schematic](figs/Tutorial-FPGA-NIOS:schematic.png)
 
-
-<button class="button0" id="8:componente" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ### Finalizando
 
@@ -248,7 +252,8 @@ Resultando em:
 
 ![Files](figs/Tutorial-FPGA-NIOS:file.png)
 
-<button class="button0" id="9:add_qip_quartus" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ### Criando o toplevel
 
@@ -297,7 +302,8 @@ Agora é necessário criar um vhdl que vai ser nosso toplevel `LAB2_VHDL_NIOS.vh
 !!! note
     Note que não estamos utilizando o sinal de reset (o `_n` indica que o reset é negativo, ou seja, em `0`). 
 
-<button class="button0" id="10:toplevel" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ## Programando o NIOS - Soft processor
 
@@ -337,7 +343,8 @@ Você deve obter algo como:
 
 ![](figs/Tutorial-FPGA-NIOS:project.png)
 
-<button class="button0" id="11:nios_criando_projeto" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ### Analisando e configurando o bsp
 
@@ -359,7 +366,8 @@ Isso abrirá uma interface de configuração para o bsp. Diversas são as opçõ
 
 ![](figs/Tutorial-FPGA-NIOS:bsp.png)
 
-<button class="button0" id="12:bsp" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ### Jtag-UART small driver
 
@@ -369,7 +377,8 @@ Note que no nosso projeto no **PD** o periférico jtag-uart não teve seu sinal 
 
 ![Jtag Small Driver](figs/Tutorial-FPGA-NIOS:smallDriver.png)
 
-<button class="button0" id="13:jtab_small_driver" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ### Gerando o bsp
 
@@ -396,12 +405,13 @@ Com o `hello_word.c` aberto (é necessário para o eclipse saber qual projeto vo
 
 ![printf](figs/Tutorial-FPGA-NIOS:console.png){width=500}
 
-<button class="button0" id="14:programando_nios" onClick="progressBut(this.id);">Cheguei aqui!</button>
-
 !!! tip "Programando"
     <video width="660" height="360" controls>
       <source src="http://54.162.111.146/shared/soc/SoC-Tutorial-FPGA-NIOS.mp4" type="video/mp4">
     </video> 
+
+!!! progress
+    Cheguei aqui!
 
 ### Blink LED
 
@@ -441,4 +451,5 @@ int main(void){
 
 Embarque no NIOS e veja o resultado nos LEDS!
 
-<button class="button0" id="15:piscaled" onClick="progressBut(this.id);">Cheguei aqui!</button>
+!!! progress
+    Cheguei aqui!

@@ -1,8 +1,5 @@
 # Bem vindo a Eletiva - SoC e Linux Embarcado!
 
-!!! tip "2020-2"
-    - Material revisado
-
 [![](https://camo.githubusercontent.com/31cbef310a2a8d91eeccb737c5d968223a7d1575/68747470733a2f2f7777772e696e737065722e6564752e62722f77702d636f6e74656e742f7468656d65732f696e737065722f646973742f696d6167652f6c6f676f2e706e67)](http://www.insper.edu.br)
 
 - **Disciplina:** Eletiva da Engenharia da Computação

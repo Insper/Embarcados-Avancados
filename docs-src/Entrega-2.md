@@ -1,7 +1,4 @@
-#  👁 Entrega 2
-
-!!! success
-    Revisado 2020-2
+# 👁 Entrega 2
 
 O que deve ser entregue?
 

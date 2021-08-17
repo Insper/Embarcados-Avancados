@@ -1,8 +1,5 @@
 #  👁 Entrega 1
 
-!!! success "2020-2"
-    - Material atualizado.
-    
 O que deve ser entregue?
 
 - **Pasta:** `Entrega_1_FPGA_RTL`
@@ -11,8 +8,6 @@ O que deve ser entregue?
 A ideia dessa entrega é que vocês trabalhem um pouco mais com o VHDL e que também relembrem/aprendem como desenvolver um projeto de forma hierárquica. Nessa entrega vocês irão desenvolver um IP core (*intellectual property core*) dedicado para o controle de um motor de passos.
 
 Esse componente deve controlar as quatro fases de um motor de passos (vocês receberam junto ao kit) de forma a girar o motor nos dois sentidos e com algumas velocidades diferentes.
-
-<button class="button0" id="0:comecando" onClick="progressBut(this.id);">Cheguei Aqui!</button>
 
 ## Exemplo
 

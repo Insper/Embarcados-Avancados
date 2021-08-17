@@ -1,8 +1,5 @@
 # Tutorial 1 - FPGA - RTL
 
-!!! success "2020-2"
-    - Material atualizado.
-
 Essa primeira entrega é um aquecimento de VHDL e FPGA, iremos criar um hardware dedicado na FPGA para controlar os LEDs com base nos sinais de entradas dos botões. 
 A ideia é passarmos por todo o processo de desenvolvimento de um projeto em FPGA e com VHDL.
 
@@ -17,8 +14,10 @@ Para seguir esse tutorial é necessário:
 - **Softwares:** Quartus 18.01
 - **Documentos:** [DE10-Standard_User_manual.pdf](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual)
 
-- **Entrega no git**: pasta`Lab1_FPGA_RTL`
- 
+Entrega no git:
+
+- **Pasta:** `Lab1_FPGA_RTL`
+
 !!! tip
     Crie um repositório para a disciplina, você deverá fazer as entregas por ele.
 
@@ -43,7 +42,8 @@ No Quartus: `File` ➡️`New Project Wizard`
 ??? tip "Wizard"
     ![](figs/Tutorial-FPGA-RTL:wizard.png)
 
-<button class="button0" id="0:wizard" onClick="progressBut(this.id);">Cheguei Aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 !!! note "**Outras referências**"
     Se precisar de outro material como referência, tem um tutorial da Terasic: [DE10-Standard_My_First_Fpga.pdf	](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual)
@@ -106,8 +106,8 @@ Inicialize o arquivo com o conteúdo a seguir:
     end rtl;
     ```
 
-
-<button class="button0" id="1:toplevel" onClick="progressBut(this.id);">Cheguei Aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 !!! info
     Esse código poderia ser mais elegante, mas vamos deixar assim para facilitar o entendimento.
@@ -195,8 +195,8 @@ A interface do `Pin Planner` exibe os pinos/ bancos disponíveis da FPGA para se
 
 ![Pin Planner](figs/Tutorial-FPGA-RTL:Assigments.png)
 
-
-<button class="button0" id="2:pinplanner" onClick="progressBut(this.id);">Cheguei Aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ??? note "Flexibilidade FPGA"
      Normalmente atribuímos a FPGA uma flexibilidade lógica, mas note a flexibilidade que ela possui quanto a definição de nível de sinal de cada pino. Isso permite ao desenvolvedor de hardware inúmeras opções de uso e de novas configurações. 
@@ -260,9 +260,8 @@ Essas linhas indicam para a ferramenta que o sinal `fpga_clk_50` é um sinal de 
 !!! success "Recompile"
     Recompile o projeto e note que não existe mais erros críticos no projeto.
 
-
-<button class="button0" id="3:sdc" onClick="progressBut(this.id);">Cheguei Aqui!</button>
-
+!!! progress
+    Cheguei aqui!
 
 ### RTL Viewer 
 
@@ -289,7 +288,8 @@ Nessa etapa você deve clicar em Auto Detect, essa etapa irá ler via JTAG todos
 
 ![](figs/Tutorial-FPGA-RTL:programming.png)
 
-<button class="button0" id="4:gravando" onClick="progressBut(this.id);">Cheguei Aqui!</button>
+!!! progress
+    Cheguei aqui!
 
 ## Exercícios
 

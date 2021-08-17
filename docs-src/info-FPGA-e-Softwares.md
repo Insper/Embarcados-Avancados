@@ -13,7 +13,6 @@ O software de desenvolvimento para FPGAs Intel chama Quartus, e ele possui vári
     - 1x Adaptador microSD/USB
     - 1x NIC USB-Wifi
 
-
 ## HW - DE10-Standard
 
 - [Site do fabricante](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=205&No=1081&PartNo=2)
@@ -26,17 +25,27 @@ O software de desenvolvimento para FPGAs Intel chama Quartus, e ele possui vári
 
 Devido a segunda parte do curso na qual iremos compilar e trabalhar com Linux embarcado a disciplina deve ser realizada (e os tutoriais vão nessa linha) no **Linux**, Windows até funciona para a primeira parte, mas depois não da mais para usar, MAC não é suportado pelo Quartus.
 
-Para o desenvolvimento na disciplina:
+### Quartus Prime
 
-- Ubuntu 18.04
-- [Quartus 18.01 Standard](http://fpgasoftware.intel.com/18.1/?edition=standard): e os softwares que já vem nesse pacote.
-- [SoC EDS](http://fpgasoftware.intel.com/soceds/18.1/?edition=standard&platform=linux&download_manager=dlm3)
+!!! info
+    Iremos usar o Quartus Prime Standard versão 19.1.
 
-Após instalar, seguir roteiro em (para o quartus funcionar no ubuntu):
+Junto com a instalação do quartus é instalado alguns outros softwares:
 
-:TODO: Atualizar link!
+- Quartus: Desenvolvimento de projetos para FPGA
+- Modelsim: Simulador para projetos HDL (VHDL/Verilog)
+- NIOS II EDS: Plataforma eclipse para programação uC NIOS
+- HLS: High-level synthesis 
 
-- https://github.com/Insper/Z01.1/wiki/Infraestrutura-Detalhada#3---quartus-prime-e-modelsim
+!!! tip "Instalando"
+    Faça o download das partes a seguir, e execute o binário do Quartus Prime que fará a instalação dos demais automaticamente.
+
+    - [Quartus Prime Standard](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/QuartusSetup-19.1.0.670-linux.run)
+    - [ModelSim](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/ModelSimSetup-19.1.0.670-linux.run)
+    - [Cyclone V](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/cyclone-19.1.0.670.qdz)
+
+!!! info "Licença"
+    Iremos usar uma versão do quartus que necessita licença para funcionar, eu irei mandar por email as instruções.
 
 :heavy_check_mark: Linux
 :no_entry_sign:  Windows

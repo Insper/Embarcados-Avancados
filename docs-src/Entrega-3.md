@@ -1,8 +1,5 @@
-#  👁 Entrega 3
+# 👁 Entrega 3
 
-!!! success "2020-2"
-    - Material atualizado.
-    
  O que deve ser entregue?
 
 - **Pasta:** `Entrega_3_FPGA_NIOS_IP`

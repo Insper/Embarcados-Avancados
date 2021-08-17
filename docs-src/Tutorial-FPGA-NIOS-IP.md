@@ -1,8 +1,5 @@
 # Tutorial 3 - FPGA - IP
 
-!!! success "2020-2"
-    - Material atualizado.
-
 Nesse tutorial iremos desenvolver um periférico customizado para o processador NIOS, esse periférico será dedicado ao controle dos LEDs da placa. O periférico terá um banco de registradores interno para seu controle, e interface de "I/O mapeado em memória" para que possamos controlar-lo do NIOS (pelo código em C).
 
 ## Começando
