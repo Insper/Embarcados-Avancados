@@ -42,7 +42,7 @@ Junto com a instalação do quartus é instalado alguns outros softwares:
 
     - [Quartus Prime Standard](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/QuartusSetup-19.1.0.670-linux.run)
     - [ModelSim](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/ModelSimSetup-19.1.0.670-linux.run)
-    - [Cyclone V](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/cyclone-19.1.0.670.qdz)
+    - [Cyclone V](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/cyclonev-19.1.0.670.qdz)
 
 !!! info "Licença"
     Iremos usar uma versão do quartus que necessita licença para funcionar, eu irei mandar por email as instruções.
