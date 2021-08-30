@@ -38,8 +38,14 @@ Montagem final:
 
 ## Rubrica
 
-??? tip "Entrega - google forms"
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc3lJYnCC9-0_C7FLGhDyDKQJ1c73MlFih8AYnk1TKQOVpIEw/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+!!! info
+    Entregar no repositório criado pelo classroom:
+    
+    - https://classroom.github.com/g/NOdeF3Du
+
+    Preencher o forms a seguir:
+    
+    - https://docs.google.com/forms/d/e/1FAIpQLSeBAJLAdo1_fcsrm2OYT62Wg12mCm96gUCrq4oHbjqUM46yGA/viewform?usp=sf_link
 
 - A
     - aplica uma curva de aceleração na velocidade.
