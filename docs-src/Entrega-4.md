@@ -1,8 +1,5 @@
 #  👁 Entrega 4
 
-!!! success "2020-2"
-    - Material atualizado.
-
 O objetivo dessa entrega é automatizarmos a compilação e deploy de novos programas para o `target`. Para isso, teremos que criar um Makefile que deve ser capaz de compilar e fazer o deploy de programa. Para isso temos diversas opções, sendo alguma delas:
 
 - Transferência de arquivo via ssh: [scp](http://www.hypexr.org/linux_scp_help.php)
@@ -21,13 +18,13 @@ siga o roteiro: [Info HPS Ethernet](Embarcados-Avancados/info-HPS-ethernet/).
 > Para testar, modifique o makefile do `BlinkLed`
 
 - A 
-    - Debuga um programar no target (via gdbserver)
+    - Faz o uboot bootar via tftp: https://ece453.engr.wisc.edu/u-boot-script/
 - B
-    - Via Makefile consegue executar o binário no `target`
-        - *make run* / *make deploy*
+    - Debuga um programar no target (via gdbserver)
 - C
     - Criou um Makefile que compila o código e faz o deploy para o `target` de um programa
-        - *make deploy*
+    - Via Makefile consegue executar o binário no `target`
+        - *make run* / *make deploy*
 - D 
     - Entregou somente os tutoriais
 - I
