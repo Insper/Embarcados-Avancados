@@ -2,12 +2,10 @@
 site_name: 'Eletiva: Embarcados Avançados (SoC e Linux Embarcado)'
 
 theme:
-  features:
-    - instant
   name: 'material'
   palette:
-      primary: 'black'
-      accent: 'pink'
+    primary: 'black'
+    accent: 'pink'
   font:
     text: Roboto
     code: Roboto Mono

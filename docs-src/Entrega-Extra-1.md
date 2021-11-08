@@ -14,3 +14,4 @@ controlar os LEDs da FPGA via Linux com o seu próprio periférico?
 
 Essa entrega extra entra como uma nota a mais na média de valor A (ou seja, quem
 fez é beneficiado e quem não quer fazer, tudo bem!)
+c
