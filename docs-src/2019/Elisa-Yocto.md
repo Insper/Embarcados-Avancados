@@ -1,4 +1,4 @@
-# Elisa Malzoni - Yocto 
+# Yocto 
 
 - Aluna: Elisa Monteiro
 - Curso: Engenharia da Computação

@@ -1,4 +1,4 @@
-# 👁 Entrega Opcional 1
+# 👁 Entrega 7
 
 Agora que vimos como faz para interfacear ARM com FPGA, que tal você
 adicionar o periférico que criou na entrega 2 (o `peripheral_led`) e

@@ -1,4 +1,4 @@
-# Martim F. José - FPGA na AWS
+# FPGA na AWS
 
 - Aluno: Martim Ferreira José
 - Curso: Engenharia da Computação

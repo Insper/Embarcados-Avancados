@@ -1,4 +1,4 @@
-# Bruno Toranja - Linux Device Driver
+# Linux Device Driver
 
 - Aluno: Bruno Toranja
 - Curso: Engenharia da Computação

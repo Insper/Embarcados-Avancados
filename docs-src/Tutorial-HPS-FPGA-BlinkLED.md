@@ -1,4 +1,4 @@
-# Tutorial - HPS + FPGA - Blink LED
+# Blink FPGA LED
 
 Nesse tutorial vamos ver como interfacear o ARM com a FPGA (fabric). Nesse
 tutorial,  optei por deixar vocês seguirem o tutorial oficial da Terasic:

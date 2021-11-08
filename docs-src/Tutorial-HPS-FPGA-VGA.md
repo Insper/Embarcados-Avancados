@@ -1,4 +1,4 @@
-# Tutorial - HPS + FPGA - VGA
+# VGA
 
 Se repararem em nosso hardware verificamos que o mesmo possui uma saída de vídeo
 VGA, porém os sinais do VGA foram conectados nos pinos da FPGA! Tornando

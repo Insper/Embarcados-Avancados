@@ -3,7 +3,7 @@
 [![](https://camo.githubusercontent.com/31cbef310a2a8d91eeccb737c5d968223a7d1575/68747470733a2f2f7777772e696e737065722e6564752e62722f77702d636f6e74656e742f7468656d65732f696e737065722f646973742f696d6167652f6c6f676f2e706e67)](http://www.insper.edu.br)
 
 - **Disciplina:** Eletiva da Engenharia da Computação
-    - Versões: 2018b/ 2019b / :arrow_right: 2020
+    - Versões: 2018b/ 2019b / 2020 /:arrow_right: 2021
 - **Prof.** Rafael Corsi / rafael.corsi@insper.edu.br
 - **Repositório:** [http:/github.com/insper/Embarcados-Avancados](http:/github.com/insper/Embarcados-Avancados)
 - **Local:** Laboratório de Arquitetura de Computadores 
@@ -59,7 +59,7 @@ A disciplina é baseada em uma série de tutoriais (com entregas ao final) que c
     - [DESCHAMPS, 2012] DESCHAMPS,  J. P.;  SUTTER, G. D.;  CANTÓ E. Guide to FPGA implementation of arithmetic functions. Springer Science & Business Media; 2012, Apr 5.
     - [CHU, 2011] CHU, PONG P. Embedded SoPC design with Nios II processor and VHDL examples. John Wiley & Sons, 2011.
     
-- Complementar   
+- Complementar
 
     - [SASS, 2010] SASS, R., SCHMIDT, A.G.; Embedded Systems Design with Platform FPGAs: Principles and Practices. Elsevier, 2010.
     - [BOVET, 2005] Bovet, Daniel P., and Marco Cesati. Understanding the Linux Kernel: from I/O ports to process management. " O'Reilly Media, Inc.", 2005.
@@ -73,9 +73,11 @@ A disciplina é baseada em uma série de tutoriais (com entregas ao final) que c
 1. Criar um repositório no github
 1. Pensar um pouco sobre um tema que gostaria de se aprofundar (para o tutorial)
     - :point_right: [Dicas](Projeto-Overview)
+    - De ma olhada nos tutoriais passados: 
 1. Leitura recomendada:
     - https://www.intel.com/content/www/us/en/products/programmable/fpga/new-to-fpgas/resource-center/overview.html
     - Disponível no lab: [CHU, 2011, cap. 1], [KOOPMAN, 2010, cap. 2] 
-1. :bangbang: Nunca mexeu com FPGA? 
-     - [VHDL introdução vídeo](https://www.youtube.com/watch?v=zm-RA6BsYmc)
-     - [livro fpgas for dummie](https://www.amiq.com/consulting/misc/free_pdf_books/fpgas_for_dummies_ebook.pdf)
+
+!!! tip "Nunca mexeu com FPGA?"
+     - Vídeo [introducão VHDL](https://www.youtube.com/watch?v=zm-RA6BsYmc)
+     - Livro [fpgas for dummise](https://www.amiq.com/consulting/misc/free_pdf_books/fpgas_for_dummies_ebook.pdf)

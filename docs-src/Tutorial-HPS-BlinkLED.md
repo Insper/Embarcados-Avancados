@@ -1,4 +1,4 @@
-# Tutorial 6 - HPS - BlinkLED
+# ARM BlinkLED
 
 !!! success "2020-2"
     - Material atualizado.

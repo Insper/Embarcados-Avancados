@@ -1,4 +1,4 @@
-# Tutorial 1 - FPGA - RTL
+# RTL / VHDL
 
 Essa primeira entrega é um aquecimento de VHDL e FPGA, iremos criar um hardware dedicado na FPGA para controlar os LEDs com base nos sinais de entradas dos botões. 
 A ideia é passarmos por todo o processo de desenvolvimento de um projeto em FPGA e com VHDL.

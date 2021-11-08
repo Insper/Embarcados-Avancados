@@ -1,4 +1,4 @@
-# Tutorial 4 - HPS - Linux embarcado
+# Linux embarcado
 
 !!! success "2020-2"
     - Material atualizado.

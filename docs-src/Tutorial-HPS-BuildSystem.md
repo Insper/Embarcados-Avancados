@@ -1,4 +1,4 @@
-# Tutorial 5 - HPS - Infra
+# Configurando infra
 
 !!! success "2020-2"
     - Material atualizado.

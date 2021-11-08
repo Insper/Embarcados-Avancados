@@ -1,4 +1,4 @@
-# Tutorial - Acelerando - HLS
+# Acelerando - HLS
 
 HLS (High-Level Synthesis Compiler) é uma ferramenta de compilação que permite
 criarmos um componente (hardware/ HDL) a partir de uma linguagem de programação

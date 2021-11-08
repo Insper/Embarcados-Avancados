@@ -1,4 +1,4 @@
-# Leonardo Medeiros  - Tutorial OpenCL
+# OpenCL
 
 - Aluno: Leonardo Medeiros
 - Curso: Engenharia da Computação

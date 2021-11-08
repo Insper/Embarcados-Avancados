@@ -1,4 +1,4 @@
-# Pedro de la Penã - Jetson Nano GPU 
+# Jetson Nano GPU 
 
 - Aluno: Pedro de la Penã
 - Curso: Engenharia da Computação

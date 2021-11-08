@@ -50,40 +50,37 @@ nav:
   - 'HPS + FPGA':
       - 'Tutorial-HPS-FPGA-BlinkLED.md'
       - 'Tutorial-HPS-FPGA-kernel-char-led-driver.md'
-  - 'Acelerando':
-      - 'Tutorial-Acelerando-HLS.md'
   - 'Extras':
+      - 'Tutorial-Acelerando-HLS.md'
       - 'Tutorial-HPS-FPGA-VGA.md'
       - 'Entrega-6.md'
       - 'Entrega-Extra-1.md'
+  - 'Tutoriais Alunos':
+      - 'Projeto-Overview.md'
+      - 'Projeto-Rubrica.md'
+      - 'Template markdown': 'https://github.com/Insper/Embarcados-Avancados-Template' 
+#     - '2020/Temas.md'
+      - '2020/PS3-Linux-Tutorial/index.md'
+      - '2020/Android/index.md'
+      - '2020/LED-HW/index.md'
+      - '2020/LED-Linux/index.md'
+      - '2020/python/index.md'
+      - '2020/metropolis/index.md'
+      - '2020/Audio/index.md'
+      - '2020/cripto/index.md'
+#      - '2019/Tutoriais.md'
+      - '2019/Gabriel-TensorFlow.md'
+      - '2019/Leo-OpenCL.md'
+      - '2019/Elisa-Yocto.md'
+      - '2019/Pedro-OpenCV.md'
+      - '2019/Martim-F1.md'
+      - '2019/Toranja-DevDriver.md'
   - 'Úteis':
       - 'info-FPGA-e-Softwares.md'
       - 'info-VHDL.md'
       - 'info-SDcard.md'
       - 'info-HPS-Serial.md'
       - 'info-HPS-ethernet.md'
-  - 'Tutoriais Alunos':
-      - 'Projeto-Overview.md'
-      - 'Projeto-Rubrica.md'
-      - 'Template markdown': 'https://github.com/Insper/Embarcados-Avancados-Template' 
-      - 2020:
-          - '2020/Temas.md'
-          - '2020/PS3-Linux-Tutorial/index.md'
-          - '2020/Android/index.md'
-          - '2020/LED-HW/index.md'
-          - '2020/LED-Linux/index.md'
-          - '2020/python/index.md'
-          - '2020/metropolis/index.md'
-          - '2020/Audio/index.md'
-          - '2020/cripto/index.md'
-      - 2019:
-          - '2019/Tutoriais.md'
-          - '2019/Gabriel-TensorFlow.md'
-          - '2019/Leo-OpenCL.md'
-          - '2019/Elisa-Yocto.md'
-          - '2019/Pedro-OpenCV.md'
-          - '2019/Martim-F1.md'
-          - '2019/Toranja-DevDriver.md'
 
 # extras
 extra_javascript:

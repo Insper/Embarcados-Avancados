@@ -1,4 +1,4 @@
-# Gabriel Moreira - TensorFlow
+# TensorFlow
 
 - Aluno: Gabriel Moreira
 - Curso: Engenharia da Computação
