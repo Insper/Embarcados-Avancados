@@ -18,6 +18,25 @@ Alguns exemplos de áreas que podem ser exploradas:
 1. Sistema operacional 
     - Escalonador real time kernel linux, Android, RTOS embarcado
 
+## Anos passados
+
+De uma olhada no que os seus colegas já fizeram:
+
+- PS3 Hack
+- Android para Raspbery Pi 3
+- Periférico para controlar matriz de LED
+- Driver linux para acender LEDs
+- SoC e Python
+- SDAccel / Vittis - Algoritmo metropolis
+- Áudio na DE10
+- Criptografia em Hardware - FPGA
+- TensorFlow - Jetson Nano
+- OpenCL - FPGA
+- Yocto 
+- Jetson Nano - GPU
+- FPGA na AWS
+- Linux device driver
+
 ## Tecnologias/ Ferramentas
 
 A seguir uma lista de tecnologias que podem ser estudadas no tutorial: 

@@ -1,4 +1,4 @@
-# 👁 Entrega 5
+# 👁 Entrega 2
 
 Vocês devem criar uma sistema embarcado que possui um webserver e uma página web que permita sensoriar e controlar o hardware por uma interface simples.
 

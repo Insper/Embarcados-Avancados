@@ -1,8 +1,5 @@
 # ARM BlinkLED
 
-!!! success "2020-2"
-    - Material atualizado.
-
 Nesse tutorial iremos compilar um programa para o HPS (Arm Cortex A) que será capaz de controlar os LEDs e ler os botões da placa que estão conectados ao HPS.
 
 ![](figs/DE10-Standard-blockdiagram.jpg)
@@ -35,7 +32,7 @@ Com o uso de um sistema operacional a parte referente ao HW é responsabilidade 
 
 ### Software pisca led
 
-Iremos compilar um programa e executar no Linux Embarcado. esse programa será executado no [user space](http://www.linfo.org/kernel_space.html). Para isso iremos vamos usar a toolchain do [tutorial anterior](Tutorial-HPS-BuildSystem).
+Iremos compilar um programa e executar no Linux Embarcado, esse programa será executado no [user space](http://www.linfo.org/kernel_space.html). Para isso iremos vamos usar a toolchain do [tutorial anterior](Tutorial-HPS-BuildSystem).
 
 Iremos utilizar como base o código exemplo da Terasic disponível no repositório: [DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC/my_first_hps](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/my_first_hps). E crosscopilar esse código para o nosso HPS utilizando o Makefile da pasta.
 
@@ -140,7 +137,7 @@ Com o cartão de memória no `host` (seu computador) copie o arquivo binário: `
 Para praticar um pouco.
 
 !!! example "Tarefa"
-    - Faça o programa ler apenas duas vezes o botão, e depois disso termina a aplicação!
+    - Faça o programa ler apenas duas vezes o botão, e depois disso terminar a aplicação!
 
 ### Fluxo de desenvolvimento
 
@@ -150,4 +147,4 @@ Esse fluxo de desenvolvimento não é dos melhores né? É bom programar no `hos
 - criar uma vmw arm e compilar nela (bom para o programador, ótimo para dependências, +- fácil de debugar, rápido, difícil de configurar)
 - crosscompilar (bom para o programador, ruim para dependências, difícil de debugar, rápido)
 
-Na entrega 4 vamos aprimorar nosso sistema de compilação e testes. 
+Na entrega 1 vamos aprimorar nosso sistema de compilação e testes. 

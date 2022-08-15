@@ -1,121 +1,128 @@
-
-site_name: 'Eletiva: Embarcados Avançados (SoC e Linux Embarcado)'
+site_name: "Eletiva: SoC e Linux Embarcado"
 
 theme:
-  name: 'material'
+  name: active-handout
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - toc.integrate
+    - content.tabs.link
   palette:
-    primary: 'black'
-    accent: 'pink'
-  font:
-    text: Roboto
-    code: Roboto Mono
+    - scheme: default
+      primary: indigo
+      accent: indigo
 
-# Copyright
-copyright: 'Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br'
-
-# repo
 docs_dir: docs-src
 site_dir: docs
-
-repo_name: 'Insper/Embarcados-Avancados'
-repo_url: 'https://github.com/insper/Embarcados-Avancados'
-edit_uri: 'https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/'
-site_url: 'https://insper.github.io/Embarcados-Avancados/'
+repo_name: "Insper/Embarcados-Avancados"
+repo_url: "https://github.com/insper/Embarcados-Avancados"
+edit_uri: "https://github.com/Insper/Embarcados-Avancados/edit/master/docs-src/"
+site_url: "https://insper.github.io/Embarcados-Avancados/"
+copyright: "Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br"
 
 extra_javascript:
-  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML
   - https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.0.0/js-yaml.min.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - https://cdn.jsdelivr.net/gh/insper-education/active-handout-plugins-js@main/package/plugin-bundle.js
 
 plugins:
   - active-exercises:
       offering_id: 1
+  - search
+
 extra:
   ihandout_config:
-    counter:
-      - question
-      - tip
-      - exercise
-      - example
     report:
       url: https://devlife.insper-comp.com.br/api/offerings/1/exercises/
 
 markdown_extensions:
+  - markdown.extensions.attr_list
   - markdown.extensions.admonition
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - pymdownx.details
-  - pymdownx.tabbed
-  - pymdownx.superfences
-  - pymdownx.magiclink
-  - pymdownx.critic:
-      mode: view
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
   - pymdownx.betterem:
       smart_enable: all
   - pymdownx.caret
-  - pymdownx.mark
-  - pymdownx.tilde
-  - pymdownx.smartsymbols
+  - pymdownx.critic
+  - pymdownx.details
   - pymdownx.emoji:
       emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
   - attr_list
+  - md_in_html
 
 nav:
   - Home: index.md
-  - FPGA:
-      - 'Tutorial-FPGA-RTL.md'
-      - 'Entrega-1.md'
-      - 'Tutorial-FPGA-NIOS.md'
-      - 'Entrega-2.md'
-      - 'Tutorial-FPGA-NIOS-IP.md'
-      - 'Entrega-3.md'
   - HPS:
-      - 'Tutorial-HPS.md'
-      - 'Tutorial-HPS-Running.md'
-      - 'Tutorial-HPS-BuildSystem.md'
-      - 'Tutorial-HPS-BlinkLED.md'
-      - 'Extra: configurando rede': 'info-HPS-ethernet.md'
-      - 'Entrega-4.md'
-      - 'Tutorial-HPS-Kernel.md'
-      - 'Tutorial-HPS-Buildroot.md'
-      - 'Entrega-5.md'
-      - 'Tutorial-HPS-DeviceDriver1.md'
-      - 'Tutorial-HPS-kernel-module.md'
-      - 'Tutorial-HPS-kernel-chardriver.md'
-        #      - 'Tutorial-HPS-kernel-chardriver-led.md'
-  - 'HPS + FPGA':
-      - 'Tutorial-HPS-FPGA-BlinkLED.md'
-      - 'Tutorial-HPS-FPGA-kernel-char-led-driver.md'
-  - 'Extras':
-      - 'Tutorial-Acelerando-HLS.md'
-      - 'Tutorial-HPS-FPGA-VGA.md'
-      - 'Entrega-6.md'
-      - 'Entrega-Extra-1.md'
-  - 'Tutoriais Alunos':
-      - 'Projeto-Overview.md'
-      - 'Projeto-Rubrica.md'
-      - 'Template markdown': 'https://github.com/Insper/Embarcados-Avancados-Template' 
-#     - '2020/Temas.md'
-      - '2020/PS3-Linux-Tutorial/index.md'
-      - '2020/Android/index.md'
-      - '2020/LED-HW/index.md'
-      - '2020/LED-Linux/index.md'
-      - '2020/python/index.md'
-      - '2020/metropolis/index.md'
-      - '2020/Audio/index.md'
-      - '2020/cripto/index.md'
-#      - '2019/Tutoriais.md'
-      - '2019/Gabriel-TensorFlow.md'
-      - '2019/Leo-OpenCL.md'
-      - '2019/Elisa-Yocto.md'
-      - '2019/Pedro-OpenCV.md'
-      - '2019/Martim-F1.md'
-      - '2019/Toranja-DevDriver.md'
-  - 'Úteis':
-      - 'info-FPGA-e-Softwares.md'
-      - 'info-VHDL.md'
-      - 'info-SDcard.md'
-      - 'info-HPS-Serial.md'
-      - 'info-HPS-ethernet.md'
-
+      - "Tutorial-HPS.md"
+      - "Tutorial-HPS-Running.md"
+      - "Tutorial-HPS-BuildSystem.md"
+      - "Tutorial-HPS-BlinkLED.md"
+      - "Extra: configurando rede": "info-HPS-ethernet.md"
+      - "Entrega-4.md"
+      - "Tutorial-HPS-Kernel.md"
+      - "Tutorial-HPS-Buildroot.md"
+      - "Entrega-5.md"
+      - "Tutorial-HPS-DeviceDriver1.md"
+      - "Tutorial-HPS-kernel-module.md"
+      - "Tutorial-HPS-kernel-chardriver.md"
+  - "HPS + FPGA":
+      - "Tutorial-HPS-FPGA-BlinkLED.md"
+      - "Tutorial-HPS-FPGA-kernel-char-led-driver.md"
+      - "Tutorial-HPS-FPGA-VGA.md"
+      - "Entrega-6.md"
+  - "Acelerando":
+      - "Tutorial-Acelerando-HLS.md"
+      - "Entrega-Extra-1.md"
+  - FPGA:
+      - "Tutorial-FPGA-RTL.md"
+      - "Entrega-1.md"
+      - "Tutorial-FPGA-NIOS.md"
+      - "Entrega-2.md"
+      - "Entrega-3.md"
+      - "Tutorial-FPGA-NIOS-IP.md"
+  - "Tutoriais Alunos":
+      - "Projeto-Overview.md"
+      - "Projeto-Rubrica.md"
+      - "Template markdown": "https://github.com/Insper/Embarcados-Avancados-Template"
+      - "2020/PS3-Linux-Tutorial/index.md"
+      - "2020/Android/index.md"
+      - "2020/LED-HW/index.md"
+      - "2020/LED-Linux/index.md"
+      - "2020/python/index.md"
+      - "2020/metropolis/index.md"
+      - "2020/Audio/index.md"
+      - "2020/cripto/index.md"
+      - "2019/Gabriel-TensorFlow.md"
+      - "2019/Leo-OpenCL.md"
+      - "2019/Elisa-Yocto.md"
+      - "2019/Pedro-OpenCV.md"
+      - "2019/Martim-F1.md"
+      - "2019/Toranja-DevDriver.md"
+  - "Úteis":
+      - "info-FPGA-e-Softwares.md"
+      - "info-VHDL.md"
+      - "info-SDcard.md"
+      - "info-HPS-Serial.md"
+      - "info-HPS-ethernet.md"

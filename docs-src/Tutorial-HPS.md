@@ -1,16 +1,14 @@
 # Visão geral
 
-!!! success "2020-2"
-    - Material atualizado.
-
-A FPGA contida no kit DE10-Standard é um chip SoC que em um único dispositivo que possui duas partes: o fabric da FPGA e um Hardware Process System (HPS). HPS é o termo utilizado pela Intel-Altera para definir a parte da FPGA que é fixa e relativa ao processador ARM A9 (pode ser outro ARM, depende da família da FPGA).
+A FPGA contida no kit DE10-Standard é um chip SoC que em um único dispositivo possui dois hardwares distintos: uma FPGA e um Hardware Process System (HPS). HPS é o termo utilizado pela Intel-Altera para definir a unidade de processamento, que no caso do nosso chip é um processador ARM A9 (pode ser outro ARM, depende da família da FPGA).
  
 ![](figs/Tutorial-HPS-SoC.png)
 
 O HPS possui uma unidade de processamento com um ou dois Cores (depende do chip, no nosso caso é **dual core**) e alguns periféricos conectados em seu barramento (DMA, UART, USB, EMACS, ...). Além dos periféricos já contidos no HPS é possível conectarmos novos periféricos sintetizados na FPGA via a interface **HPS FPGA Interfaces**.
 
-!!! note ""
-    - Ler Introdução: [1 Introduction to Cyclone V Hard Processor System (HPS)](https://people.ece.cornell.edu/land/courses/ece5760/DE1_SOC/HPS_INTRO_54001.pdf)
+
+!!! exercise
+    Dar uma olhada no documento oficial da Intel: [1 Introduction to Cyclone V Hard Processor System (HPS)](https://people.ece.cornell.edu/land/courses/ece5760/DE1_SOC/HPS_INTRO_54001.pdf)
 
 ## Família de FPGAs
 
@@ -68,13 +66,13 @@ A SDRAM deve ser usada com muita cautela, pois ela será compartilhada com o Lin
 
 ## Aplicações
 
-Agora é possível unir o melhor dos dois mundos: flexibilidade e paralelismo da FPGA com o melhor dos processadores embarcados, o ARM. Daqui para frente nossos projetos, **o NIOS será substituído pelo ARM**, possibilitando maior poder de processamento e também suportando a execução de sistemas operacionais mais complexos, tal como o Linux.
+Agora é possível unir o melhor dos dois mundos: flexibilidade e paralelismo da FPGA com o melhor dos processadores embarcados: o ARM. 
 
-Vamos fazer um exercício mental e imaginar uma aplicação que irá processar uma imagem em um sistema embarcada, com o SoC podemos fazer que a imagmem seja processada pela FPGA de modo a aumentar o throughtput do sistema. Essa imagem seria lida, por exemplo por uma câmera USB conectada no HPS (ARM), como geralmente o HPS executa um Linux, temos facilidade de acesso ao driver desse dispositivo.
+Vamos fazer um exercício mental e imaginar uma aplicação que irá processar uma imagem em um sistema embarcada, com o SoC podemos fazer que a imagem seja processada pela FPGA de modo a aumentar o throughtput do sistema. Essa imagem seria lida, por exemplo, por uma câmera USB conectada no HPS (ARM), como geralmente o HPS executa um Linux, temos facilidade de acesso ao driver desse dispositivo.
 
 A imagem será então lida via o driver e alocada na memória SDRAM, o endereço da memória assim como as propriedades do processamento serão transferidas para um periférico customizado no Fabric da FPGA via a interface LT-AXI. O periférico que está em modo wait, após ser configurado, começa a ler a imagem na memória SDRAM, processar e salvar o resultado na própria memória. Ao final da conversão uma interrupção é gerada e o Linux irá tratar o dado.
 
-Enquanto o periférico processa a imagem, a aplicação pode de forma concorrente, ler uma nova imagem e já alocar em um novo endereço de memória, pois o processamento e a aquisição agora funcionam de forma simultânea.
+Enquanto o periférico processa a imagem, a aplicação pode de forma concorrente, ler uma nova imagem e já alocar em um novo endereço de memória, pois o processamento e a aquisição agora funcionam de forma simultânea. Isso é chamado de *buffer ping-pong*.
 
 ## Próximos passos
 

@@ -1,41 +1,37 @@
 # Configurando infra
 
-!!! success "2020-2"
-    - Material atualizado.
-    
 Vamos instalar o ferramental (compiladores) que será utilizado para compilar o kernel e o filesystem. Deveremos instalar o `soceds` e o `linaro-gcc` .
 
 ## Intel SOCDES
 
-!! ! warning
-    Usando o ssd fornecido? Pode pular essa parte de instalar o soceds, siga para instalar o toolchain
+Para essa etapa iremos precisar do  `Intel® SoC FPGA Embedded Development Suite Standard Edition Software Version 18.1 for Linux`, o download pode ser feito em:
 
-Você irá precisar ter o software `SOCEDS` instalado, e ele precisa ser a mesma versão do Quartus. Link para download:
-   
-- [Intel SoC FPGA Embedded Development Suite](http://fpgasoftware.intel.com/soceds/)
+- https://www.intel.com/content/www/us/en/software-kit/665456/intel-soc-fpga-embedded-development-suite-standard-edition-software-version-18-1-for-linux.html
+
+!!! info 
+    Iremos usar uma versão antiga do Quartus, a versãomais atual é a 21.1, mas iremos trabalhar com a 18.01, o motivo disso é compatibilidade com os exemplos fornecidos pelo fabricante.
+
+!!! note "Task"
+    - Fazer o download do SocEDS
+    - Instalar:
+    
+        ```
+        chmod +x SoCEDSSetup-18.1.0.625-linux.run 
+        ./SoCEDSSetup-18.1.0.625-linux.run
+        ```
+    - Testar: 
+    
+        ```
+        ~/intelFPGA/18.1/embedded/embedded_command_shell.sh 
+        ```
 
 Vamos precisar inserir no path do bash referência para uma série de softwares a serem usados, modifique seu `.bashrc` inserindo: 
 
-!!! note ""
-   Ao fazer o download do `soceds` deve-se verificar para ser a mesma versão do Quartus.
-
-```bash
+``` bash
 export ALTERAPATH=~/intelFPGA/18.1/
-
-export ALTERAPATH=/home/corsi/opt/intelFPGA/18.1
-export QUARTUS_ROOTDIR=$ALTERAPATH/quartus/
-export PATH=$PATH:${ALTERAPATH}/quartus/bin
-export PATH=$PATH:${ALTERAPATH}/modelsim_ase/linuxaloem/
-export PATH=$PATH:${ALTERAPATH}/quartus/sopc_builder/bin/
 
 export PATH=$PATH:${ALTERAPATH}/embedded/
 export PATH=$PATH:${ALTERAPATH}/embedded/host_tools/altera/preloadergen/
-
-export PATH=$PATH:${ALTERAPATH}/hls/bin/
-export LD_LIBRARY_PATH=${ALTERAPATH}/hls/host/linux64/lib/
-
-export PATH=$PATH:${ALTERAPATH}/nios2eds/
-export PATH=$PATH:${ALTERAPATH}/nios2eds/sdk2/bin/
 
 export SOCEDS_DEST_ROOT=${ALTERAPATH}/embedded
 export SOCEDS_HWLIB=${ALTERAPATH}/embedded/ip/altera/hps/altera_hps/hwlib/
@@ -47,24 +43,6 @@ export SOCEDS_HWLIB=${ALTERAPATH}/embedded/ip/altera/hps/altera_hps/hwlib/
 !!! warning "outros bashs"
     Se estiver usando outro bash (zsh/ fish) será necessário editar o arquivo de configuração referente.
     
-### Testando
-
-Para testar, digite no terminal `nios2_command_shell.sh ` (após abrir uma nova aba, ou executar `source ~/.bashrc`):
-
-``` bash
-$ nios2_command_shell.sh 
-------------------------------------------------
-Altera Nios2 Command Shell [GCC 4]
-
-Version 16.1, Build 196
-------------------------------------------------
-
-$ exit
-```
-
-!!! note
-    Isso só testa uma parte da instalação (soceds)
-
 # GCC toolchain
 
 Iremos utilizar o GCC cross compile fornecido pelo Linaro, esse mesmo GCC será utilizado para compilar o Kernel, gerar o file system e compilar os programas que executarão no Linux. 
@@ -120,14 +98,14 @@ Note que no path do gcc temos o prefixo : **gnueabihf**.
 !!! example "Pesquisa"
     Qual a diferença entre `eabi` e `hf`
 
-## Criando um atalho no bash
+### Criando um atalho no bash
 
 Vamos criar um atalho para essa pasta no bash. Edite o arquivo `~/.bashrc` para incluir a pasta `~/work/gcc-linaro.../bin/` na variável do sistema: **GCC_Linaro**.
 
-```bash
-# GCC Linaro on path
-export GCC_Linaro=/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin
-export PATH=$PATH:${GCC_Linaro}
+```diff
++ # GCC Linaro on path
++ export GCC_Linaro=/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin
++ export PATH=$PATH:${GCC_Linaro}
 ```
 
 !!! note
@@ -151,40 +129,24 @@ E ele também deve estar no path, como `arm-linux-*`:
     É possível instalar o `arm-linux` via `apt install`, mas não vamos fazer isso pois queremos ter controle da versão do compilador que estamos utilizando.
 
 !!! note "bashrc ao final"
-     Eu não modifico meu `bashrc`, o que eu faço é criar um arquivo com o nome: `Quartus18.sh` 
-     e coloco toda essa configuração nele, e quando eu quero trabalhar na disciplina eu só
-     preciso executar `source ~/Quartus18.sh` e tenho meu ambiente configurado. Com isso, eu tenho
-     a vantagem de ter 'várias' versões instaladas e selecionar a que quero trabalhar. 
+     Eu não modifico meu `bashrc`, o que eu faço é usar o programa [direnv](https://direnv.net/) que possibilita eu controlar as minhas configurações de conforme o projeto que eu estou trabalhado, e isso inclui as variáveis de ambiente e ambientes virtuais do python.
      
-     Isso também funciona pois eu tenho ambientes diferentes, com base nas disciplinas: Elementos tem um
-     e Avançados outro.
+     Para usar esse programa, primeiro você deve instalar via gerenciador de pacotes (`apt install direnv`) e depois criar um arquivo `.direnv` na raiz da pasta que você pretende trabalhar (entrega de projetos, labs, ...) com a configuracão do ambiente:
      
-     Meu `Quartus18.sh` é o seguinte:
+     ```
+     echo "INTEL FPGA QUARTUS 18.1"
+  
+     export ARCH=arm
+     export ALTERAPATH=/home/corsi/opt/intelFPGA/18.1
+     export PATH=$PATH:${ALTERAPATH}/embedded/
+     export PATH=$PATH:${ALTERAPATH}/embedded/host_tools/altera/preloadergen/
+
      
-    ```
-    echo "INTEL FPGA QUARTUS 18.1"
+     export SOCEDS_DEST_ROOT=${ALTERAPATH}/embedded
+     export SOCEDS_HWLIB=${ALTERAPATH}/embedded/ip/altera/hps/altera_hps/hwlib/
 
-    export MGLS_LICENSE_FILE=/home/corsi/opt/intelFPGA/1-MBTRJ3_License.dat
-    export LM_LICENSE_FILE=/home/corsi/opt/intelFPGA/1-MBTRJ3_License.dat
-
-    export ALTERAPATH=/home/corsi/opt/intelFPGA/18.1
-    export QUARTUS_ROOTDIR=$ALTERAPATH/quartus/
-    export PATH=$PATH:${ALTERAPATH}/quartus/bin
-    export PATH=$PATH:${ALTERAPATH}/modelsim_ase/linuxaloem/
-    export PATH=$PATH:${ALTERAPATH}/quartus/sopc_builder/bin/
-
-    export PATH=$PATH:${ALTERAPATH}/embedded/
-    export PATH=$PATH:${ALTERAPATH}/embedded/host_tools/altera/preloadergen/
-
-    export PATH=$PATH:${ALTERAPATH}/hls/bin/
-    export LD_LIBRARY_PATH=${ALTERAPATH}/hls/host/linux64/lib/
-
-    export PATH=$PATH:${ALTERAPATH}/nios2eds/
-    export PATH=$PATH:${ALTERAPATH}/nios2eds/sdk2/bin/
-
-    export SOCEDS_DEST_ROOT=${ALTERAPATH}/embedded
-    export SOCEDS_HWLIB=${ALTERAPATH}/embedded/ip/altera/hps/altera_hps/hwlib/
-
-    export GCC_Linaro=/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin
-    export PATH=$PATH:${GCC_Linaro}
-    ```
+     export GCC_Linaro=/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin
+     export PATH=$PATH:${GCC_Linaro}
+     ```
+     
+     Ao entrar no repositório a configuração é automática, uma grande vantagem disso é que programas como VSCODE, EMACS reconhecem o .direnv e fazem uso da configuração automaticamente.

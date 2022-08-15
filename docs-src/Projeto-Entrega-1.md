@@ -1,8 +1,5 @@
 # Entregas
 
-!!! success "2020-2"
-    - Material atualizado.
-
 ## 1 
 
 | Data |

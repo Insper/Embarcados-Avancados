@@ -1,8 +1,5 @@
 # Linux embarcado
 
-!!! success "2020-2"
-    - Material atualizado.
-
 !!! danger
      Nesse tutorial mexemos com gravação de disco, se errar o dispositivo pode corromper seus arquivos!!!
      
@@ -21,7 +18,7 @@ Para seguir esse tutorial é necessário:
 
 - **Hardware:** DE10-Standard e SDCard
 - **Softwares:** Quartus 18.01
-- **Entrega no git**: pasta`Lab4_HPS_Infra`
+- **Entrega no git**: pasta`Lab1_HPS_Infra`
 
 ## Imagem padrão (sdcard) 
 
