@@ -60,14 +60,15 @@ Iremos utilizar o GCC cross compile fornecido pelo Linaro, esse mesmo GCC será 
     - `hf`: usa multiplicação de ponto flutuante de hardware
     
 
-Do site de [binários do Linaro](https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-linux-gnueabihf/) abaixe a versão `gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz` e extraía para alguma pasta no seu Linux.
+Do site de [binários do Linaro](https://releases.linaro.org/components/toolchain/binaries/7.4-2019.02/arm-linux-gnueabihf/)
+
+abaixe a versão `gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz` e extraía para alguma pasta no seu Linux.
 
 !!! note "Quer baixar via terminal?"
      Meus projetos ficam todos dentro da pasta: `/home/corsi/work/`, por isso eu extraí para lá. Você pode escolher outro local.
      
     ``` bash
     $ cd ~/work
-    $ wget https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-linux-gnueabihf/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz
     $ tar xvf gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz
     ```
 
