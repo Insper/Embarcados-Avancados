@@ -12,12 +12,16 @@ siga o roteiro: [Info HPS Ethernet](Embarcados-Avancados/info-HPS-ethernet/).
 
 ## Rubrica:
 
-??? tip "Entrega - google forms"
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScvVsml2iFkIOfIB3gskadaUad-5tnm6a7LGieXmocNEswqTw/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+!!! info
+    Você deve fazer as entregas pelo repositório do github criado no classroom:
+    
+    - https://classroom.github.com/a/fGUME066
+    
+    Crie uma pasta chamada: `1-makefile` e faça a entrega por ela
 
 > Para testar, modifique o makefile do `BlinkLed`
 
-- A 
+- A (novo) 
     - Faz o uboot bootar via tftp: https://ece453.engr.wisc.edu/u-boot-script/
 - B
     - Debuga um programar no target (via gdbserver)
@@ -25,6 +29,7 @@ siga o roteiro: [Info HPS Ethernet](Embarcados-Avancados/info-HPS-ethernet/).
     - Criou um Makefile que compila o código e faz o deploy para o `target` de um programa
     - Via Makefile consegue executar o binário no `target`
         - *make run* / *make deploy*
+    - Coloca um `README.md` na pasta que explica como usa e o que faz.
 - D 
     - Entregou somente os tutoriais
 - I
