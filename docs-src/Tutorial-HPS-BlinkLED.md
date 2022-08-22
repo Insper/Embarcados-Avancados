@@ -128,9 +128,9 @@ Com o cartão de memória no `host` (seu computador) copie o arquivo binário: `
     > A função sync é blocante, ficará travada enquanto o linux faz o flush dos dados.
 
 !!! example "Tarefas"
-    1. coloque o SDCARD de volta na fpga 
-    1. acesse via terminal e execute o programa (`/home/root/hps_gpio`)
-       - os leds da placa devem piscar.
+    1. Coloque o SDCARD de volta na fpga.
+    1. Acesse via terminal e execute o programa (`/home/root/hps_gpio`) com o comando `./hps_gpio`.
+    1. O `HPS User LED` da Intel FPGA deverá piscar duas vezes inicialmente, após isto ele acenderá conforme o usuário clicar no botão `HPS User Button`.
        
 ### Praticando
 
