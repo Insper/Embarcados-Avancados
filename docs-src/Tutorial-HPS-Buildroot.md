@@ -110,7 +110,6 @@ Vamos indicar agora para o buildroot qual toolchain que ele deve utilizar e suas
     - Toolchain kernel headers series: **4.10.x**
     - External toolchain C library: **glibc/eglibc**
     - **Ativar**: Toolchain has SSP support
-    - **Ativar**: Toolchain has SSP support
     - **Ativar**: Toolchain has RCP support
     - **Ativar**: Toolchain has C++ support 
  
