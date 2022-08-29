@@ -7,6 +7,10 @@ A página deve permitir:
 1. Controlar o LED da placa
 1. Fazer a leitura do botão da placa
 
+Dica: Vocês vai precisar ter um servidor (por exemplo em python) que vai precisar comunicar com um software em C (para controle dos pinos), uma sugesão é a de utilizar um socket para a comunicação entre os dois programas. Aqui tem um exemplo de como fazer isso:
+
+- https://github.com/Insper/Embarcados-Avancados/tree/master/Entrega-5
+
 ## Rubrica:
 
 ### A
