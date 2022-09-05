@@ -83,6 +83,7 @@ nav:
       - "Entrega-4.md"
       - "Tutorial-HPS-Kernel.md"
       - "Tutorial-HPS-Buildroot.md"
+      - "info-HPS-buildroot-scripts.md"
       - "Entrega-5.md"
       - "Tutorial-HPS-DeviceDriver1.md"
       - "Tutorial-HPS-kernel-module.md"
