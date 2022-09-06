@@ -58,8 +58,7 @@ Note que revisões ímpares são para Karnel em estágio de desenvolvimento, e n
 Vamos criar um branch da versão v4.4, para  isso execute o comando a seguir:
 
 ``` bash
-$ git checkout v4.4
-$ git checkout -b 4.4-SoC
+$ git checkout -b 4.4-SoC v4.4
 ```
 
 ## Configurando o kernel 
