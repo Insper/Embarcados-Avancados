@@ -197,6 +197,21 @@ Para compilarmos o kernel :
 make ARCH=arm LOCALVERSION= zImage -j 4
 ```
 
+!!! warning
+    Se você obter o erro:
+    
+    `"/usr/bin/ld: scripts/dtc/dtc-parser.tab.o:(.bss+0x10): multiple definition of 'yylloc'; scripts/dtc/dtc-lexer.lex.o:(.bss+0x0): first defined here".` 
+    
+    É porque existe uma incompatibilidade da versão que estamos compilando 4.5 com o GCC (a partir da versão 9). Existem duas soluções:
+    
+    1. Usar o gcc9: https://www.soughttech.com/front/article/17085/viewArticle
+    2. Aplicar um patch no kernel do linux que remove a múltipla declaracão da variável `yylloc`, na raiz do kernel:
+    
+    ``` bash
+    $ wget https://github.com/Tomoms/android_kernel_oppo_msm8974/commit/11647f99b4de6bc460e106e876f72fc7af3e54a6.patch
+    $ git am 11647f99b4de6bc460e106e876f72fc7af3e54a6.patch
+    ```
+
 !!! note
     -j4 executa a compilação em 4 threads, você pode ajustar esse valor para adequar ao seu processador.
 
