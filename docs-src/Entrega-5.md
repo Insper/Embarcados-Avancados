@@ -15,9 +15,11 @@ Dica: Vocês vai precisar ter um servidor (por exemplo em python) que vai precis
 
 ### A
 
-- Leitura e exibição da IMU da placa (dica: usar código exemplo ([hps_gsensor](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/hps_gsensor)))
+Alguma das opções a seguir:
 
+- Leitura e exibição da IMU da placa (dica: usar código exemplo ([hps_gsensor](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/hps_gsensor)))
 - Escrever no LCD da placa (dica: usar código exemplo [hps_lcd](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/hps_lcd))
+- Ou outra ideia legal (validar com o professor)
 
 ### B
 
