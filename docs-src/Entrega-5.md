@@ -28,5 +28,5 @@ Dica: Vocês vai precisar ter um servidor (por exemplo em python) que vai precis
 ### C
 
 - webserver que permite:
-    - controlar o botão do LED da placa
+    - controlar via botão (web) o LED da placa
     - leitura da chave da placa (status)
