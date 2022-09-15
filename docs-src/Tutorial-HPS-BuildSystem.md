@@ -27,15 +27,18 @@ Para essa etapa iremos precisar do  `Intel® SoC FPGA Embedded Development Suite
 
 !!! warning "DS-5 install not detected..."     
     Caso o DS-5 não ter sido detectado, você deve seguir o seguinte passo:
+    
     - Instale o DS-5 manualmente:
-    ```
+    
+    ```bash
     cd ~/intelFPGA/18.1/embedded/ds-5_installer/
     ./install.sh
     ```
-    -Aceite os termos e também o item sobre a verificacão dos requerimentos.
-    -Quando for definir o local de instalação você deverá selecionar `~/intelFPGA/18.1/embedded/ds-5/`
+    
+    - Aceite os termos e também o item sobre a verificacão dos requerimentos.
+    - Quando for definir o local de instalação você deverá selecionar `~/intelFPGA/18.1/embedded/ds-5/`
     Assim ele criará a pasta e instalará na mesma.
-    -Prossiga até o final da instalação.
+    - Prossiga até o final da instalação.
 
     Teste novamente:
     ```
