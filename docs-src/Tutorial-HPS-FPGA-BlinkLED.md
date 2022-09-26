@@ -1,17 +1,26 @@
 # Blink FPGA LED
 
-Nesse tutorial vamos ver como interfacear o ARM com a FPGA (fabric). Nesse
-tutorial,  optei por deixar vocês seguirem o tutorial oficial da Terasic:
-`Examples for using both HPS SoC and FGPA` [capítulo 7], que se encontra 
-no manual do usuário, no CD do kit.
+!!! info
+    1. Este tutorial precisa do software Quartus instalado (versão 18.1)
+    1. Vocês vão precisar usar o cabo USB branco para programar a FPGA (type-B USB)!
+
+Nesse tutorial vamos ver como interfacear o ARM com a FPGA (fabric). Eu optei por deixar vocês seguirem o tutorial oficial da Terasic **Examples for using both HPS SoC and FGPA** [capítulo 7], que se encontra no manual do usuário, no CD do kit. Por enquanto não vamos criar nenhum hardware para a FPGA, apenas o que já foi fornecido de exemplo base pela fabricante da placa.
 
 !!! note 
     Retomar a essa página quando acabar o tutorial da Terasic, ele não cobre tudo.
 
-- https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual
+!!! note "Tarefa"
+    Seguir o tutorial no cap 7:
 
+    - https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual
+    
+    Que faz uso dos exemplos:
+    
+    - [DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC_FPGA/DE10_Standard_GHRD/](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC_FPGA/DE10_Standard_GHRD)
+    - [DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC_FPGA/HPS_FPGA_LED/](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC_FPGA/HPS_FPGA_LED)
+    
 !!! example "Execute"
-    Copie o binário compilado no tutorial `HPS_FPGA_LED` para o SDCard
+    Lembrem de copiar o binário compilado no tutorial `HPS_FPGA_LED` para o SDCard
 
 ## Entendendo o HW
 
@@ -20,6 +29,7 @@ perguntas:
 
 1. Quais são as interfaces ente o ARM e a FPGA? (são 4 no total)
 1. Qual a diferença entre elas?
+1. O que é Platform Designe (PD)?
 1. Como o HPS aparece no Platform Designer (PD)?
     - Você abriu as configurações do HPS no PD? O que pode ser configurado?
 1. Como essa interface é utilizada no Platform Designer?
@@ -27,10 +37,10 @@ perguntas:
 
 ## Parte 2
 
-Esse tutorial não é completo, ele pula uma coisa muito importante:
+O tutorial da Tersaic não é completo, ele pula algumas etapas muito importante:
 
 1. Como programar a FPGA automaticamente para quando o Linux inicializar, 
-o hardware já estar programando  para poder executar o programa `HPS_FPGA_LED`.
+o hardware já estar programando? E poder executar o programa `HPS_FPGA_LED`.
 
 2. Como o Kernel do linux sabe em qual hardware ele está sendo executado?
    (Possui vídeo? Ethernet? ...)
@@ -42,7 +52,7 @@ Kernel do Linux.  No nosso caso, o u-boot foi pré configurado para ler o arquiv
 !!! note  "Explicação do processo de boot - até 1:50 minutos"
     <iframe width="560" height="315" src="https://www.youtube.com/embed/vS7pvefsbRM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-O u-boot antes de inicializar o kernel do Linux, busca esse arquivo na partição do SDCARD, o extraí e programa ["magicamente"](https://github.com/u-boot/u-boot/blob/94905e1db8d8d42c4f39f14dbee2f9788390db5e/drivers/fpga/socfpga.c) a FPGA. Nessa mesma partição temos mais dois arquivos: `u-boot.scr` e `socfpga.dtb`. O primeiro é um script de inicialização do boot na qual o u-boot lê para saber quais passos ele deve executar (se precisa carregar a fpga, onde está o kernel, ..., são os passos de inicialização), já o `socfpga.dtb` é o **device tree do Linux**, o dtb é um binário, que foi criado a partir de outro arquivo, o `.dts`, e ele contém informações sobre o hardware que é passado para o kernel no momento de inicialização.
+O u-boot antes de inicializar o kernel do Linux, busca esse arquivo na partição do SDCARD, o extraí e programa ["magicamente"](https://github.com/u-boot/u-boot/blob/94905e1db8d8d42c4f39f14dbee2f9788390db5e/drivers/fpga/socfpga.c) a FPGA. Nessa mesma partição temos mais dois arquivos: `u-boot.scr` e `socfpga.dtb`. O primeiro é um script de inicialização do boot na qual o u-boot lê para saber quais passos ele deve executar (se precisa carregar a fpga, onde está o kernel, ..., são os passos de inicialização), já o `socfpga.dtb` é o **device tree do Linux**, o dtb é um binário, que foi criado a partir de outro arquivo, o `.dts` que contém informações sobre o hardware na qual o kernel do Linux irá executar.
 
 !!! note "Device Tree for Dummies! - Thomas Petazzoni, Free Electrons"
     <iframe width="560" height="315" src="https://www.youtube.com/embed/m_NyYEBxfn8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -54,7 +64,7 @@ com algumas modificações.  Para gerar o arquivo `.rbf`  a partir do `.sof`
 basta executarmos na pasta `output_files`:
 
 !!! note
-    Você deve executar esse comando na pasta `output_files` do seu projeto Quartus!
+    Você deve executar esse comando na pasta `output_files` do projeto Quartus!
 
 ```bash
 $ cd output_files
@@ -94,12 +104,12 @@ Será necessário seguir os passos a seguir:
 
 ### Gerando o `dts` 
 
-!!! note ""
-    Eu consegui esse comando via trocado com engenheiros da Terasic, os exemplos
-    que encontrava nos tutorias da internet não funcionavam.
+!!! tip
+    Eu consegui esse comando trocado emails com engenheiros da Terasic, os exemplos que encontrava nos tutorias da internet não funcionavam. Sempre que ficarem presos em alguma coisa, tentem contactar os reponsáveis pelo projeto.
 
 !!! note
-    Para funcionar é necessário realizar o comando via o shell do oembedded
+    1. Para funcionar é necessário realizar o comando via o shell do embedded
+    1. Você deve executar esse comando na pasta raiz do seu projeto Quartus!
 
 Execute os seguintes comandos:
 
@@ -109,8 +119,6 @@ $ embedded_command_shell.sh
 $ sopc2dts --input soc_system.sopcinfo --output soc_system.dts --type dts --board soc_system_board_info.xml --board hps_common_board_info.xml --bridge-removal all --clocks
 ```
 
-!!! note
-    Você deve executar esse comando na pasta raiz do seu projeto Quartus!
 
 Agora com o `.dts` gerado, vamos dar uma olhada em seu conteúdo e como o
 interpretar. O `dts` possui a anatomia a seguir: 
@@ -242,4 +250,3 @@ Agora plugue o SDcard no kit de desenvolvimento, e após inicialização do kern
 execute o programa `blink led` e veja os LEDs da FPGA piscarem!
 
 Interessante né? Agora vamos fazer algo mais útil com isso..
-

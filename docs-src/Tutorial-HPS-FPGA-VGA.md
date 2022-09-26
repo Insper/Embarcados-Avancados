@@ -103,10 +103,10 @@ alocado na memória DDR3, conectada ao ARM). Os dados da DDR3 são transferidos
 para  o `alt_vip_vfr_vga` via DMA pelo ARM/Linux, inicializado pelo device
 driver carregado no Linux!
 
-### alt_vip_itc
+#### alt_vip_itc
 
 É um periférico de vídeo que faz a conversão do `streaming` de pixels para a
-saída de vídeo em questão (VGA). O VGA é um formato de saída de vídeo DIGITA que
+saída de vídeo em questão (VGA). O VGA é um formato de saída de vídeo DIGITAL que
 possui 5 sinais: HSYNC/ VSYNC/ R/G/B. 
 
 - HSYNC: indica o fim da linha
@@ -139,7 +139,7 @@ possamos utilizar essa saída de vídeo recém criada. Porém o driver do IP
 
 Mas como o linux sabe que existe uma saída de vídeo? No nosso caso será via o
 *device tree* (.dtb) que é passado pelo u-boot na inicialização do kernel, se
-repararmos no novo `.dts` gerado com o hardware, existe um novo componente
+repararmos no novo `.dts` gerado com o hardware que possui a saída de vídeo, existe um novo componente
 chamado de `alt_vip_vfr_vga`, que é compatível com o driver `vip-frame-reader-9.1`:
 
 ```dts
@@ -156,7 +156,14 @@ alt_vip_vfr_vga: vip@0x100031000 {
 }; //end vip@0x100031000 (alt_vip_vfr_vga)
 ```
 
-### driver
+### Kernel
+
+!!! info
+    Nesta etapa iremos adicionar um driver de vídeo no nosso linux, o driver não vai ser carregado como módulo dinâmico, mas inserido no kernel do Linux quando compilado. Para isso vocês vão precisar:
+    
+    1. adicionar um driver ao código fonte do Linux
+    1. indicar ao kernel a existência deste driver, e o ativar.
+    1. recompilar o kernel.
 
 O driver `vip-frame-reader-9.1` não é oficial do linux, vamos ter que pegar uma
 implementação realizada pelo o pessoal da Altera e utilizar. Os drivers no
@@ -190,12 +197,16 @@ CONFIG_LOGO_LINUX_VGA16=y
 CONFIG_LOGO_LINUX_CLUT224=y
 ```
 
+### Testando
+
+Agora conecte um monitor na nossa placa e ligue o sistema, no monitor deve aparecer o log do kernel! Note que na inicialização aparecem dois pinguins. O número de pinguins indicam a quantidade de COREs do sistema.
+
 !!! note
     É possível editar o pinguim e fazer por exemplo, aparecer a carinha de
     vocês! Os arquivos `ppm` ficam na pasta `/drivers/video/logo/`, esses são
     então compilados na compilação do kernel.
 
-Quer fazer umas coisas legais com o FB? Tenta o seguinte:
+Quer fazer umas coisas legais com o FB? Tente o seguinte:
 
 - Exibir imagem randômica no FB:
 
@@ -204,6 +215,8 @@ sudo cat /dev/urandom > /dev/fb0
 ```
 
 - ref: http://seenaburns.com/2018/04/04/writing-to-the-framebuffer/
+
+Agora vamos fazer alguma coisa mais útil com a nossa saída de vídeo, para isso será necessário modificarmos o buildroot incluindo programas gráficos.
 
 ## Buildroot
 
@@ -236,5 +249,5 @@ eu encontrei esse programa: `fbv`, que por sorte está no `buildroot`.
     1. Adicione o programa `fbv` ao buildroot
     1. Compile o novo fs
     1. Grave no SDCard
-    1. Grave uma imagem no SDCard
-    1. No target, exiba a imagem usando o `fbv`
+    1. Grave uma imagem (.png) no SDCard
+    1. No target, exiba a imagem no HDMI usando o `fbv`

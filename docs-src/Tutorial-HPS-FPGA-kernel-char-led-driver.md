@@ -1,11 +1,4 @@
-# Char LED device driver
-
-Agora iremos misturar o tutorial do char-device-driver com o tutorial do `Tutorial - HPS + FPGA - Blink LED`, onde iremos desenvolver um driver no linux capaz de controlar os LEDs da FPGA.
-
-!!! info
-    Para seguir nesse tutorial você deve ter feito o do ==HPS + FPGA - Blik LED== e ter o SDCARD configurado com a imagem da FPGA que possui o PD com os PIO que controla os LEDs.
-    
-## Extraindo do PD 
+# Entrega 6: Dica driver
 
 Para controlarmos os LEDs da FPGA é necessário que saibamos os endereços dos periféricos no barramento do platform designer (AVALON), para não termos que ficar dependentes de números mágicos no nosso driver, iremos usar uma ferramenta do PD que gera um arquivo `.h` com as informações necessárias para podermos controlar os periféricos.
 
@@ -117,32 +110,3 @@ static int *p_led = NULL;
 
 Com isso, podemos agora usar a função `iowrite32` e escrever no periférico PIO do LED, iremos fazer essa escrita dentro da função 
 `dev_write`, com o objetivo de escrevermos nos LEDs os valores passados pelo comando de write.
-
-A função deve ficar como:
-
-``` c
-static ssize_t dev_write(struct file *filep, const char *buffer, size_t len, loff_t *offset){
-   copy_from_user(message, buffer, len);
-   size_of_message = len;                 // store the length of the stored message
-   printk(KERN_INFO "EBBChar: Received %zu characters from the user\n", len);
-   
-   // escreve no hardware!
-   iowrite32(message[0], p_led);  // corsi: write to LED
-   return len;
-}
-```
-
-Agora, toda vez que um programa no userspace escrever nesse driver, o mesmo irá pegar o primeiro byte e transferir para o PIO na FPGA.
-
-## Testando
-
-Para testa:
-
-1. Compile o módulo e o programa de teste
-1. Passe para o SoC
-1. Carregue o módulo e teste.
-
-
-
-
-
