@@ -3,7 +3,7 @@
 Steps to use:
 
 1. Copy the `altvipfb.c` to `drivers/video/fbdev/`
-2. Modify fbdev Makefile adding the `altvipfb.o`
+2. Modify fbdev `drivers/video/fbdev/Makefile` adding the `altvipfb.o`
 
 ```diff
 # Hardware specific drivers go first
@@ -26,13 +26,13 @@ comment "Frame buffer hardware drivers"
 +   This driver supports the Altera Video and Image Processing(VIP) Frame Reader
 ```
 
-4. Add the FB_ALTERA_VIP to be include in the kernel (edite the `.config`):
+4. Add the FB_ALTERA_VIP to be include in the kernel (edite the `.config`) or enable by `menuconfig`:
 
 ```diff
 + CONFIG_FB_ALTERA_VIP=y
 ```
 
-And Enable the .config enabling:
+And enable framebuffer in .config:
 
 ```
 #
@@ -70,8 +70,3 @@ export ARCH=arm
 export CROSS_COMPILE=arm-linux-gnueabihf-
 make zImage -j4
 ```
-
-
-
-
-
