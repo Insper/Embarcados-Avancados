@@ -1,17 +1,7 @@
-site_name: "Eletiva: SoC e Linux Embarcado"
+site_name: "SoC and Embedded Linux"
 
 theme:
-  name: active-handout
-  features:
-    - navigation.instant
-    - navigation.tabs
-    - navigation.tabs.sticky
-    - toc.integrate
-    - content.tabs.link
-  palette:
-    - scheme: default
-      primary: indigo
-      accent: indigo
+  name: active-handout-theme
 
 docs_dir: docs-src
 site_dir: docs
@@ -22,19 +12,14 @@ site_url: "https://insper.github.io/Embarcados-Avancados/"
 copyright: "Copyright &copy; 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br"
 
 extra_javascript:
-  - https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.0.0/js-yaml.min.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
-  - active-exercises:
-      offering_id: 1
-  - search
-
-extra:
-  ihandout_config:
-    report:
-      url: https://devlife.insper-comp.com.br/api/offerings/1/exercises/
+  - active-handout:
+      telemetry: true
+      backend_url: http://localhost:8080/api/
+      course_slug: Embedded-Linux-SoC
+      plugin_exercise_counter: false
 
 markdown_extensions:
   - markdown.extensions.attr_list
