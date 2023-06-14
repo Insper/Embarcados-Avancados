@@ -1,20 +1,17 @@
-# Kernel module
+# Kernel Module
 
-Nesse tutorial iremos trabalhar com o básico do desenvolvimento de módulos para o kernel do linux.
+In this tutorial, we will work with the basics of developing modules for the Linux kernel. We will develop a kernel driver for our computer, since its easy and fast to develop and test. 
 
-## Simple module
+## Simple Module
 
-!!! tip
-    Antes de começar instale:
+!!! exercise
+    Before starting, install:
     
     ```
     apt-get install build-essential linux-headers-`uname -r`
     ```
 
-!!! note
-    Trabalhe dentro de uma pasta chamada `simple_module`.
-
-Crie um arquivo `simple.c` e inicialize com o código a seguir:
+We will create a very simple driver that print "HELLO, WORLD" when initialized and "GOODBYE, WORLD" when removed from the kernel. The fallowing `.c` code does this: 
 
 ```c
 // simple.c
@@ -40,9 +37,12 @@ module_init(simple_init);
 module_exit(simple_exit);
 ```
 
-Pronto! Este é um módulo que pode ser lincado no kernel do Linux em tempo de execução e altera o seu funcionamento (na verdade não faz nada). Vamos entender algumas coisas:
+!!! exercise
+    Create the file `simple_module/simple.c` with the previous content.
 
-- Todo módulo deve ter uma função de inicialização e saída, essas funções podem ter qualquer nome, mas devem ser informadas ao kernel pelas macros `module_init()` e `module_exit()`.
+There you have it! This is a module that can be linked into the Linux kernel at runtime and alters its operation (actually does nothing). Let's understand a few things:
+
+- Every module should have an initialization and exit function, these functions can have any name, but must be informed to the kernel by the `module_init()` and `module_exit()` macros.
 
 !!! info "kernel doc"
     `__initcall()/module_init() include/linux/init.h`
@@ -55,14 +55,14 @@ Pronto! Este é um módulo que pode ser lincado no kernel do Linux em tempo de e
 
     > ref: https://www.kernel.org/doc/htmldocs/kernel-hacking/routines-init-again.html
 
-- `printk`: É uma das funções mais conhecidas no kernel do Linux, usada para criar logs e rastrear bugs. A saída desse print não é no terminal como o printf, mas sim no `demesg`.
+- `printk`: It is one of the most well-known functions in the Linux kernel, used to create logs and track bugs. The output of this print is not on the terminal like printf, but in `dmesg`.
 
 !!! info "kernel doc"
-    Para mais informações acesse: 
+    For more information, visit: 
     
     - https://www.kernel.org/doc/html/latest/core-api/printk-basics.html
 
-Agora precisamos compilar esse módulo para um `.ko`, para isso crie um arquivo `Makefile`:
+Now we need to compile this module into a `.ko`, to do this we will use this `Makefile`:
 
 ```make
 // Makefile
@@ -75,33 +75,36 @@ clean:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
 ```
 
-### compilando e testando
+!!! exercise
+    Create a `Makefile` with the previous content.
 
-Agora você pode compilar o módulo com o comando `make`, uma vez feito isso o arquivo `simple.ko` deve ter sido gerado na pasta do projeto. Esse arquivo é o módulo compilado e que iremos linkar no kernel do linux usando o comando:
+### Compiling and Testing
 
-```bash
-$ sudo insmod simple.ko
-```
+Now you can compile the module with the `make` command, once done, the `simple.ko` file should have been generated in the project folder. This file is the compiled module and we will link into the Linux kernel with `insmd`.
 
-Isso fará com que o módulo faça parte do kernel, para verificarmos se funcionou podemos listar os módulos em execução com o comando `lsmod`:
+!!! exercise 
+    1. Compile with: `make`
+    2. Insert in kernel: `sudo insmod simple.ko`
+    
+This will make the module part of the kernel, to verify if it worked we can list the running modules with the `lsmod` command:
 
 ```bash
 $ lsmod | grep simple
 ```
 
-Para termos acesso ao log (mensagem de HELLO), basta acessarmos o `dmesg`:
+To access the log (HELLO message), just access `dmesg`:
 
 ```bash
 $ dmesg | tail
 ```
 
-Para remover o módulo usamos o comando `rmmod`:
+To remove the module we use the `rmmod` command:
 
 ```bash
 $ sudo rmmod simple
 ```
 
-Então devemos ver a mensagem de Goodbye no `demesg`:
+Then we should see the Goodbye message in `dmesg`:
 
 ```bash
 $ dmesg | tail

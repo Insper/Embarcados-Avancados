@@ -1,252 +1,248 @@
 # Buildroot
 
-!!! note "Buildroot wikipidia"
-    Buildroot is a set of Makefiles and patches that simplifies and automates the process of building a complete and bootable Linux environment for an embedded system, while using cross-compilation to allow building for multiple target platforms on a single Linux-based development system. Buildroot can automatically build the required cross-compilation toolchain, create a root file system, compile a Linux kernel image, and generate a boot loader for the targeted embedded system, or it can perform any independent combination of these steps. For example, an already installed cross-compilation toolchain can be used independently, while Buildroot only creates the root file system
+We will be using [buildroot](https://buildroot.org/) to generate the filesystem (`/bin`, `/etc`, ...) for our embedded system. In buildroot, we have the option to configure which software we want on the device. For example, if we want to access the HPS via ssh, we will have to add an ssh server in buildroot to be compiled and added to the filesystem and executed at boot.
+
+!!! note "Buildroot Wikipedia"
+    Buildroot is a set of Makefiles and patches that simplify and automate the process of building a complete and bootable Linux environment for an embedded system, using cross-compilation to allow building for multiple target platforms on a single Linux-based development system. Buildroot can automatically build the required cross-compilation toolchain, create a root file system, compile a Linux kernel image, and generate a boot loader for the targeted embedded system, or perform any independent combination of these steps. For example, an already installed cross-compilation toolchain can be used independently, while Buildroot only creates the root file system.
 
     - ref: https://en.wikipedia.org/wiki/Buildroot
     
-<iframe width="560" height="315" src="https://www.youtube.com/embed/0LJHx09RF80" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-Iremos utilizar o [buildroot](https://buildroot.org/) para gerar o filesystem (`/bin`, `/etc`, ...) do nosso sistema embarcado. No buildroot teremos a opção de configurar quais softwares queremos no dispositivo. Por exemplo, se desejarmos acessar o HPS via ssh, teremos que no buildroot adicionar um ssh server para ser compilado e adicionado ao filesystem e executado no boot.
-
-O buildroot é uma alternativa a outro projeto bem conhecido: Yocto. O vídeo a seguir são dois desenvolvedores, um de cada projeto, fazendo a comparação entre as duas ferramentas:
+    !!! video
+        ![](https://www.youtube.com/embed/0LJHx09RF80)
+        
+Buildroot is an alternative to another well-known project: Yocto. The following video features two developers, one from each project, comparing the two tools:
 
 !!! note
-    O Yocto está se consolidando como ferramenta padrão da industria, tomando o lugar do buildroot. A escolha pelo buildroot na eletiva é pela facilidade de criar um sistema, o yocto é mais complexo e cheio de terminologias. Nessa eletiva iremos trabalhar com o buildroot, mas para quem quer se aprofundar/especializar no tema, tem que aprender o yocto.
-    
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/wCVYQWFIvBs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    Yocto is establishing itself as the industry standard tool, taking over from buildroot. The choice for buildroot in the elective is due to the ease of creating a system; Yocto is more complex and full of terminologies. In this elective, we will work with buildroot, but for those who want to delve into/specialize in the topic, learning Yocto is a must.
+ 
+    !!! video
+        ![](https://www.youtube.com/embed/wCVYQWFIvBs)
 
-# buildroot
+## Getting Started
 
-!!! note "Leitura recomendada"
+!!! note "Recommended Reading"
     - https://buildroot.org/downloads/manual/manual.html#_getting_started
 
-## Download
+Buildroot has a configuration tool similar to the Linux kernel (`menuconfig` / `nconfig`). We will use it to configure the filesystem and decide which programs will be compiled and inserted into `/root/`. Remember that we already have a toolchain (which we used to compile the kernel) configured in `.bashrc`, we will use it for the compilation of all the programs that we will load on the embedded system.
 
-Primeiramente devemos fazer o download do `buildroot`:
+Buildroot has the option to download the toolchain (it can also compile the kernel and generate uboot, it is a very comprehensive tool), but this time we will use what we already have (to maintain compatibility).
 
-```bash
-$ git clone https://github.com/buildroot/buildroot
-$ cd buildroot/
-```
+!!! exercise
+    First, we need to download `buildroot`:
 
-O buildroot possui uma ferramenta de configuração similar ao do kernel do linux (`menuconfig` / `nconfig`) iremos utilizar-la para configurar o filesystem assim como quais programas serão compilados e inseridos no `/root/`. Lembre que já possuímos um toolchain (o que compilamos o kernel) configurado no `.bashrc`, iremos o utilizar para a compilação de todos os programas que iremos carregar no embarcado. 
+    ```bash
+    $ git clone https://github.com/buildroot/buildroot
+    $ cd buildroot/
+    ```
 
-O buildroot tem a opção de fazer o download do toolchain (ele também pode compilar o kernel e gerar o uboot, é uma ferramenta bem completa), mas dessa vez iremos utilizar o que já temos (para manter a compatibilidade).
+## Configuring
 
-## Configurando
+Now we need to configure the buildroot.
 
-Na pasta do buildroot recém clonada, execute o seguinte comando:
+!!! exercise
+    
+    In the recently cloned buildroot folder, run the following command:
+    
+    ```bash
+    $ make ARCH=arm menuconfig
+    ```
 
-```bash
-$ make ARCH=arm menuconfig
-```
+    > If you encounter an error, you may need to install `libncurses-dev` via apt.
 
-!!! tip
-    Se ser algum erro, talvez seja necessário instalar o `libncurses-dev` via apt.
-
-Ele irá abrir uma tela de configuração a seguir:
+This will open a configuration screen:
 
 ![](figs/Tutorial-HPS-Buildroot-7.png)
 
 !!! note ""
-    para voltar para essa tela, basta aperta duas vezes a tecla `<ESC>`
-
-----------------
+    To return to this screen, simply press the `<ESC>` key twice.
 
 ### 1. Target Options 
 
-A primeira parte que iremos configurar é o alvo da geração do filesystem (*Target options*), devemos informar para o buildroot que ele está gerando arquivos para um ARM e indicar algumas opções do nosso compilador. Para isso:
+The first part we are going to configure is the target for generating the filesystem (Target options). We need to inform Buildroot that it is generating files for an ARM and indicate some options for our compiler:
 
-!!! note "Config. final"
-    ![](figs/Tutorial-HPS-Buildroot-2.png)
-
-- Menu principal :arrow_right: Target Options
+=== "Config"
+    Main Menu :arrow_right: Target Options:
+    
     - Target Architecture: **ARM (little endian)**  
-        - Essa opção já deve estar certa pois passamos via a chamada do make (make ARCH=ARM ...)
-    - Target Architecture Variant: **cortex-A9**
+        - This option should already be correct since we passed it via the make call (make ARCH=ARM ...)
+    - Target Architecture Variant: ==cortex-A9==
     - **Enable** NEON SIMD extension support
     - **Enable** VFP extension support
     - Floating point strategy: **NEON**
         - https://developer.arm.com/technologies/neon
     - Target ABI: **EABIhf**
-        - Indicamos ao buildroot que nossa arquitetura possui ponto flutuante em HW.
-
-----------------
+        - We indicate to Buildroot that our architecture has floating point in HW.
+=== "Image"
+    ![](figs/Tutorial-HPS-Buildroot-2.png)
 
 ### 2. Build options
 
-!!! note "Config. Final"
-    ![](figs/Tutorial-HPS-Buildroot-5.png)
-
-Deixe padrão como o padrão.
+=== "Config"
+    Main Menu ➡️ Build options:
     
-----------------
-
+    - ==Leave this as the default.==
+=== "Image"
+    ![](figs/Tutorial-HPS-Buildroot-5.png)
+    
 ### 3. Toolchain
 
-!!! note "config. Final"
-    ![](figs/Tutorial-HPS-Buildroot-4.png)
+=== "Config"
+    Now let's indicate to Buildroot which toolchain it should use and its configurations. 
+    
+    ==Pay special attention to each one of the fields==, an error here will fail the build..
 
-Vamos indicar agora para o buildroot qual toolchain que ele deve utilizar e suas configurações:
-
-- Menu principal :arrow_right: Toolchain
+    Main Menu :arrow_right: Toolchain:
+    
     - Toolchain type: **External toolchain**
-        - o buildroot irá usar o toolchain que especificarmos. Note que dentro dessa opção existe a : *Buildroot toolchain*, que se ativada faria com que o buildroot baixasse de forma automática todo o toolchain.
+        - Buildroot will use the toolchain that we specify. Note that within this option is the *Buildroot toolchain*, which if activated would cause Buildroot to automatically download the entire toolchain.
     - Toolchain: **Custom toolchain**
     - Toolchain path: **$(ARM_GCC)**
-        - o buildroot irá usar essa variável do sistema como path do toolchain. Temos duas opções aqui :
-            1. Podemos declarar essa variável no bash
-            2. Podemos editar essa opção já com o path do nosso toolchain
-            - Vamos escolher por hora a opção 1.
+        - Buildroot will use this system variable as the path to the toolchain. We have two options here :
+            1. We can declare this variable in bash
+            2. We can edit this option with the path of our toolchain
+            - For now, let's choose option 1.
     - Toolchain prefix: **$(ARCH)-linux-gnueabihf**
-        - o prefix é como o toolchain irá ser chamado, por exemplo para acessar o gcc:
+        - The prefix is how the toolchain will be called, for example to access gcc:
             - `$(ARM_GCC)/bin/$(ARCH)-linux-gnueabihf-gcc`
-            - Sendo :
+            - Being :
                 - ARM_GCC = `/home/corsi/work/gcc-linaro-7.2.1-2017.11-x86_64_arm-linux-gnueabihf`
-                - ARCH = arm (passado no call do make)
-            - Resulta em: `/home/corsi/work/gcc-linaro-7.1-2017.11-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc`
+                - ARCH = arm (passed in the make call)
+            - Results in: `/home/corsi/work/gcc-linaro-7.1-2017.11-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc`
     - Toolchain gcc version: **7.x**
     - Toolchain kernel headers series: **4.10.x**
     - External toolchain C library: **glibc/eglibc**
-    - **Ativar**: Toolchain has SSP support
-    - **Ativar**: Toolchain has RCP support
-    - **Ativar**: Toolchain has C++ support 
- 
-----------------
- 
+    - **Activate**: Toolchain has SSP support
+    - **Activate**: Toolchain has RCP support
+    - **Activate**: Toolchain has C++ support 
+=== "Image"
+    ![](figs/Tutorial-HPS-Buildroot-4.png)
+
 ### 4. System Configuration
 
-!!! note "config. Final"
+=== "Config"
+    In this step, we will configure information such as: hostname, user, password, and init system...
+
+    Main Menu :arrow_right: System Configuration:
+    
+    - System hostname: **SoC-Corsi** (choose whatever you prefer) 
+    - System banner: **Advanced Embedded Systems!! SoC Cyclone V**
+    - Init system:
+
+    **BusyBox**
+            - systemd is an alternative, but it's more complex!
+        - Root password: **1234** (choose whatever you prefer)
+        - /bin/sh: **busybox** 
+            - The shell to be inserted into the system, we have several other options: bash, zsh. All of them will increase the size and complexity of the image. 
+=== "Image"
     ![](figs/Tutorial-HPS-Buildroot-3.png)
-
-Nessa etapa vamos configurar informações como: hostname, user, password gerenciador de inicialização (init)...
-
-- Menu principal :arrow_right: System Configuration
-    - System hostname: **SoC-Corsi** (escolha o que preferir) 
-    - System banner: **Embarcados Avancados!! SoC Cyclone V**
-    - Init system: **BusyBox**
-        - systemd é uma alternativa, só que mais complexa!
-    - Root password: **1234** (escolha o que preferir)
-    - /bin/sh: **busybox** 
-        - O shell a ser inserido no sistema, temos várias outras opções: bash, zsh. Todas elas irão aumentar o tamanho e a complexidade da imagem. 
-
-
-
-----------------
 
 ### 5. Kernel / bootloader 
 
-O busybox pode baixar e compilar o kernel e o uboot para nós.
+Busybox can download and compile the kernel and uboot for us.
 
-!!! nonte
-    Não vamos usar essa configuração. **Deixe não checado!**
-
-- Menu principal :arrow_right: Kernel
-
-----------------
+Main Menu :arrow_right: Kernel
+ 
+- ==We will not use this configuration. **Leave unchecked!**==
 
 ### 6. Target packages
 
-Nesse menu temos a opção de quais programas e sistemas serão inseridos na imagem para o target. Se quisermos por exemplo inserir um webserver (apache ?) no nosso linux embarcado, devemos selecionar aqui.
+In this menu, we have the option of which programs and systems will be inserted into the image for the target. For example, if we want to insert a webserver (apache?) into our embedded Linux, we should select it here.
 
-Vamos deixar como padrão por hora. Mais tarde iremos voltar a essa etapa mais tarde.
- 
-----------------
- 
+Let's leave it as the default for now. We will come back to this step later.
+
 ### 7. Filesystem images
 
-!!! note ""
+
+=== "Config"
+    Main Menu :arrow_right: Filesystem images:
+    
+    - Select: **tar the root filesystem**
+
+    This menu describes to Busybox how the final output of the generated filesystem image should be. Busybox needs to generate a filesystem that is capable of correctly configuring file permissions (it cannot simply generate a folder with all files and programs). 
+
+=== "Image"
     ![](figs/Tutorial-HPS-Buildroot-1.png)
 
-- Menu principal :arrow_right: Filesystem images
-    - Selecionar: **tar the root filesystem**
+## Saving
+
+Now we will save the configuration, this will create a `.confg` file on the directory, similar to the used by the Linux Kernel.
+
+!!! exercise
+    1. Configure build root as shown previous.
+    1. Save your configuration (ESC ESC save) and return to the terminal. We will now generate the image of our filesystem.
+
+## Compiling
+
+At this stage, Buildroot will download all the packages and programs that were selected in the configuration menu from the web, and will compile the source code with the toolchain that we provided. **This can take some time** because it depends to download all sources files and build all programs.
+
+!!! exercise
+    To compile and generate the filesystem run:
+
+    ``` bash
+    $ make ARCH=arm all -j 4
+    ```
     
-Esse menu descreve para o busybox como deve ser a saída final da imagem do filesystem gerada. O busybox necessita gerar filesystem que é capaz de configurar as permissões dos arquivos corretamente (ele não pode simplesmente gerar uma pasta com todos os arquivos e programas). 
+    ==This can take some time.==
 
-----------------
+### Graphics!
 
-## 8. Finalizando
-
-Salve a sua configuração (ESC ESC save) e volte ao terminal. Vamos agora gerar a imagem do nosso filesystem.
-
-### Compilando
-
-Para compilar e gerar o filesystem :
-
-``` bash
-$ make ARCH=arm all -j 4
-```
-
-Nessa etapa o buildroot irá baixar da web todos os pacotes e programas que foram
-selecionados no menu de configuração, 
-e irá compilar o source code com o toolchain que passamos para ele. **Isso pode levar um tempinho**.
-
-### Gráficos !
-
-Uma vez acabado o processo de geração do FS, podemos gerar alguns gráficos muito importantes:
+Once the FS generation process is finished, we can generate some very important graphics:
 
 - https://buildroot.org/downloads/manual/manual.html#_graphing_the_filesystem_size_contribution_of_packages
 
-- Dependência dos pacotes: `make graph-depends`
-- Tempo de compilação: `make graph-build`
-- Contribuição do tamanho do FS de cada pacote: `make graph-size`
+- Package dependencies: `make graph-depends`
+- Compilation time: `make graph-build`
+- Contribution of each package to FS size: `make graph-size`
 
-Os gráficos são salvos na pasta: `output/graphs/`
-
-!!! tip
-    Instale as dependências
+The graphs are saved in the folder: `output/graphs/`, you should obtain something similar tool:
     
+![](figs/Tutorial-HPS-Buildroot-graph-size.png)
+
+!!! Exercises
+    1. Install the dependencies
     ``` bash
     sudo apt install graphviz python-matplotlib python-numpy
     ```
-
-!!! example ""
-    Gere os três gráficos e analise os resultados
-
-!!! note "Exemplo do gráfico do tamanho dos pacotes no fs:"
-    ![](figs/Tutorial-HPS-Buildroot-graph-size.png)
-
+    2. Generate the three graphs and analyze the results
+ 
 ### Outputs
 
-Existem duas saídas do buildroot na pasta: `buildroot/output/**`
+There are two outputs of Buildroot in the folder: `buildroot/output/**`
 
-1. O arquivo `./images/rootfs.tar`: que contém o fileSystem do target (com as permissões corretas)
-1. A pasta `./images/target/`: com os arquivos contidos no `.tar` mas sem as
- permissões corretas para
- executar no target. Inclusive essa pasta possui um arquivo:
+1. The file `./images/rootfs.tar`: which contains the target fileSystem (with the correct permissions)
+1. The folder `./images/target/`: with the files contained in the `.tar` but without the correct permissions to run on the target. In fact, this folder contains a file:
 
+```
+**THIS_IS_NOT_YOUR_ROOT_FILESYSTEM**
 
-!!! warning
-    **THIS_IS_NOT_YOUR_ROOT_FILESYSTEM**
-    
-    Warning!
+Warning!
 
-    This directory does *not* contain the root filesystem that you can use on your embedded system. Since Buildroot does not run as root, it    cannot create device files and set the permissions and ownership of    files correctly in this directory to make it usable as a root    filesystem.
-    ....
+This directory does *not* contain the root filesystem that you can use on your embedded system. 
+Since Buildroot does not run as root, it cannot create device files and set the permissions and
+ownership of files correctly in this directory to make it usable as a root filesystem.
+```
 
-Para testarmos no nosso sistema embarcados, temos que extrair o arquivo `rootfs.tar` para o nosso cartão de memória. 
+## Testing 
 
-## Testando 
+==To test on our embedded systems, we need to extract the `rootfs.tar` file to our memory card.== 
 
-Siga o tutorial em [SDCard - FileSystem](/Embarcados-Avancados/info-SDcard/).
-Lá está comentando como extrair o `rootfs.tar` para o nosso cartão de memória.
+!!! exercise
+    Follow the tutorial at [SDCard - FileSystem](/Embarcados-Avancados/info-SDcard/) where there is explained how to extract the `rootfs.tar` to our memory card.
 
+!!! exercise short
+    Did the boot become faster?
 
-!!! example ""
-    1. o boot ficou mais rápido?
-    1. Tente plugar um pendrive, funciona?
+## Studying
 
-## Estudando
+Some suggestion to explore and learn more!
 
-!!! example "Responda:"
-    - descreva o que é o root file system
-    - initd process
-    - para que serve e como funciona o /linuxrc
-    - para que serve  o /proc
+- Describe what is the root file system
+- Research about initd process
+- What is the purpose of `/linuxrc` and how does it work
+- What is the purpose of `/proc`
 
-## Referências
+### References
 
-- dtb : https://rocketboards.org/foswiki/Documentation/HOWTOCreateADeviceTree
-- Generating and Compiling the Preloader : https://rocketboards.org/foswiki/Documentation/GSRD141Preloader
-- Compilando o kernel : https://rocketboards.org/foswiki/Documentation/EmbeddedLinuxBeginnerSGuide#8
+- dtb: https://rocketboards.org/foswiki/Documentation/HOWTOCreateADeviceTree
+- Generating and Compiling the Preloader: https://rocketboards.org/foswiki/Documentation/GSRD141Preloader
+- Compiling the kernel: https://rocketboards.org/foswiki/Documentation/EmbeddedLinuxBeginnerSGuide#8

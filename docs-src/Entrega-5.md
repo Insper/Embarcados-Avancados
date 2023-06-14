@@ -1,34 +1,33 @@
-# 👁 Entrega 2
+# 🔔 Assignment 2
 
-Vocês devem criar uma sistema embarcado que possui um webserver e uma página web que permita sensoriar e controlar o hardware por uma interface simples.
+You must create an embedded system that includes a web server and a webpage that allows you to monitor and control the hardware through a simple interface.
 
-A página deve permitir:
+The webpage should allow:
 
-1. Controlar o LED da placa
-1. Fazer a leitura do botão da placa
+1. Control of the board's LED
+1. Reading the status of the board's button
 
-Dica: Vocês vai precisar ter um servidor (por exemplo em python) que vai precisar comunicar com um software em C (para controle dos pinos), uma sugesão é a de utilizar um socket para a comunicação entre os dois programas. Aqui tem um exemplo de como fazer isso:
+Hint: You will need to have a server (for example in Python) that will need to communicate with a C software (for control of the pins), one suggestion is to use a socket for communication between the two programs. Here is an example of how to do this:
 
 - https://github.com/Insper/Embarcados-Avancados/tree/master/Entrega-5
 
-## Rubrica:
+## Rubric
 
 ### A
 
-Alguma das opções a seguir:
+Any of the following options:
 
-- Leitura e exibição da IMU da placa (dica: usar código exemplo ([hps_gsensor](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/hps_gsensor)))
-- Escrever no LCD da placa (dica: usar código exemplo [hps_lcd](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/hps_lcd))
-- Ou outra ideia legal (validar com o professor)
+- Reading and displaying the board's IMU (hint: use example code ([hps_gsensor](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/hps_gsensor)))
+- Writing on the board's LCD (hint: use example code [hps_lcd](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/hps_lcd))
+- Or another cool idea (to be validated with the professor)
 
 ### B
 
-- O deploy e configuração do webserver deve ser feito via um makefile 
-- O sistema deve ser inicializado automaticamente
-
+- The web server deployment and configuration should be done via a makefile 
+- The system should start automatically
 
 ### C
 
-- webserver que permite:
-    - controlar via botão (web) o LED da placa
-    - leitura da chave da placa (status)
+- A web server that allows:
+    - control of the board's LED via a web button
+    - reading of the board's switch status

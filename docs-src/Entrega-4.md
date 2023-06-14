@@ -1,4 +1,4 @@
-# 🪙 Delivery 1
+# 🔔 Assigment 1
 
 The objective of this delivery is to automate the compilation and deployment of new programs to the `target`. For this, we will have to create a Makefile that should be able to compile and deploy a program. For this, we have several options, some of them being:
 

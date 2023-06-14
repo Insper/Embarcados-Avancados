@@ -1,14 +1,13 @@
-# Char device driver
+# Char Device Driver
 
-Agora iremos criar um driver do tipo char, este módulo irá aparecer como um dispositivo no `/dev/`, suportando que um programa no userspace interaja com ele.
+Now we will create a character device driver. This module will appear as a device in `/dev/`, allowing a program in the userspace to interact with it.
 
 ## Syscall
 
-Lembre que no linux tudo é um arquivo, inclusive um driver. Para ele se comportar como um arquivo devemos implementar no mínimo as as seguintes chamadas de sistema: `open`, `close/release`, `read` e `write`. Com isso, um programa no userspace poderá interagir com o nosso driver.
+Remember that in Linux, everything is a file, including a driver. In order for it to behave like a file, we must implement at least the following system calls: `open`, `close/release`, `read`, and `write`. With this, a program in the userspace will be able to interact with our driver.
 
-!!! info "chamada de sistemas"
-    Um módulo do tipo char pode implementar outras chamadas de sistema, como definido no arquivo
-    `fs.h` no repositório do kernel:
+!!! info "system calls"
+    A character device module can implement other system calls as well, as defined in the `fs.h` file in the kernel repository.
 
     ```c
     struct file_operations {
@@ -45,40 +44,17 @@ Lembre que no linux tudo é um arquivo, inclusive um driver. Para ele se comport
     #endif
     };
     ```
+    
+The following code implements a very simple character device driver. This driver has the operations listed in the `fops` struct.
 
-## ebbchar
+This driver does the following: It prints everything that is written to it in the system log and returns the same string for reading. This is done by saving the message in a memory region called `message` (created in the module's init function using `kmalloc`). Every time the driver is opened by a program, it increments a global counter and prints that value in the system log.
 
-O código a seguir implementa um driver muito simples do tipo char, esse driver possui as operações listadas no struct `fops`.
-
-Esse driver faz o seguinte: Ele imprime no log do sistema tudo o que for escrito nele e retornar para leitura a mesma string que foi escrito, isso é feito salvando a mensagem na região de memória chamada de `message` (criada no init do módulo com `kmalloc`). Toda vez que o driver for aberto por um programa ele incrementa um contador global e imprime no log do sistema esse valor.
-
-```
-
-        +-------+
- <------|       |----------------<
- |      |       |                 | 
- |      +-------+  test.c         |  
- |                                |            users space
--v--------------------------------^----------------------
- |                                |            kernel space
- |                                |
- |      +------------------+      |  
- | write|   kmalloc        |read  |
- |----->-\     -------    /-->----
-        | \   |       |  / | 
-        |  \->|message|->  |
-        |      ---|---     |
-        +---------|--------+ 
-                  |    ebbchar.c
-                  v
-                   demesg
-```
+![](figs/kernel-chardriver.svg)
 
 !!! tip
-    Não copie apenas, leia e entenda. Os códigos fornecidos estão são bem comentandos.
+    Don't just copy, read and understand. The provided code has detailed comments.
 
-
-Crie e inicialize com os códigos a seguir, resultando em três arquivos: `ebbchar.c`, `test.c` e `Makefile`
+Create and initialize the following files: `ebbchar.c`, `test.c`, and `Makefile`.
 
 === "Makefile"
     ```c
@@ -338,24 +314,24 @@ Crie e inicialize com os códigos a seguir, resultando em três arquivos: `ebbch
     }
     ```
 
-Vamos analisar algumas partes desse código:
+Let's analyze some parts of this code:
 
-- `ebbchar_iniat`: é chamado sempre que o driver for inserido no kernel (`insmod`) e faz o registro do módulo coamo device no `/dev/eebchar`. Nessa etapa o driver aloca uma memória para uso interno pelo comando [`kmalloc`](https://www.kernel.org/doc/htmldocs/kernel-hacking/routines-kmalloc.html)
+- `ebbchar_init`: It is called whenever the driver is inserted into the kernel (`insmod`) and registers the device module as `/dev/ebbchar`. In this step, the driver allocates memory for internal use using the `kmalloc` command.
 
-``` c
-   // alocate mem
+```c
+   // allocate memory
    message = kmalloc(32, GFP_KERNEL);
    if (IS_ERR(message)){
-      printk(KERN_INFO "Failed to allocate mem \n");
+      printk(KERN_INFO "Failed to allocate memory\n");
       return PTR_ERR(message);
    }
 ```
 
-- `ebbchar_exit`: é chamada quando o driver for removido do kernel (`rmmod`), e remove o device do `/dev/ebbchar`, libera a memória que foi alocada anteriormente (`kfree`).
+- `ebbchar_exit`: It is called when the driver is removed from the kernel (`rmmod`), and it removes the device from `/dev/ebbchar` and frees the previously allocated memory using `kfree`.
 
-- A função `dev_open` é chamada sempre que um programa abrir o device como um arquivo, sempre que isso  acontece uma variável global (`numberOpens`) é incrementada e um log `KERN_INFO` gerado.
+- The `dev_open` function is called whenever a program opens the device as a file. Whenever this happens, a global variable (`numberOpens`) is incremented, and a `KERN_INFO` log is generated.
 
-- `dev_write`: é chamado sempre que acontece uma escrita no driver, quando isso acontece a mensagem que foi passada no comando de write no programa do userspace é copiada para a região de memória `message`:
+- `dev_write`: It is called whenever a write operation occurs on the driver. When this happens, the message passed in the write command from the userspace program is copied to the `message` memory region:
 
 ```c
 static ssize_t dev_write(struct file *filep, const char *buffer,
@@ -364,50 +340,50 @@ static ssize_t dev_write(struct file *filep, const char *buffer,
    ...
 ```
 
-- `dev_read`: é chamada quando acontece uma operação de leitura no driver, o módulo retorna a mensagem salva no buffer `message`:
+- `dev_read`: It is called when a read operation occurs on the driver. The module returns the message saved in the `message` buffer:
 
 ```c
 static ssize_t dev_read(struct file *filep, char *buffer,
                         size_t len, loff_t *offset){
    int error_count = 0;
-   // copy_to_user has the format ( * to, *from, size) and returns 0 on success
+   // copy_to_user has the format ( *to, *from, size) and returns 0 on success
    error_count = copy_to_user(buffer, message, size_of_message);
    ...
 ```
 
-### Testando
+### Testing
 
-Para testar basta compilar o módulo e o programa de teste com o comando `make`, uma vez compilado você deve carregar o módulo  (verificar se ele inicializou corretamente) e então executar o programa de teste.
+To test, simply compile the module and the test program using the `make` command. Once compiled, you should load the module (and check if it initialized correctly) and then run the test program.
 
-1. Em um terminal execute o comando `dmesg -wH`.
-1. Em outro terminal execute: `make`
-1. `sudo insmod ebbchar.ko`
-1. Você deve obter o log a seguir no terminal do dmesg:
-    ```
-    [12944.610531] EBBChar: Initializing the EBBChar LKM
-    [12944.610537] EBBChar: registered correctly with major number 236
-    [12944.610577] EBBChar: device class registered correctly
-    [12944.613972] EBBChar: device class created correctly
-    ```
-1. verificando se device foi inserido corretamente: `ls /dev/ebbchar` (deve ter esse arquivo)
-1. agora vamos inicializar o programa `sudo ./test`
-1. note que o dmesg indicou que alguém abriu o nosso driver:
+1. In one terminal, execute the command `dmesg -wH`.
+2. In another terminal, execute: `make`.
+3. `sudo insmod ebbchar.ko`.
+4. You should see the following log in the `dmesg` terminal:
    ```
-  [nov 3 13:07] EBBChar: Device has been opened 1 time(s)
+   [12944.610531] EBBChar: Initializing the EBBChar LKM
+   [12944.610537] EBBChar: registered correctly with major number 236
+   [12944.610577] EBBChar: device class registered correctly
+   [12944.613972] EBBChar: device class created correctly
    ```
-1. agora no terminal que executou o programa test, escreva alguma coisa, você irá notar que a mesma informação será imprimida de volta:
-
-    ```
-    Type in a short string to send to the kernel module:
-    123
-    Writing message to the device [123].
-    Reading from the device...
-    The received message is: [123]
-    ```
-1. No dmesg aparece a informação de quantos bytes o usuário digitou.
-
-!!! info 
-    1. Experimente você escrever uma mensagem grande no terminal do programa test, o que acontece?
-    1. Porque isso acontece?
+5. Verify if the device was inserted correctly: `ls /dev/ebbchar` (you should see this file).
+6. Now let's initialize the program: `sudo ./test`.
+7. Note that `dmesg` indicates that someone has opened our driver:
+   ```
+   [Nov 3 13:07] EBBChar: Device has been opened 1 time(s)
+   ```
+8. Now, in the terminal where you ran the test program, type something, and you will notice that the same information is printed back:
+   ```
+   Type in a short string to send to the kernel module:
+   123
+   Writing message to the device [123].
+   Reading from the device...
+   The received message is: [123]
+   ```
+9. In `dmesg`, you can see the information about how many bytes the user entered.
+   
+!!! info
+    1. Try entering a large message in the test program's terminal. What happens?
+    2. Why do you think this happens?
+    3. Propose a solution!
     
-Pronto! acabamos de criar nosso primeiro device driver, ele ainda não controla nenhum hardware, mas já implementamos a interface com o sistema operacional. Agora vem a parte que mais dominamos, controlar hardware (criar ponteiro, configurar e escrever).
+There you go! We have just created our first device driver. It doesn't control any hardware yet, but we have implemented the interface with the operating system. Now comes the part we are most familiar with, controlling hardware (creating pointers, configuring, and writing).
