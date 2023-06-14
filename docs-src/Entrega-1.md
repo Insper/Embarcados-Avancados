@@ -1,62 +1,62 @@
-#  👁 Entrega 1
+#  👁 Delivery 1
 
-O que deve ser entregue?
+What should be delivered?
 
-- **Pasta:** `Entrega_1_FPGA_RTL`
-- **Vídeo** do projeto funcionando com uma explicação (curto!)
+- **Folder:** `Delivery_1_FPGA_RTL`
+- **Video** of the working project with an explanation (short!)
 
-A ideia dessa entrega é que vocês trabalhem um pouco mais com o VHDL e que também relembrem/aprendem como desenvolver um projeto de forma hierárquica. Nessa entrega vocês irão desenvolver um IP core (*intellectual property core*) dedicado para o controle de um motor de passos.
+The idea of this delivery is for you to work a little more with VHDL and also to remember/learn how to develop a project hierarchically. In this delivery, you will develop an IP core (intellectual property core) dedicated to controlling a stepping motor.
 
-Esse componente deve controlar as quatro fases de um motor de passos (vocês receberam junto ao kit) de forma a girar o motor nos dois sentidos e com algumas velocidades diferentes.
+This component should control the four phases of a stepping motor (which you received with the kit) to rotate the motor in both directions and with some different speeds.
 
-## Exemplo
+## Example
 
-Para facilitar o desenvolvimento está disponível na pasta (`/Entrega1/`) no repositório da disciplina um projeto e um componente que controla o motor de passos, mas não realiza tudo o que está sendo pedido aqui. Nesse exemplo o motor de passos gira apenas para um sentido (`DIR` não funciona), o sinal de `EN` não controla se o motor vai estar ligado/desligar e o motor possui apenas duas velocidades (`VEL`).
+To facilitate development, a project and a component that control the stepping motor are available in the folder (`/Delivery1/`) in the discipline repository, but they do not perform everything that is being asked here. In this example, the stepping motor only rotates in one direction (`DIR` does not work), the `EN` signal does not control whether the motor will be turned on/off and the motor has only two speeds (`VEL`).
 
-Os pinos já foram mapeados e vocês devem conectar o motor como indicado a seguir!
+The pins have already been mapped and you should connect the motor as indicated below!
 
-![](figs/Entrega-1:montagem.png)
+![](figs/Delivery-1:assembly.png)
 
 !!! warning
-    Faça com atenção para evitar queimar a placa.
+    Be careful to avoid burning the board.
 
-Montagem final:
+Final assembly:
 
-[![](figs/Entrega-1:montagem2.png){width=200}](figs/Entrega-1:montagem2.png)
+[![](figs/Delivery-1:assembly2.png){width=200}](figs/Delivery-1:assembly2.png)
 
->  Clique para ampliar
+>  Click to enlarge
 
-??? note "GPIO esquemático"
-    Extraído do manual:
+??? note "Schematic GPIO"
+    Extracted from the manual:
 
-    ![](figs/Entrega-1:gpio.png)
+    ![](figs/Delivery-1:gpio.png)
 
 !!! example "TODO"
-    Após montar, abra o projeto exemplo, compile e grave na FPGA. Você deve ver o motor girando.
+    After assembling, open the example project, compile and write to the FPGA. You should see the motor rotating.
     
-    Mexa nas chaves 2 e 3, a velocidade do motor deve variar.
+    Play with switches 2 and 3, the motor speed should vary.
 
-## Rubrica
+## Rubric
 
 !!! info
-    Entregar no repositório criado pelo classroom:
+    Deliver to the repository created by the classroom:
     
     - https://classroom.github.com/g/NOdeF3Du
 
-    Preencher o forms a seguir:
+    Fill in the forms below:
     
     - https://docs.google.com/forms/d/e/1FAIpQLSeBAJLAdo1_fcsrm2OYT62Wg12mCm96gUCrq4oHbjqUM46yGA/viewform?usp=sf_link
 
 - A
-    - aplica uma curva de aceleração na velocidade.
+    - Applies an acceleration curve to the speed.
 - B 
-    - possuir número de passos a serem executados.
+    - Has a number of steps to be executed.
 - C
-    - aciona o motor de passos e possui um sinal de: 
-        - EN (que liga e desliga o motor)
-        - DIR (que controla a direção na qual o motor gira)
-        - VEL[1:0] (quatro velocidades de rotação)
+    - Drives the stepping motor and has a signal to:
+        - EN (which turns the motor on and off)
+        - DIR (which controls the direction in which the motor rotates)
+        - VEL[1:0] (four rotation speeds)
 - D 
-    - Entregou o tutorial
+    - Delivered the tutorial
 - I
-    - Não entregou nada
+    - Did not deliver anything.

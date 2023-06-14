@@ -1,35 +1,30 @@
-# Compilando o kernel
+# Compiling the Kernel
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/SOXeXauRAm0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+In this tutorial, we will compile the Linux kernel for our SoC's ARM using the toolchain we already have configured.
 
----------------------
+=== "Linus"
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/SOXeXauRAm0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+=== "Hans"
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/FEfSlk1EHNI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/FEfSlk1EHNI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-Nesse tutorial iremos compilar o kernel do Linux para o ARM do nosso SoC usando o toolchain que já temos configurado.
 
 ## Kernel 4.4
 
-Clone o kernel do linux :
+Clone the Linux kernel:
 
 ``` bash
 $ git clone https://github.com/torvalds/linux 
 $ cd linux
 ```
 
-> Isso pode demorar um pouquinho, o kernel é um projeto grande.
+> This might take a while, the kernel is a large project.
 
 !!! tip
-    O repositório oficial do kernel do linus é o : https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git porém clonar dele é normalmente muito mais lento que do github (que é apenas um mirror do repositório oficial).
+    The official repository of the Linus kernel is: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git however cloning from it is usually much slower than from GitHub (which is just a mirror of the official repository).
 
-Vamos trabalhar com a versão `4.4` do kernel que é uma versão com: `Long Time Suport` (LTS), ou seja, será mantida por muito mais tempo que as outras versões. A versão 4.4 foi lançada em 10 de Janeiro e será mantida oficialmente até 2021, ela também é uma versão chamada de Super LTS, com suporte estendido até 2036. 
+We will work with version `4.4` of the kernel which is a version with: `Long Time Support` (LTS), i.e., it will be maintained for much longer than other versions. Version 4.4 was released on January 10 and will be officially maintained until 2021, it is also a version called Super LTS, with extended support until 2036. Think that a developer of an embedded system, who is going to create a whole dedicated infrastructure, doesn't want to have to adjust and validate everything again just to have the newest version of the kernel. The idea of using a version with more support is to minimize efforts with new resources.
 
-??? Linux Kernel wikipidia - Versões
-    <iframe src="https://en.wikipedia.org/wiki/Linux_kernel" title="Linux Kernel" width="100%" height="300"> </iframe>
-
-Pense que um desenvolvedor de um sistema embarcado, que vai criar toda uma infra dedicada não quer ficar ter que ajustando e validando tudo novamente só para ter a versão mais nova do kenrel. A ideia de usar uma com maior suporte é minimizar esforços com recursos novos.
-
-O kernel utiliza o sistema de `tag` do git:
+The kernel uses the `tag` system of git:
 
 ```bash
 $ git tag
@@ -48,226 +43,235 @@ v2.6.14-rc3
 ...
 ```
 
-Note que revisões ímpares são para Karnel em estágio de desenvolvimento, e números pares para versão de produção, exemplo :
+Note that odd revisions are for Kernel in development stage, and even numbers for production version, example:
 
-- **Linux 2.4.x** - Produção
-- **Linux 2.5.x** - Desenvolvimento 
-- **Linux 2.6.x** - Produção
+- **Linux 2.4.x** - Production
+- **Linux 2.5.x** - Development 
+- **Linux 2.6.x** - Production
 - ....
 
-Vamos criar um branch da versão v4.4, para  isso execute o comando a seguir:
+!!! exercise
 
-``` bash
-$ git checkout -b 4.4-SoC v4.4
-```
+    Let's createa branch of version v4.4, for this execute the following command:
 
-## Configurando o kernel 
+    ``` bash
+    $ git checkout -b 4.4-SoC v4.4
+    ```
 
-Uma vez no branch `4.4-SoC` precisamos configurar o kernel para nosso processador (ARM) e fazer as configurações necessárias no kernel. Primeiramente iremos gerar um arquivo de configuração `.config` padrão para SoCs ARM Altera:
+## Configuring the Kernel 
 
-``` bash
-$ export ARCH=arm        # indica a arquitetura do Kernel
-$ make socfpga_defconfig # gera o arquivo padrão de configuração para SoC
-```
+Once in the `4.4-SoC` branch we need to configure the kernel for our processor (ARM) and make the necessary configurations in the kernel. First, we will generate a standard configuration file `.config` for Altera ARM SoCs.
 
-!!! note
-    As configuração do kernel ficam salvos no arquivo: `.config` na raiz do repositório. Quando executamos o comando `make socfpga_defconfig`, o mesmo é inicializado com algumas configurações padrões. Você pode dar uma olhada na pasta: [linux/arch/arm/configs/socfpga_defconfig](https://github.com/torvalds/linux/blob/master/arch/arm/configs/socfpga_defconfig).
+!!! exercise
+    ``` bash
+    $ export ARCH=arm        # indicates the architecture of the Kernel
+    $ make socfpga_defconfig # generates the standard configuration file for SoC
+    ```
+ 
+    The kernel configuration is saved in the file: `.config` at the root of the repository. When we execute the command `make socfpga_defconfig`, it is initialized with some default settings. You can take a look at the folder: [linux/arch/arm/configs/socfpga_defconfig](https://github.com/torvalds/linux/blob/master/arch/arm/configs/socfpga_defconfig).
 
-Agora vamos configurar alguns parâmetros específicos do Kernel para a nossa aplicação:
+!!! exercise
+    Now we will configure some specific parameters of the Kernel for our application:
 
-``` bash
-$ make ARCH=arm menuconfig 
-```
+    ``` bash
+    $ make ARCH=arm menuconfig 
+    ```
 
-!!! note
-    Talvez seja necessário instalar o pacote **libncurses5-dev**
+    You may need to install the **libncurses5-dev** package
     
     ```bash
     $ sudo apt install libncurses5-dev
     ```
 
-Esse comando irá abrir a interface de configuração do Kernel do Linux (existem outras opções: `make xconfig`; `make config`; `make gconfig`, ...). Essa interface permite selecionarmos várias configurações do Kernel. Agora iremos seguir o roteiro proposto no tutorial a seguir, traduzido de maneira reduzida aqui. 
+This command will open the Linux Kernel configuration interface (there are other options: `make xconfig`; `make config`; `make gconfig`, ...). This interface allows us to select various Kernel configurations. Now we will follow the script proposed in the following tutorial, translated in a reduced way here. 
 
 - https://rocketboards.org/foswiki/Documentation/EmbeddedLinuxBeginnerSGuide
 
-### Configurando 
+### Configuring 
 
-1. Automatically append version information to the version string
+Now lets configure the kernel:
 
-- General Setup :arrow_right:
-    - **Desabilite**: *Automatically append version information to the version string*
- 
- ![](figs/Tutorial-HPS-Kernel:config.gif)
- 
 !!! note "Exclude/ Include" 
-    Para **Desativar** utilize a letra `N` do teclado, para incluir a letra `Y`
+    To **Disable** use the letter `N` on the keyboard, to include the letter `Y`
  
-!!! note "Dúvidas?" 
-    A maioria dos parâmetros possui uma explicação, basta apertar `?` para ler a respeito.
+!!! note "Doubts?" 
+    Most parameters have an explanation, just press `?` to read about it.
 
-!!! note 
+ ![](figs/Tutorial-HPS-Kernel:config.gif)
+
+### Automatically append version information to the version string
+
+- Go to general Setup :arrow_right:
+    - **Disable**: Automatically append version information to the version string
+ 
+??? note "Automatically append version information to the version string" 
     - ref :  https://rocketboards.org/foswiki/Documentation/EmbeddedLinuxBeginnerSGuide#8
     
     Go into the “General Setup” menu. Uncheck “Automatically append version information to the version string”. This will prevent the kernel from adding extra “version” information to the kernel. Whenever we try to dynamically load a driver (also called kernel modules, as discussed in a later section) the kernel will check to see if the driver was built with the same version of the source code as itself. If it isn’t, it will reject to load that driver. For development, it’s useful to disable these options to make it easier to test out different versions of drivers. In a production system however, it’s recommend to keep this option enabled and only use drivers that were compiled with the correct version of the kernel.
     I encourage you to peruse the options in the General Setup menu and see what’s available to you (hitting “?” to view the help info for the highlighted option). Of particular importance to us is the “Embedded System” option (turns on advanced features) and the type of SLAB allocator used (determines how memory will be dynamically allocated in the kernel). If you want to use an initial ram disk or ram filesystem that would be enabled here as well (these will be explained in the next section).
-    (texto extraído da referência)
+    (text extracted from the reference)
 
 -------------------------------------
 
 #### Enable loadable module support
 
-- Volte para o menu principal (`<ESC>` `<ESC>`) :arrow_right:
-    - Note que o *Enable loadable module support* está ativado.
+- Go back to the main menu (`<ESC>` `<ESC>`) :arrow_right:
+    - Note that *Enable loadable module support* is enabled.
     
 !!! note ""
-    Isso permite que o kernel seja modificado (pelo carregamento de drivers) após a sua execução. Isso será útil quando formos desenvolver nosso próprio device driver, sem a necessidade de recompilarmos o kernel toda vez que desejamos testar uma modificação no código. É essa configuração que permite utilizarmos USBs, SSDs, placas de rede via a possibilidade do carregamento de drivers de forma dinâmica pelo sistema operacional.
+    This allows the kernel to be modified (by loading drivers) after its execution. This will be useful when we develop our own device driver, without the need to recompile the kernel every time we want to test a modification in the code. This is the configuration that allows us to use USBs, SSDs, network cards via the possibility of dynamically loading drivers by the operating system.
 
 -------------------------------------
 
 #### Support for large (2TB+) block devices and files
 
-- No menu principal :arrow_right: Enable the block layer :arrow_right:
-    - **Ative**: `Support for large (2TB+) block devices and files`
+- In the main menu :arrow_right: Enable the block layer :arrow_right:
+    - **Enable**: `Support for large (2TB+) block devices and files
+
+`
 
 !!! note ""
-    Essa opção irá permitir a utilização de partições do tipo EXT4. Se esquecer essa opção e o kernel tiver em uma partição EXT4 a mesma será montada como READ-ONLY.
+    This option will allow the use of EXT4 type partitions. If you forget this option and the kernel is on an EXT4 partition, it will be mounted as READ-ONLY.
 
 -------------------------------------
 
 #### The Extended 4 (ext4) filesystem 
 
-- Menu principal :arrow_right: File systems :arrow_right: 
-    - Note que já está selecionado: `The Extended 4 (ext4) filesystem`
+- Main menu :arrow_right: File systems :arrow_right: 
+    - Note that it is already selected: `The Extended 4 (ext4) filesystem`
     
 !!! note ""
-    Essa opção irá possibilitar que o kernel monte dispositivos formatados em EXT4. Pretendemos usar isso no SDCARD.
+    This option will enable the kernel to mount devices formatted in EXT4. We intend to use this on the SDCARD.
 
 -------------------------------------
 
 #### Altera SOCFPGA family
 
-- Menu principal :arrow_right: System Type :arrow_right:
-    - Note que já está selecioado: `Altera SOCFGPA family`
+- Main menu :arrow_right: System Type :arrow_right:
+    - Note that it is already selected: `Altera SOCFGPA family`
     
 !!! note ""
-    Isso indica para o kernel qual será o dispositivo que o mesmo será executado, note que esssa opção possui um novo menu onde podemos ativar ou não a suspensão para RAM.
+    This indicates to the kernel which will be the device that it will be executed on, note that this option has a new menu where we can enable or not the suspension to RAM.
 
 -------------------------------------
 
 #### Symmetric Multi-Processing
     
-- Menu principal :arrow_right: Kernel Features :arrow_right:
-    - Note que já está selecioado: `Symmmetric Multi-Processing`
+- Main menu :arrow_right: Kernel Features :arrow_right:
+    - Note that it is already selected: `Symmmetric Multi-Processing`
     
 !!! note ""
-    Essa opção indica para o kernel que ele deve utilizar os dois cores presente no ARM HPS da FPGA. 
+    This option indicates to the kernel that it should use the two cores present in the ARM HPS of the FPGA. 
 
 -------------------------------------
 
 #### Device Drivers
 
-- Menu principal :arrow_right: Device Drivers :arrow_right: 
-    - Analise os drivers disponíveis...
+- Main menu :arrow_right: Device Drivers :arrow_right: 
+    - Analyze the available drivers...
 
 !!! note ""
-    Indica quais drivers serão compilados junto com o kernel, note que já temos configurado drivers de rede (Network device support); GPIO (GPIO Support); RTC; DMA; ... . Lembre que já inicializamos o `.config` com uma configuração padrão para SoCs Altera.
+    Indicates which drivers will be compiled along with the kernel, note that we already have configured network drivers (Network device support); GPIO (GPIO Support); RTC; DMA; ... . Remember that we already initialized the `.config` with a default configuration for Altera SoCs.
 
-### Salvando
+### Saving
 
-Aperte ESC duas vezes (`<ESC>`  `<ESC>`) e salve as configurações no arquivo `.config`
+!!! exercise "Saving"
+    Press ESC twice (`<ESC>`  `<ESC>`) and save the settings in the `.config` file
 
-### `.config`
+### .config
 
 !!! note
-    De uma olhada no arquivo `.config` gerado! As vezes é mais fácil editar direto nele, do que ter que abrir o menu de configuração e encontrar o local de ativar um módulo.
+    Take a look at the generated `.config` file! Sometimes it's easier to edit directly in it, than having to open the configuration menu and find the place to activate a module.
     
+## Compiling
 
-## Compilando
+The makefile uses the `CROSS_COMPILE` variable to define the toolchain that will compile the kernel, let's define it as the Linaro GCC recently downloaded and than compile the Linux kernel.
 
-O makefile utiliza a variável `CROSS_COMPILE` para definir o toolchain que irá fazer a compilação do kernel, vamos definir como sendo o GCC do Linaro baixado recentemente:
+!!! exercise 
+    Define crosscompile:
+    
+    ```bash
+    export CROSS_COMPILE=$GCC_Linaro/arm-linux-gnueabihf-
+    ```
+    
+    Compile the kernel:
 
-```bash
-$ export CROSS_COMPILE=$GCC_Linaro/arm-linux-gnueabihf-
-```
+    ```bash
+    make ARCH=arm LOCALVERSION= zImage -j 8
+    ```
 
-Para compilarmos o kernel :
+    > `-j 8` runs the compilation in  4 threads, you can adjust this value to suit your processor.
 
-```bash
-make ARCH=arm LOCALVERSION= zImage -j 4
-```
+!!! note "Tip"
+    Add the `export CROSS_COMPILE=....` to your `.bashrc` so you don't have to keep typing it every time you have to compile the kernel.
 
 !!! warning
-    Se você obter o erro:
+    If you get the error:
     
     `"/usr/bin/ld: scripts/dtc/dtc-parser.tab.o:(.bss+0x10): multiple definition of 'yylloc'; scripts/dtc/dtc-lexer.lex.o:(.bss+0x0): first defined here".` 
     
-    É porque existe uma incompatibilidade da versão que estamos compilando 4.5 com o GCC (a partir da versão 9). Existem duas soluções:
+    It's because there is an incompatibility of the version we are compiling 4.5 with the GCC (from version 9 onwards). There are two solutions:
     
-    1. Usar o gcc9: https://www.soughttech.com/front/article/17085/viewArticle
-    2. Aplicar um patch no kernel do linux que remove a múltipla declaracão da variável `yylloc`, na raiz do kernel:
+    1. Use gcc9: https://www.soughttech.com/front/article/17085/viewArticle
+    2. Apply a patch to the linux kernel that removes the multiple declaration of the variable `yylloc`, in the root of the kernel:
     
     ``` bash
     $ wget https://github.com/Tomoms/android_kernel_oppo_msm8974/commit/11647f99b4de6bc460e106e876f72fc7af3e54a6.patch
     $ git am 11647f99b4de6bc460e106e876f72fc7af3e54a6.patch
     ```
-
-!!! note
-    -j4 executa a compilação em 4 threads, você pode ajustar esse valor para adequar ao seu processador.
-
-!!! note "Dica"
-    Adicione o `export CROSS_COMPILE=....` ao seu `.bashrc` para não ter que ficar digitando isso sempre que tiver que compilar o kernel.
     
 !!! fail
-    Caso aconteça algum erro de build, deve-se verificar o path do `CROSS_COMPILE` ou se existe alguma dependência que não foi satisfeita.
+    If a build error occurs, you should check the path of `CROSS_COMPILE` or if there is a dependency that has not been met.
 
-Esse comando faz com que o kernel do linux seja compilado em uma versão compactada que é auto-extraída. Outras opções seriam :
+This command causes the Linux kernel to be compiled into a compressed version that is self-extracting. Other options would be:
 
-- Image : Binário do kernel
-- zImage: versão compactada que possui *self-extracting*
-- uImage: uma versão que já possui o bootloader uboot
+- Image: Kernel binary
+- zImage: compressed version that has *self-extracting*
+- uImage: a version that already has the uboot bootloader
 
 1^: https://stackoverflow.com/questions/22322304/image-vs-zimage-vs-uimage 
 
-!!! tip "Kernel compilado"
-    o zImage é salvo em:
+!!! tip "Compiled Kernel"
+    The zImage is saved in:
 
     - `arch/arm/boot/zImage`
 
 !!! note "zImage"
-    Esse arquivo é o binário que contém o kernel do linux e será executado no sistema embarcado.
+    This file is the binary that contains the Linux kernel and will be executed on the embedded system.
  
-!!! tip "Atualizando o SDCARD"
-    Agora devemos atualizar o kernel que está no SDCard, para isso basta:
+## Testing 
+  
+Now we need to update the kernel that is on the SDCard so we can test if it is working.
+ 
+!!! exercise "Updating the SDCARD"
     
-    1. inserir o sdcard no pc
-    1. montar a partição 1
-    1. substituir o zImage que está no SDCARD pelo o gerado dentro da pata `arch/arm/boot/zImage`
-    1. ejetar o sdcard ou executar o comando `sync`
-    1. coloque o SDCARD na placa e ligar a FPGA
+    1. insert the sdcard into the pc
+    1. mount partition 1
+    1. replace the zImage that is on the SDCARD by the one generated inside the `arch/arm/boot/zImage` folder
+    1. eject the sdcard or execute the `sync` command
+    1. put the SDCARD in the board and turn on the FPGA
 
-## Executando
-
-Para verificar se tudo está certo, basta colocar o cartão de memória no kit e verificar a versão do kernel em execução:
+To check if everything is correct, just put the memory card in the kit and check the version of the running kernel:
 
 ```bash
 $ uname -a
 Linux buildroot 4.14.0 #1 SMP Mon Jul 16 21:22:58 -03 2018 armv7l GNU/Linux
 ```
 
-## Mouse/ Teclado?
+## Mouse/ Keyboard?
 
-Mouse e teclado funcionam de imediato? Tentei plugar um mouse USB na placa, ele é reconhecido pelo Linux? Não deveria. Para funcionar você deve voltar nas configurações do kernel do linux e inserir os drivers que gereciam USB e HID. Compilar, substituit o zImage no sdcard e testar novamente.
+Do mouse and keyboard work right away? Try plugging a USB mouse into the board, is it recognized by Linux? It shouldn't be. To work you should go back to the Linux kernel settings and insert the drivers that manage USB and HID. Compile, replace the zImage on the sdcard and test again.
 
-!!! info "Como verificar se o mouse está funcionando?"
-    1. Digite 'lsusb', ele deve mostrar que reconheceu um mouse
-    1. Após conectar o mouse, digite `tail dmesg`, ele deve mostrar que reconheceu um novo device USB e que associou ele com um mouse
-    1. O mouse no linux é montado em `/dev/input/mice`, para ver se está funcionando você pode executar: `cat /dev/input/mice`, mexa o mouse para ver se aparece alguma coisa na tela
+!!! info "How to check if the mouse is working?"
+    1. Type 'lsusb', it should show that it recognized a mouse
+    1. After connecting the mouse, type `tail dmesg`, it should show that it recognized a new USB device and associated it with a mouse
+    1. The mouse in linux is mounted on `/dev/input/mice`, to see if it is working you can execute: `cat /dev/input/mice`, move the mouse to see if anything appears on the screen
 
 !!! tip "Human Interface Devices (HID)"
-    HID é um tipo de dispositivo reconhecido pelo Kenel do Linux como um dispositivo de interface com o usuário, esse tipo de dispositivo é normalmente reconhecido automaticamente pelos kernels, poís eles implementam um padão de comunicação.
+    HID is a type of device recognized by the Linux Kernel as a user interface device, this type of device is usually automatically recognized by the kernels, as they implement a communication standard.
     
     - https://www.kernel.org/doc/html/latest/hid/index.html
     
-    O USB também possui uma classificação de dispositivos do tipo HID, que facilita o uso dos mesmos pelo kernel:
+    USB also has a classification of HID type devices, which facilitates their use by the kernel:
     
     - https://en.wikipedia.org/wiki/USB_human_interface_device_class

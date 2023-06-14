@@ -1,28 +1,27 @@
-# Visão geral
+# Overview
 
-A FPGA contida no kit DE10-Standard é um chip SoC que em um único dispositivo possui dois hardwares distintos: uma FPGA e um Hardware Process System (HPS). HPS é o termo utilizado pela Intel-Altera para definir a unidade de processamento, que no caso do nosso chip é um processador ARM A9 (pode ser outro ARM, depende da família da FPGA).
- 
+The FPGA contained in the DE10-Standard kit is a SoC chip that has two distinct hardwares in a single device: an FPGA and a Hardware Process System (HPS). HPS is the term used by Intel-Altera to define the processing unit, which in our chip is an ARM A9 processor (which can be another ARM depending on the FPGA family).
+
 ![](figs/Tutorial-HPS-SoC.png)
 
-O HPS possui uma unidade de processamento com um ou dois Cores (depende do chip, no nosso caso é **dual core**) e alguns periféricos conectados em seu barramento (DMA, UART, USB, EMACS, ...). Além dos periféricos já contidos no HPS é possível conectarmos novos periféricos sintetizados na FPGA via a interface **HPS FPGA Interfaces**.
-
+The HPS has a processing unit with one or two cores (depending on the chip, in our case it is dual core) and some peripherals connected to its bus (DMA, UART, USB, EMACS, ...). In addition to the peripherals already included in the HPS, it is possible to connect new peripherals synthesized in the FPGA via the **HPS FPGA Interfaces**.
 
 !!! exercise
-    Dar uma olhada no documento oficial da Intel: [1 Introduction to Cyclone V Hard Processor System (HPS)](https://people.ece.cornell.edu/land/courses/ece5760/DE1_SOC/HPS_INTRO_54001.pdf)
+    Take a look at Intel's official document: [1 Introduction to Cyclone V Hard Processor System (HPS)](https://people.ece.cornell.edu/land/courses/ece5760/DE1_SOC/HPS_INTRO_54001.pdf)
 
-## Família de FPGAs
+## FPGA Families
 
-A Altera possui quatro famílias de [FPGAs-SoC](https://www.intel.com/content/www/us/en/products/programmable/soc.html):
+Altera has four families of [FPGAs-SoC](https://www.intel.com/content/www/us/en/products/programmable/soc.html):
 
-- Stratix 10 SoC: High end, 14nm com ARM-Cortex-A53 de 64bits quad-core
-- Arria 10 SoC: 20nm, Cortex A9 duas core com grande capacidade na FPGA
-    - Temos um kit no lab
-- Arria V SoC: 28nm, Cortex A9 com foco em telecomunicações 
-- **Cyclone V SoC**: Família low end com valor mais baixo e mais low power.
+- Stratix 10 SoC: High end, 14nm with ARM-Cortex-A53 64-bit quad-core
+- Arria 10 SoC: 20nm, Cortex A9 dual-core with high FPGA capacity 
+    - We have a kit in the lab
+- Arria V SoC: 28nm, Cortex A9 focused on telecommunications
+- **Cyclone V SoC**: Low-end family with lower value and lower power.
 
 ## Cortex A9
 
-O Cortex A9 existente no HPS da Cyclone V possui as características a seguir (extraído do [datasheet](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_5v2.pdf)):
+The Cortex A9 in the Cyclone V HPS has the following characteristics (taken from the [datasheet](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_5v2.pdf)):
 
 - ARM Cortex-A9 MPCore
    - One or two ARM Cortex-A9 processors in a cluster
@@ -37,43 +36,43 @@ O Cortex A9 existente no HPS da Cyclone V possui as características a seguir (e
 - ARM L2-310 level 2 (L2) cache
    - Shared 512 KB L2 cache
 
-A seguir um diagrama detalhado do HPS: 
+Below is a detailed diagram of the HPS:
 
 ![](figs/Tutorial-HPS-SoC-detalhado.png)
 
-## Conexão entre HPS e FPGA
+## Connection between HPS and FPGA
 
-Note que existe no diagrama anterior algumas interfaces definidas no "FPGA Portion", essas interfaces permitem a ponte entre o *Fabric* da FPGA e o ARM hard core do chip. As interfaces são, resumidamente:
+Note that in the previous diagram, there are some interfaces defined in the "FPGA Portion". These interfaces allow the bridge between the FPGA Fabric and the ARM hard core of the chip. The interfaces are, briefly:
 
-- FPGA to HPS: Barramento na qual um **Master** na FPGA (Platform Designer) acessa o ARM
-- HPS to FPGA: Barramento pelo qual o ARM acessa um periférico (slave) na FPGA
-- Lightweight HPS to FPGA: Barramento de menor banda que conecta o ARM em um periférico na FPGA (slave)
-- 1-6 Masters SDRAM Controller: Permite a FPGA ler e escrever da memória SDRAM externa ao chip
+- FPGA to HPS: Bus on which a **Master** on the FPGA (Platform Designer) accesses the ARM
+- HPS to FPGA: Bus through which ARM accesses a peripheral (slave) on the FPGA
+- Lightweight HPS to FPGA: Bus with lower bandwidth that connects ARM to a peripheral on the FPGA (slave)
+- 1-6 Masters SDRAM Controller: Allows the FPGA to read and write to the external SDRAM memory of the chip
  
 ### AXI
 
-Os barramentos são todos do tipo [AXI](https://en.wikipedia.org/wiki/Advanced_Microcontroller_Bus_Architecture), um padrão definido pela própria ARM e usada em seus microcontroladores. 
+The buses are all of the type [AXI](https://en.wikipedia.org/wiki/Advanced_Microcontroller_Bus_Architecture), a standard defined by ARM and used in its microcontrollers. 
 
 !!! note "AXI - AVALON"
-    Via Platform Designer podemos conectar periféricos com o barramento Avalon (mm) no barramento AXI do ARM, isso é possível por uma "mágica" que a PD faz convertendo um barramento no outro de forma transparente ao usuário.
+    Via Platform Designer, we can connect peripherals with the Avalon (mm) bus to the ARM's AXI bus, which is possible due to a “magic” that PD performs by converting one bus to the other transparently to the user.
 
 ### SDRAM
 
-A SDRAM deve ser usada com muita cautela, pois ela será compartilhada com o Linux que estará em execução no ARM, caso um periférico da FPGA acesse "aleatoriamente" a memória SDRAM ele pode sobrescrever dados importantes do kernel e pode causar falhar em todo sistema. Essa alocação deve ser realizada no boot do Linux onde iremos dizer qual região de memória o kernel pode utilizar. 
+SDRAM should be used with caution, as it will be shared with Linux running on ARM. If an FPGA peripheral accesses SDRAM "randomly," it can overwrite important kernel data and cause system failures. This allocation should be made at Linux boot, where we will tell which memory region the kernel can use.
 
 !!! note 
-    Essa memória que é acessível tanto pelo Linux quanto pela FPGA é uma boa maneira de compartilhamento de dados a serem processados.  
+    This memory accessible by both Linux and FPGA is a good way of sharing data to be processed.
 
-## Aplicações
+## Applications
 
-Agora é possível unir o melhor dos dois mundos: flexibilidade e paralelismo da FPGA com o melhor dos processadores embarcados: o ARM. 
+Now it is possible to combine the best of both worlds: FPGA flexibility and parallelism with the best of embedded processors: ARM.
 
-Vamos fazer um exercício mental e imaginar uma aplicação que irá processar uma imagem em um sistema embarcada, com o SoC podemos fazer que a imagem seja processada pela FPGA de modo a aumentar o throughtput do sistema. Essa imagem seria lida, por exemplo, por uma câmera USB conectada no HPS (ARM), como geralmente o HPS executa um Linux, temos facilidade de acesso ao driver desse dispositivo.
+Let's do a mental exercise and imagine an application that will process an image on an embedded system. With the SoC, we can have the image processed by the FPGA in order to increase the throughput of the system. This image would be read, for example, by a USB camera connected to the HPS (ARM). Since the HPS usually runs Linux, we have easy access to the driver for this device.
 
-A imagem será então lida via o driver e alocada na memória SDRAM, o endereço da memória assim como as propriedades do processamento serão transferidas para um periférico customizado no Fabric da FPGA via a interface LT-AXI. O periférico que está em modo wait, após ser configurado, começa a ler a imagem na memória SDRAM, processar e salvar o resultado na própria memória. Ao final da conversão uma interrupção é gerada e o Linux irá tratar o dado.
+The image will then be read via the driver and allocated in SDRAM, the memory address as well as the processing properties will be transferred to a custom peripheral in the Fabric of the FPGA via the LT-AXI interface. The peripheral that is in wait mode, after being configured, starts reading the image in SDRAM, processing it, and saving the result in its own memory. At the end of the conversion, an interruption is generated and Linux will handle the data.
 
-Enquanto o periférico processa a imagem, a aplicação pode de forma concorrente, ler uma nova imagem e já alocar em um novo endereço de memória, pois o processamento e a aquisição agora funcionam de forma simultânea. Isso é chamado de *buffer ping-pong*.
+While the peripheral processes the image, the application can concurrently read a new image and allocate it to a new memory address, as the processing and acquisition now work simultaneously. This is called *ping-pong buffer*.
 
-## Próximos passos
+## Next steps
 
-Vamos agora executar um Linux no ARM, iremos nesse momento trabalhar com uma imagem já pronta e fornecida pelo fabricante do kit. Siga para o próximo tutorial, onde iremos configurar nossa infra para podermos gerar códigos para o ARM.
+Now let's run Linux on the ARM. At this point, we'll work with an image that's already provided by the kit manufacturer. Go to the next tutorial, where we will configure our infrastructure to be able to generate code for ARM.

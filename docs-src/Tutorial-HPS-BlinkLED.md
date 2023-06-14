@@ -1,54 +1,51 @@
 # ARM BlinkLED
 
-
-Nesse tutorial iremos compilar um programa para o HPS (Arm Cortex A) que será capaz de controlar os LEDs e ler os botões da placa que estão conectados ao HPS.
+In this tutorial, we will compile a program for the HPS (Arm Cortex A) that will be able to control the LEDs and read the buttons on the board that are connected to the HPS.
 
 ![](figs/DE10-Standard-blockdiagram.jpg)
 
-Note pelo diagrama anterior extraído do manual do usuário, existem LEDs e botões conectados diretamente ao HPS, e outros conectados a FPGA. Duas são as possíveis abordagens para programarmos o HPS: 
+Notice from the previous diagram extracted from the user manual, there are LEDs and buttons directly connected to the HPS, and others connected to the FPGA. There are two possible approaches to programming the HPS:
 
 ## baremetal
 
-Faríamos um programa que seria executado no ARM HPS sem nenhum sistema operacional. Como detalhado no diagrama:
+We would create a program that would run on the ARM HPS without any operating system. As detailed in the diagram:
 
 ![](figs/Tutorial-HPS-BlinkLed-baremetal.jpg)
 
 !!! note ""
     - [Altera Bare Metal User Guide](https://www.intel.com/content/www/us/en/programmable/documentation/lro1424280108409.html)
 
-Nessa maneira a aplicação deve ser capaz de realizar toda a inicialização de HW necessária para que o processador rode corretamente. Se a aplicação for executada sobre um sistema operacional, toda essa etapa é de compilação é responsabilidade do SO. Para isso é aconselhável utilizar a IDE da ARM chamada de [DS-5](https://developer.arm.com/tools-and-software/embedded/legacy-tools/ds-5-development-studio)
+In this way, the application must be able to perform all the necessary HW initialization for the processor to run correctly. If the application is executed on an operating system, this entire compilation stage is the responsibility of the OS. For this, it is advisable to use the ARM IDE called [DS-5](https://developer.arm.com/tools-and-software/embedded/legacy-tools/ds-5-development-studio)
 
-## Sistema operacional
+## Operating System
 
-Diversas são as alternativas de sistema operacional para embarcado, tudo irá depender da especificação da aplicação. É necessário saber se existem requisitos de tempo real, se sim, deve-se considerar utilizar um RTOS ou algum sistema operacional com essa funcionalidade (existe um patch no kernel do linux que o torna mais ou menos real time). Se é uma aplicação que demanda rede, vídeo, processamento de dados, é de se considerar utilizar um Linux (Android), já que existem ferramentas que facilitam o  desenvolvimento de aplicações nessa plataforma (já tem muita coisa pronta e uma comunidade gigantesca).
+There are several alternatives for embedded operating systems, everything will depend on the application specification. It is necessary to know if there are real-time requirements, if so, consider using an RTOS or some operating system with this functionality (there is a patch in the Linux kernel that makes it more or less real-time). If it is an application that requires network, video, data processing, it is worth considering using a Linux (Android), as there are tools that facilitate application development on this platform (there is a lot already done and a gigantic community).
 
-Com o uso de um sistema operacional a parte referente ao HW é responsabilidade do kernel (ou dos desenvolvedores que estão adequando o kernel ao HW, que é o nosso caso). Diversos são os ganhos de utilizar um sistema operacional do tipo Linux, podemos listar algumas
+With the use of an operating system, the part referring to HW is the responsibility of the kernel (or the developers who are adapting the kernel to HW, which is our case). There are several gains from using a Linux-type operating system, we can list some:
 
 - Device drivers 
-- Portabilidade
-- Segurança
-- Rede
+- Portability
+- Security
+- Network
 
- As perdas também são grandes: maior ocupação de memória, maior latências, **boot lento**...
+The losses are also significant: greater memory occupation, greater latencies, **slow boot**...
 
-### Software pisca led
+### Blink LED Software
 
-Iremos compilar um programa e executar no Linux Embarcado, esse programa será executado no [user space](http://www.linfo.org/kernel_space.html). Para isso iremos vamos usar a toolchain do [tutorial anterior](Tutorial-HPS-BuildSystem).
+We will compile a program and run it on Embedded Linux, this program will be executed in the [user space](http://www.linfo.org/kernel_space.html). For this, we will use the toolchain from the [previous tutorial](Tutorial-HPS-BuildSystem). We will use as a basis the example code from Terasic available in the repository: [DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC/my_first_hps](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/my_first_hps). And cross-compile this code for our HPS using the Makefile in the folder.
 
-Iremos utilizar como base o código exemplo da Terasic disponível no repositório: [DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC/my_first_hps](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/my_first_hps). E crosscopilar esse código para o nosso HPS utilizando o Makefile da pasta.
+### About the program
 
-### Sobre o programa
-
-Esse programa controla um LED que está conectado na parte do ARM do chip:
+This program controls an LED that is connected to the ARM part of the chip:
 
 ![](figs/Tutorial-HPS-SoC:io.png)
 ![](figs/Tutorial-HPS-SoC:io2.png)
 
-Os pinos são controlados pelo [periférico GPIO](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_54006.pdf) do HPS (ARM), para isso é necessário acessar esse periférico do Linux, isso é feito de maneira similar como fazíamos em Computação Embarcada, um ponteiro que aponta para a região de memória do componente e configura seus registradores:
+The pins are controlled by the [GPIO peripheral](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_54006.pdf) of the HPS (ARM), for this it is necessary to access this peripheral from Linux, this is done in a similar way as we did in Embedded Computing, a pointer that points to the memory region of the component and configures its registers:
 
 ![](figs/Tutorial-HPS-SoC:gpio.png)
 
-Em sistemas baremetal podemos simplesmente criar um ponteiro que aponta para a região de memória que desejamos alterar, no linux não podemos fazer isso de forma direta (via userspace) pois os sistemas operacionais trabalham com mapa de memórias onde o endereço 'virtual' não representa o endereço real (lembre de Sys-HW-SW). No linux, para termos acesso a memória real devemos mapear a memória real na virtual usando o comando `mmap`:
+In baremetal systems, we can simply create a pointer that points to the memory region we want to change, in Linux we cannot do this directly (via userspace) as operating systems work with memory maps where the 'virtual' address does not represent the real address (remember Sys-HW-SW). In Linux, to access real memory we must map real memory to virtual using the `mmap` command:
 
 ```c
 int main(int argc, char **argv) {
@@ -65,7 +62,7 @@ int main(int argc, char **argv) {
 	virtual_base = mmap( NULL, HW_REGS_SPAN, ( PROT_READ | PROT_WRITE ), MAP_SHARED, fd, HW_REGS_BASE );
 ```
 
-Agora o ponteiro `virtual_base` aponta para o periférico GPIO, e podemos manipular esse endereço igual fazíamos em Computação Embarcada.
+Now that the `virtual_base` pointer points to the GPIO peripheral, and we can manipulate this address just like we did in Embedded Computing:
 
 ```c
 while(1){
@@ -78,15 +75,15 @@ while(1){
 ```
 
 !!! note
-    Esse Makefile só funciona porque configuramos o nosso bashrc com as variáveis de sistemas que ele utiliza.
-    Por exemplo, a linha `SOCEDS_ROOT ?= $(SOCEDS_DEST_ROOT)` usa a variável `SOCEDS_DEST_ROOT` que foi configurara no tutorial anterior, assim como o `arm-linux-gnueabihf-`...
+    This Makefile only works because we configured our `bashrc` with the system variables it uses.
+    For example, the line `SOCEDS_ROOT ?= $(SOCEDS_DEST_ROOT)` uses the variable `SOCEDS_DEST_ROOT` that was configured in the previous tutorial, as well as the `arm-linux-gnueabihf-`...
 
-!!! example "Tarefa"
-    1. clone o repositório: https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD
-    1. entre na pasta `Demonstration/SoC/hps_gpio`
-    1. execute o comando `make`
+!!! exercise "Task"
+    1. Clone the repository: https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD
+    1. Enter the folder `Demonstration/SoC/hps_gpio`
+    1. Execute the command `make`
     
-    Resultado esperado:
+    Expected result:
     
     ```
     arm-linux-gnueabihf-gcc -g -Wall   -Dsoc_cv_av
@@ -96,7 +93,7 @@ while(1){
     arm-linux-gnueabihf-gcc -g -Wall    main.o -o my_first_hps 
     ```
     
-    Se obter algo como:
+    If you get something like:
     
     ```
     make: arm-linux-gnueabihf-gcc: Command not found
@@ -104,48 +101,42 @@ while(1){
     make: *** [main.o] Error 127
     ```
     
-    É porque você não configurou corretamente o gcc na etapa anterior.
+    It's because you didn't correctly configure gcc in the previous step.
 
-### Executando no `target`
+### Running on `target`
 
-Agora basta  copiar o binário criado pela compilação para o cartão de memória e testar o nosso programa no `target` (HPS).
-
-Com o cartão de memória no `host` (seu computador) copie o arquivo binário: `hps_gpio` para a pasta: `/home/root/` do cartão de memória. Note que existem duas partições, você deve copiar para aquela que possui o `root`.
+Now just copy the binary created by the compilation to the memory card and test our program on the `target` (HPS). With the memory card on the `host` (your computer), copy the binary file: `hps_gpio` to the folder: `/home/root/` on the memory card. Note that there are two partitions, you should copy to the one that has the `root`.
 
 !!! note
-    Talvez você tenha que copiar usando sudo, no meu caso eu executo:
+    You may have to copy using sudo, in my case I run:
     
     ```
     $ sudo cp hps_gpio /media/corsi/847f4797-311c-4286-8370-9d5573b201d7/home/root 
     ```
 
 !!! note
-    Sempre que manipular um dispositivo de memória externo, é aconselhável fazer um flush do cache para forçar o linux alterar o dispositivo externo, caso contrário a alteração poderá ficar só na memória local ao PC.
+    Whenever you handle an external memory device, it is advisable to flush the cache to force Linux to change the external device, otherwise the change may only stay in the local memory to the PC.
 
     ```bash
     $ sync
     ```
     
-    > A função sync é blocante, ficará travada enquanto o linux faz o flush dos dados.
+    > The sync function is blocking, it will be locked while Linux flushes the data.
 
-!!! example "Tarefas"
-    1. Coloque o SDCARD de volta na fpga.
-    1. Acesse via terminal e execute o programa (`/home/root/hps_gpio`) com o comando `./hps_gpio`.
-    1. O `HPS User LED` da Intel FPGA deverá piscar duas vezes inicialmente, após isto ele acenderá conforme o usuário clicar no botão `HPS User Button`.
+!!! exercise "Task"
+    1. Put the SDCARD back in the FPGA.
+    1. Access via terminal and run the program (`/home/root/hps_gpio`) with the command `./hps_gpio`.
+    1. The `HPS User LED` of the Intel FPGA should flash twice initially, after this it will light up as the user clicks on the `HPS User Button`.
        
-### Praticando
+!!! exercise "Practicting"
+    Make the program read the button only twice, and after that end the application!
 
-Para praticar um pouco.
+### Development Flow
 
-!!! example "Tarefa"
-    - Faça o programa ler apenas duas vezes o botão, e depois disso terminar a aplicação!
+This development flow isn't the best, right? It's good to program on the `host`, but this scheme of having to keep removing and inserting memory cards, waiting for the target's Linux to boot, logging in, and testing is not good for anyone. There are several solutions to improve this, each with its advantage/disadvantage:
 
-### Fluxo de desenvolvimento
+- build on the target itself (bad for the programmer, great for dependencies, easy to debug, slow)
+- create an ARM VM and compile on it (good for the programmer, great for dependencies, +- easy to debug, fast, hard to configure)
+- cross-compile (good for the programmer, bad for dependencies, hard to debug, fast)
 
-Esse fluxo de desenvolvimento não é dos melhores né? É bom programar no `host`, mas esse esquema de ter que ficar tirando e colocando cartão de memória, esperar o linux do target subir, logar e testar não faz bem para ninguém. Existem várias soluções para melhorar isso, cada qual com sua vantagem/desvantagem:
-
-- build no próprio target (ruim para o programador, ótimo para dependências, fácil de debugar, lento)
-- criar uma vmw arm e compilar nela (bom para o programador, ótimo para dependências, +- fácil de debugar, rápido, difícil de configurar)
-- crosscompilar (bom para o programador, ruim para dependências, difícil de debugar, rápido)
-
-Na entrega 1 vamos aprimorar nosso sistema de compilação e testes. 
+==In Assigment 1 we will improve our compilation and testing system.==
