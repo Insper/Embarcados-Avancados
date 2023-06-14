@@ -1,68 +1,64 @@
-# SoC e Linux Embarcado
+# SoC and Embedded Linux
 
-[![](https://camo.githubusercontent.com/31cbef310a2a8d91eeccb737c5d968223a7d1575/68747470733a2f2f7777772e696e737065722e6564752e62722f77702d636f6e74656e742f7468656d65732f696e737065722f646973742f696d6167652f6c6f676f2e706e67)](http://www.insper.edu.br)
+- **Course:** Elective for Computer Engineering
+- **Track:** Solutions Architecture
+- **Prof.:** Rafael Corsi / rafael.corsi@insper.edu.br
+- **Repository:** [http:/github.com/insper/Embarcados-Avancados](http:/github.com/insper/Embarcados-Avancados)
+- **Location:** Computer Architecture Laboratory 
 
-- **Disciplina:** Eletiva da Engenharia da Computação
-- **Trilha:** Arquitetura de Soluções
-- **Prof.** Rafael Corsi / rafael.corsi@insper.edu.br
-- **Repositório:** [http:/github.com/insper/Embarcados-Avancados](http:/github.com/insper/Embarcados-Avancados)
-- **Local:** Laboratório de Arquitetura de Computadores
-
-**© Todos os direitos reservados**
+**© All rights reserved**
 
 ---
 
-## OBJETIVOS:
+## OBJECTIVES:
 
-1. Formular soluções que satisfazem requisitos de hardware e software de projetos com FPGA-SoC (System-on-a-chip)
-2. Integrar em um protótipo solução para um sistema embarcado com requisitos de processamento e/ou tempo real via FPGA-SoC
-3. Interfacear diferentes módulos em um sistema embarcado (processadores, firmware e sistema operacional)
+1. Formulate solutions that meet hardware and software requirements for projects with FPGA-SoC (System-on-a-chip)
+2. Integrate a prototype solution for an embedded system with processing and/or real-time requirements via FPGA-SoC
+3. Interface different modules in an embedded system (processors, firmware, and operating systems)
 
-## Metodologia
+## Methodology
 
-A disciplina é baseada em tutoriais, onde os conceitos teóricos e práticos são apresentados. O aluno deve seguir o material conforme é apresentado (na sequência) pois o mesmo foi concebido de maneira incremental. Cada tutorial (ou série de) possui uma entrega (APS) que deve ser realizada, o tutorial é ponto de entrada para a entrega, porém vai além em compreensão e conceitos.
+The course is based on tutorials where theoretical and practical concepts are presented. The student must follow the material as presented (in sequence) as it was designed incrementally. Each tutorial (or series of tutorials) has an assignment (APS) to be done, and the tutorial is the entry point for the assignment, but it also goes beyond in understanding and concepts.
 
-## Avaliação
+## Evaluation
 
-A avaliação é composta de entregas ao longo do semestre (a cada série de
-tutoriais existe uma entrega com nota) e de um tutorial que deve ser criado ao longo da disciplina e integrado na página do curso. O tutorial é de tema livre dentro dos objetivos da disciplina e possui algumas entregas intermediárias que irão compor a nota final.
+The evaluation consists of assignments throughout the semester (each series of tutorials has an assignment with a grade) and a tutorial that must be created throughout the course and integrated into the course page. The tutorial is a free theme within the objectives of the course and has some intermediate assignments that will compose the final grade.
 
-## Motivação
+## Motivation
 
-- O que é um [System On Chip (SoC)](https://en.wikipedia.org/wiki/System_on_a_chip)?
-- Quem são os principal fabricantes de SoC?
+- What is a [System On Chip (SoC)](https://en.wikipedia.org/wiki/System_on_a_chip)?
+- Who are the main SoC manufacturers?
   - [Samsung](https://en.wikipedia.org/wiki/List_of_Samsung_system-on-a-chips) / [Qualcomm](<https://en.wikipedia.org/wiki/List_of_Qualcomm_Snapdragon_systems-on-chip#Qualcomm_205,_Snapdragon_208,_210_and_212_(2014-17)>) / [Xilinx](https://www.xilinx.com/products/silicon-devices/soc.html) / [Intel FPGA](https://www.intel.com/content/www/us/en/products/programmable.html)
-- Áreas / Aplicações:
-  - [macbook pro](https://www.redsharknews.com/technology/item/6408-apple-s-mac-pro-afterburner-what-just-happened) / [aws f1](https://aws.amazon.com/ec2/instance-types/f1/) / [Intel 1](https://www.intel.com/content/www/us/en/products/programmable.html) / [Intel 2](http://www.innovatefpga.com) / [xilinx](https://www.xilinx.com/applications.html)
-- Qual a diferença entre [Soft-Processor](https://www.intel.com/content/www/us/en/products/programmable/processor/nios-ii.html)
-  e um HardProcessor?
+- Areas / Applications:
+  - [Macbook Pro](https://www.redsharknews.com/technology/item/6408-apple-s-mac-pro-afterburner-what-just-happened)/ [aws f1](https://aws.amazon.com/ec2/instance-types/f1/) / [Intel 1](https://www.intel.com/content/www/us/en/products/programmable.html) / [Intel 2](http://www.innovatefpga.com) / [Xilinx](https://www.xilinx.com/applications.html)
+- What is the difference between [Soft-Processor](https://www.intel.com/content/www/us/en/products/programmable/processor/nios-ii.html) and a HardProcessor?
 - [x86 + FPGA ?](https://www.anandtech.com/show/12773/intel-shows-xeon-scalable-gold-6138p-with-integrated-fpga-shipping-to-vendors)
-- Empregos? A qual desses você se aplicaria ?
-  - [facebook](https://www.glassdoor.com.br/Vagas/Facebook-fpga-Vagas-EI_IE40772.0,8_KO9,13.htm?countryRedirect=true) / [google](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=google%20fpga&location=Mundialmente) / [apple](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=apple%20fpga&location=Mundialmente) / [microsoft](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=microsoft%20fpga&location=Mundialmente) / [amazon](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=amazon%20fpga&location=Mundialmente)
-- Como usar o hardware a serviço do software?
+- Jobs? Which one would you apply for?
+  - [Facebook](https://www.glassdoor.com.br/Vagas/Facebook-fpga-Vagas-EI_IE40772.0,8_KO9,13.htm?countryRedirect=true) / [Google](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=google%20fpga&location=Mundialmente) / [Apple](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=apple%20fpga&location=Mundialmente) / [Microsoft](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=microsoft%20fpga&location=Mundialmente) / [Amazon](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=amazon%20fpga&location=Mundialmente)
+- How to use hardware in service of software?
   [HLS](https://www.intel.com/content/www/us/en/software/programmable/quartus-prime/hls-compiler.html)
   /
   [OpenCL](https://www.intel.com/content/www/us/en/software/programmable/sdk-for-opencl/overview.html)
 
-## Infraestrutura
+## Infrastructure
 
-Para facilitar o andamento do curso, estamos enviando um SSD com os softwares listados [aqui](/info-FPGA-e-Softwares). Iremos com o kit [DE10-Standard](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1081).
+To facilitate the course progress, we  an SSD with the listed software [here](/info-FPGA-e-Softwares). We will use the [DE10-Standard](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1081) kit.
 
-## Dinâmica
+## Dynamics
 
-A disciplina é baseada em uma série de tutoriais (com entregas ao final) que começa a partir de um simples hardware na FPGA para controlar LEDs da placa e chega até a execução de um sistema Linux com interface gráfica e co-processamento em um sistema embarcado.
+The course is based on a series of tutorials (with assignments) that starts from a simple hardware on the FPGA to control the board's LEDs and goes up to running a Linux system with graphical interface and co-processing on an embedded system.
 
-## Bibliografia
+## Bibliography
 
-Muito dos livros estão disponíveis no laboratório de Arquitetura de Computadores.
+Many of the books are available in the Computer Architecture Laboratory.
 
-Básica:
+Basic:
 
   - [HALLINAN, 2007] HALLINAN, C. Embedded Linux primer: a practical, real-world approach. Pearson Education India, 2007.
   - [DESCHAMPS, 2012] DESCHAMPS, J. P.; SUTTER, G. D.; CANTÓ E. Guide to FPGA implementation of arithmetic functions. Springer Science & Business Media; 2012, Apr 5.
   - [CHU, 2011] CHU, PONG P. Embedded SoPC design with Nios II processor and VHDL examples. John Wiley & Sons, 2011.
 
-Complementar:
+Complementary:
 
   - [SASS, 2010] SASS, R., SCHMIDT, A.G.; Embedded Systems Design with Platform FPGAs: Principles and Practices. Elsevier, 2010.
   - [BOVET, 2005] Bovet, Daniel P., and Marco Cesati. Understanding the Linux Kernel: from I/O ports to process management. " O'Reilly Media, Inc.", 2005.
@@ -70,13 +66,13 @@ Complementar:
   - [KOOPMAN, 2010] Koopman, Philip. Better Embedded System Software. Drumnadrochit Education, 2010.
   - [VENKATESWARAN, 2008] Venkateswaran, Sreekrishnan. Essential Linux device drivers. Prentice Hall Press, 2008.
 
-## Para começar
+## To get started
 
-1. Ter uma máquina com Linux (pode ser VM)
-1. Criar um repositório no github [pelo link](https://classroom.github.com/a/fGUME066)
-1. Pensar um pouco sobre um tema que gostaria de se aprofundar (para o tutorial)
-   - :point_right: [Dicas](Projeto-Overview)
-   - De ma olhada nos tutoriais passados:
-1. Leitura recomendada:
+1. Have a Linux machine (can be VM)
+1. Create a repository on Github [by clicking here](https://classroom.github.com/a/fGUME066)
+1. Think a little about a theme to delve into (for tutorial)
+   - :point_right: [Tips](Projeto-Overview)
+   - Take a look at past tutorials:
+1. Recommended reading:
    - https://www.intel.com/content/www/us/en/products/programmable/fpga/new-to-fpgas/resource-center/overview.html
-   - Disponível no lab: [CHU, 2011, cap. 1], [KOOPMAN, 2010, cap. 2]
+   - Available in the lab: [CHU, 2011, cap. 1], [KOOPMAN, 2010, cap. 2]# SoC and Embedded Linux

@@ -1,44 +1,43 @@
-# Linux embarcado
+# Embedded Linux
 
 !!! danger
-     Nesse tutorial mexemos com gravação de disco, se errar o dispositivo pode corromper seus arquivos!!!
-     
-Vamos nessa etapa executar um linux de exemplo fornecido pela Terasic, para isso, será necessário programarmos um SDcard com a imagem. Vamos executar os seguintes passos para isso:
+    In this tutorial, we are working with disk writing; if you choose the wrong device, you might corrupt your files!!!
 
-1. Download e gravar a Imagem da Teraisc (`.iso`) no SDcard
-1. Insira o SDCard na FPGA
-1. Conecte o USB na porta UART (perto da porta Ethernet)
-1. Conecte a alimentação
-1. Conecte-se ao terminal via UART
-1. Executar comandos
+In this step, we will execute a sample Linux provided by Terasic. For this, we will need to program an SD card with the image. Let's perform the following steps for this:
 
-## Começando
+1. Download and write the Terasic Image (`.iso`) to the SD card
+2. Insert the SD card into the FPGA
+3. Connect the USB to the UART port (near the Ethernet port)
+4. Connect the power supply
+5. Connect to the terminal via UART
+6. Run commands
 
-Para seguir esse tutorial é necessário:
+## Getting Started
 
-- **Hardware:** DE10-Standard e SDCard
-- **Softwares:** Quartus 18.01
-- **Entrega no git**: pasta`Lab1_HPS_Infra`
+To follow this tutorial, you will need:
 
-## Imagem padrão (sdcard) 
+- **Hardware:** DE10-Standard and SD card
+- **Software:** Quartus 18.01
+- **Git submission:** folder `Lab1_HPS_Infra`
 
-Utilizaremos uma imagem (`.iso`) já gerada para o ARM da placa e que já possui todo o sistema necessário para executar o linux no HPS (incluindo boot loader, kernel e filesystem), essa imagem foi criada com a distribuição [Linaro](https://www.linaro.org/).
+## Standard Image (SD card)
 
-!!! note "Download"
-    Faça o download da imagem **Linux Console (Kernel 4.5)** do site da terasic:
-    - ["Linux BSP (Board Support Package): MicroSD Card Image"](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=205&No=1081&PartNo=4)
-    
-Extraia o arquio `de10_standard_linux_console.img` do arquivo zipado, esse `.img` é uma cópia bit a bit do que deve ser salvo no SDCard. Agora temos que copiar o `img` para o cartão de memória.
+We will use an already generated image (`.iso`) for the board's ARM, which already has the entire system necessary to run Linux on the HPS (including bootloader, kernel, and filesystem). This image was created with the [Linaro](https://www.linaro.org/) distribution.
 
-!!! note ""
-    Insira o cartão de memória no computador
-    
-    - Use o adaptador fornecido.
+!!! exercise "Download"
+    Download the **Linux Console (Kernel 4.5)** image from the Terasic website:
+   
+    - [Linux BSP (Board Support Package): MicroSD Card Image](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=205&No=1081&PartNo=4)
 
-Quando inserirmos um disco externo no linux o mesmo o associa a um 'device' na pasta `/dev/`, para sabermos qual o nome do device que foi atribuído ao SDcard, podemos usar o comando `dmesg`, que exibe o log do sistema operacional e nele podemos ver qual foi o último hardware detectado e qual device foi atribuído:
+Extract the `de10_standard_linux_console.img` file from the zipped file, this `.img` is a bit by bit copy of what should be saved to the SD card. Now we have to copy the `img` to the memory card.
+
+!!! exercise "SDcard"
+    Insert the memory card into the computer, if need use the provided adapter.
+
+When we insert an external disk into Linux, it associates it with a 'device' in the `/dev/` directory. To know the name of the device assigned to the SD card, we can use the `dmesg` command, which displays the operating system log, and there we can see what the last detected hardware was and which device was assigned:
 
 !!! warning ""
-    Cuidado, estou assumindo que nenhum dispositivo foi inserido após o SDcard
+    Be careful, I'm assuming that no device was inserted after the SD card
 
 ```bash
 $ dmesg | tail
@@ -48,35 +47,38 @@ $ dmesg | tail
 [ 4988.443942]  mmcblk0: p1 p2 p3
 ```
 
-O `dmesg` possui o log que o meu SDCARD foi alocado ao: `/dev/mmclk0`, no seu linux pode ser outro nome!
+The `dmesg` log shows that my SDCARD was allocated to: `/dev/mmclk0`, your Linux may use a different name!
 
 !!! warning 
-    Isso pode mudar de PC para PC! 
+    This may vary from PC to PC! 
 
-Agora vamos transferir a `.iso` para o SDcard (isso é diferente de copiar o arquivo para o sdcard!)
+Now let's transfer the `.iso` to the SD card (this is different from copying the file to the SD card!)
 
 !!! danger
-    Cuidado, se errar o dispositivo (no meu caso: `of=/dev/mmcblk0`) pode acontecer coisas muito ruins com os seus dados
+    Be careful, if you get the device wrong (in my case: `of=/dev/mmcblk0`) very bad things could happen to your data
 
-```bash
-$ sudo dd bs=4M if=de10_standard_linux_console.img of=DEVICE conv=fsync status=progress
-$ sync
-```
+!!! exercise "dd"
+    Execute:
+
+    ```bash
+    $ sudo dd bs=4M if=de10_standard_linux_console.img of=DEVICE conv=fsync status=progress
+    $ sync
+    ```
 
 !!! note "dd"
-    O comando `dd` executa uma cópia bit a bit de um arquivo de entrada **input file: if** para um **output file: of** 
+    The `dd` command executes a bit by bit copy from an **input file** (if) to an **output file** (of). 
 
-O comando `sync` é necessário para que o kernel faça um flush do cache escrevendo realmente no SDCard todos os dados que foram endereçados a ele. Essa etapa pode ser um pouco demorada.
+The `sync` command is necessary so that the kernel can flush the cache, actually writing all the data that was addressed to it on the SD card. This step may take some time.
 
-Agora basta montar no seu linux o SDCard recém escrito e devemos ter duas partições visíveis: 
+Now just mount the newly written SD card on your Linux, and we should see two visible partitions:
 
 - 524 MiB: FAT32
-    - Script de configuração do uboot; Kernel comprimido;  Device Tree Blob file  
+    - Uboot configuration script; Compressed Kernel; Device Tree Blob file
     - u-boot.scr; zImage; socfpga.dtb
-- 3,3 GiB:  
+- 3.3 GiB:  
     - Filesystem (`/`)
 
-E outra partição que não é visível (contém o preloader e o uboot), para visualizar:
+And another partition that is not visible (contains the preloader and the uboot), to view:
 
 ```bash
 $ sudo fdisk -l /dev/mmcblk0 
@@ -88,18 +90,18 @@ Device         Boot   Start     End Sectors  Size Id Type
 ...
 ```
 
-Note que a partição 3 (mmcblk0p3) é do tipo *unknown* (a2) e possui 1M de espaço. É nela que temos salvo o **preloader** e o **uboot**.
+Note that partition 3 (`mmcblk0p3`) is of the *unknown* type (a2) and has 1M of space. This is where the **preloader** and the **uboot** are saved.
 
-!!! success 
-    Agora remova o SDCard e o coloque na FPGA
+!!! exercise "Done"
+    Now remove the SD card and insert it into the FPGA
 
 ## USB - UART
 
-A porta **UART-to-USB** é um conector que possibilita acessar a saída serial do HPS via porta serial. No linux o driver é reconhecido automaticamente, no Windows será necessário instalar manualmente o driver da serial.. 
+The **UART-to-USB** port is a connector that allows access to the HPS serial output via the serial port. On Linux, the driver is recognized automatically, while on Windows, you will need to manually install the serial driver.
 
 ![](figs/Tutorial-HPS-Running-uart.png)
 
-Uma vez conectado no linux host, verificamos que o mesmo foi mapeado para um dispositivo do tipo serial (no meu caso com nome **ttyUSB0**):
+Once connected on the Linux host, we verify that it was mapped to a device of the serial type (in my case, named **ttyUSB0**):
 
 ```
 $ dmesg | tail 
@@ -111,26 +113,27 @@ $ dmesg | tail
 ```
 
 !!! warning 
-    Isso pode mudar de PC para PC! 
+    This can change from PC to PC! 
 
-Para conectarmos nessa porta, precisamos usar um programa do tipo: emulador de terminal. No caso iremos utilizar o **screen** (verificar se possui instalado). Note que o comando a seguir deve ser modificado para o device (`/dev/ttyxxx`) na qual o seu linux associou a porta UsSB-Serial, extraído do dmesg.
+To connect to this port, we need to use a terminal emulator program. In this case, we will use **screen** (check if it's installed). Note that the following command should be modified for the device (`/dev/ttyxxx`) to which your Linux associated the UsSB-Serial port, extracted from dmesg.
 
-```bash
-$ screen /dev/ttyUSB0 115200,cs8
-```
+
+!!! exercise "scree"
+    Execute in terminal:
+    
+    ```bash
+    $ screen /dev/ttyUSB0 115200,cs8
+    ```
 
 !!! tip
-    Para sair do terminal: <kbd>ctr</kbd>+<kbd>A</kbd> : quit
-
-
-!!! tip
-    Se você usa um editor (emacs/ vscode/ ...) procure por plugins que fazem a conexão serial (`serial-term`), ai não precisa usar o `screen`.
+    - To exit the screen: <kbd>ctr</kbd>+<kbd>A</kbd> : quit
+    - If you use an editor (emacs/ vscode/ ...), look for plugins that make serial connections (`serial-term`), so you don't need to use `screen`.
 
 ## Linux
 
-Faça o loggin no linux:
+Now we can log in to the Linux running on the device, for this use:
 
 - user: `root`
 - pass: 
 
-Legal! Vamos agora descobrir como criar programas para esse Linux!
+Great! Now let's discover how to create programs for this Linux!

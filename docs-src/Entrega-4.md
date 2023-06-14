@@ -1,36 +1,35 @@
-#  👁 Entrega 1
+# 🔔 Assigment 1
 
-O objetivo dessa entrega é automatizarmos a compilação e deploy de novos programas para o `target`. Para isso, teremos que criar um Makefile que deve ser capaz de compilar e fazer o deploy de programa. Para isso temos diversas opções, sendo alguma delas:
+The objective of this delivery is to automate the compilation and deployment of new programs to the `target`. For this, we will have to create a Makefile that should be able to compile and deploy a program. For this, we have several options, some of them being:
 
-- Transferência de arquivo via ssh: [scp](http://www.hypexr.org/linux_scp_help.php)
-- Montar do pasta do `target` no `host` remota via ssh: [sshfs](https://en.wikipedia.org/wiki/SSHFS)
+- File transfer via ssh: [scp](http://www.hypexr.org/linux_scp_help.php)
+- Mount the `target` folder on the remote `host` via ssh: [sshfs](https://en.wikipedia.org/wiki/SSHFS)
 - Via [gdb server](https://www.linux.com/news/remote-cross-target-debugging-gdb-and-gdbserver)
-    - executa no `target` um gdb server que possibilita ao `host` transferir e debugar um binário.
+    - run a gdb server on the `target` that allows the `host` to transfer and debug a binary.
 
-Note que todas as soluções demandam de conexão com de rede, para isso,
-siga o roteiro: [Info HPS Ethernet](Embarcados-Avancados/info-HPS-ethernet/).
+Note that all solutions require a network connection, for this follow the script: [Info HPS Ethernet](Embarcados-Avancados/info-HPS-ethernet/).
 
-## Rubrica:
+## Rubric:
 
 !!! info
-    Você deve fazer as entregas pelo repositório do github criado no classroom:
+    You should make the deliveries through the github repository created in the classroom:
     
     - https://classroom.github.com/a/fGUME066
     
-    Crie uma pasta chamada: `1-makefile` e faça a entrega por ela
+    Create a folder called: `1-makefile` and make the delivery through it
 
-> Para testar, modifique o makefile do `BlinkLed`
+> To test, modify the Makefile of `BlinkLed`
 
-- A (novo) 
-    - Faz o uboot bootar via tftp: https://ece453.engr.wisc.edu/u-boot-script/
+- A (new) 
+    - Makes uboot boot via tftp: https://ece453.engr.wisc.edu/u-boot-script/
 - B
-    - Debuga um programar no target (via gdbserver)
+    - Debugs a program on the target (via gdbserver)
 - C
-    - Criou um Makefile que compila o código e faz o deploy para o `target` de um programa
-    - Via Makefile consegue executar o binário no `target`
+    - Created a Makefile that compiles the code and deploys it to the `target` of a program
+    - Via Makefile can execute the binary on the `target`
         - *make run* / *make deploy*
-    - Coloca um `README.md` na pasta que explica como usa e o que faz.
+    - Puts a `README.md` in the folder that explains how to use it and what it does.
 - D 
-    - Entregou somente os tutoriais
+    - Delivered only the tutorials
 - I
-    - Não entregou nada
+    - Did not deliver anything

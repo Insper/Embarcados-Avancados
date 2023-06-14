@@ -1,51 +1,49 @@
-# Configurando infra
+# Configuring Infrastructure
 
-Vamos instalar o ferramental (compiladores) que será utilizado para compilar o kernel e o filesystem. Deveremos instalar o `soceds` e o `linaro-gcc` .
+We will install the tools (compilers) that will be used to compile the kernel and the filesystem. We will need to install `soceds` and `linaro-gcc`.
 
-## Intel SOCDES
+## Intel SOCEDS
 
-Para essa etapa iremos precisar do  `Intel® SoC FPGA Embedded Development Suite Standard Edition Software Version 18.1 for Linux`, o download pode ser feito em:
+For this step, we will need the `Intel® SoC FPGA Embedded Development Suite Standard Edition Software Version 18.1 for Linux`, which can be downloaded from:
 
 - https://www.intel.com/content/www/us/en/software-kit/665456/intel-soc-fpga-embedded-development-suite-standard-edition-software-version-18-1-for-linux.html
 
 !!! info 
-    Iremos usar uma versão antiga do Quartus, a versãomais atual é a 21.1, mas iremos trabalhar com a 18.01, o motivo disso é compatibilidade com os exemplos fornecidos pelo fabricante.
+    We will use an older version of Quartus. The latest version is 21.1, but we will work with version 18.01. The reason for this is compatibility with the examples provided by the manufacturer.
 
-!!! note "Task"
-    - Fazer o download do SocEDS
-    - Instalar:
-    
+!!! exercise "Install SOCEDS"
+    1. Download the SocEDS
+    1. Install:
         ```
         chmod +x SoCEDSSetup-18.1.0.625-linux.run 
         ./SoCEDSSetup-18.1.0.625-linux.run
         ```
-    - Testar: 
-    
+    1. Test: 
         ```
         ~/intelFPGA/18.1/embedded/embedded_command_shell.sh 
         ```
 
 !!! warning "DS-5 install not detected..."     
-    Caso o DS-5 não ter sido detectado, você deve seguir o seguinte passo:
+    If DS-5 was not detected, you should follow the next step:
     
-    - Instale o DS-5 manualmente:
+    - Install DS-5 manually:
     
     ```bash
     cd ~/intelFPGA/18.1/embedded/ds-5_installer/
     ./install.sh
     ```
     
-    - Aceite os termos e também o item sobre a verificacão dos requerimentos.
-    - Quando for definir o local de instalação você deverá selecionar `~/intelFPGA/18.1/embedded/ds-5/`
-    Assim ele criará a pasta e instalará na mesma.
-    - Prossiga até o final da instalação.
+    - Accept the terms and also the item about the verification of requirements.
+    - When defining the installation location, you should select `~/intelFPGA/18.1/embedded/ds-5/`
+    This will create the folder and install there.
+    - Proceed to the end of the installation.
 
-    Teste novamente:
+    Test again:
     ```
         ~/intelFPGA/18.1/embedded/embedded_command_shell.sh 
     ```    
 
-Vamos precisar inserir no path do bash referência para uma série de softwares a serem usados, modifique seu `.bashrc` inserindo: 
+We will need to insert into the bash path a reference for a series of softwares to be used. Modify your `.bashrc` by inserting: 
 
 ``` bash
 export ALTERAPATH=~/intelFPGA/18.1/
@@ -58,41 +56,36 @@ export SOCEDS_HWLIB=${ALTERAPATH}/embedded/ip/altera/hps/altera_hps/hwlib/
 ```
 
 !!! note
-    Lembre de verificar se o **ALTERAPATH** desse exemplo é o caminho correto da instalação do Quartus
-
-!!! warning "outros bashs"
-    Se estiver usando outro bash (zsh/ fish) será necessário editar o arquivo de configuração referente.
+    - Remember to verify if the **ALTERAPATH** in this example is the correct path for the Quartus installation.
+    - If you are using another bash (zsh/ fish) you will need to edit the corresponding configuration file.
     
-# GCC toolchain
+## GCC toolchain
 
-Iremos utilizar o GCC cross compile fornecido pelo Linaro, esse mesmo GCC será utilizado para compilar o Kernel, gerar o file system e compilar os programas que executarão no Linux. 
+We will use the GCC cross compile provided by Linaro. This same GCC will be used to compile the Kernel, generate the file system, and compile the programs that will run on Linux. 
 
-!!! note "Wikipidia Linaro"
+!!! note "Linaro Wikipedia"
     *Linaro is an engineering organization that works on free and open-source software such as the Linux kernel, the GNU Compiler Collection, power management, graphics and multimedia interfaces for the ARM family of instruction sets and implementations thereof as well as for the Heterogeneous System Architecture.*
 
     - https://en.wikipedia.org/wiki/Linaro
 
 !!! note "gcc"
-    No site do linaro existem vários `GCC` diferentes, cada um com uma configuração diferente. O que vamos usar é `arm-linux-gnueabihf` isso significa:
+    On the Linaro website, there are several different `GCC` each with a different configuration. What we are going to use is `arm-linux-gnueabihf` which means:
     
-    - `linux`: para compilar programas que executarão no linux (poderia ser baremetal)
-    - `eabi`: [Embedded Application Binary Interface](https://processors.wiki.ti.com/index.php/EABI) para ser usado pelo sistema operacional.
-    - `hf`: usa multiplicação de ponto flutuante de hardware
-    
+    - `linux`: to compile programs that will run on linux (could be baremetal)
+    - `eabi`: [Embedded Application Binary Interface](https://processors.wiki.ti.com/index.php/EABI) to be used by the operating system.
+    - `hf`: uses hardware floating-point multiplication
 
-Do site de [binários do Linaro](https://releases.linaro.org/components/toolchain/binaries/7.4-2019.02/arm-linux-gnueabihf/)
+From the [Linaro binaries site](https://releases.linaro.org/components/toolchain/binaries/7.4-2019.02/arm-linux-gnueabihf/) download the `gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz` version and extract it to some folder on your Linux.
 
-abaixe a versão `gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz` e extraía para alguma pasta no seu Linux.
-
-!!! note "Quer baixar via terminal?"
-     Meus projetos ficam todos dentro da pasta: `/home/corsi/work/`, por isso eu extraí para lá. Você pode escolher outro local.
+!!! note "Want to download via terminal?"
+     My projects are all within the folder: `/home/corsi/work/`, so I extracted there. You can choose another location.
      
     ``` bash
     $ cd ~/work
     $ tar xvf gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz
     ```
 
-De uma olhada na pasta recém extraída: 
+Take a look at the recently extracted folder: 
 
 ```
 $ cd gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf 
@@ -112,16 +105,14 @@ $ tree -L 1
 + share
 ```
 
-Temos todas as ferramentas necessárias para compilar e linkar códigos em C e C++ para o ARM.
+We have all the necessary tools to compile and link C and C++ codes for ARM. Note that in the gcc path we have the prefix: **gnueabihf**. 
 
-Note que no path do gcc temos o prefixo : **gnueabihf**. 
+!!! exericse short "Research"
+    What is the difference between `eabi` and `hf`
 
-!!! example "Pesquisa"
-    Qual a diferença entre `eabi` e `hf`
+### Creating a shortcut in bash
 
-### Criando um atalho no bash
-
-Vamos criar um atalho para essa pasta no bash. Edite o arquivo `~/.bashrc` para incluir a pasta `~/work/gcc-linaro.../bin/` na variável do sistema: **GCC_Linaro**.
+Let's create a shortcut to this folder in bash. Edit the `~/.bashrc` file to include the `~/work/gcc-linaro.../bin/` folder in the system variable: **GCC_Linaro**.
 
 ```diff
 + # GCC Linaro on path
@@ -130,9 +121,9 @@ Vamos criar um atalho para essa pasta no bash. Edite o arquivo `~/.bashrc` para 
 ```
 
 !!! note
-    Edite o comando para a pasta correta de onde Linaro foi extraído: `/home/...`
+    Edit the command to the correct folder where Linaro was extracted: `/home/...`
 
-Agora temos um atalho para o `gcc-arm`, vamos testar :
+Now we have a shortcut to the `gcc-arm`, let's test:
 
 ```bash
 $ $GCC_Linaro/arm-linux-gnueabihf-gcc -v
@@ -142,17 +133,17 @@ COLLECT_GCC=/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf
 COLLECT_LTO_WRAPPER=/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin/../libexec/gcc/arm-linux-gnueabihf/7.4.1/lto-wrapper
 ```
 
-E ele também deve estar no path, como `arm-linux-*`:
+And it should also be on the path, as `arm-linux-*`:
 
 ![](figs/Tutorial-HLS-BuildSystem-armgcc.png)
 
 !!! note
-    É possível instalar o `arm-linux` via `apt install`, mas não vamos fazer isso pois queremos ter controle da versão do compilador que estamos utilizando.
+    It's possible to install `arm-linux` via `apt install`, but we won't do that because we want to have control over the version of the compiler we are using.
 
-!!! note "bashrc ao final"
-     Eu não modifico meu `bashrc`, o que eu faço é usar o programa [direnv](https://direnv.net/) que possibilita eu controlar as minhas configurações de conforme o projeto que eu estou trabalhado, e isso inclui as variáveis de ambiente e ambientes virtuais do python.
+!!! note "bashrc at the end"
+     I don't modify my `bashrc`. What I do is use the program [direnv](https://direnv.net/) which allows me to control my settings according to the project I am working on. This includes environment variables and Python virtual environments.
      
-     Para usar esse programa, primeiro você deve instalar via gerenciador de pacotes (`apt install direnv`) e depois criar um arquivo `.direnv` na raiz da pasta que você pretende trabalhar (entrega de projetos, labs, ...) com a configuracão do ambiente:
+     To use this program, first you must install it via the package manager (`apt install direnv`) and then create a `.direnv` file in the root of the folder where you intend to work (project submissions, labs, ...) with the environment configuration:
      
      ```
      echo "INTEL FPGA QUARTUS 18.1"
@@ -170,4 +161,4 @@ E ele também deve estar no path, como `arm-linux-*`:
      export PATH=$PATH:${GCC_Linaro}
      ```
      
-     Ao entrar no repositório a configuração é automática, uma grande vantagem disso é que programas como VSCODE, EMACS reconhecem o .direnv e fazem uso da configuração automaticamente.
+     Upon entering the repository, the configuration is automatic. A great advantage of this is that programs like VSCODE, EMACS recognize the .direnv and use the configuration automatically.
