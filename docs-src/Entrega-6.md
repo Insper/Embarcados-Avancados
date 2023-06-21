@@ -1,4 +1,4 @@
-# 👁 Entrega 6
+# 🔔 HPS+FPGA - Assigment 1
 
 Você pode escolher entre um dos temas a seguir:
 

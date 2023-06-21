@@ -1,81 +1,53 @@
 # VGA
 
-Se repararem em nosso hardware verificamos que o mesmo possui uma saída de vídeo
-VGA, porém os sinais do VGA foram conectados nos pinos da FPGA! Tornando
-necessário a criação de um hardware e sua conexão com o HPS para que possamos
-fazer com que nosso Linux tenha uma saída de vídeo.
+If you take a look at our hardware, you will notice that it has a VGA video output. However, the VGA signals were connected to the FPGA pins! This means we need to create hardware and connect it to the HPS in order to enable video output in our Linux system.
 
-!!! note "Diagrama"
-    ![](figs/DE10-Standard-blockdiagram.jpg)
+![](figs/DE10-Standard-blockdiagram.jpg)
 
-Para conseguirmos ter uma saída de vídeo no nosso sistema embarcado, teremos que
-realizar os seguintes passos:
+To achieve video output in our embedded system, we need to follow these steps:
 
-1. Configurar um hw que gerencie VGA 
-    - [alt_vip_*](https://www.intel.com.br/content/www/br/pt/programmable/products/intellectual-property/ip/dsp/m-alt-vipsuite.html)
-    - pense que vamos adicionar na FPGA uma 'placa de vídeo' muito simples
-1. Adicionar ao kernel um device driver para gerenciar esse hardware
-1. Configurar o kernel adicionando a parte de FB
-    - compilar o kernel 
-1. Configurar no buildroot um programa capaz de manipular o FB e exibir uma imagem
+1. Configure FPGA to handle VGA, using an the [alt_vip_vga](https://www.intel.com.br/content/www/br/pt/programmable/products/intellectual-property/ip/dsp/m-alt-vipsuite.html) IP core to generate the VGA signals. 
+2. Add a device driver to the kernel to manage this hardware.
+3. Configure the kernel to add the framebuffer (FB) driver.
+4. Configure a program in Buildroot that can manipulate the FB and display an image.
 
 ## Frame Buffer
 
-Antes de mexermos com o hardware, vamos ver como o Linux trata uma saída de
-vídeo! Você já ouviu falar de [frame
-buffer](https://en.wikipedia.org/wiki/Framebuffer) (FB)? Verifique que o seu PC
-possui um:
+Before we work with the hardware, let's take a look at how Linux handles video output. Have you heard of a [frame buffer](https://en.wikipedia.org/wiki/Framebuffer) (FB)? Check that your PC has one (Linux/Mac):
 
 ```bash
 $ ls /dev | grep fb
 ```
 
-O FB é uma região da memória RAM  reservada e que contém um bitmap (se tiver uma 
-placa de vídeo, essa memória pode estar localizada nela),
-esse bitmap é convertido (por hardware ou software)  para a saída de vídeo em
-questão. Essa conversão de bitmap para saída de vídeo depende do driver de vídeo que foi
-carregado para gerenciar (e criar) o FB, no caso de placas de vídeo intel, é utilizado o
-driver [vesa](https://www.kernel.org/doc/html/latest/fb/vesafb.html).
+The FB is a reserved region of the RAM that contains a bitmap (if you have a graphics card, this memory may be located in it). This bitmap is converted (either by hardware or software) into the corresponding video output. The bitmap-to-video conversion depends on the video driver that was loaded to manage (and create) the FB. For Intel graphics cards, the [vesa driver](https://www.kernel.org/doc/html/latest/fb/vesafb.html) is commonly used.
 
-Porém nem tudo que é exibido passa diretamente pelo FB, alguns programas podem
-querer maior performance e podem acessar o display direto ([Direct Graphics
-Access](https://en.wikipedia.org/wiki/Direct_Graphics_Access)), como demonstrado no diagrama a seguir:
+However, not everything that is displayed goes directly through the FB. Some programs may require higher performance and access the display directly using [Direct Graphics Access](https://en.wikipedia.org/wiki/Direct_Graphics_Access), as shown in the following diagram:
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Linux_graphics_drivers_Utah_GLX.svg/600px-Linux_graphics_drivers_Utah_GLX.svg.png)
-
+ 
 !!! note "Framebuffer Console"
-    O Linux possui um driver (fbcon) que exibe um console em um framebuffer,
-    para usar, basta ativar na configuração do kernel:
-    
-    - Device Drivers:arrow_right:Graphics Support->Frame buffer Devices->Console display
-      driver support :arrow_right: Framebuffer Console Support
+   Linux has a driver called `fbcon` that displays a console on a framebuffer. To use it, you just need to activate it in the kernel configuration:
 
-    - Para mais detalhes: https://www.kernel.org/doc/html/latest/fb/fbcon.html
-    
+   - Device Drivers -> Graphics Support -> Frame buffer Devices -> Console display driver support -> Framebuffer Console Support
+
+   - For more details, refer to the [Framebuffer Console documentation](https://www.kernel.org/doc/html/latest/fb/fbcon.html).
+ 
 ## Hardware
 
-Como no exemplo anterior (para ganhar tempo), vamos utilizar um hardware da
-Terasic que já possui a parte da FPGA configurada para trabalharmos com o VGA.
-Copie a pasta [DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC_FPGA/DE10_Standard_FB/
-](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC_FPGA/DE10_Standard_FB)
-para o seu repositório.
+In order to save time, we will use a hardware design provided by Terasic that already has the FPGA part configured to work with VGA. Copy the folder [DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC_FPGA/DE10_Standard_FB/](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC_FPGA/DE10_Standard_FB) to your repository.
 
-Com o projeto `DE10_Standard_FB` copiado, abra o projeto no quartus e analise o
-`soc_system.qsys` no Platform Designer, você deve ver algo como:
+Once you have copied the `DE10_Standard_FB` project, open it in Quartus and analyze the `soc_system.qsys` file in Platform Designer. You should see something like this:
 
 !!! note ""
-    Eu deixei a mostra somente as partes referentes ao vídeo!
-    
+    I'm only showing the parts related to video!
+
 ![](figs/Tutorial-HPS-FPGA-vga-qsys.png)
 
-### Entendo o HW
+### Understanding the Hardware
 
-O projeto de HW possui dois componentes para tratar o VGA: `alt_vip_vfr_vga` e
-`alt_vip_itc_0`, ambos fazem parte do pacote de IPs: 'Video and Image Processing
-Suite Intel FPGA' específico para processamento de vídeo (já suporta 8K e +60Hz)
+The hardware design includes two components to handle VGA: `alt_vip_vfr_vga` and `alt_vip_itc_0`. These components are part of the 'Video and Image Processing Suite Intel FPGA' IP package, which is specifically designed for video processing (supporting up to 8K and +60Hz).
 
-??? note "Video and Image Process (**VIP**) Suite Intel FPGA"
-    - Retirado do site da Intel:
+!!! info "From intel website" 
     
     The Intel® FPGA Video and Image Processing Suite is a collection of Intel FPGA IP functions that you can use to facilitate the development of custom video and image processing (VIP) designs. These Intel FPGA IP functions are suitable for use in a wide variety of image processing and display applications, such as video surveillance, broadcast, video conferencing, and medical and military imaging.
 
@@ -91,56 +63,40 @@ Suite Intel FPGA' específico para processamento de vídeo (já suporta 8K e +60
 
     ![](https://www.intel.com.br/content/dam/altera-www/global/en_US/images/products/ip/dsp/images/blockdiagram-dsp-fig1-vip.gif)
 
-#### alt_vip_vfr_vga
+### alt_vip_vfr_vga
 
-É um periférico do tipo **Frame Reader** e é responsável por fazer a leitura de
-um Frame Buffer alocado em memória (`avalon_master`) e o transformar em um
-**Streaming** (`avalon_streaming`).
+The `alt_vip_vfr_vga` is a peripheral of the **Frame Reader** type and is responsible for reading a Frame Buffer allocated in memory (`avalon_master`) and converting it into a **Streaming** format (`avalon_streaming`).
 
-A maioria dos IP do VIP  operam no barramento de dados do
-tipo:`avalon_streaming`, por isso é necessário fazer a leitura do FB (que está
-alocado na memória DDR3, conectada ao ARM). Os dados da DDR3 são transferidos
-para  o `alt_vip_vfr_vga` via DMA pelo ARM/Linux, inicializado pelo device
-driver carregado no Linux!
+Most VIP IP cores operate on the `avalon_streaming` data bus, so it is necessary to read the Frame Buffer (which is allocated in the DDR3 memory connected to the ARM). The data from DDR3 is transferred to the `alt_vip_vfr_vga` via DMA by the ARM/Linux, which is initialized by the device driver loaded in Linux.
 
 #### alt_vip_itc
 
-É um periférico de vídeo que faz a conversão do `streaming` de pixels para a
-saída de vídeo em questão (VGA). O VGA é um formato de saída de vídeo DIGITAL que
-possui 5 sinais: HSYNC/ VSYNC/ R/G/B. 
+The `alt_vip_itc` is a video peripheral that converts the pixel streaming into the desired video output format (in this case, VGA). VGA is a DIGITAL video output format that consists of 5 signals: HSYNC, VSYNC, R, G, and B.
 
-- HSYNC: indica o fim da linha
-- VSYNC: indica o fim da tela
-- R/G/B: são os valores dos pixels.
+- HSYNC: Indicates the end of a line.
+- VSYNC: Indicates the end of the screen.
+- R/G/B: Represent the pixel values.
 
-!!! note 
-    O sinal VGA é simples. que até da para gerar via arduino:
-    
-    -
-    http://labdegaragem.com/profiles/blogs/gerando-sinal-vga-colorido-com-arduino-completo
+!!! note
+    The VGA signal is relatively simple, and you can even generate it using an Arduino. Here's an example: [Generating Color VGA Signal with Arduino](http://labdegaragem.com/profiles/blogs/gerando-sinal-vga-colorido-com-arduino-completo)
 
-### Compilando
+### Compilation
 
-Agora que analisamos o HW, podemos compilar e utilizar no nosso SoC! 
+Now that we have analyzed the hardware, we can compile it and use it in our SoC!
 
-!!! example "Execute"
-    - Gere o `soc_system.dtb` do projeto 
-        - Grave o novo `soc_system.dtb` no SDCard (mesma partição do kernel)
-    - Gere o `soc_system.rbf` do projeto (COMPILAR O QUARTUS!)
-        - Grave o novo `rbf` no SDCard (mesma partição do kernel)
-    
+!!! exercise
+    1. Generate the `soc_system.dtb` file for your project.
+        - Write the new `soc_system.dtb` file to the SD Card (in the same partition as the kernel).
+    1. Generate the `soc_system.rbf` file for your project (COMPILE THE QUARTUS PROJECT!).
+        - Write the new `rbf` file to the SD Card (in the same partition as the kernel).
+
 ## Driver
 
-Será necessário carregarmos um device driver no kernel do linux para que
-possamos utilizar essa saída de vídeo recém criada. Porém o driver do IP
-`alt_vip_vfr_vga` não é oficial do kernel, vamos ter que adicionar manualmente!
+We need to load a device driver into the Linux kernel in order to use the newly created video output. However, the driver for the `alt_vip_vfr_vga` IP is not included in the official kernel. Therefore, we will need to add it manually!
 
-### dts
+### Device Tree (dts)
 
-Mas como o linux sabe que existe uma saída de vídeo? No nosso caso será via o
-*device tree* (.dtb) que é passado pelo u-boot na inicialização do kernel, se
-repararmos no novo `.dts` gerado com o hardware que possui a saída de vídeo, existe um novo componente
-chamado de `alt_vip_vfr_vga`, que é compatível com o driver `vip-frame-reader-9.1`:
+But how does Linux know that there is a video output? In our case, it is through the *device tree* (.dtb) that is passed by u-boot during kernel initialization. If we look at the new `.dts` file generated with the hardware that includes the video output, we can see a new component called `alt_vip_vfr_vga`, which is compatible with the `vip-frame-reader-9.1` driver:
 
 ```dts
 alt_vip_vfr_vga: vip@0x100031000 {
@@ -159,36 +115,27 @@ alt_vip_vfr_vga: vip@0x100031000 {
 ### Kernel
 
 !!! info
-    Nesta etapa iremos adicionar um driver de vídeo no nosso linux, o driver não vai ser carregado como módulo dinâmico, mas inserido no kernel do Linux quando compilado. Para isso vocês vão precisar:
+    In this step, we will add a video driver to our Linux kernel. The driver will not be loaded as a dynamic module but will be inserted into the Linux kernel during compilation. To do this, you will need to:
     
-    1. adicionar um driver ao código fonte do Linux
-    1. indicar ao kernel a existência deste driver, e o ativar.
-    1. recompilar o kernel.
+    1. Add a driver to the Linux source code.
+    2. Inform the kernel about the existence of this driver and activate it.
+    3. Recompile the kernel.
 
-O driver `vip-frame-reader-9.1` não é oficial do linux, vamos ter que pegar uma
-implementação realizada pelo o pessoal da Altera e utilizar. Os drivers no
-repositório do Linux ficam na pasta: `linux/drivers`. No caso do vídeo/
-framebuffer, em: `linux/drivers/video/fbdev`.
+The `vip-frame-reader-9.1` driver is not officially part of the Linux kernel, so we will need to use an implementation provided by Altera. The drivers in the Linux repository are located in the `linux/drivers` folder. For video/framebuffer drivers, they are in `linux/drivers/video/fbdev`.
 
-!!! note "Adicionando o driver altvipfb"
-    Siga o roteiro em:
-    [https://github.com/Insper/Embarcados-Avancados/blob/master/driver/altvipfb/README.md](
-    https://github.com/Insper/Embarcados-Avancados/blob/master/driver/altvipfb/README.md) e
-    depois volte para essa página!
+!!! exercise "Adding the altvipfb driver"
+    Follow the instructions in this guide: [Adding the altvipfb driver](https://github.com/Insper/Embarcados-Avancados/blob/master/driver/altvipfb/README.md), and then come back to this page!
 
 !!! note
-    Esse tutorial incluiu o driver do fb no kernel, outra opção seria criar um
-    módulo (module) que poderia ser carregado conforme a necessidade.
-    
-!!! example "Testando"
-    1. Compile o kernel
-    1. Copie o zImage novo para o SDCARD
-    1. Liga um monitor a VGA
-    1. Inicialize o linux embarcado
+    This tutorial includes adding the framebuffer driver to the kernel. Another option would be to create a module that could be loaded as needed.
 
-Se tudo der certo, você deve ver dois pinguins no canto esquerdo do monitor.
-Cada pinguim representa um core do sistema, como nosso ARM é um dual core, temos
-dois. Esse pinguins aparecem porque ativamos essa opção no kernel:
+!!! exercise
+    1. Compile the kernel.
+    2. Copy the new `zImage` to the SD Card.
+    3. Connect a VGA monitor.
+    4. Boot up the embedded Linux.
+
+If everything goes well, you should see two penguins in the top left corner of the monitor. Each penguin represents a system core. Since our ARM is a dual-core, we have two penguins. These penguins appear because we enabled this option in the kernel:
 
 ```
 CONFIG_LOGO=y
@@ -197,57 +144,57 @@ CONFIG_LOGO_LINUX_VGA16=y
 CONFIG_LOGO_LINUX_CLUT224=y
 ```
 
-### Testando
+### Testing
 
-Agora conecte um monitor na nossa placa e ligue o sistema, no monitor deve aparecer o log do kernel! Note que na inicialização aparecem dois pinguins. O número de pinguins indicam a quantidade de COREs do sistema.
+Now, connect a monitor to our board and power on the system. The kernel log should appear on the monitor. Note that during the boot process, you will see two penguins. The number of penguins indicates the number of cores in the system.
 
 !!! note
-    É possível editar o pinguim e fazer por exemplo, aparecer a carinha de
-    vocês! Os arquivos `ppm` ficam na pasta `/drivers/video/logo/`, esses são
-    então compilados na compilação do kernel.
+    It's possible to edit the penguin image and, for example, use your own faces! The `ppm` files are located in the `/drivers/video/logo/` folder and are compiled into the kernel during the kernel compilation process.
+    
+    You can use GIMP to generate this images!
 
-Quer fazer umas coisas legais com o FB? Tente o seguinte:
+Want to do something cool with the framebuffer? Try the following:
 
-- Exibir imagem randômica no FB:
+- Display a random image on the framebuffer:
 
 ```bash
 sudo cat /dev/urandom > /dev/fb0
 ```
 
-- ref: http://seenaburns.com/2018/04/04/writing-to-the-framebuffer/
+> Ref: [Writing to the Framebuffer](http://seenaburns.com/2018/04/04/writing-to-the-framebuffer/)
 
-Agora vamos fazer alguma coisa mais útil com a nossa saída de vídeo, para isso será necessário modificarmos o buildroot incluindo programas gráficos.
+Now let's do something more useful with our video output. To do that, we need to modify Buildroot and include graphical programs.
 
 ## Buildroot
 
-São diversas as soluções de desenvolvimento de interface gráfica para Linux
-embarcado, e nem todas envolvem um gerenciador de janelas. A seguir uma lista de
-ferramentas que podem ser utilizadas:
+There are various solutions for developing graphical interfaces for embedded Linux, and not all of them involve a window manager. Here is a list of tools that can be used:
 
 - GUI:
     - LittlevGL: https://littlevgl.com/
-    - QT: https://www.qt.io/
-    - emWin (comercial): https://www.segger.com/products/user-interface/emwin/
+    - Qt: https://www.qt.io/
+    - emWin (commercial): https://www.segger.com/products/user-interface/emwin/
     - ...
 
-Existem outras soluções, vamos usar uma delas para exibir uma imagem na nossa
-tela! Quando eu estava fazendo esse roteiro, queria algo mais simples, em uma
-busca  (não muito rápida) na internet (keyword: `linux frame buffer show image`)
-eu encontrei esse programa: `fbv`, que por sorte está no `buildroot`.
+There are other solutions available, but we will use one of them to display an image on our screen. When I was working on this guide, I wanted something simpler. During a (not very quick) search on the internet (using the keyword "linux frame buffer show image"), I found this program: `fbv`, which luckily is included in Buildroot.
 
-!!! note  "fbv"
+!!! note "fbv"
+    ```
     1. OVERVIEW
-        fbv (FrameBuffer Viewer) is a simple program to view pictures on
-    a linux framebuffer device. In 2000, when fbv was created, there
-    were no other situable programs performing the same task, so the
-    authors decided to follow the rule: 'If you need a tool - write
-    it yourself!' :-)
- 
-    - https://github.com/smokku/fbv
+        fbv (FrameBuffer Viewer) is a simple program to view
+        pictures on a linux framebuffer device. In 2000,
+        when fbv was created, there were no other suitable
+        programs performing the same task, so the authors
+        decided to follow the rule: 
+        'If you need a tool - write it yourself!' :-)
+    ```
+    
+    > https://github.com/smokku/fbv
 
-!!! example "Faça"
-    1. Adicione o programa `fbv` ao buildroot
-    1. Compile o novo fs
-    1. Grave no SDCard
-    1. Grave uma imagem (.png) no SDCard
-    1. No target, exiba a imagem no HDMI usando o `fbv`
+!!! exercise "Step-by-step"
+    To show a png image on the fb.
+
+    1. Add the `fbv` program to Buildroot.
+    2. Compile the new file system.
+    3. Write it to the SD Card.
+    4. Write an image (in .png format) to the SD Card.
+    5. On the target system, display the image on the HDMI using `fbv`.

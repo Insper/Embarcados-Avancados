@@ -1,15 +1,15 @@
-# Entrega 6: Dica driver
+# Tip
 
-Para controlarmos os LEDs da FPGA é necessário que saibamos os endereços dos periféricos no barramento do platform designer (AVALON), para não termos que ficar dependentes de números mágicos no nosso driver, iremos usar uma ferramenta do PD que gera um arquivo `.h` com as informações necessárias para podermos controlar os periféricos.
+To control the FPGA LEDs, we need to know the addresses of the peripherals on the platform designer bus (AVALON). To avoid being dependent on magic numbers in our driver, we will use a PD tool that generates a `.h` file with the necessary information to control the peripherals.
 
-Na pasta do projeto (hardware) execute:
+In the project folder (hardware), execute:
 
 ```
 $ embedded_command_shell.sh
 $ sopc-create-header-files --single hps_0.h --module hps_0
 ```
 
-Esse comando irá gerar um arquivo `hps_0.h` que contém as informações de endereço de memória que podemos usar para acessar os periféricos na FPGA:
+This command will generate a file `hps_0.h` that contains the memory address information that we can use to access the peripherals on the FPGA:
 
 ```c
 /*
@@ -26,22 +26,22 @@ Esse comando irá gerar um arquivo `hps_0.h` que contém as informações de end
 #define LED_PIO_BIT_MODIFYING_OUTPUT_REGISTER 0
 ```
 
-## Configurando driver
+## Configuring the driver
 
-Primeiro iremos realizar uma cópia da pasta do driver: `ebbchar` para `ebbchar-led`.
+We will work with the `ebbchar` example driver.
 
-### `hps_0.h`
+!!! exercise
+    Make a copy of the folde `ebbchar` to `ebbchar-led`.
 
-Copie o arquivo `hps_0.h` para dentro da pasta do driver.
+!!! exercise
+    Copy the file `hps_0.h` into the driver folder.
 
-### Makefile
+We will need to edit the Makefile to support:
 
-Vamos ter que editar o Makefile para suportar:
+1. Cross-compilation
+1. Quartus Embedded files and functions
 
-1. Cross-compilação
-1. Arquivos e funções do Embedded do Quartus
-
-Use o arquivo a seguir no lugar do Makefile original:
+Use the following file instead of the original Makefile:
 
 ```Make
 # https://stackoverflow.com/questions/3467850/cross-compiling-a-kernel-module
@@ -79,34 +79,35 @@ clean:
 	rm test
 ```
 
-!!! info
-    Você deve editar a variável `KERNELDIR := ` para o caminho do kernel que você compilou.
+!!! exercise
+    1. Edite the Makefile
+    1. You should edit the variable `KERNELDIR := ` to the path of the kernel you compiled.
+    1. Edite the IP address
+    
+### Understanding 
 
-### Acessando hardware
-
-No kernel do Linux são várias as funções disponíveis para manipular hardware/ endereço de memória física. Iremos usar apenas a função: 
+In the Linux kernel, there are many functions available to manipulate hardware/physical memory addresses. We will only use the function: 
 
 ```c
-    void iowrite32(u32 value, void __iomem *addr);
+void iowrite32(u32 value, void __iomem *addr);
 ```
 
 !!! info
     - https://lwn.net/Articles/102232/
 
-Essa função escreve um valor `value` a um endereço de memória física `addr`. Para isso funcionar devemos criar um ponteiro que aponta para o periférico PIO na FPGA:
+This function writes a `value` to a physical memory address `addr`. To make this work, we must create a pointer that points to the PIO peripheral in the FPGA:
 
 ```c
-   p_led = ioremap_nocache(ALT_LWFPGASLVS_OFST + LED_PIO_BASE, LED_PIO_SPAN);
+p_led = ioremap_nocache(ALT_LWFPGASLVS_OFST + LED_PIO_BASE, LED_PIO_SPAN);
 ```
 
 !!! info
-    Estamos falando para o kernel criar um ponteiro e que todo acesso a esse endereço deve ser efetivado no hardware, e não pode ficar no cache. 
+    We are telling the kernel to create a pointer and that every access to this address must be enforced on the hardware, and cannot be cached.
 
-Onde `p_led` é uma variável global e estática do módulo:
+Where `p_led` is a global and static variable of the module:
 
 ```c
 static int *p_led = NULL;
 ```
 
-Com isso, podemos agora usar a função `iowrite32` e escrever no periférico PIO do LED, iremos fazer essa escrita dentro da função 
-`dev_write`, com o objetivo de escrevermos nos LEDs os valores passados pelo comando de write.
+With this, we can now use the `iowrite32` function and write to the LED PIO peripheral, we will make this writing inside the `dev_write` function, aiming to write the values passed by the write command to the LEDs.
