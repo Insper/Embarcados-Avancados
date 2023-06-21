@@ -1,4 +1,4 @@
-# 🔔 Assignment 2
+# 🔔 HPS - Assignment 2
 
 You must create an embedded system that includes a web server and a webpage that allows you to monitor and control the hardware through a simple interface.
 

@@ -1,4 +1,4 @@
-# 🔔 Assigment 1
+# 🔔 HPS - Assigment 1
 
 The objective of this delivery is to automate the compilation and deployment of new programs to the `target`. For this, we will have to create a Makefile that should be able to compile and deploy a program. For this, we have several options, some of them being:
 
@@ -31,5 +31,5 @@ Note that all solutions require a network connection, for this follow the script
     - Puts a `README.md` in the folder that explains how to use it and what it does.
 - D 
     - Delivered only the tutorials
-- I
+-   I
     - Did not deliver anything
