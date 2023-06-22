@@ -1,14 +1,18 @@
-# SoC e Linux Embarcado (Embarcados Avançados)
+# SoC and Embedded Linux
 
-Disciplina eletiva da Engenharia da Computação [Insper](https://www.insper.edu.br/) - 2020-b.
+- [**Insper**](https://www.insper.edu.br/)
+- **Course:** Elective for Computer Engineering
+- **Track:** Solutions Architecture
+- **Prof.:** Rafael Corsi / rafael.corsi@insper.edu.br
+- **Repository:** [http:/github.com/insper/Embarcados-Avancados](http:/github.com/insper/Embarcados-Avancados)
+- **Location:** Computer Architecture Laboratory 
 
-Prof. Rafael Corsi / rafael.corsi@insper.edu.br
+**© All rights reserved**
 
-:arrow_right: Material de aula em:
-https://insper.github.io/Embarcados-Avancados/ 
+---
 
-OBJETIVOS:
+## Course objectives
 
-1. Formular soluções que satisfazem requisitos de hardware e software de projetos com FPGA-SoC (System-on-a-chip) 
-2. Integrar em um protótipo solução para um sistema embarcado com requisitos de processamento e/ou tempo real via FPGA-SoC
-3. Interfacear diferentes módulos em um sistema embarcado (processadores, firmware e sistema operacional)
+1. Formulate solutions that meet hardware and software requirements for projects with FPGA-SoC (System-on-a-chip)
+2. Integrate a prototype solution for an embedded system with processing and/or real-time requirements via FPGA-SoC
+3. Interface different modules in an embedded system (processors, firmware, and operating systems)
