@@ -9,8 +9,6 @@
 
 **© All rights reserved**
 
----
-
 ## Course objectives
 
 1. Formulate solutions that meet hardware and software requirements for projects with FPGA-SoC (System-on-a-chip)
