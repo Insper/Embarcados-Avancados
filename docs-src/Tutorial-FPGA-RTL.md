@@ -1,67 +1,55 @@
 # RTL / VHDL
 
-Essa primeira entrega é um aquecimento de VHDL e FPGA, iremos criar um hardware dedicado na FPGA para controlar os LEDs com base nos sinais de entradas dos botões. 
-A ideia é passarmos por todo o processo de desenvolvimento de um projeto em FPGA e com VHDL.
+This first delivery is an introduction/warm-up to VHDL and FPGA, we will create a dedicated hardware on the FPGA to control the board's LEDs based on the input signals from the buttons. The idea is to go through the entire process of developing a hardware in FPGA and with VHDL.
 
-!!! tip 
-    Para quem já fez Design de Computadores isso é uma revisão, quem ainda não fez vai ver isso lá.
+## Getting Started
 
-## Começando
+To follow this tutorial you will need:
 
-Para seguir esse tutorial é necessário:
-
-- **Hardware:** DE10-Standard e acessórios 
-- **Softwares:** Quartus 18.01
-- **Documentos:** [DE10-Standard_User_manual.pdf](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual)
-
-Entrega no git:
-
-- **Pasta:** `Lab1_FPGA_RTL`
-
-!!! tip
-    Crie um repositório para a disciplina, você deverá fazer as entregas por ele.
+- **Hardware:** DE10-Standard and accessories 
+- **Software:** Quartus 18.01
+- **Documents:** [DE10-Standard_User_manual.pdf](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual)
 
 ## Quartus
 
-Primeiro, devemos criar um novo projeto no software Quartus. 
+First, we must create a new project in the Quartus software. 
 
-No Quartus: `File` ➡️`New Project Wizard`
+!!! exercise
+    In Quartus: `File` ➡️`New Project Wizard`
 
-- **Directory, Name, Top-Level Entity**
-    - Escolha o destino como sendo seu repositório. nomeio o projeto como `Lab1_FPGA_RTL`
-- **Project Type** 
-    - Empty Project
-- **Add Files**
-    - Não vamos adicionar nenhum arquivo por enquanto.
-- **Family, Device & Board Settings**
-    - Procure pela FPGA: 
-        - Family: `Cyclone V`
-        - Name: `5CSXFC6D6F31C6`
-- 🆗 Finalize o Wizard 
+    - **Directory, Name, Top-Level Entity**
+        - Choose the destination as your repository. Name the project as `Lab1_FPGA_RTL`
+    - **Project Type** 
+        - Empty Project
+    - **Add Files**
+        - We won't add any files for now.
+    - **Family, Device & Board Settings**
+        - Look for the FPGA: 
+            - Family: `Cyclone V`
+            - Name: `5CSXFC6D6F31C6`
+    - 🆗 Finalize the Wizard 
 
-??? tip "Wizard"
     ![](figs/Tutorial-FPGA-RTL:wizard.png)
 
-!!! progress
-    Cheguei aqui!
+!!! note "**Other references**"
+    If you need other reference material, there's a Terasic tutorial: [DE10-Standard_My_First_Fpga.pdf	](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual)
 
-!!! note "**Outras referências**"
-    Se precisar de outro material como referência, tem um tutorial da Terasic: [DE10-Standard_My_First_Fpga.pdf	](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual)
 
-## Criando o topLevel
+## Creating the topLevel
 
-TopLevel é o nome do módulo mais superior em desenvolvimento [hierárquico](https://www.intel.com/content/www/us/en/programmable/support/support-resources/design-examples/design-software/vhdl/v_hier.html) onde, geralmente os sinais da entidade (in/out,...) serão mapeados a pinos do hardware (conexão com o mundo externo).
+TopLevel is the name of the topmost module in [hierarchical](https://www.intel.com/content/www/us/en/programmable/support/support-resources/design-examples/design-software/vhdl/v_hier.html) development where, generally, the entity signals (in/out,...) will be mapped to hardware pins (connection with the external world).
 
-Vamos adicionar um arquivo ao projeto recém criado:
+!!! exercise
+    Let's add a file to the newly created project:
 
-- `File` :arrow_right:  `New` :arrow_right:  `VHDL File`
-- `File` :arrow_right:  `save as` :arrow_right:   
-  - name: `Lab1_FPGA_RTL.vhd` 
-- 🆗
+    - `File` :arrow_right:  `New` :arrow_right:  `VHDL File`
+    - `File` :arrow_right:  `save as` :arrow_right:   
+      - name: `Lab1_FPGA_RTL.vhd` 
+    - 🆗
      
-Inicialize o arquivo com o conteúdo a seguir:
-
-??? example "toplevel source file"
+!!! exercise "toplevel source file"
+    Initialize the file with the following content ( this code could be more elegant, but we'll keep it simple for the sake of understanding. )
+    
     ``` vhdl
     library IEEE;
     use IEEE.std_logic_1164.all;
@@ -105,36 +93,38 @@ Inicialize o arquivo com o conteúdo a seguir:
 
     end rtl;
     ```
+    
 
-!!! progress
-    Cheguei aqui!
+## Configuring the topLevel
 
-!!! info
-    Esse código poderia ser mais elegante, mas vamos deixar assim para facilitar o entendimento.
+In Quartus, we need to specify which entity is the topLevel. As VHDL does not define a standard for this, any entity can be configured as the top. 
 
-## Configurando o topLevel
+!!! exercixe 
+    In Quartus:
 
-No Quartus devemos dizer qual entidade é a topLevel, como o VHDL não define uma padrão para isso, qualquer entidade pode ser configurada como top. No quartus: 
+  - `Project` :arrow_right:  `Set as Top-Level Entity`
 
-- `Project` :arrow_right:  `Set as Top-Level Entity`
-
-Esse comando irá configurar o arquivo atual como sendo o topLevel do projeto. Note que o Quartus atribui ao topLevel a entidade como sendo o nome do arquivo, se por algum motivo (que acontece) o nome do arquivo não for igual ao da entidade isso não irá funcionar.
+This command will set the current file as the topLevel of the project. Note that Quartus assigns the entity's name as the file's name to the topLevel. If for any reason (which happens) the file's name is not the same as the entity's, this will not work.
 
 !!! tip
-    Como salvamos o arquivo com o mesmo nome do projeto e a entidade tem o mesmo nome também, o Quartus reconhece essa entidade como sendo a TopLevel como padrão.
+    As we saved the file with the same name as the project and the entity has the same name as well, Quartus recognizes this entity as the TopLevel by default.
 
-## Verificando 
+## Verifying
 
-Vamos verificar se está tudo certo por enquanto realizando uma compilação completa no projeto. Para isso: `Processing` :arrow_right:  `Start Compilation`.
+Let's make sure everything is fine so far by doing a complete compilation of the project.
 
-!!! note ""
-    Aguarde !! as compilações de HDL podem demorar bastante tempo.
+!!! exercise 
+    To full complile the project on quartus:10000000
+    
+    :arrow_right: `Processing` :arrow_right:  `Start Compilation`.
+ 
+    > Please wait! Hardware compilations can take quite a long time.
 
 ### I/Os
 
-Lembre que o topLevel é a entidade que será mapeada com o mundo externo, nesse caso os sinais: `fpga_clk_50`; `fpga_led_pio`; devem ser conectados aos pinos da FPGA que estão conectados nesses dispositivos (clock de 50 MHz; Seis LEDs).
+Remember that the topLevel is the entity that will be mapped with the external world. In this case, the signals: `fpga_clk_50`; `fpga_led_pio`; should be connected to the FPGA pins that are connected to these devices (50 MHz clock; Six LEDs).
 
-Note o erro que o Quartus gerou quando mandamos ele compilar o projeto (**"Show Critical Warnings Messages"**):
+Notice the error that Quartus generated when we asked it to compile the project (**"Show Critical Warnings Messages"**):
 
 !!! failure
     ```
@@ -143,17 +133,17 @@ Note o erro que o Quartus gerou quando mandamos ele compilar o projeto (**"Show 
     to the I/O Assignment Warnings table in the fitter report.
     ```
 
-![Error](figs/Tutorial-FPGA-RTL:error.png)
+    ![Error](figs/Tutorial-FPGA-RTL:error.png)
 
-Esse erro indica que do topLevel 6 sinais não foram mapeados para os pinos correspondentes. 
+==This error indicates that from the topLevel 6 signals were not mapped to their corresponding pins.==
 
-### Pinos
+#### Pins
 
-Devemos indicar para a ferramenta quais são os pinos e qual padrão de sinal ele deve utilizar para cada um dos sinais definidos na entidade do topLevel. 
+We must indicate to the tool which pins and which signal standard it should use for each of the signals defined in the topLevel entity. 
 
 #### LEDs
 
-No manual da placa página 22 temos as definições de como os pinos da FPGA foram utilizados na placa:
+On page 22 of the board manual, we have the definitions of how the FPGA pins were used on the board:
 
 > There are also ten user-controllable LEDs connected to the FPGA. Each LED is driven directly and
 > individually by the Cyclone V SoC FPGA; driving its associated pin to a high logic level or low
@@ -165,7 +155,7 @@ No manual da placa página 22 temos as definições de como os pinos da FPGA for
 
 #### CLOCK
 
-Do manual:
+From the manual:
 
 > Figure 3-13 shows the default frequency of all external clocks to the Cyclone V SoC FPGA. A
 > clock generator is used to distribute clock signals with low jitter. The four 50MHz clock signals
@@ -177,129 +167,105 @@ Do manual:
 
 ![](figs/Tutorial-FPGA-RTL:pins3.png)
 
-#### Pin Assigment
+#### Pin Assignment
 
-Iremos utilizar o`Pin Planner` para inserir esses pinos, para isso:
+We will use the `Pin Planner` to insert these pins informations.
 
-`Assignments` :arrow_right: `Pin Planner`. 
+!!! exercise
+    To edit the pin assgiments:
 
-A interface do `Pin Planner` exibe os pinos/ bancos disponíveis da FPGA para serem alocados aos sinais do TopLevel. Note que a coluna `Fitter Location` já possui pinos alocados aos sinais, isso foi gerado automaticamente pelo Quartus na etapa de `Filter`, porém eles não correspondem aos pinos reais que desejamos utilizar.
+    :arrow_right: `Assignments` :arrow_right: `Pin Planner`. 
 
-!!! example "Tarefa"
-     Edite a coluna `Location` utilizando como referência a figura anterior que relaciona os LEDs da placa com os pinos da FPGA. 
+The `Pin Planner` interface displays the available FPGA pins/banks to be allocated to the TopLevel signals. Note that the `Fitter Location` column already has pins allocated to the signals, this was automatically generated by Quartus in the `Filter` step, however they do not correspond to the actual pins we want to use.
+
+!!! exercise
+     Edit the `Location` column using the previous figure that relates the LEDs on the board with the FPGA pins.
      
      Note:
      
-     1. no nosso projeto possuímos apenas 6 LEDs, do total de 10 disponíveis.
-     1. o I/O Standard não reflete o definido no manual que é `3.3V CMOS`. Você deve alterar essa coluna de `2.5V CMOS (Default)` para **`3.3-V LVTTL`**.
+     1. In our project, we only have 6 LEDs, out of the total 10 available.
+     1. The I/O Standard does not reflect the one defined in the manual, which is `3.3V CMOS`. You should change this column from `2.5V CMOS (Default)` to **`3.3-V LVTTL`**.
 
-![Pin Planner](figs/Tutorial-FPGA-RTL:Assigments.png)
+    ![Pin Planner](figs/Tutorial-FPGA-RTL:Assigments.png)
 
-!!! progress
-    Cheguei aqui!
+!!! info "FPGA Flexibility"
+     We normally attribute logical flexibility to the FPGA, but notice the flexibility it has in terms of defining the signal level of each pin. This gives the hardware developer countless usage options and new configurations.
 
-??? note "Flexibilidade FPGA"
-     Normalmente atribuímos a FPGA uma flexibilidade lógica, mas note a flexibilidade que ela possui quanto a definição de nível de sinal de cada pino. Isso permite ao desenvolvedor de hardware inúmeras opções de uso e de novas configurações. 
-
-!!! tip "Assignment Editor"
-    Feche a ferramenta e abra o `Assignment Editor`:
+!!! exercise "Assignment Editor"
+    Close the tool and open the `Assignment Editor`:
     
-    `Assignments` :arrow_right:  `Assignments Editor`. 
+    :arrow_right: `Assignments` :arrow_right:  `Assignments Editor`. 
     
-    Note que as mesmas informações inseridas anteriormente estão nesse editor. Na verdade, todas as configurações da FPGA são exibidas no `Assignments Editor` e apenas algumas no `Pin Planner`. 
+    Note that the same information entered previously is in this editor. In fact, all FPGA configurations are displayed in the `Assignments Editor`, and only some in the `Pin Planner`.
+
+!!! exercise "Recompile"
+    Recompile the project and note that there are no longer allocation errors.
+
+The error you're encountering pertains to not having indicated the operating frequency of your system to Quartus. Since the frequency isn't defined, the `Fitter and Assembler` phase can't correctly optimize the project, leading to this error. Note tha in this context, "Assembler" refers to a different process than the assembler used in a program like **C**. For more details, refer to this [resource](https://people.ece.cornell.edu/land/courses/ece5760/Quartus/Quartus_compile.html).
+
+### Synopsys Design Constraints File (`.sdc`)
+
+We need to add a new file to the project that outlines the boundary conditions of the project for the tool.
+
+!!! exercise
+    To do this: `File` :arrow_right: `New File` :arrow_right: `Synopsys Design Constraints File` :arrow_right: `Save As`:
+
+    - `Lab1_FPGA_RTL.sdc`
+
+!!! exercise
+    Add the following content to the file:
+
+    ```
+    # 50MHz board input clock
+    create_clock -period 20 [get_ports fpga_clk_50]
+
+    # Automatically apply a generate clock on the output of phase-locked loops (PLLs) 
+    derive_pll_clocks
+    ```
+
+These lines instruct the tool that the signal `fpga_clk_50` is a clock signal with a frequency of 50MHz (20 ns period) and to infer other automatic clocks (e.g., in case a PLL is used).
 
 !!! success "Recompile"
-    1. Recompile o projeto e note que não existe mais erros de alocação
-
-## Timing Requirements not met
-
-Ao compilar o projeto ainda possuímos um erro **critico**: 
-
-!!! failure
-    ```
-    Critical Warning (332012): Synopsys Design Constraints File file not found. 
-    A Synopsys Design Constraints File is required by the TimeQuest Timing
-    Analyzer to get proper timing constraints. Without it, the Compiler will
-    not properly optimize the design.
-
-    Critical Warning (332148): Timing requirements not met
-      
-    Info (11105): For recommendations on closing timing,
-    run Report Timing Closure Recommendations in the TimeQuest Timing Analyzer.
-    ```
-
-Esse erro é referente a não termos indicado para o Quartus qual a frequência de operação do nosso sistema. Como a frequência não está definida a etapa de `Fitter and Assembler` não consegue otimizar o projeto corretamente, resultando nesse erro.
-
-!!! note ""
-    Assembler aqui é diferente do assembler de um programa como **C**. De uma olhada nessa [referência](https://people.ece.cornell.edu/land/courses/ece5760/Quartus/Quartus_compile.html) para maiores detalhes.
-
-### Synopsys Design Constraints File: `.sdc`
-
-Devemos adicionar um novo arquivo ao projeto que irá indicar para a ferramenta quais são as condições de contorno do projeto. Para isso: `File` :arrow_right: `New File` :arrow_right: `Synopsys Design Constraints File` :arrow_right: `Save As`:
-
-- `Lab1_FPGA_RTL.sdc`
-
-Adicione ao arquivo o seguinte conteúdo:
-
-```
-# 50MHz board input clock
-create_clock -period 20 [get_ports fpga_clk_50]
-
-# Automatically apply a generate clock on the output of phase-locked loops (PLLs) 
-derive_pll_clocks
-```
-
-Essas linhas indicam para a ferramenta que o sinal `fpga_clk_50` é um sinal de clock com frequência 50MHz (20 ns de período) e é para a inferir outros clocks automáticos (exe: caso um PLL seja utilizado).
-
-1^: https://www.altera.com/support/support-resources/design-examples/design-software/timinganalyzer/exm-tq-basic-sdc-template.html
-
-!!! example "Tarefa"
-    1. Crie e inicialize o arquivo `.sdc`
-    1. Compile o projeto
-
-!!! success "Recompile"
-    Recompile o projeto e note que não existe mais erros críticos no projeto.
-
-!!! progress
-    Cheguei aqui!
+    Recompile the project and note that there are no longer any critical errors in the project.
 
 ### RTL Viewer 
 
-RTL Viewer é uma maneira gráfica de verificar se o código em HDL foi interpretado corretamente pela ferramenta, e uma ótima maneira de verificar se a descrição do hardware está correta. Para isso vá em:
+The RTL Viewer provides a graphical way to verify if the HDL code has been correctly interpreted by the tool. It's an excellent way to check if the hardware description is correct.
 
-`Tools` :arrow_right: `NetList Viewers` :arrow_right: `RTL Viewer`.
+!!! exercise
+    To open the RTL   Viewer:
 
-![RTL](figs/Tutorial-FPGA-RTL:rtl.png)
+    :arrow_right: `Tools` :arrow_right: `NetList Viewers` :arrow_right: `RTL Viewer`.
+  
+    You should see a diagrama similar to this one:
+    
+    ![RTL](figs/Tutorial-FPGA-RTL:rtl.png)
 
-## Gravando
+## Programming
 
-Conecte a FPGA no Host via o conector USB Blaster
+Connect the FPGA to the Host via the USB Blaster connector
 
-Com o projeto compilando o Quartus gera um arquivo binário na pasta output_files com extensão `*.sof` . Esse arquivo é o que será carregado na FPGA para executar o projeto. Para isso abra: 
+Once the project compiles, Quartus generates a binary file in the output_files folder with the `*.sof` extension. This file will be loaded onto the FPGA to run the project. 
 
-`Tools` :arrow_right: ` Programmmer`.
+!!! exercise
+    To programmer the FPGA:
+    
+    `Tools` :arrow_right: ` Programmmer`.
 
-Nessa etapa você deve clicar em Auto Detect, essa etapa irá ler via JTAG todos os dispositivos que estão conectados no **JTAG chain**, você irá notar que irão aparecer dois dispositivos:
+    At this stage, click on Auto Detect. This will read via JTAG all devices connected to the **JTAG chain**. You will notice that two devices appear:
 
-- `SOCVHPS`: ARM Cortex A7
-- `5CSXFC6D6`: FPGA
+    - `SOCVHPS`: ARM Cortex A7
+    - `5CSXFC6D6`: FPGA
 
-> Talvez seja necessário configurar o Linux para reconhecer o JTAG, siga os passos em: [Configurando USB Blaster Linux](https://github.com/Insper/Z01.1/wiki/Infraestrutura-Detalhada#configurando-o-usb-blaster).
+    > You might need to configure Linux to recognize the JTAG. Follow the steps at: [Configuring USB Blaster Linux](https://github.com/Insper/Z01.1/wiki/Infraestrutura-Detalhada#configurando-o-usb-blaster).
 
-![](figs/Tutorial-FPGA-RTL:programming.png)
+    ![Programming](figs/Tutorial-FPGA-RTL:programming.png)
 
-!!! progress
-    Cheguei aqui!
+## Exercises
 
-## Exercícios
+Lets practical a little bit:
 
-:beginner: : Fácil
-
-1. :beginner: Faça os LEDs piscarem mais devagar
-1. :beginner: Adicione botões ao projeto e faça eles controlarem os LEDs
-1. Faça as chaves controlarem a frequência na qual os LEDs piscam
-1. Adicione um PWM aos LEDs para controlar sua intensidade 
-
-## Entrega 1
-
-:bangbang: Siga para a [Entrega 1](Entrega-1)
+1. :beginner: Make the LEDs blink more slowly
+1. :beginner: Add buttons to the project and make them control the LEDs
+1. Make switches control the frequency at which the LEDs blink
+1. Add a PWM to the LEDs to control their intensity 

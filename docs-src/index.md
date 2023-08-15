@@ -1,5 +1,6 @@
 # SoC and Embedded Linux
 
+- [**Insper**](https://www.insper.edu.br/)
 - **Course:** Elective for Computer Engineering
 - **Track:** Solutions Architecture
 - **Prof.:** Rafael Corsi / rafael.corsi@insper.edu.br
@@ -10,43 +11,41 @@
 
 ---
 
-## OBJECTIVES:
+## Course objectives
 
 1. Formulate solutions that meet hardware and software requirements for projects with FPGA-SoC (System-on-a-chip)
 2. Integrate a prototype solution for an embedded system with processing and/or real-time requirements via FPGA-SoC
 3. Interface different modules in an embedded system (processors, firmware, and operating systems)
 
-## Methodology
+## Course
 
 The course is based on tutorials where theoretical and practical concepts are presented. The student must follow the material as presented (in sequence) as it was designed incrementally. Each tutorial (or series of tutorials) has an assignment (APS) to be done, and the tutorial is the entry point for the assignment, but it also goes beyond in understanding and concepts.
 
-## Evaluation
+==If you're an external visitor==, you can use this course material in different ways. Consider that all examples were created for the DE0-Standard board but can easily be adapted to other development boards with an Intel SoC FPGA.
 
-The evaluation consists of assignments throughout the semester (each series of tutorials has an assignment with a grade) and a tutorial that must be created throughout the course and integrated into the course page. The tutorial is a free theme within the objectives of the course and has some intermediate assignments that will compose the final grade.
+If you're specifically interested in learning about ARM and embedded Linux, you can access the **HPS** material. On the other hand, if you want to explore FPGA and hardware topics, including the NIOS soft processor and IP development, you should start by looking at the **FPGA** section. 
+
+The **HPS + FPGA** section discusses the connection between these two subjects. You can also find material on the basics of hardware acceleration using HLS or OpenCL in the **Acceleration** section. Lastly, the **Students** section contains tutorials created by students from the previous semester.
 
 ## Motivation
 
 - What is a [System On Chip (SoC)](https://en.wikipedia.org/wiki/System_on_a_chip)?
 - Who are the main SoC manufacturers?
-  - [Samsung](https://en.wikipedia.org/wiki/List_of_Samsung_system-on-a-chips) / [Qualcomm](<https://en.wikipedia.org/wiki/List_of_Qualcomm_Snapdragon_systems-on-chip#Qualcomm_205,_Snapdragon_208,_210_and_212_(2014-17)>) / [Xilinx](https://www.xilinx.com/products/silicon-devices/soc.html) / [Intel FPGA](https://www.intel.com/content/www/us/en/products/programmable.html)
+    - [Samsung](https://en.wikipedia.org/wiki/List_of_Samsung_system-on-a-chips) / [Qualcomm](<https://en.wikipedia.org/wiki/List_of_Qualcomm_Snapdragon_systems-on-chip#Qualcomm_205,_Snapdragon_208,_210_and_212_(2014-17)>) / [Xilinx](https://www.xilinx.com/products/silicon-devices/soc.html) / [Intel FPGA](https://www.intel.com/content/www/us/en/products/programmable.html)
 - Areas / Applications:
-  - [Macbook Pro](https://www.redsharknews.com/technology/item/6408-apple-s-mac-pro-afterburner-what-just-happened)/ [aws f1](https://aws.amazon.com/ec2/instance-types/f1/) / [Intel 1](https://www.intel.com/content/www/us/en/products/programmable.html) / [Intel 2](http://www.innovatefpga.com) / [Xilinx](https://www.xilinx.com/applications.html)
+    - [Macbook Pro](https://www.redsharknews.com/technology/item/6408-apple-s-mac-pro-afterburner-what-just-happened)/ [aws f1](https://aws.amazon.com/ec2/instance-types/f1/) / [Intel 1](https://www.intel.com/content/www/us/en/products/programmable.html) / [Intel 2](http://www.innovatefpga.com) / [Xilinx](https://www.xilinx.com/applications.html)
 - What is the difference between [Soft-Processor](https://www.intel.com/content/www/us/en/products/programmable/processor/nios-ii.html) and a HardProcessor?
 - [x86 + FPGA ?](https://www.anandtech.com/show/12773/intel-shows-xeon-scalable-gold-6138p-with-integrated-fpga-shipping-to-vendors)
 - Jobs? Which one would you apply for?
-  - [Facebook](https://www.glassdoor.com.br/Vagas/Facebook-fpga-Vagas-EI_IE40772.0,8_KO9,13.htm?countryRedirect=true) / [Google](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=google%20fpga&location=Mundialmente) / [Apple](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=apple%20fpga&location=Mundialmente) / [Microsoft](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=microsoft%20fpga&location=Mundialmente) / [Amazon](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=amazon%20fpga&location=Mundialmente)
+    - [Facebook](https://www.glassdoor.com.br/Vagas/Facebook-fpga-Vagas-EI_IE40772.0,8_KO9,13.htm?countryRedirect=true) / [Google](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=google%20fpga&location=Mundialmente) / [Apple](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=apple%20fpga&location=Mundialmente) / [Microsoft](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=microsoft%20fpga&location=Mundialmente) / [Amazon](https://www.linkedin.com/jobs/search/?geoId=92000000&keywords=amazon%20fpga&location=Mundialmente)
 - How to use hardware in service of software?
   [HLS](https://www.intel.com/content/www/us/en/software/programmable/quartus-prime/hls-compiler.html)
   /
   [OpenCL](https://www.intel.com/content/www/us/en/software/programmable/sdk-for-opencl/overview.html)
 
-## Infrastructure
+## Evaluation
 
-To facilitate the course progress, we  an SSD with the listed software [here](/info-FPGA-e-Softwares). We will use the [DE10-Standard](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1081) kit.
-
-## Dynamics
-
-The course is based on a series of tutorials (with assignments) that starts from a simple hardware on the FPGA to control the board's LEDs and goes up to running a Linux system with graphical interface and co-processing on an embedded system.
+The evaluation consists of assignments throughout the semester (each series of tutorials has an assignment with a grade) and a tutorial that must be created throughout the course and integrated into the course page. The tutorial is a free theme within the objectives of the course and has some intermediate assignments that will compose the final grade.
 
 ## Bibliography
 
@@ -71,8 +70,8 @@ Complementary:
 1. Have a Linux machine (can be VM)
 1. Create a repository on Github [by clicking here](https://classroom.github.com/a/fGUME066)
 1. Think a little about a theme to delve into (for tutorial)
-   - :point_right: [Tips](Projeto-Overview)
-   - Take a look at past tutorials:
+    - :point_right: [Tips](Projeto-Overview)
+    - Take a look at past tutorials:
 1. Recommended reading:
-   - https://www.intel.com/content/www/us/en/products/programmable/fpga/new-to-fpgas/resource-center/overview.html
-   - Available in the lab: [CHU, 2011, cap. 1], [KOOPMAN, 2010, cap. 2]# SoC and Embedded Linux
+    - https://www.intel.com/content/www/us/en/products/programmable/fpga/new-to-fpgas/resource-center/overview.html
+    - Available in the lab: [CHU, 2011, cap. 1], [KOOPMAN, 2010, cap. 2]# SoC and Embedded Linux

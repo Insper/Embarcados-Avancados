@@ -1,4 +1,4 @@
-#  👁 Delivery 1
+# 🔔 FPGA - Assigment 1
 
 What should be delivered?
 
@@ -15,21 +15,19 @@ To facilitate development, a project and a component that control the stepping m
 
 The pins have already been mapped and you should connect the motor as indicated below!
 
-![](figs/Delivery-1:assembly.png)
+![](figs/Entrega-1:montagem.png)
 
 !!! warning
     Be careful to avoid burning the board.
 
 Final assembly:
 
-[![](figs/Delivery-1:assembly2.png){width=200}](figs/Delivery-1:assembly2.png)
+![](figs/Entrega-1:montagem2.png){width=300}
 
->  Click to enlarge
-
-??? note "Schematic GPIO"
+!!! note "Schematic GPIO"
     Extracted from the manual:
 
-    ![](figs/Delivery-1:gpio.png)
+    ![](figs/Entrega-1:gpio.png)
 
 !!! example "TODO"
     After assembling, open the example project, compile and write to the FPGA. You should see the motor rotating.
@@ -37,15 +35,6 @@ Final assembly:
     Play with switches 2 and 3, the motor speed should vary.
 
 ## Rubric
-
-!!! info
-    Deliver to the repository created by the classroom:
-    
-    - https://classroom.github.com/g/NOdeF3Du
-
-    Fill in the forms below:
-    
-    - https://docs.google.com/forms/d/e/1FAIpQLSeBAJLAdo1_fcsrm2OYT62Wg12mCm96gUCrq4oHbjqUM46yGA/viewform?usp=sf_link
 
 - A
     - Applies an acceleration curve to the speed.
