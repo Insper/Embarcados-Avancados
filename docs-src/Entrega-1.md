@@ -3,9 +3,9 @@
 !!! tip "Deliver"
     What should be delivered?
     
-    - **DeadLine:** {entrega_1_deadline}
-    - **Classroom:** {{entrega_1_classroom}}
-    - **Forms:** {{entrega_1_forms}}
+    - **DeadLine:** {{entrega_1_deadline}}
+    - [Github Classroom]({{entrega_1_classroom}})
+    - [Google forms]({{entrega_1_forms}})
 
 The idea of this delivery is for you to work a little more with VHDL and also to remember/learn how to develop a project hierarchically. In this delivery, you will develop an IP core (intellectual property core) dedicated to controlling a stepping motor.
 
