@@ -2,6 +2,7 @@
 
 !!! tip "Deliver"
     What should be delivered?
+    
     - **DeadLine:** {entrega_1_deadline}
     - **Classroom:** {{entrega_1_classroom}}
     - **Forms:** {{entrega_1_forms}}
