@@ -1,4 +1,10 @@
-# 🔔 HPS - Assigment 1
+# 🔔 HPS - Deploy 
+
+!!! tip "Deliver"
+    What should be delivered?
+    - **DeadLine:** {entrega_2_deadline}
+    - **Classroom:** {{entrega_2_classroom}}
+    - **Forms:** {{entrega_2_forms}}
 
 The objective of this delivery is to automate the compilation and deployment of new programs to the `target`. For this, we will have to create a Makefile that should be able to compile and deploy a program. For this, we have several options, some of them being:
 
@@ -9,14 +15,7 @@ The objective of this delivery is to automate the compilation and deployment of 
 
 Note that all solutions require a network connection, for this follow the script: [Info HPS Ethernet](Embarcados-Avancados/info-HPS-ethernet/).
 
-## Rubric:
-
-!!! info
-    You should make the deliveries through the github repository created in the classroom:
-    
-    - https://classroom.github.com/a/fGUME066
-    
-    Create a folder called: `1-makefile` and make the delivery through it
+## Rubric
 
 > To test, modify the Makefile of `BlinkLed`
 

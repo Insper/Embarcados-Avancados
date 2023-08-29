@@ -1,9 +1,10 @@
 # 🔔 FPGA - Assigment 1
 
-What should be delivered?
-
-- **Folder:** `Delivery_1_FPGA_RTL`
-- **Video** of the working project with an explanation (short!)
+!!! tip "Deliver"
+    What should be delivered?
+    - **DeadLine:** {entrega_1_deadline}
+    - **Classroom:** {{entrega_1_classroom}}
+    - **Forms:** {{entrega_1_forms}}
 
 The idea of this delivery is for you to work a little more with VHDL and also to remember/learn how to develop a project hierarchically. In this delivery, you will develop an IP core (intellectual property core) dedicated to controlling a stepping motor.
 
