@@ -19,17 +19,23 @@ It will copy files to the `/etc/init.d` folder, for this:
     - `System Configuration` -> *Root filesystem overlay directories*: `overlay`
     
 ```bash title="overlay/S41static"
-#!/bin/bash
+#!/bin/sh
 
 case "$1" in
-start)
-    printf "Setting ip: "
-    /sbin/ifconfig eth0 169.254.0.13 netmask 255.255.0.0 up
-    [ $? = 0 ] && echo "OK" || echo "FAIL"
-    ;; 
-*)
-    exit 1
-    ;;
+  start)
+        start
+        ifconfig eth0 up
+        ifconfig eth0 169.254.0.13 netmask 255.255.0.0 up
+        ;;
+  stop)
+        stop
+        ;;
+  restart|reload)
+        restart
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
 esac
 ```
 

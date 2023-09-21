@@ -1,5 +1,13 @@
 # 🔔 HPS - Assignment 3
 
+!!! tip "Deliver"
+    What should be delivered?
+    
+    - **DeadLine:** {{entrega_3_deadline}}
+    - [Github Classroom]({{entrega_3_classroom}})
+    - [Google forms]({{entrega_forms}})
+
+
 You must create an embedded system that includes a web server and a webpage that allows you to monitor and control the hardware through a simple interface.
 
 The webpage should allow:

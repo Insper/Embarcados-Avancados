@@ -33,6 +33,11 @@ extra:
     entrega_2_classroom: https://classroom.github.com/a/X1VhdjzW
     entrega_2_forms:  https://docs.google.com/forms/d/e/1FAIpQLSe3TKNxu2SV4Rm7QUyj3hq6Yt1YB5BWweT4zSXWMQHSDh6XpA/viewform?usp=sf_link
 
+    entrega_3_deadline: TBD
+    entrega_3_classroom: https://classroom.github.com/a/EVfsoSFX
+
+    entrega_forms:  https://docs.google.com/forms/d/e/1FAIpQLSe3TKNxu2SV4Rm7QUyj3hq6Yt1YB5BWweT4zSXWMQHSDh6XpA/viewform?usp=sf_link
+
 
 markdown_extensions:
   - markdown.extensions.attr_list

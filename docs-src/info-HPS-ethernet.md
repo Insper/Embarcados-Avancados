@@ -117,20 +117,24 @@ Create a script named `S60MAC.sh` in the `/etc/init.d` folder and add the follow
 
 === "Scenario 1"
     ```bash
-    #!/bin/bash
+    #!/bin/sh
 
     case "$1" in
     start)
-        printf "Setting ip: "
-        ifconfig eth0 down
-        ifconfig eth0 up
-        udhcpc eth0
-        [ $? = 0 ] && echo "OK" || echo "FAIL"
-        ;;
+            start
+            ifconfig eth0 up
+            ifconfig eth0 169.254.0.13 netmask 255.255.0.0 up
+            ;;
+    stop)
+            stop
+            ifconfig eth0 down
+            ;;
+    restart|reload)
+            restart
+            ;;
     *)
-        exit 1
-        ;;
-
+            echo "Usage: $0 {start|stop|restart}"
+            exit 1
     esac
     ```
     
