@@ -251,11 +251,11 @@ Now we need to update the kernel that is on the SDCard so we can test if it is w
     1. eject the sdcard or execute the `sync` command
     1. put the SDCARD in the board and turn on the FPGA
 
-To check if everything is correct, just put the memory card in the kit and check the version of the running kernel:
+To verify that everything is set up correctly, simply insert the memory card into the kit and check the version of the running kernel. ==Please note that your kernel version and compilation time may differ from mine==.
 
 ```bash
 $ uname -a
-Linux buildroot 4.14.0 #1 SMP Mon Jul 16 21:22:58 -03 2018 armv7l GNU/Linux
+Linux buildroot 4.4 #1 SMP Mon Jul 16 21:22:58 -03 2018 armv7l GNU/Linux
 ```
 
 ## Mouse/ Keyboard?

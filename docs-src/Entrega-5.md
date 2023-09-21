@@ -1,4 +1,4 @@
-# 🔔 HPS - Assignment 2
+# 🔔 HPS - Assignment 3
 
 You must create an embedded system that includes a web server and a webpage that allows you to monitor and control the hardware through a simple interface.
 
@@ -13,18 +13,24 @@ Hint: You will need to have a server (for example in Python) that will need to c
 
 ## Rubric
 
-### A
+### Extras
 
 Any of the following options:
 
+
 - Reading and displaying the board's IMU (hint: use example code ([hps_gsensor](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/hps_gsensor)))
 - Writing on the board's LCD (hint: use example code [hps_lcd](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/hps_lcd))
-- Or another cool idea (to be validated with the professor)
+
+### A
+
+Attach a webcam to the board and display the captured image on the webserver.
 
 ### B
 
-- The web server deployment and configuration should be done via a makefile 
-- The system should start automatically
+Automate the Buildroot process so that it includes your server solution and any other necessary files every time you run Buildroot. For this, use the overlay solution and configure Linux to automatically run your server at boot time. To achieve this, you will need to:
+
+- Use overlay to add your files to the image.
+- Utilize overlay to create a script in /etc/init.d/ that will start the webserver at boot time.
 
 ### C
 

@@ -82,7 +82,7 @@ nav:
       - "Tutorial-HPS-Kernel.md"
       - "Tutorial-HPS-Buildroot.md"
       - "info-HPS-buildroot-scripts.md"
-      - Entrega 4: "Entrega-5.md"
+      - Entrega 3: "Entrega-5.md"
       - "Tutorial-HPS-DeviceDriver1.md"
       - "Tutorial-HPS-kernel-module.md"
       - "Tutorial-HPS-kernel-chardriver.md"
@@ -98,7 +98,7 @@ nav:
       - "Tutorial-FPGA-RTL.md"
       - Entrega 1: "Entrega-1.md"
       - "Tutorial-FPGA-NIOS.md"
-      - Entrega 3: "Entrega-2.md"
+      - Entrega 4: "Entrega-2.md"
       - Entrega 5: "Entrega-3.md"
       - "Tutorial-FPGA-NIOS-IP.md"
   - "Tutoriais Alunos":
