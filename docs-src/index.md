@@ -11,6 +11,13 @@
 
 ---
 
+## Schedule 2023
+
+1. FPGA 
+
+
+---
+
 ## Course objectives
 
 1. Formulate solutions that meet hardware and software requirements for projects with FPGA-SoC (System-on-a-chip)
