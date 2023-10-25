@@ -110,20 +110,20 @@ nav:
       - "Projeto-Overview.md"
       - "Projeto-Rubrica.md"
       - "Template markdown": "https://github.com/Insper/Embarcados-Avancados-Template"
-      - "2020/PS3-Linux-Tutorial/index.md": PS3 HACK
-      - "2020/Android/index.md":  Android para Raspbery Pi 3
-      - "2020/LED-HW/index.md":  Driver linux para acender leds
-      - "2020/LED-Linux/index.md": Driver linux para acender leds
-      - "2020/python/index.md":  Soc & Python
-      - "2020/metropolis/index.md": SDAccel / Vitis - Algoritmo metropolis
-      - "2020/Audio/index.md": Áudio na DE10
-      - "2020/cripto/index.md":  Criptografia em Hardware Fpga
-      - "2019/Gabriel-TensorFlow.md": TensorFlow
-      - "2019/Leo-OpenCL.md": OpenCL
-      - "2019/Elisa-Yocto.md":  Yocto
-      - "2019/Pedro-OpenCV.md": OpenCV
-      - "2019/Martim-F1.md": FPGA na AWS
-      - "2019/Toranja-DevDriver.md": DeviceDriver
+      - PS3 HACK: "2020/PS3-Linux-Tutorial/index.md"
+      - Android para Raspbery Pi 3: "2020/Android/index.md"
+      - Driver linux para acender leds: "2020/LED-HW/index.md"
+      - Driver linux para acender leds: "2020/LED-Linux/index.md"
+      - Soc & Python: "2020/python/index.md"
+      - SDAccel / Vitis - Algoritmo metropolis: "2020/metropolis/index.md"
+      - Áudio na DE10: "2020/Audio/index.md"
+      - Criptografia em Hardware Fpga: "2020/cripto/index.md"
+      - TensorFlow: "2019/Gabriel-TensorFlow.md"
+      - OpenCL: "2019/Leo-OpenCL.md"
+      - Yocto: "2019/Elisa-Yocto.md"
+      - OpenCV: "2019/Pedro-OpenCV.md"
+      - FPGA na AWS: "2019/Martim-F1.md"
+      - DeviceDriver: "2019/Toranja-DevDriver.md"
   - "Úteis":
       - "info-FPGA-e-Softwares.md"
       - "info-VHDL.md"
