@@ -1,9 +1,10 @@
-# 🔔 Entrega 2
+# 🔔 Entrega 4
 
-O que deve ser entregue?
-
-- **Pasta:** `Entrega_2_FPGA_NIOS`
-- **Vídeo** do projeto funcionando com uma explicação (aprox 1.5 min)
+!!! tip "Deliver"
+    What should be delivered?
+    
+    - [Github Classroom]({{entrega_4_classroom}})
+    - [Google forms]({{entrega_forms}})
 
 Nessa entrega iremos ter a mesma funcionalidade que a [Entrega 1](/Entrega1/) porém com o motor sendo acionado pelo NIOS (soft processor).
 
