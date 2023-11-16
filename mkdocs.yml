@@ -112,23 +112,23 @@ nav:
       - "Projeto-Overview.md"
       - "Projeto-Rubrica.md"
       - "Template markdown": "https://github.com/Insper/Embarcados-Avancados-Template"
-      - 2022 - TFTP: 2023/tftp/index.md
-      - 2022 - RISC V: 2023/riscv/index.md
-      - 2022 - RaSpider: RaSpider/index.md
-      - 2021 - PS3 HACK: "2020/PS3-Linux-Tutorial/index.md"
-      - 2021 - Android para Raspbery Pi 3: "2020/Android/index.md"
-      - 2021 - IP para fita de LED: "2020/LED-HW/index.md"
-      - 2021 - Driver linux fita de LED: "2020/LED-Linux/index.md"
-      - 2021 - Soc & Python: "2020/python/index.md"
-      - 2021 - SDAccel: "2020/metropolis/index.md"
-      - 2021 - Áudio na DE10: "2020/Audio/index.md"
-      - 2021 - Criptografia em Hardware: "2020/cripto/index.md"
-      - 2020 - TensorFlow: "2019/Gabriel-TensorFlow.md"
-      - 2020 - OpenCL: "2019/Leo-OpenCL.md"
-      - 2020 - Yocto: "2019/Elisa-Yocto.md"
-      - 2020 - OpenCV: "2019/Pedro-OpenCV.md"
-      - 2020 - FPGA na AWS: "2019/Martim-F1.md"
-      - 2020 - DeviceDriver: "2019/Toranja-DevDriver.md"
+      - 2022 - TFTP: 2022/tftp/index.md
+      - 2022 - RISC V: 2022/riscv/index.md
+      - 2022 - RaSpider: 2022/RaSpider/index.md
+      - 2020 - PS3 HACK: "2020/PS3-Linux-Tutorial/index.md"
+      - 2020 - Android para Raspbery Pi 3: "2020/Android/index.md"
+      - 2020 - IP para fita de LED: "2020/LED-HW/index.md"
+      - 2020 - Driver linux fita de LED: "2020/LED-Linux/index.md"
+      - 2020 - Soc & Python: "2020/python/index.md"
+      - 2020 - SDAccel: "2020/metropolis/index.md"
+      - 2020 - Áudio na DE10: "2020/Audio/index.md"
+      - 2020 - Criptografia em Hardware: "2020/cripto/index.md"
+      - 2019 - TensorFlow: "2019/Gabriel-TensorFlow.md"
+      - 2019 - OpenCL: "2019/Leo-OpenCL.md"
+      - 2019 - Yocto: "2019/Elisa-Yocto.md"
+      - 2019 - OpenCV: "2019/Pedro-OpenCV.md"
+      - 2019 - FPGA na AWS: "2019/Martim-F1.md"
+      - 2019 - DeviceDriver: "2019/Toranja-DevDriver.md"
   - "Úteis":
       - "info-FPGA-e-Softwares.md"
       - "info-VHDL.md"
