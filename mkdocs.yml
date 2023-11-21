@@ -115,6 +115,8 @@ nav:
       - 2022 - TFTP: 2022/tftp/index.md
       - 2022 - RISC V: 2022/riscv/index.md
       - 2022 - RaSpider: 2022/RaSpider/index.md
+      - 2021 - Chisel: 2021/Chisel/index.md
+      - 2021 - RISC V: 2021/RISCV/index.md
       - 2020 - PS3 HACK: "2020/PS3-Linux-Tutorial/index.md"
       - 2020 - Android para Raspbery Pi 3: "2020/Android/index.md"
       - 2020 - IP para fita de LED: "2020/LED-HW/index.md"
