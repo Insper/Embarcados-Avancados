@@ -1,4 +1,4 @@
-# Char Device DriverTESTE
+# Char Device Driver
 
 Now we will create a character device driver. This module will appear as a device in `/dev/`, allowing a program in the userspace to interact with it.
 

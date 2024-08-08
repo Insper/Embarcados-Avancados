@@ -112,7 +112,7 @@ nav:
       - "Projeto-Overview.md"
       - "Projeto-Rubrica.md"
       - "Template markdown": "https://github.com/Insper/Embarcados-Avancados-Template"
-      - 2022 - TFTP: 2022/tftpp/index.md
+      - 2022 - TFTP: 2022/tftp/index.md
       - 2022 - RISC V: 2022/riscv/index.md
       - 2022 - RaSpider: 2022/RaSpider/index.md
       - 2021 - Chisel: 2021/Chisel/index.md
