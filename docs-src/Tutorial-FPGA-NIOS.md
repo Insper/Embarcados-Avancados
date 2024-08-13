@@ -10,6 +10,12 @@ To follow this tutorial you need:
 - **Software:** Quartus 18.01
 - **Documents:** [DE10-Standard_User_manual.pdf](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual)
 
+!!! warning
+    No link abaixo você irá encontrar dicas para resolver possíveis problemas neste tutorial:
+    
+    [Possíveis Problemas na Aula: Tutorial FPGA NIOS](https://insper.github.io/Embarcados-Avancados/Tutorial_FPGA_NIOS_possiveis_problemas/)
+
+
 ## Soft processor
 
 HDL (VHDL, Verilog, ...) projects aren't very flexible, each project modification implies hardware modifications, which isn't straightforward. Besides the difficulty of implementing changes, we also have the testing and compilation time of the project, which isn't immediate.
@@ -91,6 +97,10 @@ To begin:
         - Direction: **Output**
     - `NIOS II Processor`
         - Type: **NIOS II/e**
+        
+
+!!! tip
+    You can use the search box to find the IPs
 
 You should obtain something similar to:
 
@@ -243,14 +253,14 @@ Now we need to create a VHDL file that will be our top-level `LAB2_FPGA_NIOS.vhd
         port (
             -- Globals
             fpga_clk_50        : in  std_logic;             -- clock.clk
-
+    
             -- I/Os
             fpga_led_pio       : out std_logic_vector(5 downto 0)
       );
     end entity LAB2_FPGA_NIOS;
-
+    
     architecture rtl of LAB2_FPGA_NIOS is
-
+    
     component niosLab2 is port (
       clk_clk       : in  std_logic                    := 'X'; -- clk
       reset_reset_n : in  std_logic                    := 'X'; -- reset_n
@@ -259,18 +269,18 @@ Now we need to create a VHDL file that will be our top-level `LAB2_FPGA_NIOS.vhd
 
     );
     end component niosLab2;
-
+    
     begin
-
+    
     u0 : component niosLab2 port map (
       clk_clk       => fpga_clk_50,    --  clk.clk
       reset_reset_n => '1',            --  reset.reset_n
       leds_export   => fpga_led_pio    --  leds.export
     );
-
+    
     end rtl;
     ```
-     
+
 !!! note
     Note that we are not using the reset signal (the `_n` indicates that the reset is active-low, i.e., 0). 
 

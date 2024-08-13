@@ -1,0 +1,222 @@
+{
+  "course": "Embedded-Linux-SoC",
+  "exercises": {
+    "Tutorial-FPGA-RTL/": {
+      "exercise_1": {
+        "tags": [],
+        "slug": "Tutorial-FPGA-RTL/exercise_1"
+      },
+      "exercise_2": {
+        "tags": [],
+        "slug": "Tutorial-FPGA-RTL/exercise_2"
+      },
+      "exercise_3": {
+        "tags": [],
+        "slug": "Tutorial-FPGA-RTL/exercise_3"
+      },
+      "exercise_4": {
+        "tags": [],
+        "slug": "Tutorial-FPGA-RTL/exercise_4"
+      },
+      "exercise_5": {
+        "tags": [],
+        "slug": "Tutorial-FPGA-RTL/exercise_5"
+      },
+      "exercise_6": {
+        "tags": [],
+        "slug": "Tutorial-FPGA-RTL/exercise_6"
+      },
+      "exercise_7": {
+        "tags": [],
+        "slug": "Tutorial-FPGA-RTL/exercise_7"
+      },
+      "exercise_8": {
+        "tags": [],
+        "slug": "Tutorial-FPGA-RTL/exercise_8"
+      },
+      "exercise_9": {
+        "tags": [],
+        "slug": "Tutorial-FPGA-RTL/exercise_9"
+      },
+      "exercise_10": {
+        "tags": [],
+        "slug": "Tutorial-FPGA-RTL/exercise_10"
+      },
+      "exercise_11": {
+        "tags": [],
+        "slug": "Tutorial-FPGA-RTL/exercise_11"
+      },
+      "exercise_12": {
+        "tags": [],
+        "slug": "Tutorial-FPGA-RTL/exercise_12"
+      }
+    },
+    "Tutorial-HPS-BlinkLED/": {
+      "exercise_1": {
+        "tags": [],
+        "slug": "Tutorial-HPS-BlinkLED/exercise_1"
+      },
+      "exercise_2": {
+        "tags": [],
+        "slug": "Tutorial-HPS-BlinkLED/exercise_2"
+      },
+      "exercise_3": {
+        "tags": [],
+        "slug": "Tutorial-HPS-BlinkLED/exercise_3"
+      }
+    },
+    "Tutorial-HPS-BuildSystem/": {
+      "exercise_1": {
+        "tags": [],
+        "slug": "Tutorial-HPS-BuildSystem/exercise_1"
+      }
+    },
+    "Tutorial-HPS-Buildroot/": {
+      "exercise_1": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Buildroot/exercise_1"
+      },
+      "exercise_2": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Buildroot/exercise_2"
+      },
+      "exercise_3": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Buildroot/exercise_3"
+      },
+      "exercise_4": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Buildroot/exercise_4"
+      },
+      "exercise_5": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Buildroot/exercise_5"
+      },
+      "exercise_6": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Buildroot/exercise_6"
+      },
+      "short_1": {
+        "tags": [
+          "short-text",
+          "text-exercise"
+        ],
+        "slug": "Tutorial-HPS-Buildroot/short_1"
+      }
+    },
+    "Tutorial-HPS-FPGA-BlinkLED/": {
+      "exercise_1": {
+        "tags": [],
+        "slug": "Tutorial-HPS-FPGA-BlinkLED/exercise_1"
+      }
+    },
+    "Tutorial-HPS-FPGA-VGA/": {
+      "exercise_1": {
+        "tags": [],
+        "slug": "Tutorial-HPS-FPGA-VGA/exercise_1"
+      },
+      "exercise_2": {
+        "tags": [],
+        "slug": "Tutorial-HPS-FPGA-VGA/exercise_2"
+      },
+      "exercise_3": {
+        "tags": [],
+        "slug": "Tutorial-HPS-FPGA-VGA/exercise_3"
+      },
+      "exercise_4": {
+        "tags": [],
+        "slug": "Tutorial-HPS-FPGA-VGA/exercise_4"
+      }
+    },
+    "Tutorial-HPS-FPGA-kernel-char-led-driver/": {
+      "exercise_1": {
+        "tags": [],
+        "slug": "Tutorial-HPS-FPGA-kernel-char-led-driver/exercise_1"
+      },
+      "exercise_2": {
+        "tags": [],
+        "slug": "Tutorial-HPS-FPGA-kernel-char-led-driver/exercise_2"
+      },
+      "exercise_3": {
+        "tags": [],
+        "slug": "Tutorial-HPS-FPGA-kernel-char-led-driver/exercise_3"
+      }
+    },
+    "Tutorial-HPS-Kernel/": {
+      "exercise_1": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Kernel/exercise_1"
+      },
+      "exercise_2": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Kernel/exercise_2"
+      },
+      "exercise_3": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Kernel/exercise_3"
+      },
+      "exercise_4": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Kernel/exercise_4"
+      },
+      "exercise_5": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Kernel/exercise_5"
+      },
+      "exercise_6": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Kernel/exercise_6"
+      }
+    },
+    "Tutorial-HPS-Running/": {
+      "exercise_1": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Running/exercise_1"
+      },
+      "exercise_2": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Running/exercise_2"
+      },
+      "exercise_3": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Running/exercise_3"
+      },
+      "exercise_4": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Running/exercise_4"
+      },
+      "exercise_5": {
+        "tags": [],
+        "slug": "Tutorial-HPS-Running/exercise_5"
+      }
+    },
+    "Tutorial-HPS-kernel-module/": {
+      "exercise_1": {
+        "tags": [],
+        "slug": "Tutorial-HPS-kernel-module/exercise_1"
+      },
+      "exercise_2": {
+        "tags": [],
+        "slug": "Tutorial-HPS-kernel-module/exercise_2"
+      },
+      "exercise_3": {
+        "tags": [],
+        "slug": "Tutorial-HPS-kernel-module/exercise_3"
+      },
+      "exercise_4": {
+        "tags": [],
+        "slug": "Tutorial-HPS-kernel-module/exercise_4"
+      }
+    },
+    "Tutorial-HPS/": {
+      "exercise_1": {
+        "tags": [],
+        "slug": "Tutorial-HPS/exercise_1"
+      }
+    }
+  },
+  "tags": {
+    "short-text": "short-text",
+    "text-exercise": "text-exercise"
+  }
+}

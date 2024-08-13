@@ -39,6 +39,8 @@ extra:
     entrega_4_classroom: https://classroom.github.com/a/Qc6_OnhL
 
     entrega_forms:  https://docs.google.com/forms/d/e/1FAIpQLSe3TKNxu2SV4Rm7QUyj3hq6Yt1YB5BWweT4zSXWMQHSDh6XpA/viewform?usp=sf_link
+    
+    
 
 
 markdown_extensions:
@@ -107,7 +109,8 @@ nav:
       - "Tutorial-FPGA-NIOS.md"
       - Entrega 4: "Entrega-2.md"
       - Entrega 5: "Entrega-3.md"
-      - "Tutorial-FPGA-NIOS-IP.md"
+      #- "Tutorial-FPGA-NIOS-IP.md"
+      - "Tutorial_FPGA_NIOS_possiveis_problemas"
   - "Tutoriais Alunos":
       - "Projeto-Overview.md"
       - "Projeto-Rubrica.md"
