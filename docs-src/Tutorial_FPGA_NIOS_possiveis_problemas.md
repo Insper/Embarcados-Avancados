@@ -15,7 +15,7 @@ Para tanto, fazermos uso de:
 
 Para fazer as conexões entre os módulos do Plataform Designer,  deve-se clicar no circulo cinza nos cruzamentos de barramentos ou  sinais, conforme mostrado abaixo:
 
-![Plataform_Designer_02](\Embarcados-Avancados\imgs\Plataform_Designer_02.png)
+![Plataform_Designer_02](\Embarcados-Avancados\figs\Plataform_Designer_02.png)
 
 **Plataform Designer**
 
@@ -44,15 +44,15 @@ Ver detalhes em: https://stackoverflow.com/questions/65240134/nios-ii-ide-unsuab
 
 Ao transferir o programa em *C* para o Kit FPGA, através da opção **Run -> Run**, pode ocorrer o seguinte erro:
 
-![Erro de ID](\Embarcados-Avancados\imgs\Erro_System_ID.png)**Erro de ID**
+![Erro de ID](\Embarcados-Avancados\figs\Erro_System_ID.png)**Erro de ID**
 
 Para resolver, pode-se ignorar a verificação do *ID* na configuração em **Run -> Run Configurations …**, conforme mostrado abaixo:
 
-![Tela de Configuração](\Embarcados-Avancados\imgs\Run_Configurations-02.png)**Tela de Configuração**
+![Tela de Configuração](\Embarcados-Avancados\figs\Run_Configurations-02.png)**Tela de Configuração**
 
 Caso ocorra o erro de *Time Stamp*, como mostrado abaixo, basta ignorá-lo na mesma tela de configuração mostrada acima.
 
-![Erro de Time Stamp](\Embarcados-Avancados\imgs\Erro_Time_Stamp.png)**Erro de Time Stamp**
+![Erro de Time Stamp](\Embarcados-Avancados\figs\Erro_Time_Stamp.png)**Erro de Time Stamp**
 
 
 
