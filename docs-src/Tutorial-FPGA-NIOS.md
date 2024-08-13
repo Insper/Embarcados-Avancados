@@ -107,6 +107,9 @@ Think of this step as similar to the `port map` in VHDL, but at a higher level o
 
 ![Clock and Reset](figs/Tutorial-FPGA-NIOS:rst.png)
 
+!!! tip
+    To connect, click on the gray circle at the intersection of the buses or signals.
+
 !!! progress
     I've reached this point!
 
@@ -123,9 +126,7 @@ The main bus of NIOS is the [memory-mapped](https://en.wikipedia.org/wiki/Memory
 
 > In tutorial 3, we will develop a proprietary peripheral that will be connected to this bus.
 
-Note that NIOS has two **MM** type buses: `data_master` and `instruction_master`. Since NIOS II is a processor based on the [Harvard architecture](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.faqs/ka
-
-3839.html), it has two separate paths for accessing memory: one for data and another for program (instruction).
+Note that NIOS has two **MM** type buses: `data_master` and `instruction_master`. Since NIOS II is a processor based on the [Harvard architecture](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.faqs/ka3839.html), it has two separate paths for accessing memory: one for data and another for program (instruction).
 
 In our hardware topology, we only have a single memory (**on_chip_memory**) that will be initially shared between data and program (there is an efficiency loss here since the memory can only be accessed by one bus at a time). **We'll improve this later!**
 
@@ -283,15 +284,15 @@ When developing projects for SoC systems, we have a problem: the hardware is not
 
 Altera solved this by creating a Hardware Abstraction Layer (HAL), or as Intel calls it, Board Support Package (BSP), which extracts information from the Platform Designer to be used by the compilation toolchain (GCC). When we create a project in **NIOS II - Eclipse**, two projects will be created: one containing the firmware to be programmed into the NIOS, and another (BSP) containing relevant information about the hardware for use in the firmware and toolchain.
 
-![SBT](https://www.altera.com/content/dam/altera-www/global/en_US/images/devices/processor/images/n2-soft-dev-tools.gif)
+<!--![SBT](https://www.altera.com/content/dam/altera-www/global/en_US/images/devices/processor/images/n2-soft-dev-tools.gif)-->
 
-!!! note "For more information:"
-    - https://www.altera.com/products/processors/design-tools.html#SBT
+<!--!!! note "For more information:"
+    - https://www.altera.com/products/processors/design-tools.html#SBT-->
 
 ### Creating the Project
 
 1. In **Quartus**: `Tools` :arrow_right: `Nios II Software Build for Eclipse`
-2. In **NIOS II Software Build for Eclipse**: `File` :arrow_right: `NIOS II Application and BSP from template`
+2. In **NIOS II Software Build for Eclipse**: `File`  :arrow_right:  `New`  :arrow_right:  `NIOS II Application and BSP from template`
 
 - `SOPC Information File Name`:
     - In the project folder, search for the file: **niosLab2.sopcinfo**
