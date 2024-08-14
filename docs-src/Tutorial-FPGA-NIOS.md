@@ -381,10 +381,10 @@ Com o `hello_word.c` aberto (é necessário para o eclipse saber qual projeto vo
 
 ![printf](figs/Tutorial-FPGA-NIOS:console.png){width=500}
 
-!!! tip "Programando"
+<!--!!! tip "Programando"
     <video width="660" height="360" controls>
       <source src="http://54.162.111.146/shared/soc/SoC-Tutorial-FPGA-NIOS.mp4" type="video/mp4">
-    </video> 
+    </video> -->
 
 !!! progress
     Cheguei aqui!
