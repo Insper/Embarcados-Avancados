@@ -44,13 +44,7 @@ Ver detalhes em: https://stackoverflow.com/questions/65240134/nios-ii-ide-unsuab
 
 Ao transferir o programa em *C* para o Kit FPGA, através da opção **Run :arrow_right:  Run**, pode ocorrer o seguinte erro:
 
-<img style="float: left;" src="\Embarcados-Avancados\figs\Erro_System_ID.png">
-
-<p align="left">
-    **Erro de ID**
-</p>
-
-![Erro de ID](\Embarcados-Avancados\figs\Erro_System_ID.png)**Erro de ID**
+<img style="float: left;" src="\Embarcados-Avancados\figs\Erro_System_ID.png">**Erro de ID**
 
 Para resolver, pode-se ignorar a verificação do *ID* na configuração em **Run :arrow_right:  Run Configurations …**, conforme mostrado abaixo:
 
