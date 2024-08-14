@@ -46,7 +46,15 @@ Ao transferir o programa em *C* para o Kit FPGA, através da opção **Run :arro
 
 <img style="float: left;" src="\Embarcados-Avancados\figs\Erro_System_ID.png"><br>
 
+```
+<br>
+```
+
 **Erro de ID**<br>
+
+```
+<br>
+```
 
 Para resolver, pode-se ignorar a verificação do *ID* na configuração em **Run :arrow_right:  Run Configurations …**, conforme mostrado abaixo:
 
