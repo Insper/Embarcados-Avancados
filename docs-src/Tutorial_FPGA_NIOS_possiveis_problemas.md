@@ -42,17 +42,17 @@ Ver detalhes em: https://stackoverflow.com/questions/65240134/nios-ii-ide-unsuab
 
 ### Não Encontra o ID na Cadeia JTAG
 
-Ao transferir o programa em *C* para o Kit FPGA, através da opção **Run -> Run**, pode ocorrer o seguinte erro:
+Ao transferir o programa em *C* para o Kit FPGA, através da opção **Run :arrow_right:  Run**, pode ocorrer o seguinte erro:
 
-![Erro de ID](\Embarcados-Avancados\figs\Erro_System_ID.png)**Erro de ID**
+<p align="left">![Erro de ID](\Embarcados-Avancados\figs\Erro_System_ID.png)**Erro de ID**</p>
 
-Para resolver, pode-se ignorar a verificação do *ID* na configuração em **Run -> Run Configurations …**, conforme mostrado abaixo:
+Para resolver, pode-se ignorar a verificação do *ID* na configuração em **Run :arrow_right:  Run Configurations …**, conforme mostrado abaixo:
 
 ![Tela de Configuração](\Embarcados-Avancados\figs\Run_Configurations-02.png)**Tela de Configuração**
 
 Caso ocorra o erro de *Time Stamp*, como mostrado abaixo, basta ignorá-lo na mesma tela de configuração mostrada acima.
 
-![Erro de Time Stamp](\Embarcados-Avancados\figs\Erro_Time_Stamp.png)**Erro de Time Stamp**
+<p align="left">![Erro de Time Stamp](\Embarcados-Avancados\figs\Erro_Time_Stamp.png)**Erro de Time Stamp**</p>
 
 
 
