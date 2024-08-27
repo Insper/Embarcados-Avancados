@@ -44,25 +44,18 @@ Ver detalhes em: https://stackoverflow.com/questions/65240134/nios-ii-ide-unsuab
 
 Ao transferir o programa em *C* para o Kit FPGA, através da opção **Run :arrow_right:  Run**, pode ocorrer o seguinte erro:
 
-<img style="float: left;" src="\Embarcados-Avancados\figs\Erro_System_ID.png"><br>
-
-```
-<br>
-```
-
-**Erro de ID**<br>
-
-```
-<br>
-```
+<img style="float: center;" src="\Embarcados-Avancados\figs\Erro_System_ID.png">
+**Erro de ID**
 
 Para resolver, pode-se ignorar a verificação do *ID* na configuração em **Run :arrow_right:  Run Configurations …**, conforme mostrado abaixo:
 
-![Tela de Configuração](\Embarcados-Avancados\figs\Run_Configurations-02.png)**Tela de Configuração**
+![Tela de Configuração](\Embarcados-Avancados\figs\Run_Configurations-02.png)
+**Tela de Configuração**
 
 Caso ocorra o erro de *Time Stamp*, como mostrado abaixo, basta ignorá-lo na mesma tela de configuração mostrada acima.
 
-<p align="left">![Erro de Time Stamp](\Embarcados-Avancados\figs\Erro_Time_Stamp.png)**Erro de Time Stamp**</p>
+<img style="float: center;" src="\Embarcados-Avancados\figs\Erro_Time_Stamp.png">
+**Erro de Time Stamp**
 
 
 
