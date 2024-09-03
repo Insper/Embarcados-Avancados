@@ -98,8 +98,8 @@
       },
       "short_1": {
         "tags": [
-          "text-exercise",
-          "short-text"
+          "short-text",
+          "text-exercise"
         ],
         "slug": "Tutorial-HPS-Buildroot/short_1"
       }
@@ -216,7 +216,7 @@
     }
   },
   "tags": {
-    "text-exercise": "text-exercise",
-    "short-text": "short-text"
+    "short-text": "short-text",
+    "text-exercise": "text-exercise"
   }
 }

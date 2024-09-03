@@ -81,6 +81,14 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+  - FPGA:
+      - 1. Tutorial - FPGA RTL: "Tutorial-FPGA-RTL.md"
+      - ___Entrega 1 - FPGA RTL: "Entrega-1.md"
+      - 2. Tutorial - FPGA NIOS: "Tutorial-FPGA-NIOS.md"
+      - ___Entrega 2 - FPGA NIOS : "Entrega-2.md"
+      - 3. Tutorial - FPGA NIOS IP: "Tutorial-FPGA-NIOS-IP.md" 
+      - ___Entrega 3 - FPGA NIOS IP: "Entrega-3.md"
+ 
   - HPS:
       - "Tutorial-HPS.md"
       - "Tutorial-HPS-Running.md"
@@ -103,14 +111,7 @@ nav:
   - "Acelerando":
       - "Tutorial-Acelerando-HLS.md"
       - "Entrega-Extra-1.md"
-  - FPGA:
-      - "Tutorial-FPGA-RTL.md"
-      - Entrega 1: "Entrega-1.md"
-      - "Tutorial-FPGA-NIOS.md"
-      - Entrega 4: "Entrega-2.md"
-      - Entrega 5: "Entrega-3.md"
-      #- "Tutorial-FPGA-NIOS-IP.md"
-      - "Tutorial_FPGA_NIOS_possiveis_problemas"
+
   - "Tutoriais Alunos":
       - "Projeto-Overview.md"
       - "Projeto-Rubrica.md"

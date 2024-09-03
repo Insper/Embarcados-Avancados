@@ -134,7 +134,7 @@ Uma escrita ao periférico é dada da seguinte forma:
      - O endereço que o master escreve no periférico é composto por: **addr** :heavy_plus_sign:	**offset** porém o slave só possui acesso ao **offset**. 
 3. Periférico recebe: `avs_address`, `avs_write = '1'` e `avs_writedata`.
 
-![](figs/Tutorial-FPGA-IP:avalon.png)
+![](figs/Tutorial-FPGA-IP_avalon.png)
 
 Uma leitura ao periférico é dada da seguinte forma:
 
@@ -160,7 +160,7 @@ Nosso periférico será no começo bem simples, apenas para entendermos todo o p
 
 Nosso periférico será mapeado em memória e possuirá um conduit (saída) onde será realizada o acionamento dos LEDs:
 
-![](figs/Tutorial-FPGA-IP:diagram.png)
+![](figs/Tutorial-FPGA-IP_diagram.png)
 
 O acesso ao nosso periférico será por uma palavra de 32 bits (para mater um padrão com o NIOS) e  terá dois registradores `REG_CONFIG` e `REG_DATA`:
 
@@ -224,7 +224,7 @@ begin
 
 end rtl;
 ```
- 
+
 !!! note "Limitações dessa implementação"
     - Não possui um registrador de configuração: `REG_CONFIG`
     - Não é possível ler: `REG_DATA` via barramento **Avalon** 
@@ -253,7 +253,7 @@ Só adicionar o arquivo HDL (`.vhd` ou `.v`) não é suficiente para o PD reconh
 
 E uma interface gráfica de configuração do componente será exibida. A primeira parte é referente a descrição do próprio componente. De o nome desse componente de : `peripheral_LED` e preencha sua descrição.
 
-![](figs/Tutorial-FPGA-IP:info.png)
+![](figs/Tutorial-FPGA-IP_info.png)
 
 Já na aba `Files` temos as informações de quais arquivos pertencem ao componente. 
 
@@ -270,7 +270,7 @@ Note o atributo do arquivo: `Top-level File`, isso indica que o `peripheral_LED.
 
 Note que se não adicionarmos esse arquivo nessa secção, na hora de simular o projeto o componente estaria vazio. Porquê o padrão não é o de automaticamente copiar os arquivos da síntese para a simulação? Pois nem sempre conseguimos simular o que será sintetizado. Pense no caso desse componente ser um controlador de memória, se formos simular não teremos a memória física para o controlador acessar e a simulação não funcionará. Uma solução seria de ter dois componentes, um para simulação (que imita a memória) e outro para síntese.
 
-![](figs/Tutorial-FPGA-IP:files.png)
+![](figs/Tutorial-FPGA-IP_files.png)
 
 #### Signals & Interfaces
 
@@ -302,7 +302,7 @@ Podemos notar ainda pelo diagrama (e pela mensagem de erro) que a ferramenta int
 LEDs : out std_logic_vector(LEN - 1 downto 0) := (others => '0');
 ```
 
-![](figs/Tutorial-FPGA-IP:component.png)
+![](figs/Tutorial-FPGA-IP_component.png)
 
 Note pelo diagrama de blocos que o PD atribui essa saída como sendo parte do barramento Avalon: **writerequestvalid_n**, o que não é verdade. Para corrigir isso, precisamos de uma nova aba que não é padrão de exibição, no `component builder` clique em:
 
@@ -312,13 +312,13 @@ Essa nova aba permite verificarmos (e associarmos) as entradas e saídas da enti
 
 Iremos indicar agora para a ferramenta que o sinal `LEDs` deve ser interpretado como um `conduite`, edite os sinais como na figura a seguir :
 
-![](figs/Tutorial-FPGA-IP:conduit.png)
+![](figs/Tutorial-FPGA-IP_conduit.png)
 
 #### Finalizando
 
 Verifique os sinais e o diagrama de bloco antes de continuar e clique em **Finish**. Quando o componente for gerado, ele automaticamente irá aparecer no catálogo de componentes que podem ser inseridos no SoC:
 
-![](figs/Tutorial-FPGA-IP:catalogo.png)
+![](figs/Tutorial-FPGA-IP_catalogo.png)
 
 Porém o arquivo de configuração desse componente (.tcl) foi salvo na pasta raiz do projeto do Quartus: 
 
@@ -350,14 +350,14 @@ add_fileset_file peripheral_LED.vhd VHDL PATH peripheral_LED.vhd
 
 Agora adicione o componente no projeto e faça as conexões corretas (como se fosse outro componente), exporte o sinal dos LEDs, o resultado final deve ser algo como:
 
-![](figs/Tutorial-FPGA-IP:final.png)
+![](figs/Tutorial-FPGA-IP_final.png)
 
 Gere o componente: Clique em `Generate HDL` :arrow_right: `Generate`. 
 
 !!! warning ""
     Marque a opção: ✅ `Create a Simulation Model`
 
-![](figs/Tutorial-FPGA-IP:gen.png)
+![](figs/Tutorial-FPGA-IP_gen.png)
 
 ### Utilizando o componente no `topLevel.vhd`
 
@@ -436,7 +436,7 @@ end rtl;
 
 Podemos analisar agora o RTL do projeto e mais especificamente o do componente criado:
 
-![](figs/Tutorial-FPGA-IP:rtl.png)
+![](figs/Tutorial-FPGA-IP_rtl.png)
 
 Verificamos que a ferramenta inferiu um registrador de 4 bits para armazenar o valor dos LEDs, um Mux para indicar se os registradores serão ou não atualizados com um novo valor e um comparador para verificar se o endereço é equivalente a `0x01`.
 
@@ -506,7 +506,7 @@ Além de configurarmos a otimização durante a simulação, iremos desativar o 
 !!! note
     Para simularmos 1 ms de execução do HW será necessário muito mais que 1 ms de esforço computacional! O tempo pode chegar a unidades de hora!!
 
-![](figs/Tutorial-FPGA-IP:sim.png)
+![](figs/Tutorial-FPGA-IP_sim.png)
 
 ### ModelSim
 
@@ -516,15 +516,15 @@ No **Eclipse**, após ter compilado o projeto:
 
 O simulador a ser utilizado é o modelsim da Mentor, o mais completo do mercado e fornecido com algumas customizações pela Intel-FPGA. No modelsim, iremos adicionar os sinais que desejamos visualizar, para isso, siga o que indica a figura a seguir:
 
-![](figs/Tutorial-FPGA-IP:modelsim1.png)
+![](figs/Tutorial-FPGA-IP_modelsim1.png)
 
 Após adicionar todos os sinais que fazem parte do periférico `led_peripheral` iremos executar 500 us de simulação:
 
-![](figs/Tutorial-FPGA-IP:modelsim2.png)
+![](figs/Tutorial-FPGA-IP_modelsim2.png)
 
 Após a simulação finalizar, note os valore dos sinais `avs_write`, `avs_writedata`, `avs_LEDs` e como eles mudam no tempo em respeito ao que foi feito no código.
 
-![](figs/Tutorial-FPGA-IP:modelsim3.png)
+![](figs/Tutorial-FPGA-IP_modelsim3.png)
 
 ## Praticando
 

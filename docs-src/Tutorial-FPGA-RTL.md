@@ -28,8 +28,8 @@ First, we must create a new project in the Quartus software.
             - Family: `Cyclone V`
             - Name: `5CSXFC6D6F31C6`
     - 🆗 Finalize the Wizard 
-
-    ![](figs/Tutorial-FPGA-RTL:wizard.png)
+    
+    ![](figs/Tutorial-FPGA-RTL_wizard.png)
 
 !!! note "**Other references**"
     If you need other reference material, there's a Terasic tutorial: [DE10-Standard_My_First_Fpga.pdf	](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual)
@@ -46,14 +46,14 @@ TopLevel is the name of the topmost module in [hierarchical](https://www.intel.c
     - `File` :arrow_right:  `save as` :arrow_right:   
       - name: `Lab1_FPGA_RTL.vhd` 
     - 🆗
-     
+
 !!! exercise "toplevel source file"
     Initialize the file with the following content ( this code could be more elegant, but we'll keep it simple for the sake of understanding. )
     
     ``` vhdl
     library IEEE;
     use IEEE.std_logic_1164.all;
-
+    
     entity Lab1_FPGA_RTL is
         port (
             -- Gloabals
@@ -63,14 +63,14 @@ TopLevel is the name of the topmost module in [hierarchical](https://www.intel.c
             fpga_led_pio  : out std_logic_vector(5 downto 0)
       );
     end entity Lab1_FPGA_RTL;
-
+    
     architecture rtl of Lab1_FPGA_RTL is
-
+    
     -- signal
     signal blink : std_logic := '0';
-
+    
     begin
-
+    
       process(fpga_clk_50) 
           variable counter : integer range 0 to 25000000 := 0;
           begin
@@ -83,17 +83,17 @@ TopLevel is the name of the topmost module in [hierarchical](https://www.intel.c
                       end if;
             end if;
       end process;
-
+    
       fpga_led_pio(0) <= blink;
       fpga_led_pio(1) <= blink;
       fpga_led_pio(2) <= blink;
       fpga_led_pio(3) <= blink;
       fpga_led_pio(4) <= blink;
       fpga_led_pio(5) <= blink;
-
+    
     end rtl;
     ```
-    
+
 
 ## Configuring the topLevel
 
@@ -117,7 +117,7 @@ Let's make sure everything is fine so far by doing a complete compilation of the
     To full complile the project on quartus:10000000
     
     :arrow_right: `Processing` :arrow_right:  `Start Compilation`.
- 
+     
     > Please wait! Hardware compilations can take quite a long time.
 
 ### I/Os
@@ -133,7 +133,7 @@ Notice the error that Quartus generated when we asked it to compile the project 
     to the I/O Assignment Warnings table in the fitter report.
     ```
 
-    ![Error](figs/Tutorial-FPGA-RTL:error.png)
+    ![Error](figs/Tutorial-FPGA-RTL_error.png)
 
 ==This error indicates that from the topLevel 6 signals were not mapped to their corresponding pins.==
 
@@ -151,7 +151,7 @@ On page 22 of the board manual, we have the definitions of how the FPGA pins wer
 > Cyclone V SoC FPGA. Table 3-6, Table 3-7 and Table 3-8 list the pin assignment of user
 > push-buttons, switches, and LEDs.
 
-![LEDs](figs/Tutorial-FPGA-RTL:pins.png){width=500}
+![LEDs](figs/Tutorial-FPGA-RTL_pins.png){width=500}
 
 #### CLOCK
 
@@ -165,7 +165,7 @@ From the manual:
 > Host/OTG PHY and USB hub controller. The associated pin assignment for clock inputs to FPGA
 > I/O pins is listed in Table 3-5.
 
-![](figs/Tutorial-FPGA-RTL:pins3.png)
+![](figs/Tutorial-FPGA-RTL_pins3.png)
 
 #### Pin Assignment
 
@@ -185,8 +185,8 @@ The `Pin Planner` interface displays the available FPGA pins/banks to be allocat
      
      1. In our project, we only have 6 LEDs, out of the total 10 available.
      1. The I/O Standard does not reflect the one defined in the manual, which is `3.3V CMOS`. You should change this column from `2.5V CMOS (Default)` to **`3.3-V LVTTL`**.
-
-    ![Pin Planner](figs/Tutorial-FPGA-RTL:Assigments.png)
+    
+    ![Pin Planner](figs/Tutorial-FPGA-RTL_Assigments.png)
 
 !!! info "FPGA Flexibility"
      We normally attribute logical flexibility to the FPGA, but notice the flexibility it has in terms of defining the signal level of each pin. This gives the hardware developer countless usage options and new configurations.
@@ -218,7 +218,7 @@ We need to add a new file to the project that outlines the boundary conditions o
     ```
     # 50MHz board input clock
     create_clock -period 20 [get_ports fpga_clk_50]
-
+    
     # Automatically apply a generate clock on the output of phase-locked loops (PLLs) 
     derive_pll_clocks
     ```
@@ -236,10 +236,10 @@ The RTL Viewer provides a graphical way to verify if the HDL code has been corre
     To open the RTL   Viewer:
 
     :arrow_right: `Tools` :arrow_right: `NetList Viewers` :arrow_right: `RTL Viewer`.
-  
+      
     You should see a diagrama similar to this one:
     
-    ![RTL](figs/Tutorial-FPGA-RTL:rtl.png)
+    ![RTL](figs/Tutorial-FPGA-RTL_rtl.png)
 
 ## Programming
 
@@ -251,15 +251,15 @@ Once the project compiles, Quartus generates a binary file in the output_files f
     To programmer the FPGA:
     
     `Tools` :arrow_right: ` Programmmer`.
-
+    
     At this stage, click on Auto Detect. This will read via JTAG all devices connected to the **JTAG chain**. You will notice that two devices appear:
-
+    
     - `SOCVHPS`: ARM Cortex A7
     - `5CSXFC6D6`: FPGA
-
+    
     > You might need to configure Linux to recognize the JTAG. Follow the steps at: [Configuring USB Blaster Linux](https://github.com/Insper/Z01.1/wiki/Infraestrutura-Detalhada#configurando-o-usb-blaster).
-
-    ![Programming](figs/Tutorial-FPGA-RTL:programming.png)
+    
+    ![Programming](figs/Tutorial-FPGA-RTL_programming.png)
 
 ## Exercises
 

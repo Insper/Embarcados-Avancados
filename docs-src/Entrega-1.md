@@ -17,19 +17,19 @@ To facilitate development, a project and a component that control the stepping m
 
 The pins have already been mapped and you should connect the motor as indicated below!
 
-![](figs/Entrega-1:montagem.png)
+![](figs/Entrega-1_montagem.png)
 
 !!! warning
     Be careful to avoid burning the board.
 
 Final assembly:
 
-![](figs/Entrega-1:montagem2.png){width=300}
+![](figs/Entrega-1_montagem2.png){width=300}
 
 !!! note "Schematic GPIO"
     Extracted from the manual:
 
-    ![](figs/Entrega-1:gpio.png)
+    ![](figs/Entrega-1_gpio.png)
 
 !!! example "TODO"
     After assembling, open the example project, compile and write to the FPGA. You should see the motor rotating.
