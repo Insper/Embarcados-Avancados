@@ -97,3 +97,8 @@ Ao adicionar uma segunda OnChip Memory, para separar RAM de ROM, pode ocorrer do
 
 ![BSP Editor](\Embarcados-Avancados\figs\erros_ELF_bsp.png) 
 
+
+
+
+![BSP Editor](\Embarcados-Avancados\figs\tamanhoELF.png) 
+
