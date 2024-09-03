@@ -95,5 +95,5 @@ Ao adicionar uma segunda OnChip Memory, para separar RAM de ROM, pode ocorrer do
 4. Na seção Linker Sections Regions clique em restore defaults.
 5. Verifique se apenas o .text esta na memória ROM (como na imagem abaixo), caso contrario altere manualmente mantendo apenas o .text na ROM.
 
-![BSP Editor](\Embarcados-Avancados\figs\erros_ELF_plataform_designer.png) 
+![BSP Editor](\Embarcados-Avancados\figs\erros_ELF_bsp.png) 
 
