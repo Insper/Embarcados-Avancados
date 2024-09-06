@@ -98,7 +98,36 @@ Ao adicionar uma segunda OnChip Memory, para separar RAM de ROM, pode ocorrer do
 ![BSP Editor](\Embarcados-Avancados\figs\erros_ELF_bsp.png) 
 
 
+### Tamanho .elf
 
+Para saber o tamanho que está sendo gerado para seu arquivo .elf, acesse a pasta que contém o arquivo .elf gerado:
+
+```
+$ cd ~/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/nios2-elf/bin
+```
+
+OBS: Esse path exemplo é referente ao Quartus 18.1, para outras versões altere o path.
+
+Agora, considerando que o nome do arquivo seja "niosLab2.elf", utilize o seguinte comando:
+
+```
+$ nios2-elf-size niosLab2.elf
+```
 
 ![Tamanho ELF](\Embarcados-Avancados\figs\tamanhoELF.jpeg) 
+
+
+## Connection Error/ Java.lang.Exception
+
+### Solução
+
+1. No eclipse clique em Run > Run Configurations
+2. Va na aba Target Connection
+3. Scrolle para o lado e clique em Refresh Connections
+4. Clique em apply e depois em Run
+5. Caso não funcione feche o programador no quartus. Reinicie a placa e grave novamente. Em seguida repita os passos a partir do passo 1.
+
+![Target Connection](\Embarcados-Avancados\figs\targetConnection.jpeg) 
+
+
 
