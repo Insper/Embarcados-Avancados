@@ -127,7 +127,7 @@ nios2-elf-size niosLab2.elf
 4. Clique em apply e depois em Run
 5. Caso não funcione feche o programador no quartus. Reinicie a placa e grave novamente. Em seguida repita os passos a partir do passo 1.
 
-![Target Connection](\Embarcados-Avancados\figs\targetConnection.jpeg) 
+![Target Connection](\Embarcados-Avancados\figs\targetConnection.png) 
 
 
 ## Set IRQ
