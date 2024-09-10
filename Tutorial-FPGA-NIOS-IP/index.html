@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>3. Tutorial - FPGA NIOS IP - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-RTL/">1. Tutorial - FPGA RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">___Entrega 1 - FPGA RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS/">2. Tutorial - FPGA NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">___Entrega 2 - FPGA NIOS</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">3. Tutorial - FPGA NIOS IP</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#comecando">Começando</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#ip-cores">IP Cores</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#platform-desginer">Platform Desginer</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#barramentos">Barramentos</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#projeto">Projeto</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#firmware">Firmware</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#simulando">Simulando</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#praticando">Praticando</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#entrega-3">Entrega 3</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">___Entrega 3 - FPGA NIOS IP</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">Tutorial HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">Tutorial HPS Running</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BuildSystem/">Tutorial HPS BuildSystem</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BlinkLED/">Tutorial HPS BlinkLED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra: configurando rede</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">Entrega 2</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">Tutorial HPS Kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Buildroot/">Tutorial HPS Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">info HPS buildroot scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">Entrega 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-DeviceDriver1/">Tutorial HPS DeviceDriver1</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">Tutorial HPS kernel module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-chardriver/">Tutorial HPS kernel chardriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">Tutorial HPS FPGA BlinkLED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-VGA/">Tutorial HPS FPGA VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">Entrega 6</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">Tutorial HPS FPGA kernel char led driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Acelerando</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-Acelerando-HLS/">Tutorial Acelerando HLS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-Extra-1/">Entrega Extra 1</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Tutoriais Alunos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Úteis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">info FPGA e Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">info VHDL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">info SDcard</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">info HPS Serial</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra: configurando rede</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-dtb.md">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>FPGA</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="ip-core">IP Core<a class="headerlink" href="#ip-core" title="Permanent link">&para;</a></h1>
+<p>Nesse tutorial iremos desenvolver um periférico customizado para o processador NIOS, esse periférico será dedicado ao controle dos LEDs da placa. O periférico terá um banco de registradores interno para seu controle, e interface de "I/O mapeado em memória" para que possamos controlar-lo do NIOS (pelo código em C).</p>
+<h2 id="comecando">Começando<a class="headerlink" href="#comecando" title="Permanent link">&para;</a></h2>
+<p>Para seguir esse tutorial, é necessário:</p>
+<ul>
+<li><strong>Hardware:</strong> DE10-Standard e acessórios </li>
+<li><strong>Softwares:</strong> Quartus 18.01 <ul>
+<li>Modelsim Simulator</li>
+</ul>
+</li>
+</ul>
+<p>Entrega no git:</p>
+<ul>
+<li><strong>Pasta:</strong> <code>Lab3_FPGA_IP/</code></li>
+</ul>
+<h2 id="ip-cores">IP Cores<a class="headerlink" href="#ip-cores" title="Permanent link">&para;</a></h2>
+<p>Intelectual Proprety Core (<a href="https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/cgn_c_ip_overview.htm">IP Core</a>) são componentes descritos em HDL que podem ser utilizados em múltiplos projetos de Hardware. O Platform Designer (PD) fornece além da interface visual de conexão entre esses IPs um padrão de comunicação entre os componentes, facilitando assim o uso desses IPs.</p>
+<p>Além das centenas de projetos espalhados pela internet (github), existe um repositório muito completo de IP cores opensource que concentra grande variedade de projeto:</p>
+<ul>
+<li><a href="http://opencores.org/projects">opencores</a></li>
+</ul>
+<p>As empresas também disponibilizando IPs, pagos e gratuitos:</p>
+<ul>
+<li><a href="https://www.altera.com/products/intellectual-property/ip.html">Intel-FPGA IP cores</a></li>
+</ul>
+<h2 id="platform-desginer">Platform Desginer<a class="headerlink" href="#platform-desginer" title="Permanent link">&para;</a></h2>
+<p>O PD é uma ferramenta integradora de IPs, com ela é muito simples inserirmos e criarmos componentes que serão utilizados para formar um sistema mais completo. Como no caso do tutorial passado onde usamos uma série de componentes para criar nosso projeto. Esses componentes são de certa forma IPs (simples como o PIO e complexo como o NIOS).</p>
+<p>A integração dos IPs no PD se da devido à padronização da comunicação entre esses componentes, que é dada via o barramento.</p>
+<h2 id="barramentos">Barramentos<a class="headerlink" href="#barramentos" title="Permanent link">&para;</a></h2>
+<p>A Intel-FPGA define duas categorias de barramento de dados para o PD: <strong>Avalon</strong> e <strong>AXI</strong>. O barramento Avalon é a principal maneira de conectar um periférico ao NIOS (processador), já o AXI é o padrão de barramento do ARM, que também é utilizado no platform designer.</p>
+<h3 id="avalon">Avalon<a class="headerlink" href="#avalon" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Documentação completa dos barramento AVALON:</p>
+<ul>
+<li><a href="https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/manual/mnl_avalon_spec.pdf">https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/manual/mnl_avalon_spec.pdf</a></li>
+</ul>
+</div>
+<p>O barramento Avalon define basicamente dois tipos de módulos: <strong>Memory Mapped (MM)</strong> e <strong>Avalon Streaming Interface (ST)</strong>, conforme descrição a seguir extraído da documentação:</p>
+<ul>
+<li>
+<p><strong>Avalon Streaming Interface (Avalon-ST)</strong> — <em>an interface that supports the unidirectional flow of data, including multiplexed streams, packets, and DSP data.</em></p>
+</li>
+<li>
+<p><strong>Avalon Memory Mapped Interface (Avalon-MM)</strong> — <em>an address-based read/write interface typical of master–slave connections.</em></p>
+</li>
+<li>
+<p><strong>Avalon Conduit Interfae</strong> — <em>an interface type that accommodates individual signals or groups of signals that do not fit into any of the other Avalon types. You can connect conduit interfaces inside a Platform Designer system. Or, you can export them to make connections to other modules in the design or to FPGA pins.</em></p>
+</li>
+<li>
+<p><strong>Avalon Tri-State Conduit Interface</strong> - <em>(an interface to support connections to off-chip peripherals. Multiple peripherals can share pins through signal multiplexing, reducing the pin count of the FPGA and the number of traces on the PCB.</em></p>
+</li>
+<li>
+<p><strong>Avalon Interrupt Interface</strong> — <em>an interface that allows components to signal events to other components.</em></p>
+</li>
+<li><strong>Avalon Clock Interface*</strong> — <em>an interface that drives or receives clocks.</em></li>
+<li><strong>Avalon Reset Interface</strong> — <em>an interface that provides reset connectivity.</em></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Iremos trabalhar com o tipo: <strong>Avalon-MM</strong> como maneira de conectar o periférico ao NIOS.</p>
+</div>
+<h2 id="projeto">Projeto<a class="headerlink" href="#projeto" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Vamos melhorar o projeto passado, faça uma cópia da pasta do projeto: <code>Lab2_FPGA_NIOS/</code> e renomeei para: <code>Lab3_FPGA_IP/</code>. Iremos agora trabalhar nessa nova pasta.</p>
+</div>
+<h3 id="criando-um-periferico">Criando um periférico<a class="headerlink" href="#criando-um-periferico" title="Permanent link">&para;</a></h3>
+<p>Vamos criar um novo componente que será capaz de controlar os LEDs com maior autonomia. </p>
+<p>Roteiro a ser seguido:</p>
+<ol>
+<li>Especificação</li>
+<li>Gerar HDL que representa o periférico com interface Avalon</li>
+<li>Criar o componente no Platform Designer <ul>
+<li>Associar arquivos ao componente</li>
+<li>Definições gerais</li>
+<li>Associar as portas do componente com os sinais do barramento</li>
+</ul>
+</li>
+<li>Usar componente no projeto</li>
+<li>Criar driver (<code>.c</code> e <code>.h</code>)</li>
+<li>Simular</li>
+<li>Implementar/ Testar</li>
+<li>Rever especificação (1.)</li>
+</ol>
+<p>Primeiramente precisamos definir o papel principal desse periférico e seu fluxo de dados. Com isso será possível definir se o periférico é do tipo: <strong>Master</strong> ou <strong>Slave</strong> e se sua interface é do tipo <strong>Memory Mapped</strong> ou <strong>Streaming</strong>.</p>
+<p>Um periférico pode possuir mais de uma interface, por exemplo: Um periférico que irá processar um áudio em tempo real pode ter até três interfaces: O mesmo irá receber o áudio via a interface <strong>streaming</strong> e retornar o dado por outra interface de <strong>streaming</strong>, porém será necessária uma terceira interface para controle desse periférico, muito provavelmente do tipo <strong>Memory Mapped</strong>.</p>
+<div class="admonition note">
+<p>É possível transmitir pacotes de comando pela interface streaming, mas isso torna o projeto mais complexo.</p>
+</div>
+<p>O nosso simples periférico irá simplesmente receber configurações para acionar o LED, sem nenhum fluxo contínuo ou intenso de dados, sendo a interface mais apropriada a do <strong>periférico mapeado em memória</strong>. Além disso, nosso periférico exclusivo para controle do LED é um <strong>slave</strong> do sistema, já que ele deve ser controlado por outra parte do sistema (no nosso caso o uC) para agir conforme necessário.</p>
+<h4 id="avalon-slave-memory-mapped">Avalon Slave Memory Mapped<a class="headerlink" href="#avalon-slave-memory-mapped" title="Permanent link">&para;</a></h4>
+<p>Para nosso periférico se comunicar com o processador precisamos implementar o padrão de comunicação utilizado pelo NIOS. Podemos optar por implementar o padrão completo ou apenas uma parte de sua especificação. Por exemplo, se nosso periférico não faz uso do <code>waitrequest</code> ou <code>byteenable</code> podemos optar por não implementar esses sinais.</p>
+<p>A seguir um exemplo dos sinais de um periférico mapeado em memória que possui como interface com o <code>Avalon-MM-Slave</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">entity</span><span class="w"> </span><span class="nc">peripheral_MM</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="c1">-- Gloabals</span>
+<span class="w">        </span><span class="n">clk</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                     </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w">             </span>
+<span class="w">        </span><span class="n">reset</span><span class="w">              </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                     </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w">             </span>
+
+<span class="w">        </span><span class="c1">-- Avalon Memmory Mapped Slave</span>
+<span class="w">        </span><span class="n">avs_address</span><span class="w">     </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span><span class="w"> </span>
+<span class="w">        </span><span class="n">avs_read</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                     </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w">             </span>
+<span class="w">        </span><span class="n">avs_readdata</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">31</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span><span class="w"> </span>
+<span class="w">        </span><span class="n">avs_write</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                     </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w">           </span>
+<span class="w">        </span><span class="n">avs_writedata</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">31</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">peripheral_MM</span><span class="p">;</span>
+</code></pre></div>
+<p>Note que a primeira parte do componente define um sinal de clock (<code>clk</code>) e um sinal de reset (<code>reset</code>), lembre que projetos digitais em FPGA devem ser na maioria das vezes síncronos. A segunda parte é a definição dos sinais que irão ser conectados no barramento para acesso de outros periféricos.</p>
+<p>Lembrem que estamos criando um componente mapeado em memória, logo o mesmo deve ter comportamento e interface similar ao de uma memória. </p>
+<ul>
+<li><code>avs_address</code>: Endereço de acesso ao componente, no caso, 4 bits.</li>
+<li><code>avs_read</code>: Indica que é um acesso de leitura</li>
+<li><code>avs_readdata</code>: Dado que será retornado ao Master dado um acesso de leitura.</li>
+<li><code>avs_write</code>: Indica que é um acesso de escrita</li>
+<li><code>avs_writedata</code>: Dado que é transmitido ao componente dado um acesso de escrita.</li>
+</ul>
+<p>O tamanho da palavra do <code>avs_readdata</code> e do <code>avs_writadata</code> é definido pelo componente e não é fixo em 32 bits como no exemplo, pode assumir outros valores.</p>
+<p>Uma escrita ao periférico é dada da seguinte forma:</p>
+<ol>
+<li>Master endereça periférico </li>
+<li>Endereço absoluto é traduzido em relativo<ul>
+<li>O endereço que o master escreve no periférico é composto por: <strong>addr</strong> <img alt="➕" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2795.svg" title=":heavy_plus_sign:" /> <strong>offset</strong> porém o slave só possui acesso ao <strong>offset</strong>. </li>
+</ul>
+</li>
+<li>Periférico recebe: <code>avs_address</code>, <code>avs_write = '1'</code> e <code>avs_writedata</code>.</li>
+</ol>
+<p><a class="glightbox" href="figs/Tutorial-FPGA-IP_avalon.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="figs/Tutorial-FPGA-IP_avalon.png" /></a></p>
+<p>Uma leitura ao periférico é dada da seguinte forma:</p>
+<ol>
+<li>Master endereça periférico </li>
+<li>Endereço absoluto é traduzido em relativo</li>
+<li>Periférico recebe: <code>avs_adddress</code> e <code>avs_read = '1'</code></li>
+<li>Periférico atualiza: <code>avs_readdata</code></li>
+</ol>
+<div class="admonition question">
+<p class="admonition-title">Perguntas</p>
+<p>O barramento <code>AVALON</code> define outros sinais, responda a seguir sobre alguns desses sinais:</p>
+<ul>
+<li>waitrequest</li>
+<li>Qual o papel do waitrequest? </li>
+<li>Quem aciona o waitrequest (Slave ou Master)?</li>
+<li>byteenable</li>
+<li>Qual o papel do byteenable? </li>
+<li>Quem aciona o byteenable (Slave ou Master)?</li>
+</ul>
+</div>
+<h3 id="especificacao">Especificação<a class="headerlink" href="#especificacao" title="Permanent link">&para;</a></h3>
+<p>Nosso periférico será no começo bem simples, apenas para entendermos todo o processo de desenvolvimento de um periférico e o seu uso. O periférico que iremos desenvolver será um substituto ao periférico PIO fornecido pela Intel-FPGA, utilizado no projeto do pisca LED com o NIOS.</p>
+<p>Nosso periférico será mapeado em memória e possuirá um conduit (saída) onde será realizada o acionamento dos LEDs:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-IP_diagram.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-IP_diagram.png" /></a></p>
+<p>O acesso ao nosso periférico será por uma palavra de 32 bits (para mater um padrão com o NIOS) e  terá dois registradores <code>REG_CONFIG</code> e <code>REG_DATA</code>:</p>
+<ul>
+<li><code>REG_CONIFG</code>: Registrador que controla o periférico, no nosso caso, irá ter somente um bit de: <code>Enable</code>/<code>Disable</code> (<code>bit0</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />  <code>Enable/Disable</code>)</li>
+<li><code>REG_DATA</code>: Registrador que possui o valor de cada LED (<code>bit0</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>LED0</code>; <code>bit1</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>LED1</code> ....).</li>
+</ul>
+<h3 id="gerar-hdl-que-representa-o-periferico-com-interface-avalon">Gerar HDL que representa o periférico com interface Avalon<a class="headerlink" href="#gerar-hdl-que-representa-o-periferico-com-interface-avalon" title="Permanent link">&para;</a></h3>
+<p>Partindo da entidade fornecida (<code>peripheral_MM</code>), podemos criar um componente que implementa parcialmente a especificação anterior, nessa implementação não temos os dois registradores (<code>REG_CONFIG</code> e <code>REG_DATA</code>), temos apenas a funcionalidade do <code>REG_DATA</code>. Note que a implementação faz uso de um generic para definir a quantidade de LEDs que esse periférico controla. Esse genérico poderá ser configurado pela interface gráfica do Plataform Designer, tornando um componente customizado.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Crie um arquivo chamado: <code>peripheral_LED.vhd</code> e salve na pasta do projeto : <code>Lab3_FPGA_IP/IP/</code></p>
+<div class="admonition warning">
+<p>Será necessário criar a pasta IP</p>
+</div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="k">library</span><span class="w"> </span><span class="nn">IEEE</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">IEEE.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">IEEE.std_logic_unsigned.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">IEEE.numeric_std.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">work.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">peripheral_LED</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">generic</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">LEN</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="kt">natural</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">4</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="c1">-- Gloabals</span>
+<span class="w">        </span><span class="n">clk</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                     </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w">             </span>
+<span class="w">        </span><span class="n">reset</span><span class="w">              </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                     </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w">             </span>
+
+<span class="w">        </span><span class="c1">-- I/Os</span>
+<span class="w">        </span><span class="n">LEDs</span><span class="w">               </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="n">LEN</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">-- Avalion Memmory Mapped Slave</span>
+<span class="w">        </span><span class="n">avs_address</span><span class="w">     </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span><span class="w"> </span>
+<span class="w">        </span><span class="n">avs_read</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                     </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w">             </span>
+<span class="w">        </span><span class="n">avs_readdata</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">31</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span><span class="w"> </span>
+<span class="w">        </span><span class="n">avs_write</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                     </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w">             </span>
+<span class="w">        </span><span class="n">avs_writedata</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">31</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">peripheral_LED</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">peripheral_LED</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">reset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">LEDs</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">elsif</span><span class="p">(</span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">avs_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;0001&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w">                  </span><span class="c1">-- REG_DATA</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">avs_write</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">              </span><span class="n">LEDs</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">avs_writedata</span><span class="p">(</span><span class="n">LEN</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">            </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">        </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="k">end</span><span class="w"> </span><span class="nc">rtl</span><span class="p">;</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Limitações dessa implementação</p>
+<ul>
+<li>Não possui um registrador de configuração: <code>REG_CONFIG</code></li>
+<li>Não é possível ler: <code>REG_DATA</code> via barramento <strong>Avalon</strong> </li>
+<li>impede a aplicação de máscaras!</li>
+</ul>
+</div>
+<p>Poderíamos já nessa etapa testar o componente, criando um <code>testbench</code> para excitar o módulo e verificar seu comportamento. Grande parte do desenvolvimento de um projeto de hardware é gasto nos testes, que podem ser tão complexos quanto o próprio módulo. Vamos pular essa etapa aqui, iremos simular em um nível mais alto.</p>
+<h3 id="configurando-path">Configurando path<a class="headerlink" href="#configurando-path" title="Permanent link">&para;</a></h3>
+<p>Agora iremos adicionar o nosso periférico no <strong>Platform Designer</strong>, esse novo componente que será criado será incorporado na ferramenta, para isso:</p>
+<p>Precisamos indicar para o PD o local que ele deve buscar para encontrar por códigos fonte que não fazem parte do catálogo padrão, para isso:</p>
+<ol>
+<li><code>Tools</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Options</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>IP Search Path</code></li>
+<li>Adicione a pasta <code>IP</code> recém criada.</li>
+</ol>
+<p>E agora remova o componente PIO:</p>
+<ol>
+<li>Remova o PIO que controlava os LEDs (agora iremos fazer o controle pelo nosso componente)</li>
+</ol>
+<h3 id="criando-componente">Criando componente<a class="headerlink" href="#criando-componente" title="Permanent link">&para;</a></h3>
+<p>Só adicionar o arquivo HDL (<code>.vhd</code> ou <code>.v</code>) não é suficiente para o PD reconhecer o componente, precisamos criar um segundo arquivo (<code>*_hw.tcl</code>) que é lido pelo PD, esse arquivo possuirá todas as configurações e descrições do novo componente. Para isso:</p>
+<ul>
+<li><code>File</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>New Component</code> <img alt="🆗" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/1f197.svg" title=":ok:" /></li>
+</ul>
+<p>E uma interface gráfica de configuração do componente será exibida. A primeira parte é referente a descrição do próprio componente. De o nome desse componente de : <code>peripheral_LED</code> e preencha sua descrição.</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-IP_info.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-IP_info.png" /></a></p>
+<p>Já na aba <code>Files</code> temos as informações de quais arquivos pertencem ao componente. </p>
+<h4 id="files">Files<a class="headerlink" href="#files" title="Permanent link">&para;</a></h4>
+<p>Na aba Files adicione o arquivo <code>peripheral_LED.vhd</code>:</p>
+<ol>
+<li><code>Files</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Syntesis Files</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>add file</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <strong><code>peripheral_LED.vhd</code></strong></li>
+<li>Clique em <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Analyze Synthesis Files</code> : isso fará com que a ferramenta faça uma breve análise dos arquivos HDL e detecte as interfaces do componente.</li>
+</ol>
+<p>Note o atributo do arquivo: <code>Top-level File</code>, isso indica que o <code>peripheral_LED.vhd</code> é o arquivo principal desse componente, se tivéssemos um desenvolvimento hierárquico do componente, nessa etapa adicionaríamos vários arquivos e deveríamos configurar qual deles é o toplevel.</p>
+<ul>
+<li>Na secção <code>VHDL Simulation Files</code>  <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <strong>Copy from Synthesis Files</strong> <img alt="🆗" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/1f197.svg" title=":ok:" /></li>
+</ul>
+<p>Note que se não adicionarmos esse arquivo nessa secção, na hora de simular o projeto o componente estaria vazio. Porquê o padrão não é o de automaticamente copiar os arquivos da síntese para a simulação? Pois nem sempre conseguimos simular o que será sintetizado. Pense no caso desse componente ser um controlador de memória, se formos simular não teremos a memória física para o controlador acessar e a simulação não funcionará. Uma solução seria de ter dois componentes, um para simulação (que imita a memória) e outro para síntese.</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-IP_files.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-IP_files.png" /></a></p>
+<h4 id="signals-interfaces">Signals &amp; Interfaces<a class="headerlink" href="#signals-interfaces" title="Permanent link">&para;</a></h4>
+<p>Nessa secção iremos configurar as interfaces do nosso componente, e como o PD irá interpretá-las quando formos conectar ao resto do sistema. Note que algumas interfaces já foram detectadas pelo PD, porém temos um erro que será corrigido.</p>
+<p>Nas interfaces padrões note que o <code>Component Editor</code> já detectou uma interface: </p>
+<ul>
+<li><strong>avalon_slave_0</strong></li>
+<li><strong>clock</strong></li>
+<li><strong>reset</strong></li>
+</ul>
+<p>Isso aconteceu pelos nomes da entidade do <code>peripheral_led</code>.</p>
+<p>Vamos primeiramente editar o <code>avalon_slave_0</code>. Clique na interface e note que a ferramenta indica um erro : </p>
+<div class="admonition failure">
+<p class="admonition-title">Failure</p>
+<div class="highlight"><pre><span></span><code>Error: avalon_slave_0_1: Interface must have an associated reset
+</code></pre></div>
+</div>
+<p>Vamos associar ter que associar um sinal der reset a interface (parte sequência do IP), para isso :</p>
+<ul>
+<li><code>avalon_slave_0</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Associated Reset</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>reset</code> <img alt="🆗" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/1f197.svg" title=":ok:" /></li>
+</ul>
+<p>Podemos notar ainda pelo diagrama (e pela mensagem de erro) que a ferramenta interpretou de forma errada o nosso sinal <code>LEDs</code>, pertencente a entidade do componente: </p>
+<div class="highlight"><pre><span></span><code>-- I/Os
+LEDs : out std_logic_vector(LEN - 1 downto 0) := (others =&gt; &#39;0&#39;);
+</code></pre></div>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-IP_component.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-IP_component.png" /></a></p>
+<p>Note pelo diagrama de blocos que o PD atribui essa saída como sendo parte do barramento Avalon: <strong>writerequestvalid_n</strong>, o que não é verdade. Para corrigir isso, precisamos de uma nova aba que não é padrão de exibição, no <code>component builder</code> clique em:</p>
+<ul>
+<li><strong>Component builder</strong> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>View</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Signals</code> <img alt="🆗" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/1f197.svg" title=":ok:" /></li>
+</ul>
+<p>Essa nova aba permite verificarmos (e associarmos) as entradas e saídas da entidade (toplevel) com sinais e tipos de sinais definido pelo PD.</p>
+<p>Iremos indicar agora para a ferramenta que o sinal <code>LEDs</code> deve ser interpretado como um <code>conduite</code>, edite os sinais como na figura a seguir :</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-IP_conduit.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-IP_conduit.png" /></a></p>
+<h4 id="finalizando">Finalizando<a class="headerlink" href="#finalizando" title="Permanent link">&para;</a></h4>
+<p>Verifique os sinais e o diagrama de bloco antes de continuar e clique em <strong>Finish</strong>. Quando o componente for gerado, ele automaticamente irá aparecer no catálogo de componentes que podem ser inseridos no SoC:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-IP_catalogo.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-IP_catalogo.png" /></a></p>
+<p>Porém o arquivo de configuração desse componente (.tcl) foi salvo na pasta raiz do projeto do Quartus: </p>
+<ul>
+<li><code>Lab3_FPGA_IP/peripheral_LED_hw.tcl</code></li>
+</ul>
+<p>Esse arquivo <code>.tcl</code> descreve todas as configurações realizadas anteriormente no componente. O mais natural é que esse arquivo esteja na mesma localidade (pasta IP) que os códigos HDL. Mova essa arquivo para:</p>
+<ul>
+<li><code>Lab3_FPGA_IP/IP/peripheral_LED_hw.tcl</code></li>
+</ul>
+<p>Agora precisamos editar o arquivo <code>.tcl</code> para atualizarmos o local do arquivo <code>peripheral_LED.vhd</code>, procure pela secção <strong>files set</strong>:</p>
+<ul>
+<li>Antes </li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nv">add_fileset_file</span><span class="w"> </span>peripheral_LED.vhd<span class="w"> </span>VHDL<span class="w"> </span>PATH<span class="w"> </span>IP<span class="o">/</span>peripheral_LED.vhd<span class="w"> </span>TOP_LEVEL_FILE
+<span class="nv">...</span>
+<span class="nv">add_fileset_file</span><span class="w"> </span>peripheral_LED.vhd<span class="w"> </span>VHDL<span class="w"> </span>PATH<span class="w"> </span>IP<span class="o">/</span>peripheral_LED.vhd
+</code></pre></div>
+<p>E edite para:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">add_fileset_file</span><span class="w"> </span>peripheral_LED.vhd<span class="w"> </span>VHDL<span class="w"> </span>PATH<span class="w"> </span>peripheral_LED.vhd<span class="w"> </span>TOP_LEVEL_FILE
+<span class="nv">...</span>
+<span class="nv">add_fileset_file</span><span class="w"> </span>peripheral_LED.vhd<span class="w"> </span>VHDL<span class="w"> </span>PATH<span class="w"> </span>peripheral_LED.vhd
+</code></pre></div>
+<h3 id="utilizando-o-componente-no-pd">Utilizando o componente no PD<a class="headerlink" href="#utilizando-o-componente-no-pd" title="Permanent link">&para;</a></h3>
+<p>Agora adicione o componente no projeto e faça as conexões corretas (como se fosse outro componente), exporte o sinal dos LEDs, o resultado final deve ser algo como:</p>
+<p><a class="glightbox" href="figs/Tutorial-FPGA-IP_final.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="figs/Tutorial-FPGA-IP_final.png" /></a></p>
+<p>Gere o componente: Clique em <code>Generate HDL</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Generate</code>. </p>
+<div class="admonition warning">
+<p>Marque a opção: ✅ <code>Create a Simulation Model</code></p>
+</div>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-IP_gen.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-IP_gen.png" /></a></p>
+<h3 id="utilizando-o-componente-no-toplevelvhd">Utilizando o componente no <code>topLevel.vhd</code><a class="headerlink" href="#utilizando-o-componente-no-toplevelvhd" title="Permanent link">&para;</a></h3>
+<p>Precisamos agora modificar o componente inserido no topLevel, para isso no PD gere novamente o template de utilização :</p>
+<ul>
+<li>No Platform Designer: <code>Generate</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />  <code>Show Instatiation Template</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>VHDL</code></li>
+</ul>
+<p>No meu caso o resultado foi:</p>
+<div class="highlight"><pre><span></span><code>    component niosHello is
+        port (
+            buts_export   : in  std_logic_vector(2 downto 0) := (others =&gt; &#39;X&#39;); -- export
+            clk_clk       : in  std_logic                    := &#39;X&#39;;             -- clk
+            reset_reset_n : in  std_logic                    := &#39;X&#39;;             -- reset_n
+            leds_name     : out std_logic_vector(3 downto 0)                     -- name
+        );
+    end component niosHello;
+
+    u0 : component niosHello
+        port map (
+            buts_export   =&gt; CONNECTED_TO_buts_export,   --  buts.export
+            clk_clk       =&gt; CONNECTED_TO_clk_clk,       --   clk.clk
+            reset_reset_n =&gt; CONNECTED_TO_reset_reset_n, -- reset.reset_n
+            leds_name     =&gt; CONNECTED_TO_leds_name      --  leds.name
+        );
+</code></pre></div>
+<p>Devemos inserir agora esse componente com a nova interface (<strong>leds_name</strong>) no <code>Lab3_FPGA_IP.vhd</code>.</p>
+<blockquote>
+<p>Você deve fazer essa etapa com cuidado. Esses nomes podem alterar entre versões da ferramenta.</p>
+</blockquote>
+<p>Editando o <code>Lab3_FPGA_IP.vhd</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">library</span><span class="w"> </span><span class="nn">IEEE</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">IEEE.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">Lab3_FPGA_IP</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="c1">-- Gloabals</span>
+<span class="w">        </span><span class="n">fpga_clk_50</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span><span class="w">             </span><span class="c1">-- clock.clk</span>
+
+<span class="w">        </span><span class="c1">-- I/Os</span>
+<span class="w">        </span><span class="n">fpga_led_pio</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">fpga_button_pio</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+
+<span class="w">    </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">Lab3_FPGA_IP</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">Lab3_FPGA_IP</span><span class="w"> </span><span class="k">is</span>
+
+<span class="w">   </span><span class="k">component</span><span class="w"> </span><span class="nc">niosHello</span><span class="w"> </span><span class="k">is</span>
+<span class="w">        </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">            </span><span class="n">buts_export</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">-- export</span>
+<span class="w">            </span><span class="n">clk_clk</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                    </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span><span class="w">             </span><span class="c1">-- clk</span>
+<span class="w">            </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                    </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span><span class="w">             </span><span class="c1">-- reset_n</span>
+<span class="w">            </span><span class="n">leds_name</span><span class="w">     </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">                     </span><span class="c1">-- name</span>
+<span class="w">        </span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">niosHello</span><span class="p">;</span>
+
+<span class="k">begin</span>
+
+<span class="w">    </span><span class="n">u0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">niosHello</span><span class="w"> </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">clk_clk</span><span class="w">       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">fpga_clk_50</span><span class="p">,</span><span class="w">     </span><span class="c1">--  clk.clk</span>
+<span class="w">        </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w">             </span><span class="c1">--  reset.reset_n</span>
+<span class="w">        </span><span class="n">leds_name</span><span class="w">     </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">fpga_led_pio</span><span class="w"> </span><span class="p">,</span><span class="w">   </span><span class="c1">--  leds.export</span>
+<span class="w">        </span><span class="n">buts_export</span><span class="w">   </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">fpga_button_pio</span><span class="w">  </span><span class="c1">--  buts.export   </span>
+<span class="w">    </span><span class="p">);</span>
+
+
+<span class="k">end</span><span class="w"> </span><span class="nc">rtl</span><span class="p">;</span>
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Recompile</p>
+<p>Salve, compile o projeto e programe a FPGA</p>
+</div>
+<p>Podemos analisar agora o RTL do projeto e mais especificamente o do componente criado:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-IP_rtl.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-IP_rtl.png" /></a></p>
+<p>Verificamos que a ferramenta inferiu um registrador de 4 bits para armazenar o valor dos LEDs, um Mux para indicar se os registradores serão ou não atualizados com um novo valor e um comparador para verificar se o endereço é equivalente a <code>0x01</code>.</p>
+<h2 id="firmware">Firmware<a class="headerlink" href="#firmware" title="Permanent link">&para;</a></h2>
+<p>Devemos agora escrever um firmware que será executado no NIOS e que acesse e controle nosso periférico. Para isso será necessário criarmos um BSP para o projeto. Abra o <strong>NIOS II Software Build ...</strong> e refaça a etapa do tutorial anterior com o novo SoC e adicione o código a seguir:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;system.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;alt_types.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;io.h&gt;</span><span class="c1"> /* Leiutura e escrita no Avalon */</span>
+
+<span class="c1">//#define SIM</span>
+
+<span class="c1">// LED Peripheral</span>
+<span class="cp">#define REG_DATA_OFFSET 1</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">led</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">p_led</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">PERIPHERAL_LED_0_BASE</span><span class="p">;</span>
+
+<span class="cp">#ifndef SIM</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Embarcados++ </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="cp">#endif</span>
+
+<span class="w">  </span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">led</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">){</span>
+<span class="w">          </span><span class="o">*</span><span class="p">(</span><span class="n">p_led</span><span class="o">+</span><span class="n">REG_DATA_OFFSET</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mh">0x1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">led</span><span class="o">++</span><span class="p">);</span>
+<span class="cp">#ifndef SIM</span>
+<span class="w">          </span><span class="n">usleep</span><span class="p">(</span><span class="mi">500000</span><span class="p">);</span><span class="w"> </span><span class="c1">// remover durante a simulação</span>
+<span class="cp">#endif</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="k">else</span><span class="p">{</span>
+<span class="w">          </span><span class="n">led</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">  </span><span class="p">};</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>O firmware utiliza o <code>peripheral_LED</code> para controlar os LEDs da placa, note que o acesso dessa vez é feito pelo ponteiro <code>p_led</code> e não mais pela função da Alteara <code>IOWR_32DIRECT</code> (deveria funcionar também).</p>
+<h3 id="executando">Executando<a class="headerlink" href="#executando" title="Permanent link">&para;</a></h3>
+<p>Execute o firmware no kit de desenvolvimento e verifique se sua funcionalidade está correta. Lembre que o HW já deve estar programado (via quartus), caso contrário não funcionará.</p>
+<h2 id="simulando">Simulando<a class="headerlink" href="#simulando" title="Permanent link">&para;</a></h2>
+<p>Uma das grandes vantagens de trabalharmos com SoftProcessor é que temos acesso ao seu código fonte (criptografado ou não) e isso possibilita que possamos simular todo o sistema, verificando suas funcionalidades internas, comunicação da CPU com os periféricos, interface do firmware com o resto do sistema. Vamos nessa etapa simular a interface do NIOS com o nosso periférico e verificar se está tudo certo.</p>
+<p>Note que no código anterior, o printf foi comentando, assim como o delay de 50000 us, que no lugar foi inserido um de 1us. Isso foi feito para acelerar a simulação e verificarmos mais rapidamente o acesso do NIOS ao periférico, que acontece na linha :</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="o">*</span><span class="p">(</span><span class="n">p_led</span><span class="o">+</span><span class="n">REG_DATA_OFFSET</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mh">0x1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">led</span><span class="o">++</span><span class="p">);</span>
+</code></pre></div>
+<p>Nesse momento, o NIOS envia um comando ao barramento no endereço <strong>PERIPHERAL_LED_0_BASE + REG_DATA_OFFSET</strong>, o comando carrega a mensagem: <strong>0x01 &lt;&lt; led</strong>, gravando no registrador <code>REG_DATA</code> qual LED deve ser acionado.</p>
+<h3 id="configurando-o-bsp">Configurando o bsp<a class="headerlink" href="#configurando-o-bsp" title="Permanent link">&para;</a></h3>
+<p>Para obtermos um resultado mais rápido é possível ativarmos uma opção no bsp chamada de: <strong>enable_sim_opitimize</strong>. Quando ativada, o binário compilado só poderá ser usado para simulação, <strong>não pode ser embarcado no HW!</strong>. Com essa opção temos um ganho significativo no tempo de execução do modelo no modelsim.</p>
+<p>Além de configurarmos a otimização durante a simulação, iremos desativar o <strong>stdin, stdout, stderr</strong> para a simulação ficar ainda mais rápida, caso contrário teremos que esperar por muito tempo até verificarmos o resultado do código. Note que a simulação abrange todo o HW desde o processador até o barramento e periféricos.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Para simularmos 1 ms de execução do HW será necessário muito mais que 1 ms de esforço computacional! O tempo pode chegar a unidades de hora!!</p>
+</div>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-IP_sim.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-IP_sim.png" /></a></p>
+<h3 id="modelsim">ModelSim<a class="headerlink" href="#modelsim" title="Permanent link">&para;</a></h3>
+<p>No <strong>Eclipse</strong>, após ter compilado o projeto:</p>
+<ul>
+<li><code>Run</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Run configuration</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Nios II ModelSim</code></li>
+</ul>
+<p>O simulador a ser utilizado é o modelsim da Mentor, o mais completo do mercado e fornecido com algumas customizações pela Intel-FPGA. No modelsim, iremos adicionar os sinais que desejamos visualizar, para isso, siga o que indica a figura a seguir:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-IP_modelsim1.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-IP_modelsim1.png" /></a></p>
+<p>Após adicionar todos os sinais que fazem parte do periférico <code>led_peripheral</code> iremos executar 500 us de simulação:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-IP_modelsim2.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-IP_modelsim2.png" /></a></p>
+<p>Após a simulação finalizar, note os valore dos sinais <code>avs_write</code>, <code>avs_writedata</code>, <code>avs_LEDs</code> e como eles mudam no tempo em respeito ao que foi feito no código.</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-IP_modelsim3.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-IP_modelsim3.png" /></a></p>
+<h2 id="praticando">Praticando<a class="headerlink" href="#praticando" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Faça o periférico ter 6 saídas (6 LEDs)</li>
+<li>Faça os LEDs piscarem por HW, adicione um registrador para controlar a frequência.</li>
+<li>Como colocar as chaves no periférico para que o NIOS tenha acesso a elas?</li>
+</ol>
+<h2 id="entrega-3">Entrega 3<a class="headerlink" href="#entrega-3" title="Permanent link">&para;</a></h2>
+<p>Siga para a terceira entrega:</p>
+<ul>
+<li><a href="/Entrega-3">Entega 3</a></li>
+</ul>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Entrega-2/"
+               class="ah-prev"
+               title="___Entrega 2 - FPGA NIOS">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">___Entrega 2 - FPGA NIOS</span>
+            </a>
+          
+          
+            <a href="../Entrega-3/"
+               class="ah-next"
+               title="___Entrega 3 - FPGA NIOS IP">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">___Entrega 3 - FPGA NIOS IP</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

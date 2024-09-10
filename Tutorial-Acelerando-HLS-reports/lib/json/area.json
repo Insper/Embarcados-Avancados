@@ -1,0 +1,944 @@
+{
+  "columns":
+  ["", "ALUTs", "FFs", "RAMs", "DSPs", "Details"]
+  , "debug_enabled":"true"
+  , "type":"module"
+  , "total_percent":
+  [1.34308, 0.936371, 0.504235, 0, 1.78571]
+  , "total":
+  [1026, 1105, 0, 2]
+  , "name":"System"
+  , "max_resources":
+  [109572, 219144, 514, 112]
+  , "children":
+  [
+    {
+      "name":"imgOffSet"
+      , "compute_units":1
+      , "type":"function"
+      , "total_percent":
+      [1.34308, 0.936371, 0.504235, 0, 1.78571]
+      , "total_kernel_resources":
+      [1026, 1105, 0, 2]
+      , "details":
+      [
+        {
+          "type":"text"
+          , "text":"Number of compute units: 1"
+        }
+      ]
+      , "children":
+      [
+        {
+          "name":"Component call"
+          , "type":"resource"
+          , "data":
+          [0, 0, 0, 0]
+          , "details":
+          [
+            {
+              "type":"text"
+              , "text":"Stream implemented 192 bits wide with a buffer size of 0 elements."
+            }
+          ]
+        }
+        , {
+          "name":"Component return"
+          , "type":"resource"
+          , "data":
+          [0, 0, 0, 0]
+          , "details":
+          [
+            {
+              "type":"text"
+              , "text":"Stream implemented 1 bit wide with a buffer size of 0 elements."
+            }
+          ]
+        }
+        , {
+          "name":"Variable: \n - 'x' (image.cpp:30)"
+          , "type":"resource"
+          , "data":
+          [24, 101, 0, 0]
+          , "debug":
+          [
+            [
+              {
+                "filename":"image.cpp"
+                , "line":30
+              }
+            ]
+          ]
+          , "details":
+          [
+            {
+              "type":"text"
+              , "text":"Type: Register"
+            }
+            , {
+              "type":"text"
+              , "text":"1 register of width 32 and depth 1"
+            }
+          ]
+        }
+        , {
+          "name":"Variable: \n - 'y' (image.cpp:29)"
+          , "type":"resource"
+          , "data":
+          [7, 36, 0, 0]
+          , "debug":
+          [
+            [
+              {
+                "filename":"image.cpp"
+                , "line":29
+              }
+            ]
+          ]
+          , "details":
+          [
+            {
+              "type":"text"
+              , "text":"Type: Register"
+            }
+            , {
+              "type":"text"
+              , "text":"1 register of width 32 and depth 1"
+            }
+          ]
+        }
+        , {
+          "name":"imgOffSet.B1.start"
+          , "type":"basicblock"
+          , "children":
+          [
+            {
+              "name":"State"
+              , "type":"resource"
+              , "data":
+              [0, 227, 0, 0]
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"Resources for live values and control logic. To reduce this area:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"reduce size of local variables"
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"reduce scope of local variables, localizing them as much as possible"
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"reduce number of nested loops"
+                    }
+                  ]
+                }
+              ]
+              , "children":
+              [
+                {
+                  "name":"No Source Line"
+                  , "type":"resource"
+                  , "data":
+                  [0, 33, 0, 0]
+                }
+                , {
+                  "name":"image.cpp:29"
+                  , "type":"resource"
+                  , "data":
+                  [0, 66, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":29
+                      }
+                    ]
+                  ]
+                }
+                , {
+                  "name":"image.cpp:33 > hls.h:521"
+                  , "type":"resource"
+                  , "data":
+                  [0, 64, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":33
+                      }
+                      , {
+                        "filename":"/home/monstrinho/opt/intelFPGA/18.1/hls/include/HLS/hls.h"
+                        , "line":521
+                      }
+                    ]
+                  ]
+                }
+                , {
+                  "name":"image.cpp:35 > hls.h:521"
+                  , "type":"resource"
+                  , "data":
+                  [0, 64, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":35
+                      }
+                      , {
+                        "filename":"/home/monstrinho/opt/intelFPGA/18.1/hls/include/HLS/hls.h"
+                        , "line":521
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+            , {
+              "name":"Feedback"
+              , "type":"resource"
+              , "data":
+              [5, 2, 0, 0]
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"Resources for loop-carried dependencies. To reduce this area:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"reduce number and size of loop-carried variables"
+                    }
+                  ]
+                }
+              ]
+              , "children":
+              [
+                {
+                  "name":"No Source Line"
+                  , "type":"resource"
+                  , "data":
+                  [5, 2, 0, 0]
+                }
+              ]
+            }
+            , {
+              "name":"Computation"
+              , "type":"resource"
+              , "children":
+              [
+                {
+                  "name":"No Source Line"
+                  , "type":"resource"
+                  , "data":
+                  [36, 1, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":""
+                        , "line":0
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"Channel Read"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [1, 0, 0, 0]
+                    }
+                    , {
+                      "name":"Integer Compare"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [35, 1, 0, 0]
+                    }
+                  ]
+                }
+                , {
+                  "name":"image.cpp:29"
+                  , "type":"resource"
+                  , "data":
+                  [67, 0, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":29
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"32-bit Integer Add"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [33, 0, 0, 0]
+                    }
+                    , {
+                      "name":"33-bit Integer Add"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [34, 0, 0, 0]
+                    }
+                  ]
+                  , "replace_name":"true"
+                }
+              ]
+            }
+          ]
+        }
+        , {
+          "name":"imgOffSet.B2"
+          , "type":"basicblock"
+          , "children":
+          [
+            {
+              "name":"State"
+              , "type":"resource"
+              , "data":
+              [55, 107, 0, 0]
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"Resources for live values and control logic. To reduce this area:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"reduce size of local variables"
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"reduce scope of local variables, localizing them as much as possible"
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"reduce number of nested loops"
+                    }
+                  ]
+                }
+              ]
+              , "children":
+              [
+                {
+                  "name":"No Source Line"
+                  , "type":"resource"
+                  , "data":
+                  [55, 107, 0, 0]
+                }
+              ]
+            }
+            , {
+              "name":"Feedback"
+              , "type":"resource"
+              , "data":
+              [23, 80, 0, 0]
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"Resources for loop-carried dependencies. To reduce this area:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"reduce number and size of loop-carried variables"
+                    }
+                  ]
+                }
+              ]
+              , "children":
+              [
+                {
+                  "name":"No Source Line"
+                  , "type":"resource"
+                  , "data":
+                  [1, 0, 0, 0]
+                }
+                , {
+                  "name":"image.cpp:29"
+                  , "type":"resource"
+                  , "data":
+                  [22, 80, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":29
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+            , {
+              "name":"Cluster logic"
+              , "type":"resource"
+              , "data":
+              [104, 52, 0, 0]
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"Logic required to efficiently support sets of operations that do not stall. This area cannot be affected directly."
+                }
+              ]
+            }
+            , {
+              "name":"Computation"
+              , "type":"resource"
+              , "children":
+              [
+                {
+                  "name":"No Source Line"
+                  , "type":"resource"
+                  , "data":
+                  [27, 0, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":""
+                        , "line":0
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"Select"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [27, 0, 0, 0]
+                    }
+                  ]
+                }
+                , {
+                  "name":"image.cpp:29"
+                  , "type":"resource"
+                  , "data":
+                  [67, 0, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":29
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"32-bit Integer Add"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [33, 0, 0, 0]
+                    }
+                    , {
+                      "name":"33-bit Integer Add"
+                      , "type":"resource"
+                      , "count":2
+                      , "data":
+                      [34, 0, 0, 0]
+                    }
+                  ]
+                  , "replace_name":"true"
+                }
+                , {
+                  "name":"image.cpp:31 > image.cpp:21"
+                  , "type":"resource"
+                  , "data":
+                  [66, 0, 0, 2]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":31
+                      }
+                      , {
+                        "filename":"image.cpp"
+                        , "line":21
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"32-bit Integer Multiply"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [66, 0, 0, 2]
+                    }
+                  ]
+                  , "replace_name":"true"
+                }
+              ]
+            }
+          ]
+        }
+        , {
+          "name":"imgOffSet.B3"
+          , "type":"basicblock"
+          , "children":
+          [
+            {
+              "name":"State"
+              , "type":"resource"
+              , "data":
+              [173, 161, 0, 0]
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"Resources for live values and control logic. To reduce this area:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"reduce size of local variables"
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"reduce scope of local variables, localizing them as much as possible"
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"reduce number of nested loops"
+                    }
+                  ]
+                }
+              ]
+              , "children":
+              [
+                {
+                  "name":"No Source Line"
+                  , "type":"resource"
+                  , "data":
+                  [173, 161, 0, 0]
+                }
+              ]
+            }
+            , {
+              "name":"Feedback"
+              , "type":"resource"
+              , "data":
+              [74, 254, 0, 0]
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"Resources for loop-carried dependencies. To reduce this area:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"reduce number and size of loop-carried variables"
+                    }
+                  ]
+                }
+              ]
+              , "children":
+              [
+                {
+                  "name":"No Source Line"
+                  , "type":"resource"
+                  , "data":
+                  [1, 0, 0, 0]
+                }
+                , {
+                  "name":"image.cpp:29"
+                  , "type":"resource"
+                  , "data":
+                  [9, 8, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":29
+                      }
+                    ]
+                  ]
+                }
+                , {
+                  "name":"image.cpp:30"
+                  , "type":"resource"
+                  , "data":
+                  [39, 145, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":30
+                      }
+                    ]
+                  ]
+                }
+                , {
+                  "name":"image.cpp:31 > image.cpp:21"
+                  , "type":"resource"
+                  , "data":
+                  [25, 101, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":31
+                      }
+                      , {
+                        "filename":"image.cpp"
+                        , "line":21
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+            , {
+              "name":"Cluster logic"
+              , "type":"resource"
+              , "data":
+              [45, 32, 0, 0]
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"Logic required to efficiently support sets of operations that do not stall. This area cannot be affected directly."
+                }
+              ]
+            }
+            , {
+              "name":"Computation"
+              , "type":"resource"
+              , "children":
+              [
+                {
+                  "name":"No Source Line"
+                  , "type":"resource"
+                  , "data":
+                  [27, 0, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":""
+                        , "line":0
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"Select"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [27, 0, 0, 0]
+                    }
+                  ]
+                }
+                , {
+                  "name":"image.cpp:30"
+                  , "type":"resource"
+                  , "data":
+                  [67, 0, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":30
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"32-bit Integer Add"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [33, 0, 0, 0]
+                    }
+                    , {
+                      "name":"33-bit Integer Add"
+                      , "type":"resource"
+                      , "count":2
+                      , "data":
+                      [34, 0, 0, 0]
+                    }
+                  ]
+                  , "replace_name":"true"
+                }
+                , {
+                  "name":"image.cpp:31 > image.cpp:21"
+                  , "type":"resource"
+                  , "data":
+                  [33, 0, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":31
+                      }
+                      , {
+                        "filename":"image.cpp"
+                        , "line":21
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"32-bit Integer Add"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [33, 0, 0, 0]
+                    }
+                  ]
+                  , "replace_name":"true"
+                }
+                , {
+                  "name":"image.cpp:33"
+                  , "type":"resource"
+                  , "data":
+                  [47, 17, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":33
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"32-bit Integer Add"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [33, 0, 0, 0]
+                    }
+                    , {
+                      "name":"Load"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [14, 17, 0, 0]
+                      , "details":
+                      [
+                        {
+                          "type":"text"
+                          , "text":"Load uses a Local-pipelined never-stall LSU"
+                        }
+                      ]
+                    }
+                  ]
+                  , "replace_name":"true"
+                }
+                , {
+                  "name":"image.cpp:34"
+                  , "type":"resource"
+                  , "data":
+                  [35, 1, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":34
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"Integer Compare"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [35, 1, 0, 0]
+                    }
+                  ]
+                  , "replace_name":"true"
+                }
+                , {
+                  "name":"image.cpp:35"
+                  , "type":"resource"
+                  , "data":
+                  [17, 12, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":35
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"Store"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [17, 12, 0, 0]
+                      , "details":
+                      [
+                        {
+                          "type":"text"
+                          , "text":"Store uses a Local-pipelined never-stall LSU"
+                        }
+                      ]
+                    }
+                  ]
+                  , "replace_name":"true"
+                }
+                , {
+                  "name":"image.cpp:37"
+                  , "type":"resource"
+                  , "data":
+                  [21, 12, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"image.cpp"
+                        , "line":37
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"Select"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [4, 0, 0, 0]
+                    }
+                    , {
+                      "name":"Store"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [17, 12, 0, 0]
+                      , "details":
+                      [
+                        {
+                          "type":"text"
+                          , "text":"Store uses a Local-pipelined never-stall LSU"
+                        }
+                      ]
+                    }
+                  ]
+                  , "replace_name":"true"
+                }
+              ]
+            }
+          ]
+        }
+        , {
+          "name":"imgOffSet.B5"
+          , "type":"basicblock"
+          , "children":
+          [
+            {
+              "name":"Feedback"
+              , "type":"resource"
+              , "data":
+              [3, 8, 0, 0]
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"Resources for loop-carried dependencies. To reduce this area:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"reduce number and size of loop-carried variables"
+                    }
+                  ]
+                }
+              ]
+              , "children":
+              [
+                {
+                  "name":"No Source Line"
+                  , "type":"resource"
+                  , "data":
+                  [3, 8, 0, 0]
+                }
+              ]
+            }
+            , {
+              "name":"Computation"
+              , "type":"resource"
+              , "children":
+              [
+                {
+                  "name":"No Source Line"
+                  , "type":"resource"
+                  , "data":
+                  [3, 2, 0, 0]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":""
+                        , "line":0
+                      }
+                    ]
+                  ]
+                  , "children":
+                  [
+                    {
+                      "name":"Channel Write"
+                      , "type":"resource"
+                      , "count":1
+                      , "data":
+                      [3, 2, 0, 0]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
