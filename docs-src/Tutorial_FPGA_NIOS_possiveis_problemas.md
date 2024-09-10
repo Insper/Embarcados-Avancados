@@ -103,15 +103,15 @@ Ao adicionar uma segunda OnChip Memory, para separar RAM de ROM, pode ocorrer do
 Para saber o tamanho que está sendo gerado para seu arquivo .elf, acesse a pasta que contém o arquivo .elf gerado:
 
 ```
-$ cd ~/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/nios2-elf/bin
+cd ~/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/nios2-elf/bin
 ```
 
-OBS: Esse path exemplo é referente ao Quartus 18.1, para outras versões altere o path.
+OBS: Esse path exemplo é referente ao *Quartus 18.1*, para outras versões altere o path.
 
 Agora, considerando que o nome do arquivo seja "niosLab2.elf", utilize o seguinte comando:
 
 ```
-$ nios2-elf-size niosLab2.elf
+nios2-elf-size niosLab2.elf
 ```
 
 ![Tamanho ELF](\Embarcados-Avancados\figs\tamanhoELF.jpeg) 
@@ -130,4 +130,7 @@ $ nios2-elf-size niosLab2.elf
 ![Target Connection](\Embarcados-Avancados\figs\targetConnection.jpeg) 
 
 
+## Set IRQ
+
+![Set IRQ](\Embarcados-Avancados\figs\set_IRQ.jpeg) 
 
