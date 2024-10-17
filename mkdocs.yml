@@ -113,7 +113,7 @@ nav:
       - 1c. Tutorial - HPS-FPGA-Kernel-Char_LED_Driver: "Tutorial-HPS-FPGA-kernel-char-led-driver.md"
       
   - Acelerando:
-      - 1a. Tutorial - Acelerando-HLS: "Tutorial-Acelerando-HLS.md"
+      - 1. Tutorial - Acelerando-HLS: "Tutorial-Acelerando-HLS.md"
       - ___Entrega 7: "Entrega-Extra-1.md"
 
   - "Tutoriais Alunos":
