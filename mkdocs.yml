@@ -100,7 +100,7 @@ nav:
       - "Tutorial-HPS-Buildroot.md"
       - "info-HPS-buildroot-scripts.md"
       - Entrega 3: "Entrega-5.md"
-      - "Tutorial-HPS-DeviceDriver1.md"
+      - "Tutorial-HPS-DeviceDriver.md"
       - "Tutorial-HPS-kernel-module.md"
       - "Tutorial-HPS-kernel-chardriver.md"
   - "HPS + FPGA":

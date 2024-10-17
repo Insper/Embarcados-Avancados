@@ -129,10 +129,11 @@ The first part we are going to configure is the target for generating the filesy
     - Init system:
 
     **BusyBox**
-            - systemd is an alternative, but it's more complex!
-        - Root password: **1234** (choose whatever you prefer)
-        - /bin/sh: **busybox** 
-            - The shell to be inserted into the system, we have several other options: bash, zsh. All of them will increase the size and complexity of the image. 
+    
+    - systemd is an alternative, but it's more complex!
+    - Root password: **1234** (choose whatever you prefer)
+    - /bin/sh: **busybox** - The shell to be inserted into the system, we have several other options: bash, zsh. All of them will increase the size and complexity of the image. 
+            
 === "Image"
     ![](figs/Tutorial-HPS-Buildroot-3.png)
 

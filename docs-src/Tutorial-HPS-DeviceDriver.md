@@ -57,9 +57,7 @@ To better understand userspace, let's imagine what happens when a program tries 
 
 When we create a pointer and access memory, this command is translated into a LOAD type instruction in assembly. The LOAD instruction enters the CPU pipeline and at the execution stage, the CPU passes the instruction address to the hardware responsible for managing memory: Memory Management Unit (MMU). The MMU translates the virtual memory address to the physical address (memory page), at this point the MMU checks the current execution mode of the CPU and if the memory region can be accessed by the current mode. In our case, the CPU will change the processor mode to *Abort* and handle the unauthorized memory address access, causing the program to terminate with a `seg fault`. 
 
-Programs in userspace communicate with the kernel via system calls[^1], these calls turn into software interruptions that will be processed by the kernel.
-
-[^1]: http://www.linux.it/~rubini/docs/ksys/
+Programs in userspace communicate with the kernel via system calls (http://www.linux.it/~rubini/docs/ksys/), these calls turn into software interruptions that will be processed by the kernel.
 
 ### Kernel Space
 
