@@ -96,7 +96,7 @@ nav:
       - 1d. Tutorial - HPS-BlinkLED: "Tutorial-HPS-BlinkLED.md"
       - 1x. Extra - Configurando Rede: "info-HPS-ethernet.md"
       - ___Entrega 4: "Entrega-4.md"
-      	
+      
       - 2a. Tutorial - HPS-Kernel: "Tutorial-HPS-Kernel.md"
       - 2b. Tutorial - HPS-Buildroot: "Tutorial-HPS-Buildroot.md"
       - 2x. Extra - HPS-buildroot-scripts: "info-HPS-buildroot-scripts.md"
