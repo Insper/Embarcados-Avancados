@@ -98,7 +98,7 @@ nav:
       - ___Entrega 4: "Entrega-4.md"
       - 2a. Tutorial - HPS-Kernel: "Tutorial-HPS-Kernel.md"
       - 2b. Tutorial - HPS-Buildroot: "Tutorial-HPS-Buildroot.md"
-      - 2extra. Extra: HPS-buildroot-scripts: "info-HPS-buildroot-scripts.md"
+      - 2extra. Extra - HPS-buildroot-scripts: "info-HPS-buildroot-scripts.md"
       - ___Entrega 5: "Entrega-5.md"
       - "Tutorial-HPS-DeviceDriver.md"
       - "Tutorial-HPS-kernel-module.md"
