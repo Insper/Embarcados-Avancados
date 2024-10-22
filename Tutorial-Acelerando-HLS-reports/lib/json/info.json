@@ -1,0 +1,8 @@
+{"name":"Info","rows":[
+{"name":"Project Name","data":["./image-CycloneV"],"classes":["info-table"]},
+{"name":"Target Family, Device","data":["Cyclone V, 5CEFA9F23I7"]},
+{"name":"i++ Version","data":["18.1.0 Build 625"]},
+{"name":"Quartus Version","data":["18.1.0 Build 625"]},
+{"name":"Command","data":["i++ image.cpp -march=CycloneV -o image-CycloneV"]},
+{"name":"Reports Generated At", "data":["Mon Nov 11 20:14:42 2019"]}
+]}
