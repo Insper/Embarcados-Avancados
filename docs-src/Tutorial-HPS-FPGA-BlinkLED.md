@@ -23,7 +23,7 @@ In this tutorial, we will see how to interface the ARM with the FPGA fabric. I c
 
 It's very important to stop and reflect on what happened. Here are some questions:
 
-1. What are the interfaces between the ARM and the FPGA? (there are 4 in total)
+1. What are the interfaces between the ARM and the FPGA? (there are 3 in total)
 2. What is the difference between them?
 3. What is Platform Designer (PD)?
 4. How does the HPS appear in Platform Designer (PD)?
