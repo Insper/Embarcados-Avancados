@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
       
-        <title>2021 - Chisel - SoC and Embedded Linux</title>
+        <title>2024 - Buildroot c/ Ferramentas Atuais - SoC and Embedded Linux</title>
       
     
     <link rel="stylesheet"
@@ -372,8 +372,20 @@
       
         
   
-    <li>
-      <a href="../../2024/Buildroot/">2024 - Buildroot c/ Ferramentas Atuais</a>
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">2024 - Buildroot c/ Ferramentas Atuais</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#consideracoes">Considerações</a>
+              </li>
+            
+        
+      </ul>
     </li>
   
 
@@ -404,44 +416,8 @@
       
         
   
-
-    <li class="active ah-togglable-item opened">
-      <span class="ah-togglable-handle">2021 - Chisel</span>
-      <ul>
-        
-          
-            
-            
-              <li class="ah-toc-item">
-                <a href="#comecando">Começando</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#motivacao">Motivação</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#introducao-sobre-chisel">Introdução sobre Chisel</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#chisel-tutorial-sem-necessidade-de-instalacao">Chisel Tutorial (Sem necessidade de instalação)</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#instalacoes">Instalações</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#clonando-o-repositorio">Clonando o repositório</a>
-              </li>
-            
-              <li class="ah-toc-item">
-                <a href="#video-de-resultado">Vídeo de resultado</a>
-              </li>
-            
-        
-      </ul>
+    <li>
+      <a href="../../2021/Chisel/">2021 - Chisel</a>
     </li>
   
 
@@ -449,7 +425,7 @@
         
   
     <li>
-      <a href="../RISCV/">2021 - RISC V</a>
+      <a href="../../2021/RISCV/">2021 - RISC V</a>
     </li>
   
 
@@ -647,142 +623,197 @@
           </div>
           
             <section class="progress-section show">
-<h1 id="chisel">Chisel<a class="headerlink" href="#chisel" title="Permanent link">&para;</a></h1>
+<h1 id="tutorial-buildroot-utilizando-ferramentas-atuais">Tutorial Buildroot utilizando ferramentas atuais<a class="headerlink" href="#tutorial-buildroot-utilizando-ferramentas-atuais" title="Permanent link">&para;</a></h1>
 <ul>
-<li><strong>Alunes:</strong> Victor Laperuta de Moura / Ana Clara Carneiro de Freitas</li>
+<li><strong>Alunes:</strong> PEDRO CLIQUET DO AMARAL, LUANA WILNER ABRAMOFF e TIAGO VITORINO SEIXAS</li>
 <li><strong>Curso:</strong> Engenharia da Computação</li>
-<li><strong>Semestre:</strong> 10 / 6</li>
-<li><strong>Contato:</strong> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#105;&#99;&#116;&#111;&#114;&#108;&#109;&#50;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#118;&#105;&#99;&#116;&#111;&#114;&#108;&#109;&#50;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a> / <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#97;&#99;&#99;&#102;&#53;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#97;&#110;&#97;&#99;&#99;&#102;&#53;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
-<li><strong>Ano:</strong> 2021</li>
+<li><strong>Semestre:</strong> 7</li>
+<li><strong>Contato:</strong> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#100;&#114;&#111;&#99;&#97;&#56;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#112;&#101;&#100;&#114;&#111;&#99;&#97;&#56;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a>, <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#117;&#97;&#110;&#97;&#119;&#97;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#108;&#117;&#97;&#110;&#97;&#119;&#97;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a> e <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#97;&#103;&#111;&#118;&#115;&#49;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#116;&#105;&#97;&#103;&#111;&#118;&#115;&#49;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
+<li><strong>Ano:</strong> 2024</li>
 </ul>
-<h2 id="comecando">Começando<a class="headerlink" href="#comecando" title="Permanent link">&para;</a></h2>
-<p>Para seguir esse tutorial é necessário:</p>
+<h2 id="consideracoes">Considerações<a class="headerlink" href="#consideracoes" title="Permanent link">&para;</a></h2>
+<p>Neste tutorial iremos explicar como efetuar o build root utilizando os seguintes recursos:</p>
 <ul>
-<li><strong>Hardware:</strong> DE10-Standard e acessórios</li>
-<li><strong>Softwares:</strong> Quartus 18.01, Java</li>
-<li><strong>Documentos:</strong></li>
-<li><a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual">DE10-Standard_User_manual.pdf</a></li>
+<li>Testado em: Ubuntu 20.04, 22.04, 24.04 e 24.04.1. </li>
+<li><a href="https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads">Arm GNU 13.3.rel1-x86_64-arm-none-linux-gnueabihf</a></li>
+<li><a href="https://buildroot.org/downloads/">Buildroot 2024.08.1.tar.xz</a></li>
 </ul>
-<h2 id="motivacao">Motivação<a class="headerlink" href="#motivacao" title="Permanent link">&para;</a></h2>
-<p>Esse tutorial foi realizado com o intuito de aprender e entender um pouco mais sobre uma das mais novas linguagens de design de hardware, Chisel, e apresentar sua infraestrutura, algumas formas de implementá-la e quais são suas possibilidades.</p>
-<h2 id="introducao-sobre-chisel">Introdução sobre Chisel<a class="headerlink" href="#introducao-sobre-chisel" title="Permanent link">&para;</a></h2>
-<p>Chisel é uma linguagem de design de hardware extremamente nova e que foi desenvolvida como uma alternativa às HDLs (Hardware Description Languages), como por exemplo Verilog e VHDL. O que diferencia a Chisel das mais clássicas é a possibilidade de realizar a programação por meio de uma linguagem mais atualizada, sendo essa o Scala, facilitando o desenvolvimento de circuitos e designs mais complexos.</p>
-<p>Além disso, o Chisel se baseia na estrutura de compilador de hardware <a href="https://github.com/chipsalliance/firrtl">FIRRTL (Flexible Intermediate Representation for RTL)</a>, a qual permite uma compilação de circuitos mais otimizada, em menor tempo e mais otimizada.</p>
-<p>Caso deseje saber um pouco mais sobre a linguagem:</p>
+<p>A utilização das ferramentas atuais permite entender e facilitar a contrução dos arquivos de sistemas de forma atualizada.</p>
+<h3 id="1-inicializando">1. Inicializando<a class="headerlink" href="#1-inicializando" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p><a href="http://www.imm.dtu.dk/~masca/chisel-book.html">Livro Design Digital com Chisel</a></p>
-</li>
-<li>
-<p><a href="https://www.chisel-lang.org/chisel3/docs/introduction.html">Documentação Chisel</a></p>
-</li>
-<li>
-<p><a href="https://github.com/chipsalliance/chisel3">Github Chisel</a></p>
-</li>
+<li><strong>Clonar Repositório:</strong> <a href="https://github.com/pcliquet/build_root">https://github.com/pcliquet/build_root</a></li>
 </ul>
-<h2 id="chisel-tutorial-sem-necessidade-de-instalacao">Chisel Tutorial (Sem necessidade de instalação)<a class="headerlink" href="#chisel-tutorial-sem-necessidade-de-instalacao" title="Permanent link">&para;</a></h2>
-<p><a class="glightbox" href="chisel-tutorial.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="chisel-tutorial.png" /></a>
-Antes de continuar o tutorial, pode ser interessante executar este <a href="https://mybinder.org/v2/gh/freechipsproject/chisel-bootcamp/master">notebook</a> para ter uma noção melhor da linguagem scala, caso não esteja familiarizado. Em especial, o arquivo "1_intro_to_scala.ipynb" pode ser bem útil, e os demais vão cobrir pontos que não abordaremos neste projeto, por exemplo como construir seus próprios módulos do zero no Chisel.</p>
-<h2 id="instalacoes">Instalações<a class="headerlink" href="#instalacoes" title="Permanent link">&para;</a></h2>
-<h3 id="instalacao-no-ubuntu">Instalação no Ubuntu<a class="headerlink" href="#instalacao-no-ubuntu" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://adoptopenjdk.net/">Instalação do Java</a>.</li>
-</ul>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-</div>
-<p>A instalação do Scala e os projetos que usam o SBT assumem que o ambiente já possui um JDK instalado, por isso é preciso realizar a instalação do java.</p>
-<ul>
-<li><a href="https://www.scala-sbt.org/download.html">Instalação do Scala</a>.</li>
-</ul>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-</div>
-<p>O Chisel é baseado no Scala para compilar os arquivos dos seus projetos, ou seja, o Scala é uma "Domain Specific Language" - uma linguagem de programação
-específica para uma determinada aplicação.</p>
-<ul>
-<li><a href="https://verilator.org/guide/latest/install.html">Instalação do Verilator</a>.</li>
-</ul>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-</div>
-<p>O Verilator é utilizado na etapa de compilação do código em Scala para Verilog.</p>
-<h3 id="instalacao-no-windows">Instalação no Windows<a class="headerlink" href="#instalacao-no-windows" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://www.scala-sbt.org/download.html">Baixar arquivo do SBT</a></li>
-</ul>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-</div>
-<p>É necessário baixar o SBT pois essa é a ferramenta que permite a execução e construção de projetos em Scala e Java.</p>
-<ul>
-<li><a href="https://community.chocolatey.org/packages/sbt">Instalação do Chocolatey</a></li>
-</ul>
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-</div>
-<p>Foi escolhido o Chocolatey como ferramenta para instalar o SBT, mas outras, como o scoop, podem ser utilizadas para instalar o SBT no seu computador. Para instalar a ferramenta utilize o comando abaixo:</p>
-<div class="highlight"><pre><span></span><code>choco install sbt
+<p>Para efetuar esse tutorial, é preciso ter o SDCard particionado com a imagem desse arquivo <a href="https://download.terasic.com/downloads/cd-rom/de10-standard/Linux/DE10-Standard_Linux_Console.zip">Linux Console(Kernel 4.5)</a></p>
+<div class="highlight"><pre><span></span><code>wget https://download.terasic.com/downloads/cd-rom/de10-standard/Linux/DE10-Standard_Linux_Console.zip
 </code></pre></div>
-<hr />
-<h2 id="clonando-o-repositorio">Clonando o repositório<a class="headerlink" href="#clonando-o-repositorio" title="Permanent link">&para;</a></h2>
-<p>Clonar o repositório: <a href="https://github.com/carlosedp/chisel-playground">Chisel Playground</a>.</p>
-<p>Ir para a pasta "blinky", que é o projeto que vamos compilar e demonstrar o funcionamento na FPGA:</p>
-<div class="codehilite"><pre><span></span><code>cd chisel-playground/blinky
-</code></pre></div>
-
-<p>Nos arquivos do projeto, ao entrar na pasta <code>src/main/scala</code>, existem dois principais: "Blinky.scala" e "TopLevel.scala".</p>
+<p>Depois descompactar o .zip e passe para o SDCard particionado.</p>
+<p>Instale os packages necessários:
+<div class="highlight"><pre><span></span><code>sudo apt update
+sudo apt install flex
+sudo apt install bison
+sudo apt install libncurses5-dev
+sudo apt install g++
+sudo apt install bzip2
+sudo apt install git
+sudo apt install libssl-dev
+</code></pre></div></p>
+<p>Primeiramente, baixe os recursos citados acima (exceto Linux SoCFPGA, cujo link será usado no menuconfig do buildroot). Crie um diretório e coloque os arquivos extraídos nele (em caso de repositório git, dê git clone neste diretõrio). Em seguida começaremos pelas configurações do buildroot:</p>
 <ol>
-    <li>O "Blinky.scala" é responsável por criar o módulo que controla 3 LEDs: o primeiro e o segundo piscam alternadamente duas vezes a cada frequência definida, e o terceiro LED realiza um "fade-in", através de um PWM definido no arquivo.</li>
-    <li>O "TopLevel.scala" é responsável por mapear os inputs e outputs para o módulo do "Blinky" e converter o clock da FPGA para 25Mhz utilizando o pll selecionado.</li>
+<li>Acesse o diretorio do Buildroot</li>
+<li>rode o comando: 
+<div class="highlight"><pre><span></span><code>export ARM_GCC=[insert_toolchain_path]/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-linux-gnueabihf
+export ARCH=arm
+make menuconfig
+</code></pre></div></li>
 </ol>
-
-<div class="admonition info">
-<p class="admonition-title">Info</p>
-</div>
-<p>O clock utilizado na FPGA foi o de 50Mhz, mas um dos arquivos compilados pelo projeto é responsável por converter a frequência para 25Mhz.</p>
-<p>Como o código que vamos compilar precisa de recursos específicos da placa na qual vai ser rodado, é preciso antes procurar pela placa nos arquivos do projeto. Para isso, é possível conferir as placas disponíveis na pasta <code>src/main/resources</code>, onde temos os plls que serão utilizados por cada uma.</p>
-<p>Em seguida, podemos compilar o projeto para verilog. Como argumento do comando "make", é possível selecionar a placa em que queremos executar o código. No caso, como estamos usando uma placa DE-10 da Altera, a mais próxima seria a "de1_soc_revF".</p>
-<div class="codehilite"><pre><span></span><code>make chisel BOARD=de1_soc_revF
+<p>O comando anterior irá abrir a configuração do Buildroot. Iremos configurar os recursos existentes para criar o file system e compilar o kernel. Segue abaixo as configurações recomendadas para uso em nossa pĺaca de desenvolvimento.</p>
+<h3 id="2-configuracao-do-root-file-system">2. Configuração do root file system<a class="headerlink" href="#2-configuracao-do-root-file-system" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Acesse no Main Menu -&gt; Target Options:</p>
+<ul>
+<li>Target Architecture: ARM (little endian)</li>
+<li>Target Architecture Variant: cortex-A9</li>
+<li>Enable NEON SIMD extension support (aperte Y)</li>
+<li>Enable VFP extension support (aperte Y)</li>
+<li>Floating point strategy: NEON</li>
+</ul>
+</li>
+<li>
+<p>Acesse no Main Menu -&gt; Toolchain:</p>
+<ul>
+<li>Toolchain type: External toolchain</li>
+<li>Toolchain: Custom toolchain</li>
+<li>Toolchain path: $(ARM_GCC)</li>
+<li>
+<p>Toolchain prefix: $(ARCH)-none-linux-gnueabihf </p>
+<p>Para essa etapa, acesse o diretório da pasta e abre no terminal, Por fim execute o comando PWD para ter o caminho certo e coloque na configuração do buildroot.
+    - External toolchain gcc version: 13.x
+    - External toolchain kernel headers series 4.20.x
+    - External toolchain C library: glibc
+    - Enable: Toolchain has SSP support
+    - Disable: Toolchain doesn't have RPC support
+    - Enable: Toolchain has C++ support
+    As opções abaixo foram selecionadas, pois o GNU tem supporte para, e caso contrário um erro acontece durante a construção do arquivo de sistema:
+    - Enable: Toolchain has Fortran support
+    - Enable: Toolchain has OpenMP support</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Acesse no Main Menu -&gt; System Configuration:</p>
+<ul>
+<li>System hostname: Escolha o nome do Host</li>
+<li>System banner: BEM VENIDOS AO SISTEMA EMBARCADO AVANÇADO (de seu nome)</li>
+</ul>
+</li>
+<li>
+<p>Acesse no Main Menu -&gt; Kernel</p>
+<ul>
+<li>Enable: Linux Kernel</li>
+<li>Kernel version: Custom Git repository</li>
+<li>URL of custom repository: <a href="https://github.com/altera-opensource/linux-socfpga">https://github.com/altera-opensource/linux-socfpga</a></li>
+<li>Custom repository version: socfpga-6.6.22-lts</li>
+<li>Defconfig name: socfpga</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-gerando-o-root-file-system-e-o-zimage">3. Gerando o Root File System e o zImage<a class="headerlink" href="#3-gerando-o-root-file-system-e-o-zimage" title="Permanent link">&para;</a></h3>
+<p>Apos efetuar e salvar as configurações do buildroot, o comando abaixo ira gerar a imagem do kernel:</p>
+<div class="highlight"><pre><span></span><code>export ARM_GCC=[insert_toolchain_path]/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-linux-gnueabihf
+export ARCH=arm
+make all -j 8
 </code></pre></div>
-
-<p>O output dos arquivos compilados se encontra na pasta <code>generated</code>. Dos arquivos gerados, vamos precisar de apenas dois para passar para a FPGA via quartus: o "Toplevel.v" e o pll gerado "pll_de1_soc_revF.v". Com ambos os arquivos gerados:</p>
 <ul>
-<li>Abra o quartus e crie um novo projeto.</li>
+<li>Na área do insert_toolchain_path coloque o caminho do diretório onde deixou a pasta <a href="https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads">Arm GNU 13.3.rel1-x86_64-arm-none-linux-gnueabihf</a> após extração.</li>
 </ul>
-<p align="center">
-    <a class="glightbox" href="quartus.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="quartus.png" width="600" height="600" /></a>
-    <a class="glightbox" href="quartus_tool.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="quartus_tool.png" width="600" height="600" /></a>
-</p>
-
+<h3 id="4-passando-o-file-system-para-o-sdcard">4. Passando o File System para o SDCard<a class="headerlink" href="#4-passando-o-file-system-para-o-sdcard" title="Permanent link">&para;</a></h3>
+<p>O file system zipado gerado está no diretório do seu buildroot/output/images! Apague o file system atual, e extraia os arquivos zipados gerados para seu SDcard.</p>
+<div class="highlight"><pre><span></span><code>sudo rm -r /media/[seu_usuario]/[partição_do_sdcard_rfs]/
+sync
+sudo tar xvf rootfs.tar -C /media/[seu_usuario]/[partição_do_sdcard_rfs]/
+sync
+</code></pre></div>
+<h3 id="5-passando-a-imagem-do-kernel-para-o-sdcard">5. Passando a imagem do kernel para o SDCard<a class="headerlink" href="#5-passando-a-imagem-do-kernel-para-o-sdcard" title="Permanent link">&para;</a></h3>
+<p>Copie o arquivo zImage para a partição do pendrive de 500 MB, substituindo o zImage antigo.
+<div class="highlight"><pre><span></span><code>cp -f zImage /media/[seu_usuario]/[partição_do_sdcard_zimage]/zImage
+</code></pre></div></p>
+<h3 id="6-executando">6. Executando<a class="headerlink" href="#6-executando" title="Permanent link">&para;</a></h3>
+<p>Coloque o SDCard em sua placa de desenvolvimento e execute o comando abaixo:</p>
+<p>screen /dev/ttyUSB0 115200,cs8</p>
+<p>Lembre-se do usuário configurado e sua senha. Em seguida o seu kernel estará em execução!</p>
+<h3 id="facilitando">Facilitando<a class="headerlink" href="#facilitando" title="Permanent link">&para;</a></h3>
+<p>Para facilitar a compilação do kernel, criamos um script Makefile para executar o buildroot com as configurações citadas antariormente, presente no arquivo .config abaixo. Esse arquivo Make deverá estar no mesmo diretório do buildroot, enquanto o .config deverá estar na raíz do buildroot. Vale mencionar que o .config é a configuração efetuada na etapa 2, sem essa configuração não é possível criar o file system. Geramos esse arquivo para agilizar as etapas.</p>
+<p>Já no arquivo Makefile, você precisa alterar o caminho do user da máquina e das partições do SDCard, para que seja reconhecido na hora de executar o comando. Como nos exemplos abaixo:</p>
+<div class="highlight"><pre><span></span><code>export USER = [seu_ususario]
+export PARTITION_ROOTFS = XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+export PARTITION_ZIMAGE = XXXX-XXXX 
+export HOME_PATH = /[o_caminho]/[para]/[o_diretorio]/[do_build_root]/
+</code></pre></div>
+<blockquote>
+<p>[!WARNING] 
+HOME_PATH precisa terminar com "/" e verifique e retire caso haja espaços após os nomes dos partitions, pois pode gerar erros no make.</p>
+</blockquote>
+<p>O arquivo Makefile encapsula as seguintes funcionalidades:</p>
 <ul>
-<li>Importe os dois arquivos e configure o "Toplevel.v" como toplevel do projeto.</li>
+<li>
+<p>Baixa requerimentos</p>
+</li>
+<li>
+<p>Compila o kernel e o root file system</p>
+</li>
+<li>
+<p>Apaga o file system atual do SDCard (JÁ CONECTADO COM O PEN-DRIVE EM SUA MÁQUINA)</p>
+</li>
+<li>
+<p>Transfere o file system e o kernel pro SDCard(JÁ CONECTADO COM O PEN-DRIVE EM SUA MÁQUINA)</p>
+</li>
 </ul>
-<p align="center">
-    <a class="glightbox" href="toplevel.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="toplevel.png" width="600" height="600" /></a>
-</p>
-
+<h3 id="executando-o-makefile">Executando o Makefile<a class="headerlink" href="#executando-o-makefile" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>[!WARNING] 
+Não rode o comando <code>make</code> por si só. Pode dar problema.</p>
+</blockquote>
+<p>Execute os seguintes comandos:</p>
+<ol>
+<li>
+<p>O make install irá baixar todas as dependências e copiar o .config para dentro do buildroot. Dependências:</p>
+</li>
+<li>
+<p>Necessário que o .config esteja na mesma pasta do Makefile.</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code>make install
+</code></pre></div>
+<ol>
+<li>O make build irá gerar o kernel e o root file system.</li>
+</ol>
+<div class="highlight"><pre><span></span><code>make build
+</code></pre></div>
+<blockquote>
+<p>[!WARNING] 
+Se aparecer o erro "LD_LIBRARY_PATH" execute o comando:
+unset LD_LIBRARY_PATH e rode o make build novamente.</p>
+</blockquote>
+<ol>
+<li>O make remove é necessário para remoção do arquivo root file system, devido ao erro que pode ocorrer após execução mesmo que feita correta. É importante checar os arquivos internos do SDCard, como confirmação de que o comando foi efetivo.</li>
+</ol>
+<div class="highlight"><pre><span></span><code>make remove
+</code></pre></div>
+<ol>
+<li>
+<p>O make deploy, envia o Kernel e o root file system para o SDCard. Dependências:</p>
+</li>
+<li>
+<p>Necessário a conexão com o Pen-drive(SDCard).</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code>make deploy
+</code></pre></div>
+<h3 id="referencias">Referências<a class="headerlink" href="#referencias" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Mapeie os LEDs e o clock no Pin Planner.</li>
+<li><a href="https://github.com/altera-opensource/linux-socfpga">Linux SoCFPGA</a></li>
 </ul>
-<p align="center">
-    <a class="glightbox" href="pin.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="pin.png" width="600" height="600" /></a>
-</p>
-
-<ul>
-<li>Compile e passe para a FPGA.</li>
-</ul>
-<p align="center">
-    <a class="glightbox" href="programmer.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="programmer.png" width="600" height="600" /></a>
-</p>
-
-<h2 id="video-de-resultado">Vídeo de resultado<a class="headerlink" href="#video-de-resultado" title="Permanent link">&para;</a></h2>
-<figure class="video_container">
-    <video controls="true" allowfullscreen="true" width="600" height="400">
-        <source src = "video_projeto.mp4" type="video/mp4">
-    </video>
-</figure>
-
 
 
 </section>
@@ -792,19 +823,19 @@ específica para uma determinada aplicação.</p>
       <footer class="ah-footer ah-typeset">
         <div class="ah-footer-nav">
           
-            <a href="../../2022/riscv/"
+            <a href="../../Projeto-Rubrica/"
                class="ah-prev"
-               title="2022 - RISC V">
+               title="Projeto Rubrica">
               <span class="nav-label">Previous</span>
-              <span class="nav-title">2022 - RISC V</span>
+              <span class="nav-title">Projeto Rubrica</span>
             </a>
           
           
-            <a href="../RISCV/"
+            <a href="../../2022/riscv/"
                class="ah-next"
-               title="2021 - RISC V">
+               title="2022 - RISC V">
               <span class="nav-label">Next</span>
-              <span class="nav-title">2021 - RISC V</span>
+              <span class="nav-title">2022 - RISC V</span>
             </a>
           
         </div>
