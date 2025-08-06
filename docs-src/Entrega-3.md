@@ -1,56 +1,56 @@
-# 👁 Entrega 3
+# 🔔 Assigment 3
 
- O que deve ser entregue?
+ What should be delivered?
 
-- **Pasta:** `Entrega_3_FPGA_NIOS_IP`
-- **Vídeo** do projeto funcionando com uma explicação (aprox 1.5 min)   
+- **Folder:** `Entrega_3_FPGA_NIOS_IP`
+- **Video** of the project working with an explanation (approx 1.5 min)   
 
-Nessa entrega iremos encapsular o periférico que criamos para controlar o motor de passos (`Entrega-1`) no Plataform Designer (criando um periférico mapeado em memória) a fim de possuirmos um componente dedicado para controlar o motor.
+In this delivery, we will encapsulate the peripheral we created to control the stepper motor (`Entrega-1`) in Platform Designer (creating a memory-mapped peripheral) so that we have a dedicated component to control the motor.
 
 ## Hardware
 
-O diagrama a seguir é uma visão geral do que deve ser feito, nessa concepção iremos "encapsular" o IP da desenvolvido na `Entrega-1` em um "periférico mapeado em memória" (`StepMotor-MM`), para isso será necessário adicionar uma lógica extra, normalmente chamada de `Glue Logic` que realiza a interface entre o barramento e o IP.
+The diagram below is an overview of what needs to be done. In this concept, we will "encapsulate" the IP developed in `Entrega-1` into a "memory-mapped peripheral" (`StepMotor-MM`). For this, it will be necessary to add extra logic, usually called `Glue Logic`, which interfaces between the bus and the IP.
 
 ![](figs/Entrega-3.png)
 
 ### Glue Logic
 
-A lógica de controle deve interfacear com o periférico do Motor de passos em todos os sinais de controle (menos nos de saída (pahse)) de maneira abstrair o acesso mapeado em memória para o periférico. A maneira mais fácil de fazer isso é definindo funcionalidades a endereços do periférico, por exemplo:
+The control logic must interface with the Stepper Motor peripheral on all control signals (except the outputs (phase)), in order to abstract the memory-mapped access for the peripheral. The easiest way to do this is to assign functionalities to peripheral addresses, for example:
 
-| Offset | Funcionalidade | Tipo |
-|--------|----------------|------|
-| 0      | EN             | R/W  |
-| 1      | DIR            | R/W  |
-| 2      | VEL            | R/W  |
-| ...    | ...            |      |
+| Offset | Functionality | Type |
+|--------|--------------|------|
+| 0      | EN           | R/W  |
+| 1      | DIR          | R/W  |
+| 2      | VEL          | R/W  |
+| ...    | ...          |      |
 
 
-A tabela anterior mapeia para cada endereço do periférico uma funcionalidade diferente, nesse exemplo, se o usuário deseja ativar o motor, deve fazer a escrita no endereço 0 desse periférico. 
+The table above maps each address of the peripheral to a different functionality. In this example, if the user wants to activate the motor, they must write to address 0 of this peripheral.
 
-> Note que alguns endereços são Read Only e outros Read/Write (tipo), isso se dá porque não tem sentido (nem é possível fisicamente) escrever me alguns endereços.
+> Note that some addresses are Read Only and others are Read/Write (type). This is because it doesn't make sense (nor is it physically possible) to write to some addresses.
 
-## (rubrica C) Software
+## (rubric C) Software
 
-??? tip "Entrega - google forms"
+??? tip "Submission - google forms"
     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfQisAY242qZ7YgpRIeHXcmg_bz1qhaXUZAPM-HOlPiyYbWFQ/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 
-Além da parte de HW, iremos desenvolver uma biblioteca em C que irá abstrair a interface com esse periférico. 
-O periférico deve possuir um driver capaz de interagir com o periférico. Iremos padronizar algumas funções a fim de definirmos um padrão de interface:
+In addition to the HW part, we will develop a C library that will abstract the interface with this peripheral. 
+The peripheral must have a driver capable of interacting with it. We will standardize some functions to define a standard interface:
 
 ``` c
-// Para rubrica C
-int motor_init( ..... );        // Inicializa o periférico
-int motor_halt( ..... );        // Desativa o periférico 
-int motor_en( ..... );  // retorna se houve algum click
+// For rubric C
+int motor_init( ..... );        // Initializes the peripheral
+int motor_halt( ..... );        // Deactivates the peripheral 
+int motor_en( ..... );          // Returns if there was any click
 ```
 
-## (rubrica A/B) Software (melhorando)
+## (rubric A/B) Software (improving)
 
-Adicionar as seguintes funções (cada uma + meio conceito):
+Add the following functions (each one + half a concept):
 
 ``` c
-// Para rubrica B/A
-int motor_dir( ..... );      // configura direção
-int motor_vel( ..... );    // condigura velocidade
+// For rubric B/A
+int motor_dir( ..... );      // sets direction
+int motor_vel( ..... );      // sets speed
 ```
-Esse driver deve estar distribuído em dois arquivos: `motor.c` e `motor.h`. 
+This driver should be distributed in two files: `motor.c` and `motor.h`.

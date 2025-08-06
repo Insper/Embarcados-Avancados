@@ -1,91 +1,91 @@
 # Overview
 
-O projeto final da disciplina deve ser um tutorial que tenha relação com ao menos um objetivo de aprendizagem da matéria:
+The final project for the course should be a tutorial related to at least one learning objective of the subject:
 
-- Formular soluções que satisfazem requisitos de hardware e software de projetos com FPGA-SoC (System-on-a-chip)
-- Integrar em um protótipo solução para um sistema embarcado com requisitos de processamento e/ou tempo real via FPGA-SoC
-- Interfacear diferentes módulos em um sistema embarcado (processadores, firmware e sistema operacional)
+- Formulate solutions that meet hardware and software requirements for FPGA-SoC (System-on-a-chip) projects
+- Integrate a prototype solution for an embedded system with processing and/or real-time requirements via FPGA-SoC
+- Interface different modules in an embedded system (processors, firmware, and operating system)
 
-## Áreas
+## Areas
 
-Alguns exemplos de áreas que podem ser exploradas:
+Some examples of areas that can be explored:
 
-1. Aceleração/ implementação de algum algorítimo em hardware
-    - processamento de dados, FFT, compressão, criptografia, ...
-    - HLD/ HLS/ OpenCL/ FPGA Amazon
-1. Comparação de performance entre diferentes tecnologias  
+1. Acceleration/implementation of some algorithm in hardware
+    - data processing, FFT, compression, cryptography, ...
+    - HLD/HLS/OpenCL/Amazon FPGA
+1. Performance comparison between different technologies  
     - SoC vs GPU vs FPGA vs uC
-1. Sistema operacional 
-    - Escalonador real time kernel linux, Android, RTOS embarcado
+1. Operating system 
+    - Real-time scheduler, Linux kernel, Android, embedded RTOS
 
-## Anos passados
+## Previous Years
 
-De uma olhada no que os seus colegas já fizeram:
+Take a look at what your colleagues have already done:
 
 - PS3 Hack
-- Android para Raspbery Pi 3
-- Periférico para controlar matriz de LED
-- Driver linux para acender LEDs
-- SoC e Python
-- SDAccel / Vittis - Algoritmo metropolis
-- Áudio na DE10
-- Criptografia em Hardware - FPGA
+- Android for Raspberry Pi 3
+- Peripheral to control LED matrix
+- Linux driver to turn on LEDs
+- SoC and Python
+- SDAccel / Vittis - Metropolis algorithm
+- Audio on DE10
+- Hardware Cryptography - FPGA
 - TensorFlow - Jetson Nano
 - OpenCL - FPGA
 - Yocto 
 - Jetson Nano - GPU
-- FPGA na AWS
+- FPGA on AWS
 - Linux device driver
 
-## Tecnologias/ Ferramentas
+## Technologies/Tools
 
-A seguir uma lista de tecnologias que podem ser estudadas no tutorial: 
+Below is a list of technologies that can be studied in the tutorial: 
 
 - HDL (VHDL/Verilog)
-  - [Adicionar uma instrução customizada ao NIOS](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_nios2_custom_instruction.pdf)
-  - Platform designer 
-     - Criar um sistema para controlar um dos robôs de robótica 
-  - Criar um periférico para interfacear com o mundo externo (ler teclado/ motor/ fita de Led/ ...)
+  - [Add a custom instruction to NIOS](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_nios2_custom_instruction.pdf)
+  - Platform Designer 
+     - Create a system to control one of the robotics robots 
+  - Create a peripheral to interface with the external world (read keyboard/motor/LED strip/...)
 - [High Level Synthesis (HLS)](https://www.intel.com/content/www/us/en/software/programmable/quartus-prime/hls-compiler.html)
-  - Criar um periférico que acelera uma função ([example](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/wp/wp-01274-intel-hls-compiler-fast-design-coding-and-hardware.pdf))
+  - Create a peripheral that accelerates a function ([example](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/wp/wp-01274-intel-hls-compiler-fast-design-coding-and-hardware.pdf))
 -  [OpenCL](https://www.intel.com/content/www/us/en/software/programmable/sdk-for-opencl/overview.html)
-  - Criar um hardware que acelera uma função [Terasic Manual](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/blob/master/Manual/DE10_Standard_OpenCL.pdf) ([example](https://www.intel.com/content/www/us/en/programmable/products/design-software/embedded-software-developers/opencl/support.html))
+  - Create hardware that accelerates a function [Terasic Manual](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/blob/master/Manual/DE10_Standard_OpenCL.pdf) ([example](https://www.intel.com/content/www/us/en/programmable/products/design-software/embedded-software-developers/opencl/support.html))
 - Linux 
-  - [real time](https://www.linuxfoundation.org/blog/2013/03/intro-to-real-time-linux-for-embedded-developers/) / otimização energética / 👍 [boot time](https://embexus.com/2017/05/16/embedded-linux-fast-boot-techniques/) / aplicações / 👍 [Android](https://www.youtube.com/watch?v=zHqS_yWiMNI) / openCL ....
+  - [real time](https://www.linuxfoundation.org/blog/2013/03/intro-to-real-time-linux-for-embedded-developers/) / energy optimization / 👍 [boot time](https://embexus.com/2017/05/16/embedded-linux-fast-boot-techniques/) / applications / 👍 [Android](https://www.youtube.com/watch?v=zHqS_yWiMNI) / openCL ....
 
-## Hardwares 
+## Hardware
 
-A seguir, eu tentei resumir os hardwares disponíveis no Insper e as respectivas tecnologias que podem ser utilizados para desenvolver os projetos:
+Below, I tried to summarize the hardware available at Insper and the respective technologies that can be used to develop the projects:
 
-| Kit           | Empresa | Tecnologia | vhdl | HLS | OpenCL | Linux | OpenCV | Cuda |
-|---------------|---------|------------|------------|-----|--------|-------|--------|------|
-| [Arria 10 SoC](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=216&No=997) | Intel   | FPGA + ARM | x          | x   | x      | x     | x      |      |
-| [DE10-Standard](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1081) | Intel   | FPGA + ARM | x          | x   | x      | x     | x      |      |
-| [DE10-nano-soc](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=941)     | Intel   | FPGA + ARM | x          | x   | x      | x     | x      |      |
-| [Terasic SoC SoM](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=167&No=1211)   | Intel   | FPGA + ARM | x          | x   | x      | x     | x      |      |
-| [DE5a-NET-DDR4](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=1&No=1108&PartNo=1) | Intel   | FPGA       | x          | x   | x      |       | x      |      |
-| [ZedBoard](http://zedboard.org/product/zedboard)      | Xilinx  | FPGA + ARM | x          | x   | x      | x     | x      |      |
-| [instância F1](https://aws.amazon.com/ec2/instance-types/f1/)  | AWS     | FPGA       |            |     | x      |       |        |      |
-| [Jetson TK2](https://developer.nvidia.com/embedded/jetson-tx2)   | NVIDIa  | ARM + GPU  |            |     |        | x     | x      | x    |
-|               |         |            |            |     |        |       |        |      |
+| Kit           | Company | Technology | vhdl | HLS | OpenCL | Linux | OpenCV | Cuda |
+|---------------|---------|------------|------|-----|--------|-------|--------|------|
+| [Arria 10 SoC](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=216&No=997) | Intel   | FPGA + ARM | x    | x   | x      | x     | x      |      |
+| [DE10-Standard](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1081) | Intel   | FPGA + ARM | x    | x   | x      | x     | x      |      |
+| [DE10-nano-soc](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=941)     | Intel   | FPGA + ARM | x    | x   | x      | x     | x      |      |
+| [Terasic SoC SoM](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=167&No=1211)   | Intel   | FPGA + ARM | x    | x   | x      | x     | x      |      |
+| [DE5a-NET-DDR4](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=1&No=1108&PartNo=1) | Intel   | FPGA       | x    | x   | x      |       | x      |      |
+| [ZedBoard](http://zedboard.org/product/zedboard)      | Xilinx  | FPGA + ARM | x    | x   | x      | x     | x      |      |
+| [F1 instance](https://aws.amazon.com/ec2/instance-types/f1/)  | AWS     | FPGA       |      |     | x      |       |        |      |
+| [Jetson TK2](https://developer.nvidia.com/embedded/jetson-tx2)   | NVIDIA  | ARM + GPU  |      |     |        | x     | x      | x    |
+|               |         |            |      |     |        |       |        |      |
 
-## Exemplos de temas/ coisas legais
+## Example topics/cool ideas
 
-legenda: ‼ demanda uma dedicação maior
+legend: ‼ requires greater dedication
  
-- Criando um SoftProcessor e API para controlar um Drone
-- [OpenCV acelerado com OpenCL - ZedBoard](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841665/HLS+Video+Library)
-- !! Criar uma aplicação com HLS/OpenCL que acelera uma função na FPGA
-    - Processamento de imagem/ compressão de dados/ criptografia/ fft/ ... 
-- ‼ [Criar uma aplicação com OpenCL na AWS](https://github.com/aws/aws-fpga)
-- [Embarcando ROS no SoC-FPGA](http://wiki.ros.org/hydro/Installation/OpenEmbedded) (primeiro passo para controlarmos os robôs de robótica com a FPGA)
-- ‼ Usar o [LCD LT24](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=68&No=892) com o Linux (Comunicação ARM-FPGA)
-- [Real Time kernel](https://www.linuxfoundation.org/blog/2013/03/intro-to-real-time-linux-for-embedded-developers/) é realmente tempo real? Estudo de latência...
-- Otimizando o [boot time](https://embexus.com/2017/05/16/embedded-linux-fast-boot-techniques/) do linux
-- Executando [Android](https://www.youtube.com/watch?v=zHqS_yWiMNI) na DE10-Standard
-- Interface gráficas em sistemas embarcados (exe: criar um totem de pagamento)
-- Device driver: Criar um driver no linux [para algum sensor de distância](https://github.com/johannesthoma/linux-hc-sro4)
-- ‼ Criar um periférico para controlar a fita de LED RGB e criar um driver para o Linux controlar
-- BanchMark entre os diferentes kits de desenvolvimento 
-- Usando o [yocto](https://www.yoctoproject.org/) como alternativa ao buildroot para gerar o Linux
+- Creating a SoftProcessor and API to control a Drone
+- [OpenCV accelerated with OpenCL - ZedBoard](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841665/HLS+Video+Library)
+- !! Create an application with HLS/OpenCL that accelerates a function on the FPGA
+    - Image processing/data compression/cryptography/fft/...
+- ‼ [Create an application with OpenCL on AWS](https://github.com/aws/aws-fpga)
+- [Embedding ROS on SoC-FPGA](http://wiki.ros.org/hydro/Installation/OpenEmbedded) (first step to control robotics robots with FPGA)
+- ‼ Use the [LCD LT24](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=68&No=892) with Linux (ARM-FPGA Communication)
+- [Real Time kernel](https://www.linuxfoundation.org/blog/2013/03/intro-to-real-time-linux-for-embedded-developers/) is it really real time? Latency study...
+- Optimizing [boot time](https://embexus.com/2017/05/16/embedded-linux-fast-boot-techniques/) for Linux
+- Running [Android](https://www.youtube.com/watch?v=zHqS_yWiMNI) on DE10-Standard
+- Graphical interfaces in embedded systems (e.g.: create a payment kiosk)
+- Device driver: Create a Linux driver [for some distance sensor](https://github.com/johannesthoma/linux-hc-sro4)
+- ‼ Create a peripheral to control the RGB LED strip and create a driver for Linux to control it
+- Benchmark between different development kits 
+- Using [yocto](https://www.yoctoproject.org/) as an alternative to buildroot to generate Linux
 

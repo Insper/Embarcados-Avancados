@@ -40,9 +40,6 @@ extra:
 
     entrega_forms:  https://docs.google.com/forms/d/e/1FAIpQLSe3TKNxu2SV4Rm7QUyj3hq6Yt1YB5BWweT4zSXWMQHSDh6XpA/viewform?usp=sf_link
     
-    
-
-
 markdown_extensions:
   - markdown.extensions.attr_list
   - markdown.extensions.admonition
@@ -82,41 +79,48 @@ markdown_extensions:
 nav:
   - Home: index.md
   - FPGA:
-      - 1. Tutorial - FPGA RTL: "Tutorial-FPGA-RTL.md"
-      - ___Entrega 1: "Entrega-1.md"
-      - 2. Tutorial - FPGA NIOS: "Tutorial-FPGA-NIOS.md"
-      - ___Entrega 2: "Entrega-2.md"
-      - 3. Tutorial - FPGA NIOS IP: "Tutorial-FPGA-NIOS-IP.md" 
-      - ___Entrega 3: "Entrega-3.md"
+      - 1.  FPGA RTL: "Tutorial-FPGA-RTL.md"
+      - 🔔 Assigment: "Entrega-1.md"
+      - 2.  FPGA NIOS: "Tutorial-FPGA-NIOS.md"
+      - 🔔 Assigment: "Entrega-2.md"
+      - 3.  FPGA NIOS IP: "Tutorial-FPGA-NIOS-IP.md"
+      - 🔔 Assigment: "Entrega-3.md"
  
   - HPS:
-      - 1a. Tutorial - HPS: "Tutorial-HPS.md"
-      - 1b. Tutorial - HPS-Running: "Tutorial-HPS-Running.md"
-      - 1c. Tutorial - HPS-BuildSystem: "Tutorial-HPS-BuildSystem.md"
-      - 1d. Tutorial - HPS-BlinkLED: "Tutorial-HPS-BlinkLED.md"
-      - 1x. Extra - Configurando Rede: "info-HPS-ethernet.md"
-      - ___Entrega 4: "Entrega-4.md"
+      - 4. HPS: "Tutorial-HPS.md"
+      - 5. HPS-Running: "Tutorial-HPS-Running.md"
+      - 6. HPS-BuildSystem: "Tutorial-HPS-BuildSystem.md"
+      - 7. HPS-BlinkLED: "Tutorial-HPS-BlinkLED.md"
+      -  Extra - Network: "info-HPS-ethernet.md"
+      - 🔔 Assigment: "Entrega-4.md"
+
+      - 8. HPS-Kernel: "Tutorial-HPS-Kernel.md"
+      - 9. HPS-Buildroot: "Tutorial-HPS-Buildroot.md"
+      - 10. Extra - HPS-buildroot-scripts: "info-HPS-buildroot-scripts.md"
+      - 🔔 Assigment: "Entrega-5.md"
       
-      - 2a. Tutorial - HPS-Kernel: "Tutorial-HPS-Kernel.md"
-      - 2b. Tutorial - HPS-Buildroot: "Tutorial-HPS-Buildroot.md"
-      - 2x. Extra - HPS-buildroot-scripts: "info-HPS-buildroot-scripts.md"
-      - ___Entrega 5: "Entrega-5.md"
-      
-      - 3a. Tutorial - HPS-DeviceDriver: "Tutorial-HPS-DeviceDriver.md"
-      - 3b. Tutorial - HPS-Kernel-Module: "Tutorial-HPS-kernel-module.md"
-      - 3c. Tutorial - HPS-Kernel-Char_Device_Driver: "Tutorial-HPS-kernel-chardriver.md"
+      - 11. HPS-DeviceDriver: "Tutorial-HPS-DeviceDriver.md"
+      - 12. HPS-Kernel-Module: "Tutorial-HPS-kernel-module.md"
+      - 13. HPS-Kernel-Char_Device_Driver: "Tutorial-HPS-kernel-chardriver.md"
       
   - HPS + FPGA:
-      - 1a. Tutorial - HPS-FPGA-BlinkLED: "Tutorial-HPS-FPGA-BlinkLED.md"
-      - 1b. Tutorial - HPS-FPGA-VGA: "Tutorial-HPS-FPGA-VGA.md"
-      - ___Entrega 6: "Entrega-6.md"
-      - 1c. Tutorial - HPS-FPGA-Kernel-Char_LED_Driver: "Tutorial-HPS-FPGA-kernel-char-led-driver.md"
+      - 14. HPS-FPGA-BlinkLED: "Tutorial-HPS-FPGA-BlinkLED.md"
+      - 15. HPS-FPGA-VGA: "Tutorial-HPS-FPGA-VGA.md"
+      - 🔔 Assigment:  "Entrega-6.md"
+      - 16. HPS-FPGA-Kernel-Char_LED_Driver: "Tutorial-HPS-FPGA-kernel-char-led-driver.md"
       
-  - Acelerando:
-      - 1. Tutorial - Acelerando-HLS: "Tutorial-Acelerando-HLS.md"
-      - ___Entrega 7: "Entrega-Extra-1.md"
+  - High Level Synthesis:
+      - 17.  Acelerando-HLS: "Tutorial-Acelerando-HLS.md"
+      - 🔔 Assigment:"Entrega-Extra-1.md"
 
-  - "Tutoriais Alunos":
+  - "Useful":
+      - Softwares: "info-FPGA-e-Softwares.md"
+      - SD card: "info-SDcard.md"
+      - Serial port: "info-HPS-Serial.md"
+      - Network: "info-HPS-ethernet.md"
+      - Refereces: "info-VHDL.md"
+
+  - "Students tutorials":
       - "Projeto-Overview.md"
       - "Projeto-Rubrica.md"
       - "Template markdown": "https://github.com/Insper/Embarcados-Avancados-Template"
@@ -139,10 +143,3 @@ nav:
       - 2019 - OpenCV: "2019/Pedro-OpenCV.md"
       - 2019 - FPGA na AWS: "2019/Martim-F1.md"
       - 2019 - DeviceDriver: "2019/Toranja-DevDriver.md"
-  - "Úteis":
-      - "info-FPGA-e-Softwares.md"
-      - "info-VHDL.md"
-      - "info-SDcard.md"
-      - "info-HPS-Serial.md"
-      - "info-HPS-ethernet.md"
-      - "info-dtb.md"

@@ -3,18 +3,11 @@
 - [**Insper**](https://www.insper.edu.br/)
 - **Course:** Elective for Computer Engineering
 - **Track:** Solutions Architecture
-- **Prof.:** Rafael Corsi / rafael.corsi@insper.edu.br
+- **Prof:** Rafael Corsi / rafael.corsi@insper.edu.br
 - **Repository:** [http:/github.com/insper/Embarcados-Avancados](http:/github.com/insper/Embarcados-Avancados)
 - **Location:** Computer Architecture Laboratory 
 
 **© All rights reserved**
-
----
-
-## Schedule 2023
-
-1. FPGA 
-
 
 ---
 

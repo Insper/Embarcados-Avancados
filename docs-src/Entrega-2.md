@@ -1,4 +1,4 @@
-# 🔔 Entrega 4
+# 🔔 Assigment 2 
 
 !!! tip "Deliver"
     What should be delivered?
@@ -6,39 +6,39 @@
     - [Github Classroom]({{entrega_4_classroom}})
     - [Google forms]({{entrega_forms}})
 
-Nessa entrega iremos ter a mesma funcionalidade que a [Entrega 1](/Entrega1/) porém com o motor sendo acionado pelo NIOS (soft processor).
+In this assignment, we will have the same functionality as [Assignment 1](/Entrega1/), but with the motor being controlled by the NIOS (soft processor).
 
-Para isso será necessário modificar o projeto criado no tutorial para possuir ao menos mais um periférico PIO (que será responsável por ler os botões). Além de adicionar esse novo periférico, nessa entrega iremos aprimorar nosso sistema com:
+For this, it will be necessary to modify the project created in the tutorial to have at least one more PIO peripheral (which will be responsible for reading the buttons). In addition to adding this new peripheral, in this assignment we will improve our system with:
 
-- Periférico JTAG deve gerar interrupção
-- Periférico PIO que lida com o botão deve gerar interrupção
-- Memória de programa separada da de dados
+- JTAG peripheral must generate an interrupt
+- PIO peripheral that handles the button must generate an interrupt
+- Program memory separated from data memory
 
-Uma vez que o JTAG começa a gerar interrupções não será mais necessário usar o *small driver* do JTAG, lembre de alterar isso no **bsp**. 
+Once the JTAG starts generating interrupts, it will no longer be necessary to use the JTAG *small driver*, remember to change this in the **bsp**.
 
-Comece por ler os botões sem interrupção, uma vez que estiver funcionando, utilize os sites a seguir como referência para implementar interrupção no NIOS:
+Start by reading the buttons without interruption, once it is working, use the following sites as a reference to implement interruption in NIOS:
 
-Dicas:
+Tips:
 
 - http://www.johnloomis.org/NiosII/interrupts/interrupt/interrupt.html
 - https://www.altera.com/en_US/pdfs/literature/hb/nios2/n2sw_nii52006.pdf
 
-## Rubrica
+## Rubric
 
-??? tip "Entrega - google forms"
+??? tip "Submission - google forms"
     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfH7w1wPogmTPI-Vesg1lyC1sn3i7aVDBf8w5le2mImOCjZ8A/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 
 - A 
-    - Insira um RTOS no NIOS para fazer o controle da aplicação, **ou**
-    - Curva de aceleração no motor
+    - Insert an RTOS in NIOS to control the application, **or**
+    - Acceleration curve in the motor
 - B
-    - Implementar `VEL` no SWx
-    - Interrupção na leitura do botão
+    - Implement `VEL` in SWx
+    - Interrupt in button reading
 - C
-    - Memória de dados separada da de programa
-    - JTAG gerando interrupção.
-    - PIO dedicado a ler botões (SWx) e controlar `EN` e `DIR`
+    - Data memory separated from program memory
+    - JTAG generating interrupt.
+    - PIO dedicated to reading buttons (SWx) and controlling `EN` and `DIR`
 - D 
-    - Entregou somente tutorial
+    - Delivered only the tutorial
 - I
-    - Não entregou nada
+    - Did not deliver anything

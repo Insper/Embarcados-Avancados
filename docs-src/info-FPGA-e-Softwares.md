@@ -1,52 +1,52 @@
-# Infraestrutura de HW e SWs
+# HW and SW Infrastructure
 
-Ao longo do curso iremos trabalhar principalmente com FPGAs SoC da Intel, o principal kit de desenvolvimento é o DE10-Standard que possui uma FPGA Cyclone V SoC.
+Throughout the course, we will mainly work with Intel SoC FPGAs. The main development kit is the DE10-Standard, which features a Cyclone V SoC FPGA.
 
-O software de desenvolvimento para FPGAs Intel chama Quartus, e ele possui várias e várias versões e variações, baixar a indicada aqui para não correr o risco de ter que instalar tudo novamente.
+The development software for Intel FPGAs is called Quartus, and it has many versions and variations. Download the one indicated here to avoid having to reinstall everything.
 
 
-!!! note "Versão 2020-2 online"
-    Vocês vão receber os seguintes materiais para trabalharem no curso de casa:
+!!! note "2020-2 Online Version"
+    You will receive the following materials to work on the course from home:
     
-    - 1x FPGA DE10-Standard
-    - 1x micro SDcard
-    - 1x Adaptador microSD/USB
-    - 1x NIC USB-Wifi
+    - 1x DE10-Standard FPGA
+    - 1x micro SD card
+    - 1x microSD/USB adapter
+    - 1x USB-Wifi NIC
 
 ## HW - DE10-Standard
 
-- [Site do fabricante](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=205&No=1081&PartNo=2)
+- [Manufacturer's website](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=205&No=1081&PartNo=2)
 
-É um kit de desenvolvimento fabricado pela Terasic com valor de $350 que possui em seu core uma FPGA Intel Cyclone V - SoC com grande capacidade de memória e várias células lógicas, possui diversos periféricos que podem ser controlados ou pela FPGA ou pelo ARM do chip.
+It is a development kit manufactured by Terasic, costing $350, which has at its core an Intel Cyclone V - SoC FPGA with large memory capacity and many logic cells. It has several peripherals that can be controlled either by the FPGA or by the ARM on the chip.
 
 ![](https://img11.shop-pro.jp/PA01053/865/etc/DE10-Standard_Front.jpg?cmsp_timestamp=20170421200223)
 
-## Softwares
+## Software
 
-Devido a segunda parte do curso na qual iremos compilar e trabalhar com Linux embarcado a disciplina deve ser realizada (e os tutoriais vão nessa linha) no **Linux**, Windows até funciona para a primeira parte, mas depois não da mais para usar, MAC não é suportado pelo Quartus.
+Due to the second part of the course, in which we will compile and work with embedded Linux, the course should be done (and the tutorials follow this) on **Linux**. Windows works for the first part, but not after that, and MAC is not supported by Quartus.
 
 ### Quartus Prime
 
 !!! info
-    Iremos usar o Quartus Prime Standard versão 19.1.
+    We will use Quartus Prime Standard version 19.1.
 
-Junto com a instalação do quartus é instalado alguns outros softwares:
+Along with Quartus installation, some other software is installed:
 
-- Quartus: Desenvolvimento de projetos para FPGA
-- Modelsim: Simulador para projetos HDL (VHDL/Verilog)
-- NIOS II EDS: Plataforma eclipse para programação uC NIOS
+- Quartus: FPGA project development
+- Modelsim: HDL project simulator (VHDL/Verilog)
+- NIOS II EDS: Eclipse platform for NIOS uC programming
 - HLS: High-level synthesis 
 
-!!! tip "Instalando"
-    Faça o download das partes a seguir, e execute o binário do Quartus Prime que fará a instalação dos demais automaticamente.
+!!! tip "Installing"
+    Download the following parts and run the Quartus Prime binary, which will automatically install the others.
 
     - [Quartus Prime Standard](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/QuartusSetup-19.1.0.670-linux.run)
     - [ModelSim](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/ModelSimSetup-19.1.0.670-linux.run)
     - [Cyclone V](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/cyclonev-19.1.0.670.qdz)
 
-!!! info "Licença"
-    Iremos usar uma versão do quartus que necessita licença para funcionar, eu irei mandar por email as instruções.
+!!! info "License"
+    We will use a version of Quartus that requires a license to work. I will send instructions by email.
 
 :heavy_check_mark: Linux
-:no_entry_sign:  Windows
+:no_entry_sign: Windows
 :no_entry_sign: MAC

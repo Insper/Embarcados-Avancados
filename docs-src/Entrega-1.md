@@ -1,4 +1,4 @@
-# 🔔 FPGA - Assigment 1
+# 🔔 Assigment 1
 
 !!! tip "Deliver"
     What should be delivered?

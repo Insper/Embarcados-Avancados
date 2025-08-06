@@ -1,10 +1,6 @@
-# Acelerando - HLS
+# Accelerating - HLS
 
-HLS (High-Level Synthesis Compiler) é uma ferramenta de compilação que permite
-criarmos um componente (hardware/ HDL) a partir de uma linguagem de programação
-de alto nível (no caso c++). Essa ferramenta facilita muito o desenvolvimento, e
-abstrai o hardware para software, porém ainda é preciso ter um conhecimento de
-hardware para utilizar-lha.
+HLS (High-Level Synthesis Compiler) is a compilation tool that allows us to create a component (hardware/HDL) from a high-level programming language (in this case, C++). This tool greatly facilitates development and abstracts hardware for software, but you still need hardware knowledge to use it.
 
 ## Intel
 
@@ -15,22 +11,22 @@ hardware para utilizar-lha.
 ## centos
 
 !!! warning
-    Eu só consegui fazer funcionar no centos6, minha solução foi a de executar
-    um docker com centos, e instalar as dependências nele. Eu executo o HLS via o
+    I was only able to get it working on centos6; my solution was to run
+    a docker with centos and install the dependencies there. I run HLS via the
     docker CLI. 
     
 !!! note
-    Para facilitar a vida, vamos disponibilizar uma imagem do docker já configurada.
-    Veja com o seu professor como conseguir.
+    To make things easier, we will provide a pre-configured docker image.
+    Check with your instructor on how to get it.
 
 ## HLS
 
-Vamos gerar um componente que aplica um offset (proc) em uma imagem, para isso, esse
-componente terá duas interfaces avalon de acesso a memória (AVALON-MM), na
-primeira interface, iremos acessar a imagem original e na outra iremos escrever
-a imagem processada. 
+We will generate a component that applies an offset (proc) to an image. For this, the
+component will have two Avalon memory access interfaces (AVALON-MM): on the
+first interface, we will access the original image, and on the other, we will write
+the processed image.
 
-O nosso hardware terá o seguinte formato:
+Our hardware will have the following format:
 
 ```
     |-----|         AXI
@@ -48,28 +44,20 @@ O nosso hardware terá o seguinte formato:
                    |-------|  
 ```
 
-- Min: Memória da FPGA onde iremos salvar a imagem original
-- Mout: Memória na FPGA onde iremos salvar a imagem processada
-- TH: Periférico criado pelo HLS
+- Min: FPGA memory where we will save the original image
+- Mout: FPGA memory where we will save the processed image
+- TH: Peripheral created by HLS
 
-Para isso, iremos utilizar um sintax própria do HLS que define como em C qual
-tipo de interface será utilizada no componente (lembre das interfaces AVALON,
-memmory maped e streaming).
+For this, we will use a specific HLS syntax that, as in C, defines what type of interface will be used in the component (remember the Avalon interfaces, memory mapped, and streaming).
 
-O HLS permite que validemos o código em duas camadas distintas: a primeira é
-compilando o mesmo código que será sintetizado para arquitetura x86, com isso
-conseguimos validar o algorítimo de forma mais rápida, a segunda é gerando o HDL
-do componente e simulando via modelsim, tudo isso é feito de forma transparente
-e automática pela ferramenta.
+HLS allows us to validate the code on two distinct layers: the first is by compiling the same code that will be synthesized for the x86 architecture, with this we can validate the algorithm much faster, the second is by generating the HDL of the component and simulating it via ModelSim, all of this is done transparently and automatically by the tool.
 
 !!! note
-    A simulação do hardware é custosa em termos de tempo de processamento e
-    poder computacional, ela deve ser a ultima coisa a ser feita, antes de usar
-    o componente no hardware. Valide antes compilando para x86 e então simule.
+    Simulating the hardware is costly in terms of processing time and computational power, it should be the last thing to be done before using the component on the hardware. Validate by compiling for x86 and then simulating.
     
 ## Offset
 
-A função a ser acelerada é a seguinte (`imgOffSet`):
+The function to be accelerated is as follows (`imgOffSet`):
 
 ``` c
 #define OFFSET 50
@@ -111,49 +99,49 @@ component void imgOffSet(Master1& imgIn,
 
 ```
 
-Note que a função `imgOffSet` possui quatro argumentos: `imgIn`, `imgOut`, `offSet` e `N`.
-Os dois primeiros são ponteiros de memória, que é respectivamente onde o
-componente vai fazer a leitura da imagem e onde ele vai fazer a escrita da
-imagem. Já os argumentos `offSet` e `N` são: valor a ser aplicado de offSet no px e o tamanho
-da imagem em pxs, esse argumentos são do tipo `hls_avalon_slave_register_argument`, que será
-convertido para um banco de registradores.
+Note that the `imgOffSet` function has four arguments: `imgIn`, `imgOut`, `offSet`, and `N`.
+The first two are memory pointers, which are respectively where the
+component will read the image and where it will write the
+image. The `offSet` and `N` arguments are the value to be applied as an offset to the px and the size
+of the image in pxs, these arguments are of the type `hls_avalon_slave_register_argument`, which will be
+converted to a register bank.
 
-Além dessas entradas e saídas, para cada interface do tipo `mm_master` o HLS vai
-criar mais um `conduit`, que será o offset de endereço na qual ele deve acessar
-o dado (para a função o endereço 0 é relativo). E mais dois `conduits`, um para
-controlar o inicio do processamento (chamada de função/ `call`) e outro para
-informar sobre o status do processamento (`return`).
+In addition to these inputs and outputs, for each interface of the type `mm_master`, HLS will create
+one more `conduit`, which will be the address offset at which it should access
+the data (for the function, the address 0 is relative). And two more `conduits`, one to
+control the start of processing (function call/ `call`) and another to
+inform about the processing status (`return`).
 
 ### `imgIn` , `imgOut`
 
-Os dois primeiros argumento são do tipo `ihc::mm_master< unsigned char,` que significa que serão
-traduzidos para um barramento do tipo `Avalon` e que devem ser tradados como
+The first two arguments are of the type `ihc::mm_master< unsigned char,` which means they will be
+translated to a bus of the type `Avalon` and that they should be treated as
 `unsigned char`. 
 
-- `ihc::aspace<n>`: e um identificador único do barramento (1,2,3,4,...)
-- `ihc::awidth<32>`: Define o tamanho do barramento de endereço, nesse caso 32 bits
-- `ihc::dwidth<8>`: Define o tamanho do barramento de dados, nesse caso 8
-  (leitura de 8 bits)
-- Existem outras configurações do barramento que podem ser feitas nessa
-  declaração: latência/ waitrequest/ burst/ (`, ihc::latency<0>, ihc::maxburst<8>, ihc::waitrequest<true> `)...
+- `ihc::aspace<n>`: is a unique identifier of the bus (1,2,3,4,...)
+- `ihc::awidth<32>`: Defines the size of the address bus, in this case, 32 bits
+- `ihc::dwidth<8>`: Defines the size of the data bus, in this case, 8
+  (reading 8 bits)
+- There are other bus configurations that can be made in this
+  declaration: latency/ waitrequest/ burst/ (`, ihc::latency<0>, ihc::maxburst<8>, ihc::waitrequest<true> `)...
   
 ### `pxToMem()`
 
-Para facilitar o desenvolvimento, a função `pxToMem(x,y,N)` traduz um acesso a
-px por endereço na matriz para o endereço de memória do px.
+To facilitate development, the function `pxToMem(x,y,N)` translates an access to
+px by address in the matrix to the memory address of the px.
 
 #### `printf()`
 
-Essa função será removida quando a função for compilada para hardware, ela só
-está disponível para simulação e testes.
+This function will be removed when the function is compiled for hardware; it is only
+available for simulation and testing.
 
 ### `offSet`, `n`
 
-Precisamos lembrar que estamos criando um componente que resolverá um código em C, e a maneira de conseguirmos
-passar argumentos para um componente é criando uma memória interna, que chamamos normalmente de banco de 
-registrador e dando funcionalidade para eles. É dessa maneira, que os parâmetros `offSet` e `n` serão criados.
-Na geração do componente, uma memória será inicializada e endereços serão reservados para o `offSet` e `n`, como
-no exemplo a seguir:
+We need to remember that we are creating a component that will resolve a C code, and the way we can
+pass arguments to a component is by creating an internal memory, which we normally call a register bank,
+and giving functionality to them. This is how the `offSet` and `n` parameters will be created.
+When the component is generated, a memory will be initialized and addresses will be reserved for `offSet` and `n`, as
+in the following example:
 
 ```c
 /******************************************************************************/
@@ -193,13 +181,13 @@ no exemplo a seguir:
 
 ### main.c
 
-A fim de validarmos o projeto, devemos criar uma função main (que não será
-compilada para o hardware). Nessa função, abrimos um arquivo de imagem no
-formato `.pgm` ("in.pgm")  e geramos outro arquivo de imagem, com a imagem
-original processada ("out.pgm"). A fim de validarmos o componente a ser gerado (
-`offSetImg()` ) devemos alocar duas regiões de memórias contínuas (`in[M_SIZE]`
-e `out[M_SIZE)` que serão utilizadas como input do componente (simulando o
-barramento AVALON).
+In order to validate the project, we must create a main function (which will not be
+compiled for the hardware). In this function, we open an image file in the
+`.pgm` format ("in.pgm") and generate another image file with the
+original image processed ("out.pgm"). In order to validate the component to be generated (
+`offSetImg()` ) we must allocate two continuous memory regions (`in[M_SIZE]`
+and `out[M_SIZE)` that will be used as the component's input (simulating the
+AVALON bus).
 
 ```c
 int main(void) {
@@ -241,101 +229,101 @@ int main(void) {
 ```
 
 !!! note
-     Quando formos executar a função `imgOffSet` no nosso hardware, não será tão simples 
-     quanto apenas uma chamada de função.
+     When we execute the `imgOffSet` function on our hardware, it will not be as simple 
+     as just a function call.
 
-### Testando (x86)
+### Testing (x86)
 
 !!! note
-    Deve ser feito no centos (docker)
+    Must be done on centos (docker)
 
-Para testar, vamos compilar o nosso projeto para `x86` (não será um hardware) e validar 
-se nossa lógica está correta. Se funcionar, compilamos para hardware.
+To test, we will compile our project for `x86` (it will not be hardware) and validate 
+if our logic is correct. If it works, we compile for hardware.
 
-Para compilar basta usarmos o compilador `i++` como no exemplo a seguir:
+To compile, just use the `i++` compiler as in the following example:
 
 ```bash
 $ i++ image.cpp -march=x86-64 -o image_x86
 ```
 
-E testar o programa gerado:
+And test the generated program:
 
 ```bash
 $ ./image_x86
 ```
 
-O resultado deve ser a belíssima foto `img.ppm` do seu professor, processada com um offset (`out.ppm`):
+The result should be the beautiful `img.ppm` photo of your instructor, processed with an offset (`out.ppm`):
 
 ![](figs/Tutorial-Acelerando-HLS:resultadoSW.png)
 
 !!! tip 
-    Para gerar uma imagem do tipo `ppm` você pode usar o Gimp
+    To generate a `ppm` type image you can use Gimp
 
 !!! note
-    Essa execução é como se tivéssemos compilado com gcc, só serve para validar lógica
+    This execution is like compiling with gcc, it only serves to validate logic
     
 | input     | output             |
 | -----     | ---------          |
-| img.pgm   | image    (binário) |
+| img.pgm   | image    (binary) |
 | image.cpp | out.pgm            |
     
-## Acelerando na FPGA
+## Accelerating on the FPGA
 
-Para acelerar na FPGA, vamos compilar novamente a aplicação, porém agora com a flag `-march=CycloneV ` 
-que representa a nossa FPGA
+To accelerate on the FPGA, we will compile the application again, but now with the `-march=CycloneV ` flag 
+which represents our FPGA
 
 ```bash
 $ i++ image.cpp -march=CycloneV -o image-CycloneV
 ```
 
 !!! note
-    Isso pode bastante tempo, o que ele vai fazer é:
+    This may take a long time, what it will do is:
     
-    1. Gerar um HDL a partir da sua função
-    1. Criar um componente para o Platform Designer
+    1. Generate an HDL from your function
+    1. Create a component for the Platform Designer
     
 | input   | output            |
 | -----   | ---------         |
-| img.pgm | image-CycloneV.prj (pasta) |
+| img.pgm | image-CycloneV.prj (folder) |
     
-### image-CycloneV.prj (pasta)
+### image-CycloneV.prj (folder)
 
-Se reparar na pasta do projeto, deve ter uma pasta nova: **image-CycloneV.prj**, com o seguinte conteúdo:
+If you notice in the project folder, there should be a new folder: **image-CycloneV.prj**, with the following content:
 
-- **components**: Pasta com o componente criado (para ser usado no Platform designer)
-- **quartus**: Pasta do projeto Quartus utilizado para compilar o componente, **não vamos usar**
-- **report**: Pasta com reports gerado pela ferramenta (html)
-- **report**: Pasta para simular o projeto
+- **components**: Folder with the created component (to be used in the Platform designer)
+- **quartus**: Quartus project folder used to compile the component, **we will not use this**
+- **report**: Folder with reports generated by the tool (html)
+- **report**: Folder to simulate the project
 
-### testando
+### testing
 
-Agora podemos testar nossa aplicação utilizando o hardware criado pelo HLS, para isso basta executar
-o novo binário criado quando compilamos para a arquitetura `CycloneV`. 
+Now we can test our application using the hardware created by HLS, for that just execute
+the new binary created when we compiled for the `CycloneV` architecture. 
 
 ```bash
 $ ./image-CycloneV
 ```
 
 !!! warning
-    Isso vai levar muito tempo! No monstrinho do lab de Arquitetura, levou mais de 1 hora!
+    This will take a long time! On the monster lab Architecture, it took over 1 hour!
     
-Essa simulação é realizada no modelsim! A nível de hardware. O resultado será o esperado quando formos embarcar
-na FPGA. Com essa simulação conseguimos verificar erros de arredondamento, acesso a memória, entre outros.
+This simulation is performed on ModelSim! At the hardware level. The result will be as expected when we embed
+on the FPGA. With this simulation, we can check for rounding errors, memory access, among others.
 
 !!! tipa
-    A imagem `out-CycloneV.pgm` que está na pasta do projeto, é o resultado dessa simulação.
+    The image `out-CycloneV.pgm` that is in the project folder, is the result of this simulation.
 
 ### report
 
-O HLS gera um relatório da compilação do hardware, ele pode ser encontrado em: [`reports/report.html`](/Tutorial-Acelerando-HLS-reports/report.html). Um report interessante de se analisar é o **Loops analysis**, que demonstra os loops do programa:
+HLS generates a report of the hardware compilation, it can be found in: [`reports/report.html`](/Tutorial-Acelerando-HLS-reports/report.html). An interesting report to analyze is the **Loops analysis**, which demonstrates the program loops:
 
 ![](figs/Tutorial-Acelerando-HLS:report.png)
 
-### Otimizando
+### Optimizing
 
-Podemos aplicar diversas técnicas de paralelização no software que irá impactar no hardware criado (área e performance), no manual do HLS ([Intel High Level Synthesis Compiler: Reference Manual](https://www.intel.com/content/www/us/en/programmable/documentation/ewa1462824960255.html#ewa1462826976357)) tem a documentação que descreve cada uma das técnicas.
+We can apply several parallelization techniques in the software that will impact the created hardware (area and performance), in the HLS manual ([Intel High Level Synthesis Compiler: Reference Manual](https://www.intel.com/content/www/us/en/programmable/documentation/ewa1462824960255.html#ewa1462826976357)) there is documentation that describes each of the techniques.
 
-Vamos utilizar a do **Loop Unrolling**, que permite executarmos um loop paralelo:
+We will use the **Loop Unrolling** one, which allows us to execute a loop in parallel:
 
 ```c
  #pragma unroll <N>
@@ -345,9 +333,9 @@ Vamos utilizar a do **Loop Unrolling**, que permite executarmos um loop paralelo
 ```
 
 !!! tip
-    **N** é a quantidade de loops a serem executado em //.
+    **N** is the number of loops to be executed in //.
 
-Vamos paralelizar a varredura da linha em 8 execuções em paralelo, para isso adicione no for que varre a linha (x):
+We will parallelize the line scanning by 8 executions in parallel, for that add in the for that scans the line (x):
 
 ```c
  for(int y=0; y < N; y++){
@@ -355,11 +343,11 @@ Vamos paralelizar a varredura da linha em 8 execuções em paralelo, para isso a
       for (int x=0; x < N; x++){
 ```
 
-### Criando um hardware
+### Creating a hardware
 
-Agora com o componente criado é necessário adicionarmos ele no hardware, isso será feito via Plataform Design.
-Para facilitar o desenvolvimento, vamos usar o projeto de hw exemplo da `Terasic`: `DE10_Standard_FB` e modificar
-inserindo o componente e duas memórias, como indicado a seguir:
+Now with the component created, we need to add it to the hardware, this will be done via Platform Design.
+To facilitate development, we will use the example hw project from `Terasic`: `DE10_Standard_FB` and modify
+inserting the component and two memories, as indicated below:
 
 
 
