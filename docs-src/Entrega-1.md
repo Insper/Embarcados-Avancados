@@ -1,4 +1,4 @@
-# 🔔 Assigment 1
+# 🔔 Assessment 1
 
 !!! tip "Deliver"
     What should be delivered?

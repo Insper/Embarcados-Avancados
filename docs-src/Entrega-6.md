@@ -1,4 +1,4 @@
-# 🔔 HPS+FPGA - Assigment 1
+# 🔔 Assessment 6
 
 Você pode escolher entre um dos temas a seguir:
 

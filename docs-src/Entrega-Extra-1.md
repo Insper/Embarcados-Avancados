@@ -3,7 +3,7 @@
 Now that we've seen how to interface ARM with FPGA, how about adding the peripheral you created in assignment 2 (the `peripheral_led`) and controlling the FPGA LEDs via Linux with your own peripheral?
 
 1. Modify Platform Designer by adding your IP
-   - Note the address
+   - Note the address 
 1. Compile the project, generate the `.rbf` and `.dtb` (copy to the SD card)
 1. Modify `main.c` to access your peripheral
 1. Test

@@ -15,7 +15,7 @@ Linux on the HPS is usually configured (in the bootloader) to have a terminal re
 
 Once the USB port is connected to the PC and the board is powered on, we can check which *device* the serial port was mapped to (on the `host`):
 
-``` bash
+```bash
 $ dmesg | tail 
 [95158.497894] ftdi_sio 1-1.1:1.0: device disconnected
 [95161.649187] usb 1-1.1: new full-speed USB device number 22 using xhci_hcd
@@ -26,7 +26,7 @@ $ dmesg | tail
 
 In the log, we see that an **FTDI USB Serial Device** was connected to **ttyUSB0**. We can then open the terminal with any serial port program (PUTTY, ...), in this example we will use the **screen** program.
 
-``` bash
+```bash
 $ screen /dev/ttyUSB0 115200,cs8
 ```
 

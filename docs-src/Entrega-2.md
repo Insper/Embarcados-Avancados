@@ -1,4 +1,4 @@
-# 🔔 Assigment 2 
+# 🔔 Assessment 2 
 
 !!! tip "Deliver"
     What should be delivered?
@@ -14,9 +14,9 @@ For this, it will be necessary to modify the project created in the tutorial to 
 - PIO peripheral that handles the button must generate an interrupt
 - Program memory separated from data memory
 
-Once the JTAG starts generating interrupts, it will no longer be necessary to use the JTAG *small driver*, remember to change this in the **bsp**.
+Once the JTAG starts generating interrupts, it will no longer be necessary to use the JTAG *small driver*. Remember to change this in the **bsp**.
 
-Start by reading the buttons without interruption, once it is working, use the following sites as a reference to implement interruption in NIOS:
+Start by reading the buttons without interruption. Once it is working, use the following sites as a reference to implement interruption in NIOS:
 
 Tips:
 
@@ -36,7 +36,7 @@ Tips:
     - Interrupt in button reading
 - C
     - Data memory separated from program memory
-    - JTAG generating interrupt.
+    - JTAG generating interrupt
     - PIO dedicated to reading buttons (SWx) and controlling `EN` and `DIR`
 - D 
     - Delivered only the tutorial

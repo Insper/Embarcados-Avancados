@@ -8,11 +8,11 @@ HLS (High-Level Synthesis Compiler) is a compilation tool that allows us to crea
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/hEbfAU_1x8k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## centos
+## CentOS
 
 !!! warning
-    I was only able to get it working on centos6; my solution was to run
-    a docker with centos and install the dependencies there. I run HLS via the
+    I was only able to get it working on CentOS 6; my solution was to run
+    a docker with CentOS and install the dependencies there. I run HLS via the
     docker CLI. 
     
 !!! note

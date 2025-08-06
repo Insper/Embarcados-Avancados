@@ -4,7 +4,6 @@ Throughout the course, we will mainly work with Intel SoC FPGAs. The main develo
 
 The development software for Intel FPGAs is called Quartus, and it has many versions and variations. Download the one indicated here to avoid having to reinstall everything.
 
-
 !!! note "2020-2 Online Version"
     You will receive the following materials to work on the course from home:
     
@@ -49,4 +48,5 @@ Along with Quartus installation, some other software is installed:
 
 :heavy_check_mark: Linux
 :no_entry_sign: Windows
+:no_entry_sign: MAC
 :no_entry_sign: MAC

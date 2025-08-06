@@ -1,4 +1,4 @@
-#  IP Core
+# IP Core
 
 In this tutorial, we will develop a custom peripheral for the NIOS processor, dedicated to controlling the board's LEDs. The peripheral will have an internal register bank for its control, and a "memory-mapped I/O" interface so we can control it from NIOS (using C code).
 
@@ -10,7 +10,7 @@ To follow this tutorial, you need:
 - **Software:** Quartus 18.01 
     - Modelsim Simulator
 
-Git submission:
+Submission on git:
 
 - **Folder:** `Lab3_FPGA_IP/`
 
@@ -345,7 +345,7 @@ Now add the component to the project and make the correct connections (as if it 
 
 ![](figs/Tutorial-FPGA-IP_final.png)
 
-Generate the component: Click on `Generate HDL` :arrow_right: `Generate`. 
+Generate the component: Click on `Generate` :arrow_right: `Generate`. 
 
 !!! warning ""
     Check the option: ✅ `Create a Simulation Model`
