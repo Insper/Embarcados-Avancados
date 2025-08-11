@@ -26,19 +26,19 @@ plugins:
 extra:
   custom_variables:
     entrega_1_deadline: 29/09/2023
-    entrega_1_classroom: https://classroom.github.com/a/DHwwnXCQ
+    entrega_1_classroom: https://classroom.github.com/a/LrXCFn5d
     entrega_1_forms: https://docs.google.com/forms/d/e/1FAIpQLSe3TKNxu2SV4Rm7QUyj3hq6Yt1YB5BWweT4zSXWMQHSDh6XpA/viewform?usp=sf_link
 
     entrega_2_deadline: TBD
-    entrega_2_classroom: https://classroom.github.com/a/X1VhdjzW
-    entrega_2_forms:  https://docs.google.com/forms/d/e/1FAIpQLSe3TKNxu2SV4Rm7QUyj3hq6Yt1YB5BWweT4zSXWMQHSDh6XpA/viewform?usp=sf_link
+    entrega_2_classroom: TBD
+    entrega_2_forms: TBD
 
     entrega_3_deadline: TBD
-    entrega_3_classroom: https://classroom.github.com/a/EVfsoSFX
+    entrega_3_classroom:TBD
 
-    entrega_4_classroom: https://classroom.github.com/a/Qc6_OnhL
+    entrega_4_classroom: TBD
 
-    entrega_forms:  https://docs.google.com/forms/d/e/1FAIpQLSe3TKNxu2SV4Rm7QUyj3hq6Yt1YB5BWweT4zSXWMQHSDh6XpA/viewform?usp=sf_link
+    entrega_forms:  tbd
     
 markdown_extensions:
   - markdown.extensions.attr_list
