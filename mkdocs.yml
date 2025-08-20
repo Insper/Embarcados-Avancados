@@ -25,9 +25,9 @@ plugins:
 
 extra:
   custom_variables:
-    entrega_1_deadline: 29/09/2023
+    entrega_1_deadline: 25/09/2025
     entrega_1_classroom: https://classroom.github.com/a/LrXCFn5d
-    entrega_1_forms: https://docs.google.com/forms/d/e/1FAIpQLSe3TKNxu2SV4Rm7QUyj3hq6Yt1YB5BWweT4zSXWMQHSDh6XpA/viewform?usp=sf_link
+    entrega_1_forms:
 
     entrega_2_deadline: TBD
     entrega_2_classroom: TBD

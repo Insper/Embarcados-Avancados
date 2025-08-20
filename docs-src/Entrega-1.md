@@ -5,7 +5,6 @@
     
     - **DeadLine:** {{entrega_1_deadline}}
     - [Github Classroom]({{entrega_1_classroom}})
-    - [Google forms]({{entrega_1_forms}})
 
 The idea of this delivery is for you to work a little more with VHDL and also to remember/learn how to develop a project hierarchically. In this delivery, you will develop an IP core (intellectual property core) dedicated to controlling a stepping motor.
 
@@ -13,7 +12,7 @@ This component should control the four phases of a stepping motor (which you rec
 
 ## Example
 
-To facilitate development, a project and a component that control the stepping motor are available in the folder (`/Delivery1/`) in the discipline repository, but they do not perform everything that is being asked here. In this example, the stepping motor only rotates in one direction (`DIR` does not work), the `EN` signal does not control whether the motor will be turned on/off and the motor has only two speeds (`VEL`).
+To facilitate development, a project and a component that control the stepping motor are available [HERE](https://github.com/Insper/Embarcados-Avancados/tree/master/Entrega-1), but they do not perform everything that is being asked here. In this example, the stepping motor only rotates in one direction (`DIR` does not work), the `EN` signal does not control whether the motor will be turned on/off and the motor has only two speeds (`VEL`).
 
 The pins have already been mapped and you should connect the motor as indicated below!
 
