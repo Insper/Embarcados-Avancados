@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>11. Device Driver - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">11. Device Driver</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#kernel">Kernel</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#userspace-vs-kernel-space">Userspace vs Kernel Space</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#kernel-module-device-driver">Kernel Module / Device driver</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#device-tree-dts">Device Tree (dts)</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#u-boot">U-boot</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>HPS</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="device-driver">Device Driver<a class="headerlink" href="#device-driver" title="Permanent link">&para;</a></h1>
+<p>In this tutorial, we will develop a device driver for the Linux kernel. This device will abstract the control of the LED and the access to the SW key on the development kit.</p>
+<h2 id="kernel">Kernel<a class="headerlink" href="#kernel" title="Permanent link">&para;</a></h2>
+<p>Linux is a <a href="https://en.wikipedia.org/wiki/Monolithic_kernel">monolithic kernel</a>, where all code related to the operating system occurs in kernel space. </p>
+<p><a class="glightbox" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Linux_kernel_ubiquity.svg/1920px-Linux_kernel_ubiquity.svg.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Linux_kernel_ubiquity.svg/1920px-Linux_kernel_ubiquity.svg.png" width="500" /></a></p>
+<p>The Linux kernel is responsible, among other things, for:</p>
+<ul>
+<li>Managing processes and tasks</li>
+<li>Scheduling</li>
+<li>Virtualization, controlling groups/users</li>
+<li>Memory management/pagination</li>
+<li>Inter-process communication</li>
+<li>Input/output</li>
+<li>File management</li>
+<li>Device drivers</li>
+<li>Hardware abstraction</li>
+</ul>
+<p><a class="glightbox" href="https://upload.wikimedia.org/wikipedia/commons/5/5b/Linux_kernel_map.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Linux_kernel_map.png" width="500" /></a></p>
+<blockquote>
+<p>Map of the internal architecture of the Linux kernel</p>
+</blockquote>
+<div class="admonition info">
+<p class="admonition-title">Microkernel</p>
+<p>The microkernel is an alternative to the monolithic kernel. In this architecture, the kernel implements the bare minimum.
+<a class="glightbox" href="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/OS-structure.svg/900px-OS-structure.svg.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/OS-structure.svg/900px-OS-structure.svg.png" width="300" /></a></p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">GNU</p>
+<p>The Linux kernel uses various software created and made available by the <a href="https://www.gnu.org">GNU</a> community (such as gcc, gdb, make, and <a href="https://www.gnu.org/software/software.html">many others</a>, so it is often known as GNU/Linux.</p>
+<p><a class="glightbox" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Gnulinux.svg/260px-Gnulinux.svg.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Gnulinux.svg/260px-Gnulinux.svg.png" width="100" /></a></p>
+</div>
+<h2 id="userspace-vs-kernel-space">Userspace vs Kernel Space<a class="headerlink" href="#userspace-vs-kernel-space" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Most of this section was translated from <a href="https://www.ctrlinux.com/blog/?p=40">https://www.ctrlinux.com/blog/?p=40</a></p>
+</blockquote>
+<p>Userspace is a region of virtual memory where all user programs are executed. The programs that are part of userspace run in a CPU operating mode called <em>unprivileged</em>, where not all instructions and registers are available.</p>
+<p>ARM supports a total of 7 execution modes, with only user mode being unprivileged:</p>
+<ol>
+<li>User mode – All user level applications run in this mode.</li>
+<li>FIQ Fast Interrupt Mode – Used to handle interrupts classified as “fast”, get in and get out type of interrupts.</li>
+<li>IRQ Mode – Used to handle device interrupts and non FIQ interrupts.</li>
+<li>Supervisor mode (default CPU boot mode). Used by the OS and software interrupts (SWIs).</li>
+<li>Abort – Used to handle violations caused by erroneous memory accesses</li>
+<li>Undefined – Used to handle undefined instructions</li>
+<li>System – A privileged mode with the same register set as user mode, used to run exception handlers.</li>
+</ol>
+<blockquote>
+<p>Material taken from: <a href="https://www.ctrlinux.com/blog/?p=40">https://www.ctrlinux.com/blog/?p=40</a></p>
+</blockquote>
+<h3 id="userspace">Userspace<a class="headerlink" href="#userspace" title="Permanent link">&para;</a></h3>
+<p>To better understand userspace, let's imagine what happens when a program tries to access a region of memory that belongs to the kernel (privileged mode).</p>
+<p>When we create a pointer and access memory, this command is translated into a LOAD type instruction in assembly. The LOAD instruction enters the CPU pipeline and at the execution stage, the CPU passes the instruction address to the hardware responsible for managing memory: Memory Management Unit (MMU). The MMU translates the virtual memory address to the physical address (memory page), at this point the MMU checks the current execution mode of the CPU and if the memory region can be accessed by the current mode. In our case, the CPU will change the processor mode to <em>Abort</em> and handle the unauthorized memory address access, causing the program to terminate with a <code>seg fault</code>. </p>
+<p>Programs in userspace communicate with the kernel via system calls (<a href="http://www.linux.it/~rubini/docs/ksys/">http://www.linux.it/~rubini/docs/ksys/</a>), these calls turn into software interruptions that will be processed by the kernel.</p>
+<h3 id="kernel-space">Kernel Space<a class="headerlink" href="#kernel-space" title="Permanent link">&para;</a></h3>
+<p>The advantages of working with kernel space are: being able to directly manipulate hardware peripherals, being able to handle hardware interruptions. With great powers comes great responsibilities, errors in this mode can cause kernel panic and freeze the entire system.</p>
+<h2 id="kernel-module-device-driver">Kernel Module / Device driver<a class="headerlink" href="#kernel-module-device-driver" title="Permanent link">&para;</a></h2>
+<p>A kernel module is a compiled code that can be linked with the kernel at runtime (like changing the wing of a moving airplane), a module can be a device driver, but not necessarily.</p>
+<h3 id="device-driver_1">Device driver<a class="headerlink" href="#device-driver_1" title="Permanent link">&para;</a></h3>
+<p>Device drivers are responsible for implementing the low-level part of hardware configuration, communication, and management (peripherals, memory, CPU). In the Linux kernel repository, drivers are located in: <code>linux/drivers/</code> and are organized by category:</p>
+<div class="highlight"><pre><span></span><code>accessibility  dca         ide         mfd              pnp         spmi
+acpi           devfreq     idle        misc             power       ssb
+amba           dio         iio         mmc              powercap    staging
+android        dma         infiniband  modules.builtin  pps         target
+ata            dma-buf     input       mtd              ps3         tc
+atm            edac        iommu       net              ptp         thermal
+auxdisplay     eisa        ipack       nfc              pwm         thunderbolt
+base           extcon      irqchip     ntb              rapidio     tty
+bcma           firewire    isdn        nubus            ras         uio
+block          firmware    Kconfig     nvdimm           regulator   usb
+bluetooth      fmc         leds        nvme             remoteproc  uwb
+built-in.a     fpga        lguest      nvmem            reset       vfio
+built-in.o     gpio        lightnvm    of               rpmsg       vhost
+bus            gpu         macintosh   oprofile         rtc         video
+cdrom          hid         mailbox     parisc           s390        virt
+char           hsi         Makefile    parport          sbus        virtio
+clk            hv          mcb         pci              scsi        vlynq
+clocksource    hwmon       md          pcmcia           sfi         vme
+connector      hwspinlock  media       perf             sh          w1
+cpufreq        hwtracing   memory      phy              sn          watchdog
+cpuidle        i2c         memstick    pinctrl          soc         xen
+crypto         i3c         message     platform         spi         zorro
+</code></pre></div>
+<p>In Linux, drivers can be developed/classified into basically <a href="https://tldp.org/LDP/tlk/dd/drivers.html">three types</a>: <code>char module</code>, <code>block module</code>, <code>network module</code>.</p>
+<ul>
+<li>
+<p><strong>character device</strong>: It is used in the case that the driver can be accessed with a stream of bytes (like a file). It must implement at least the following system calls: <code>open/close/read/write</code>. The <code>/dev/console</code> and <code>/dev/tty</code> are examples of this type of device. A difference between a file and a <code>char dev</code> is that in the file you can move the pointer forward and backward, but in this type of device you can't, you can only move forward.</p>
+</li>
+<li>
+<p><strong>block device</strong>: Used to implement physical disk access, this type of driver operates with blocks of bytes (usually 512 bytes).</p>
+</li>
+<li>
+<p><strong>network device</strong>: Used to implement a network interface (like <code>loopback/ wlan0/ ...</code>). This interface is capable of receiving and sending data packets, controlled by the kernel's network system.</p>
+</li>
+</ul>
+<h2 id="device-tree-dts">Device Tree (dts)<a class="headerlink" href="#device-tree-dts" title="Permanent link">&para;</a></h2>
+<p>How does the Linux kernel know what devices and drivers are associated with them? A configuration file called the device tree is passed by the boot to the Linux kernel indicating the peripherals, and what drivers are associated with them.</p>
+<h2 id="u-boot">U-boot<a class="headerlink" href="#u-boot" title="Permanent link">&para;</a></h2>
+<p>The programming of the FPGA is carried out by u-boot, before the initialization of the Linux Kernel. In our case, the u-boot has been pre-configured to read the file <code>soc_system.rbf</code>. FPGA hardawre programming is performed by U-boot, before Linux Kernel initialization. In our case, U-boot was preconfigured to read the <code>soc_system.rbf</code> file located in the SDCARD partition along with the kernel (<code>zImage</code>).</p>
+<div class="admonition video">
+<p class="admonition-title">Video</p>
+</div>
+<p><a class="glightbox" href="https://www.youtube.com/watch?v=vS7pvefsbRM" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://www.youtube.com/watch?v=vS7pvefsbRM" /></a></p>
+<p>Before initializing the Linux kernel, U-boot fetches this file from the SDCARD partition, extracts it, and <a href="https://github.com/u-boot/u-boot/blob/94905e1db8d8d42c4f39f14dbee2f9788390db5e/drivers/fpga/socfpga.c">"magically"</a> programs the FPGA. In this same partition, we have two more files: <code>u-boot.scr</code> and <code>socfpga.dtb</code>. The first one is a boot initialization script that U-boot reads to know which steps it should execute (whether it needs to load the fpga, where the kernel is, etc., these are the initialization steps). The <code>socfpga.dtb</code> is the <strong>Linux device tree</strong>, the dtb is a binary, which was created from another file, the <code>.dts</code>, and it contains information about the hardware that is passed to the kernel at startup.</p>
+<div class="admonition video">
+<p class="admonition-title">Video</p>
+</div>
+<p><a class="glightbox" href="https://www.youtube.com/watch?v=m_NyYEBxfn8" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://www.youtube.com/watch?v=m_NyYEBxfn8" /></a></p>
+<h3 id="dtb-compiled-dts"><code>dtb</code> (compiled dts)<a class="headerlink" href="#dtb-compiled-dts" title="Permanent link">&para;</a></h3>
+<p>The <code>dtb</code> is used as a tool to indicate to the kernel what the available hardware configurations are. You do not need to recompile the kernel if the memory address of some peripheral changes, just inform it in the <code>dts</code>. This tool is very important for embedded systems, in which, each hardware has its specificity.</p>
+<p>The <code>dtb</code> is generated from a text file in <code>dts</code> format, which is then generated by the hardware information extracted from the <strong>Platform Designer</strong> and saved in the <code>.sopcinfo</code> file. This is the same file used by Eclipse-NIOS to generate the BSP in the previous tutorials. The Linux BSP is called <code>dts</code> and has a standard format that must be followed!</p>
+<h3 id="understanding-the-dts">Understanding the DTS<a class="headerlink" href="#understanding-the-dts" title="Permanent link">&para;</a></h3>
+<p><a class="glightbox" href="../figs/Tutorial-HLS-FPGA-BlinkLED-devicetree.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HLS-FPGA-BlinkLED-devicetree.png" /></a></p>
+<ul>
+<li>ref: <a href="https://developer.toradex.com/device-tree-customization">https://developer.toradex.com/device-tree-customization</a></li>
+</ul>
+<p>The start of our <code>.dts</code> has the definition of the CPUs that are available on the CHIP:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">cpus</span><span class="cm"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">#address-cells</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">  </span><span class="kr">#size-cells</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">  </span><span class="n">enable-method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;altr,socfpga-smp&quot;</span><span class="p">;</span><span class="w">   </span><span class="cm">/* appended from boardinfo */</span>
+
+<span class="w">  </span><span class="nl">hps_0_arm_a9_0</span><span class="p">:</span><span class="w"> </span><span class="nf">cpu</span><span class="o">@</span><span class="mi">0x0</span><span class="cm"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kr">device_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;cpu&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kr">compatible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;arm,cortex-a9-16.1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;arm,cortex-a9&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kr">reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mh">0x00000000</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">next-level-cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&amp;</span><span class="na">hps_0_L2</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="cm">/* appended from boardinfo */</span>
+<span class="w">  </span><span class="p">};</span><span class="w"> </span><span class="c1">//end cpu@0x0 (hps_0_arm_a9_0)</span>
+
+<span class="w">  </span><span class="nl">hps_0_arm_a9_1</span><span class="p">:</span><span class="w"> </span><span class="nf">cpu</span><span class="o">@</span><span class="mi">0x1</span><span class="cm"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kr">device_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;cpu&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kr">compatible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;arm,cortex-a9-16.1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;arm,cortex-a9&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kr">reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mh">0x00000001</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">next-level-cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&amp;</span><span class="na">hps_0_L2</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="cm">/* appended from boardinfo */</span>
+<span class="w">  </span><span class="p">};</span><span class="w"> </span><span class="c1">//end cpu@0x1 (hps_0_arm_a9_1)</span>
+<span class="p">};</span><span class="w"> </span><span class="c1">//end cpus</span>
+</code></pre></div>
+<p>Let's look at <code>hps_0_uart0</code> from our <code>dts</code> in more detail:</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nl">hps_0_uart0</span><span class="p">:</span><span class="w"> </span><span class="nf">serial</span><span class="o">@</span><span class="mi">0xffc02000</span><span class="cm"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kr">compatible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;snps,dw-apb-uart-16.1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;snps,dw-apb-uart&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kr">reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mh">0xffc02000</span><span class="w"> </span><span class="mh">0x00000100</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">interrupt-parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&amp;</span><span class="na">hps_0_arm_gic_0</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">interrupts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">0</span><span class="w"> </span><span class="mi">162</span><span class="w"> </span><span class="mi">4</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">clocks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&amp;</span><span class="na">l4_sp_clk</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="kr">reg</span><span class="o">-</span><span class="n">io-width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="cm">/* embeddedsw.dts.params.reg-io-width type NUMBER */</span>
+<span class="w">    </span><span class="kr">reg</span><span class="o">-</span><span class="n">shift</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">;</span><span class="w">    </span><span class="cm">/* embeddedsw.dts.params.reg-shift type NUMBER */</span>
+<span class="w">    </span><span class="kr">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;okay&quot;</span><span class="p">;</span><span class="w">    </span><span class="cm">/* embeddedsw.dts.params.status type STRING */</span>
+<span class="w">  </span><span class="p">};</span><span class="w"> </span><span class="c1">//end serial@0xffc02000 (hps_0_uart0)</span>
+<span class="p">};</span><span class="w"> </span><span class="c1">//end serial@0x100020000 (jtag_uart)</span>
+</code></pre></div>
+<p>It indicates that in our hardware, we have a serial component at address <code>0xffc02000</code> that is compatible with the drivers: <code>snps,dw-apb-uart-16.1</code> and/or <code>snps,dw-apb-uart</code>, which is implemented in the 8250 driver in the Linux kernel: <a href="https://github.com/torvalds/linux/blob/master/drivers/tty/serial/8250/8250_dw.c">https://github.com/torvalds/linux/blob/master/drivers/tty/serial/8250/8250_dw.c</a>.
+And this driver is configured as active in our kernel:</p>
+<p><a class="glightbox" href="../figs/Tutorial-HLS-FPGA-BlinkLED-uart.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HLS-FPGA-BlinkLED-uart.png" width="600" /></a></p>
+<p>And it is because of this that we can access the kit with USB (screen).</p>
+<div class="highlight"><pre><span></span><code>CONFIG_SERIAL_8250_CONSOLE:                                                 │  
+│                                                                             │  
+│ If you say Y here, it will be possible to use a serial port as the          │  
+│ system console (the system console is the device which receives all         │  
+│ kernel messages and warnings and which allows logins in single user         │  
+│ mode). This could be useful if some terminal or printer is connected        │  
+│ to that serial port.                                                        │  
+│                                                                             │  
+│ Even if you say Y here, the currently visible virtual console               │  
+│ (/dev/tty0) will still be used as the system console by default, but        │  
+│ you can alter that using a kernel command line option such as               │  
+│ &quot;console=ttyS1&quot;. (Try &quot;man bootparam&quot; or see the documentation of           │  
+│ your boot loader (grub or lilo or loadlin) about how to pass options        │  
+│ to the kernel at boot time.)                                                │  
+│                                                                             │  
+│ If you don&#39;t have a VGA card installed and you say Y here, the              │  
+│ kernel will automatically use the first serial line, /dev/ttyS0, as         │  
+│ system console.                                                             │  
+│                                                                             │  
+│ You can set that using a kernel command line option such as                 │  
+│ &quot;console=uart8250,io,0x3f8,9600n8&quot;                                          │  
+│ &quot;console=uart8250,mmio,0xff5e0000,115200n8&quot;.                                │  
+│ and it will switch to normal serial console when the corresponding          │  
+│ port is ready.                                                              │  
+│ &quot;earlycon=uart8250,io,0x3f8,9600n8&quot;                                         │  
+│ &quot;earlycon=uart8250,mmio,0xff5e0000,115200n8&quot;.                               │  
+│ it will not only setup early console.                                       │  
+│                                                                             │  
+│ If unsure, say N.                                                           │  
+│                                                                             │  
+│ Symbol: SERIAL_8250_CONSOLE [=y]                                            │  
+│ Type  : boolean                                                             │  
+│ Prompt: Console on 8250/16550 and compatible serial port              
+│   Location:                                                                 │  
+│     -&gt; Device Drivers                                                       │  
+│       -&gt; Character devices                                                  │  
+│         -&gt; Serial drivers                                                   │  
+│           -&gt; 8250/16550 and compatible serial support (SERIAL_8250 [=y])    │  
+│   Defined at drivers/tty/serial/8250/Kconfig:60                             │  
+│   Depends on: TTY [=y] &amp;&amp; HAS_IOMEM [=y] &amp;&amp; SERIAL_8250 [=y]=y              │  
+│   Selects: SERIAL_CORE_CONSOLE [=y] &amp;&amp; SERIAL_EARLYCON [=y]                 │  
+│                                                                        
+</code></pre></div>
+<p>For more information about the <code>dts</code>: </p>
+<ul>
+<li><a href="https://elinux.org/Device_Tree_Usage">https://elinux.org/Device_Tree_Usage</a></li>
+<li><a href="https://elinux.org/Device_Tree_Reference">https://elinux.org/Device_Tree_Reference</a></li>
+<li><a href="https://developer.toradex.com/device-tree-customization#Device_Tree_Anatomy">https://developer.toradex.com/device-tree-customization#Device_Tree_Anatomy</a></li>
+<li><a href="https://bootlin.com/pub/conferences/2014/elc/petazzoni-device-tree-dummies/petazzoni-device-tree-dummies.pdf">https://bootlin.com/pub/conferences/2014/elc/petazzoni-device-tree-dummies/petazzoni-device-tree-dummies.pdf</a></li>
+</ul>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Entrega-5/"
+               class="ah-prev"
+               title="🔔 Assessment">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">🔔 Assessment</span>
+            </a>
+          
+          
+            <a href="../Tutorial-HPS-kernel-module/"
+               class="ah-next"
+               title="12. Kernel Module">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">12. Kernel Module</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

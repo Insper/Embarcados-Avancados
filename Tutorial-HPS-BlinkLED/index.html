@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>7. Blink LED - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">7. Blink LED</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#baremetal">baremetal</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#operating-system">Operating System</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>HPS</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="arm-blinkled">ARM BlinkLED<a class="headerlink" href="#arm-blinkled" title="Permanent link">&para;</a></h1>
+<p>In this tutorial, we will compile a program for the HPS (Arm Cortex A) that will be able to control the LEDs and read the buttons on the board that are connected to the HPS.</p>
+<p><a class="glightbox" href="../figs/DE10-Standard-blockdiagram.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/DE10-Standard-blockdiagram.jpg" /></a></p>
+<p>Notice from the previous diagram extracted from the user manual, there are LEDs and buttons directly connected to the HPS, and others connected to the FPGA. There are two possible approaches to programming the HPS:</p>
+<h2 id="baremetal">baremetal<a class="headerlink" href="#baremetal" title="Permanent link">&para;</a></h2>
+<p>We would create a program that would run on the ARM HPS without any operating system. As detailed in the diagram:</p>
+<p><a class="glightbox" href="../figs/Tutorial-HPS-BlinkLed-baremetal.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HPS-BlinkLed-baremetal.jpg" /></a></p>
+<div class="admonition note">
+<ul>
+<li><a href="https://www.intel.com/content/www/us/en/programmable/documentation/lro1424280108409.html">Altera Bare Metal User Guide</a></li>
+</ul>
+</div>
+<p>In this way, the application must be able to perform all the necessary HW initialization for the processor to run correctly. If the application is executed on an operating system, this entire compilation stage is the responsibility of the OS. For this, it is advisable to use the ARM IDE called <a href="https://developer.arm.com/tools-and-software/embedded/legacy-tools/ds-5-development-studio">DS-5</a></p>
+<h2 id="operating-system">Operating System<a class="headerlink" href="#operating-system" title="Permanent link">&para;</a></h2>
+<p>There are several alternatives for embedded operating systems, everything will depend on the application specification. It is necessary to know if there are real-time requirements, if so, consider using an RTOS or some operating system with this functionality (there is a patch in the Linux kernel that makes it more or less real-time). If it is an application that requires network, video, data processing, it is worth considering using a Linux (Android), as there are tools that facilitate application development on this platform (there is a lot already done and a gigantic community).</p>
+<p>With the use of an operating system, the part referring to HW is the responsibility of the kernel (or the developers who are adapting the kernel to HW, which is our case). There are several gains from using a Linux-type operating system, we can list some:</p>
+<ul>
+<li>Device drivers </li>
+<li>Portability</li>
+<li>Security</li>
+<li>Network</li>
+</ul>
+<p>The losses are also significant: greater memory occupation, greater latencies, <strong>slow boot</strong>...</p>
+<h3 id="blink-led-software">Blink LED Software<a class="headerlink" href="#blink-led-software" title="Permanent link">&para;</a></h3>
+<p>We will compile a program and run it on Embedded Linux, this program will be executed in the <a href="http://www.linfo.org/kernel_space.html">user space</a>. For this, we will use the toolchain from the <a href="Tutorial-HPS-BuildSystem">previous tutorial</a>. We will use as a basis the example code from Terasic available in the repository: <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC/my_first_hps">DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC/my_first_hps</a>. And cross-compile this code for our HPS using the Makefile in the folder.</p>
+<h3 id="about-the-program">About the program<a class="headerlink" href="#about-the-program" title="Permanent link">&para;</a></h3>
+<p>This program controls an LED that is connected to the ARM part of the chip:</p>
+<p><a class="glightbox" href="../figs/Tutorial-HPS-SoC%3Aio.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HPS-SoC%3Aio.png" /></a>
+<a class="glightbox" href="../figs/Tutorial-HPS-SoC%3Aio2.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HPS-SoC%3Aio2.png" /></a></p>
+<p>The pins are controlled by the <a href="https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_54006.pdf">GPIO peripheral</a> of the HPS (ARM), for this it is necessary to access this peripheral from Linux, this is done in a similar way as we did in Embedded Computing, a pointer that points to the memory region of the component and configures its registers:</p>
+<p><a class="glightbox" href="../figs/Tutorial-HPS-SoC%3Agpio.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HPS-SoC%3Agpio.png" /></a></p>
+<p>In baremetal systems, we can simply create a pointer that points to the memory region we want to change, in Linux we cannot do this directly (via userspace) as operating systems work with memory maps where the 'virtual' address does not represent the real address (remember Sys-HW-SW). In Linux, to access real memory we must map real memory to virtual using the <code>mmap</code> command:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">virtual_base</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">fd</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="c1">//...</span>
+
+<span class="w">    </span><span class="c1">// map the address space for the LED registers into user space so we can interact with them.</span>
+<span class="w">    </span><span class="c1">// we&#39;ll actually map in the entire CSR span of the HPS since we want to access various registers within that span</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">fd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;/dev/mem&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">O_RDWR</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">O_SYNC</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;ERROR: could not open </span><span class="se">\&quot;</span><span class="s">/dev/mem</span><span class="se">\&quot;</span><span class="s">...</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">virtual_base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mmap</span><span class="p">(</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">HW_REGS_SPAN</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">PROT_READ</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PROT_WRITE</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">MAP_SHARED</span><span class="p">,</span><span class="w"> </span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">HW_REGS_BASE</span><span class="w"> </span><span class="p">);</span>
+</code></pre></div>
+<p>Now that the <code>virtual_base</code> pointer points to the GPIO peripheral, and we can manipulate this address just like we did in Embedded Computing:</p>
+<div class="highlight"><pre><span></span><code><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+<span class="w">  </span><span class="n">scan_input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alt_read_word</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">virtual_base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="p">)(</span><span class="w">  </span><span class="n">ALT_GPIO1_EXT_PORTA_ADDR</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="p">)(</span><span class="w"> </span><span class="n">HW_REGS_MASK</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w">        </span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="o">~</span><span class="n">scan_input</span><span class="o">&amp;</span><span class="n">BUTTON_MASK</span><span class="p">)</span>
+<span class="w">    </span><span class="n">alt_setbits_word</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">virtual_base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="p">)(</span><span class="w"> </span><span class="n">ALT_GPIO1_SWPORTA_DR_ADDR</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="p">)(</span><span class="w"> </span><span class="n">HW_REGS_MASK</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">BIT_LED</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="k">else</span><span class="w">    </span>
+<span class="w">    </span><span class="n">alt_clrbits_word</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">virtual_base</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="p">)(</span><span class="w"> </span><span class="n">ALT_GPIO1_SWPORTA_DR_ADDR</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="p">)(</span><span class="w"> </span><span class="n">HW_REGS_MASK</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">BIT_LED</span><span class="w"> </span><span class="p">);</span>
+<span class="p">}</span><span class="w">   </span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This Makefile only works because we configured our <code>bashrc</code> with the system variables it uses.
+For example, the line <code>SOCEDS_ROOT ?= $(SOCEDS_DEST_ROOT)</code> uses the variable <code>SOCEDS_DEST_ROOT</code> that was configured in the previous tutorial, as well as the <code>arm-linux-gnueabihf-</code>...</p>
+</div>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-BlinkLED/exercise_1" id="exercise_1_0">
+<p class="admonition-title">Task</p>
+<form class="exercise-form">
+<ol>
+<li>Clone the repository: <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD">https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD</a></li>
+<li>Enter the folder <code>Demonstration/SoC/hps_gpio</code></li>
+<li>Execute the command <code>make</code></li>
+</ol>
+<p>Expected result:</p>
+<div class="highlight"><pre><span></span><code>arm-linux-gnueabihf-gcc -g -Wall   -Dsoc_cv_av
+-I/media/corsi/dados/intelFPGA/20.1/embedded/ip/altera/hps/altera_hps/hwlib/include/soc_cv_av
+-I/media/corsi/dados/intelFPGA/20.1/embedded/ip/altera/hps/altera_hps/hwlib/include/
+-c main.c -o main.o
+arm-linux-gnueabihf-gcc -g -Wall    main.o -o my_first_hps 
+</code></pre></div>
+<p>If you get something like:</p>
+<div class="highlight"><pre><span></span><code>make: arm-linux-gnueabihf-gcc: Command not found
+Makefile:19: recipe for target &#39;main.o&#39; failed
+make: *** [main.o] Error 127
+</code></pre></div>
+<p>It's because you didn't correctly configure gcc in the previous step.</p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<h3 id="running-on-target">Running on <code>target</code><a class="headerlink" href="#running-on-target" title="Permanent link">&para;</a></h3>
+<p>Now just copy the binary created by the compilation to the memory card and test our program on the <code>target</code> (HPS). With the memory card on the <code>host</code> (your computer), copy the binary file: <code>hps_gpio</code> to the folder: <code>/home/root/</code> on the memory card. Note that there are two partitions, you should copy to the one that has the <code>root</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may have to copy using sudo, in my case I run:</p>
+<div class="highlight"><pre><span></span><code>$ sudo cp hps_gpio /media/corsi/847f4797-311c-4286-8370-9d5573b201d7/home/root 
+</code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Whenever you handle an external memory device, it is advisable to flush the cache to force Linux to change the external device, otherwise the change may only stay in the local memory to the PC.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sync
+</code></pre></div>
+<blockquote>
+<p>The sync function is blocking, it will be locked while Linux flushes the data.</p>
+</blockquote>
+</div>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-BlinkLED/exercise_2" id="exercise_2_0">
+<p class="admonition-title">Task</p>
+<form class="exercise-form">
+<ol>
+<li>Put the SDCARD back in the FPGA.</li>
+<li>Access via terminal and run the program (<code>/home/root/hps_gpio</code>) with the command <code>./hps_gpio</code>.</li>
+<li>The <code>HPS User LED</code> of the Intel FPGA should flash twice initially, after this it will light up as the user clicks on the <code>HPS User Button</code>.</li>
+</ol>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-BlinkLED/exercise_3" id="exercise_3_0">
+<p class="admonition-title">Practicting</p>
+<form class="exercise-form">
+<p>Make the program read the button only twice, and after that end the application!</p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<h3 id="development-flow">Development Flow<a class="headerlink" href="#development-flow" title="Permanent link">&para;</a></h3>
+<p>This development flow isn't the best, right? It's good to program on the <code>host</code>, but this scheme of having to keep removing and inserting memory cards, waiting for the target's Linux to boot, logging in, and testing is not good for anyone. There are several solutions to improve this, each with its advantage/disadvantage:</p>
+<ul>
+<li>build on the target itself (bad for the programmer, great for dependencies, easy to debug, slow)</li>
+<li>create an ARM VM and compile on it (good for the programmer, great for dependencies, +- easy to debug, fast, hard to configure)</li>
+<li>cross-compile (good for the programmer, bad for dependencies, hard to debug, fast)</li>
+</ul>
+<p><mark>In Assigment 1 we will improve our compilation and testing system.</mark></p>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Tutorial-HPS-BuildSystem/"
+               class="ah-prev"
+               title="6. Setup">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">6. Setup</span>
+            </a>
+          
+          
+            <a href="../info-HPS-ethernet/"
+               class="ah-next"
+               title="Extra - Network">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">Extra - Network</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

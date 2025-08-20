@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>13. Char Device Driver - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">13. Char Device Driver</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#syscall">Syscall</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>HPS</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="char-device-driver">Char Device Driver<a class="headerlink" href="#char-device-driver" title="Permanent link">&para;</a></h1>
+<p>Now we will create a character device driver. This module will appear as a device in <code>/dev/</code>, allowing a program in the userspace to interact with it.</p>
+<h2 id="syscall">Syscall<a class="headerlink" href="#syscall" title="Permanent link">&para;</a></h2>
+<p>Remember that in Linux, everything is a file, including a driver. In order for it to behave like a file, we must implement at least the following system calls: <code>open</code>, <code>close/release</code>, <code>read</code>, and <code>write</code>. With this, a program in the userspace will be able to interact with our driver.</p>
+<div class="admonition info">
+<p class="admonition-title">system calls</p>
+<p>A character device module can implement other system calls as well, as defined in the <code>fs.h</code> file in the kernel repository.</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">file_operations</span><span class="w"> </span><span class="p">{</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">module</span><span class="w"> </span><span class="o">*</span><span class="n">owner</span><span class="p">;</span>
+<span class="n">loff_t</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">llseek</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
+<span class="kt">ssize_t</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">read</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">__user</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="kt">ssize_t</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">write</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">__user</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="kt">ssize_t</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">read_iter</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">kiocb</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">iov_iter</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="kt">ssize_t</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">write_iter</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">kiocb</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">iov_iter</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">iterate</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">dir_context</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="nf">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">poll</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">poll_table_struct</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="kt">long</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">unlocked_ioctl</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">);</span>
+<span class="kt">long</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">compat_ioctl</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">mmap</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">vm_area_struct</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">open</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">inode</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">flush</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">fl_owner_t</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">release</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">inode</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">fsync</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">datasync</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">aio_fsync</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">kiocb</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">datasync</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">fasync</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">lock</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file_lock</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="kt">ssize_t</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">sendpage</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">page</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="nf">long</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">get_unmapped_area</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">check_flags</span><span class="p">)(</span><span class="kt">int</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">flock</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file_lock</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="kt">ssize_t</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">splice_write</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">pipe_inode_info</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
+<span class="kt">ssize_t</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">splice_read</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">pipe_inode_info</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">);</span>
+<span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">setlease</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file_lock</span><span class="w"> </span><span class="o">**</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">**</span><span class="p">);</span>
+<span class="kt">long</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">fallocate</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="n">file</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">mode</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span>
+<span class="w">          </span><span class="n">loff_t</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">show_fdinfo</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">seq_file</span><span class="w"> </span><span class="o">*</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="n">f</span><span class="p">);</span>
+<span class="cp">#ifndef CONFIG_MMU</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">mmap_capabilities</span><span class="p">)(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="cp">#endif</span>
+<span class="p">};</span>
+</code></pre></div>
+</div>
+<p>The following code implements a very simple character device driver. This driver has the operations listed in the <code>fops</code> struct.</p>
+<p>This driver does the following: It prints everything that is written to it in the system log and returns the same string for reading. This is done by saving the message in a memory region called <code>message</code> (created in the module's init function using <code>kmalloc</code>). Every time the driver is opened by a program, it increments a global counter and prints that value in the system log.</p>
+<p><a class="glightbox" href="../figs/kernel-chardriver.svg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/kernel-chardriver.svg" /></a></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Don't just copy, read and understand. The provided code has detailed comments.</p>
+</div>
+<p>Create and initialize the following files: <code>ebbchar.c</code>, <code>test.c</code>, and <code>Makefile</code>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Makefile</label><label for="__tabbed_1_2">ebbchar.c</label><label for="__tabbed_1_3">test.c</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="n">obj</span><span class="o">-</span><span class="n">m</span><span class="o">+=</span><span class="n">ebbchar</span><span class="p">.</span><span class="n">o</span>
+
+<span class="nl">all</span><span class="p">:</span>
+<span class="w">    </span><span class="n">make</span><span class="w"> </span><span class="o">-</span><span class="n">C</span><span class="w"> </span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">$</span><span class="p">(</span><span class="n">shell</span><span class="w"> </span><span class="n">uname</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="p">)</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="w"> </span><span class="n">M</span><span class="o">=</span><span class="n">$</span><span class="p">(</span><span class="n">PWD</span><span class="p">)</span><span class="w">  </span><span class="n">modules</span>
+<span class="w">    </span><span class="n">$</span><span class="p">(</span><span class="n">CC</span><span class="p">)</span><span class="w"> </span><span class="n">test</span><span class="p">.</span><span class="n">c</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="n">test</span>
+<span class="nl">clean</span><span class="p">:</span>
+<span class="w">    </span><span class="n">make</span><span class="w"> </span><span class="o">-</span><span class="n">C</span><span class="w"> </span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">$</span><span class="p">(</span><span class="n">shell</span><span class="w"> </span><span class="n">uname</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="p">)</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="w"> </span><span class="n">M</span><span class="o">=</span><span class="n">$</span><span class="p">(</span><span class="n">PWD</span><span class="p">)</span><span class="w"> </span><span class="n">clean</span>
+<span class="w">    </span><span class="n">rm</span><span class="w"> </span><span class="n">test</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">* @file   ebbchar.c</span>
+<span class="cm">* @author Derek Molloy</span>
+<span class="cm">* @date   7 April 2015</span>
+<span class="cm">* @version 0.1</span>
+<span class="cm">* @brief   An introductory character driver to support the second article of my series on</span>
+<span class="cm">* Linux loadable kernel module (LKM) development. This module maps to /dev/ebbchar and</span>
+<span class="cm">* comes with a helper C program that can be run in Linux user space to communicate with</span>
+<span class="cm">* this the LKM.</span>
+<span class="cm">* @see http://www.derekmolloy.ie/ for a full description and follow-up descriptions.</span>
+<span class="cm">*</span>
+<span class="cm">* Corsi 20b: Modifiquei para usar kmalloc no lugar de de alocacao estática.</span>
+<span class="cm">*</span>
+<span class="cm">*/</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/init.h&gt;</span><span class="c1">           // Macros used to mark up functions e.g. __init __exit</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/module.h&gt;</span><span class="c1">         // Core header for loading LKMs into the kernel</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/device.h&gt;</span><span class="c1">         // Header to support the kernel Driver Model</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/kernel.h&gt;</span><span class="c1">         // Contains types, macros, functions for the kernel</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/fs.h&gt;</span><span class="c1">             // Header for the Linux file system support</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/uaccess.h&gt;</span><span class="c1">          // Required for the copy to user function</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;linux/slab.h&gt;</span>
+
+<span class="cp">#define  DEVICE_NAME &quot;ebbchar&quot;    </span><span class="c1">///&lt; The device will appear at /dev/ebbchar using this value</span>
+<span class="cp">#define  CLASS_NAME  &quot;ebb&quot;        </span><span class="c1">///&lt; The device class -- this is a character device driver</span>
+
+<span class="n">MODULE_LICENSE</span><span class="p">(</span><span class="s">&quot;GPL&quot;</span><span class="p">);</span><span class="w">            </span><span class="c1">///&lt; The license type -- this affects available functionality</span>
+<span class="n">MODULE_AUTHOR</span><span class="p">(</span><span class="s">&quot;Derek Molloy&quot;</span><span class="p">);</span><span class="w">    </span><span class="c1">///&lt; The author -- visible when you use modinfo</span>
+<span class="n">MODULE_DESCRIPTION</span><span class="p">(</span><span class="s">&quot;A simple Linux char driver for the BBB&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">///&lt; The description -- see modinfo</span>
+<span class="n">MODULE_VERSION</span><span class="p">(</span><span class="s">&quot;0.1&quot;</span><span class="p">);</span><span class="w">            </span><span class="c1">///&lt; A version number to inform users</span>
+
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w">    </span><span class="n">majorNumber</span><span class="p">;</span><span class="w">                  </span><span class="c1">///&lt; Stores the device number -- determined automatically</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">char</span><span class="w">   </span><span class="o">*</span><span class="n">message</span><span class="p">;</span><span class="w">                     </span><span class="c1">///&lt; Memory for the string that is passed from userspace</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">short</span><span class="w">  </span><span class="n">size_of_message</span><span class="p">;</span><span class="w">              </span><span class="c1">///&lt; Used to remember the size of the string stored</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w">    </span><span class="n">numberOpens</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">              </span><span class="c1">///&lt; Counts the number of times the device is opened</span>
+<span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">class</span><span class="o">*</span><span class="w">  </span><span class="n">ebbcharClass</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="c1">///&lt; The device-driver class struct pointer</span>
+<span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">device</span><span class="o">*</span><span class="w"> </span><span class="n">ebbcharDevice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="c1">///&lt; The device-driver device struct pointer</span>
+
+<span class="c1">// The prototype functions for the character driver -- must come before the struct definition</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w">     </span><span class="nf">dev_open</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">inode</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w">     </span><span class="nf">dev_release</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">inode</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">ssize_t</span><span class="w"> </span><span class="nf">dev_read</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">ssize_t</span><span class="w"> </span><span class="nf">dev_write</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+
+<span class="cm">/** @brief Devices are represented as file structure in the kernel. The file_operations structure from</span>
+<span class="cm">*  /linux/fs.h lists the callback functions that you wish to associated with your file operations</span>
+<span class="cm">*  using a C99 syntax structure. char devices usually implement open, read, write and release calls</span>
+<span class="cm">*/</span>
+<span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file_operations</span><span class="w"> </span><span class="n">fops</span><span class="w"> </span><span class="o">=</span>
+<span class="p">{</span>
+<span class="p">.</span><span class="n">open</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dev_open</span><span class="p">,</span>
+<span class="p">.</span><span class="n">read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dev_read</span><span class="p">,</span>
+<span class="p">.</span><span class="n">write</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dev_write</span><span class="p">,</span>
+<span class="p">.</span><span class="n">release</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dev_release</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="cm">/** @brief The LKM initialization function</span>
+<span class="cm">*  The static keyword restricts the visibility of the function to within this C file. The __init</span>
+<span class="cm">*  macro means that for a built-in driver (not a LKM) the function is only used at initialization</span>
+<span class="cm">*  time and that it can be discarded and its memory freed up after that point.</span>
+<span class="cm">*  @return returns 0 if successful</span>
+<span class="cm">*/</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">__init</span><span class="w"> </span><span class="nf">ebbchar_init</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+<span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span><span class="w"> </span><span class="s">&quot;EBBChar: Initializing the EBBChar LKM</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="c1">// Try to dynamically allocate a major number for the device -- more difficult but worth it</span>
+<span class="n">majorNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">register_chrdev</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">DEVICE_NAME</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fops</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">majorNumber</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">){</span>
+<span class="w">    </span><span class="n">printk</span><span class="p">(</span><span class="n">KERN_ALERT</span><span class="w"> </span><span class="s">&quot;EBBChar failed to register a major number</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">majorNumber</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span><span class="w"> </span><span class="s">&quot;EBBChar: registered correctly with major number %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">majorNumber</span><span class="p">);</span>
+
+<span class="c1">// Register the device class</span>
+<span class="n">ebbcharClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class_create</span><span class="p">(</span><span class="n">THIS_MODULE</span><span class="p">,</span><span class="w"> </span><span class="n">CLASS_NAME</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IS_ERR</span><span class="p">(</span><span class="n">ebbcharClass</span><span class="p">)){</span><span class="w">                </span><span class="c1">// Check for error and clean up if there is</span>
+<span class="w">    </span><span class="n">unregister_chrdev</span><span class="p">(</span><span class="n">majorNumber</span><span class="p">,</span><span class="w"> </span><span class="n">DEVICE_NAME</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printk</span><span class="p">(</span><span class="n">KERN_ALERT</span><span class="w"> </span><span class="s">&quot;Failed to register device class</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">PTR_ERR</span><span class="p">(</span><span class="n">ebbcharClass</span><span class="p">);</span><span class="w">          </span><span class="c1">// Correct way to return an error on a pointer</span>
+<span class="p">}</span>
+<span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span><span class="w"> </span><span class="s">&quot;EBBChar: device class registered correctly</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="c1">// Register the device driver</span>
+<span class="n">ebbcharDevice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">device_create</span><span class="p">(</span><span class="n">ebbcharClass</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">MKDEV</span><span class="p">(</span><span class="n">majorNumber</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">DEVICE_NAME</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IS_ERR</span><span class="p">(</span><span class="n">ebbcharDevice</span><span class="p">)){</span><span class="w">               </span><span class="c1">// Clean up if there is an error</span>
+<span class="w">    </span><span class="n">class_destroy</span><span class="p">(</span><span class="n">ebbcharClass</span><span class="p">);</span><span class="w">           </span><span class="c1">// Repeated code but the alternative is goto statements</span>
+<span class="w">    </span><span class="n">unregister_chrdev</span><span class="p">(</span><span class="n">majorNumber</span><span class="p">,</span><span class="w"> </span><span class="n">DEVICE_NAME</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printk</span><span class="p">(</span><span class="n">KERN_ALERT</span><span class="w"> </span><span class="s">&quot;Failed to create the device</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">PTR_ERR</span><span class="p">(</span><span class="n">ebbcharDevice</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// alocate mem</span>
+<span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kmalloc</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">GFP_KERNEL</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IS_ERR</span><span class="p">(</span><span class="n">message</span><span class="p">)){</span>
+<span class="w">    </span><span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span><span class="w"> </span><span class="s">&quot;Failed to allocate mem </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">PTR_ERR</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span><span class="w"> </span><span class="s">&quot;EBBChar: device class created correctly</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Made it! device was initialized</span>
+<span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/** @brief The LKM cleanup function</span>
+<span class="cm">*  Similar to the initialization function, it is static. The __exit macro notifies that if this</span>
+<span class="cm">*  code is used for a built-in driver (not a LKM) that this function is not required.</span>
+<span class="cm">*/</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">__exit</span><span class="w"> </span><span class="nf">ebbchar_exit</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+<span class="n">device_destroy</span><span class="p">(</span><span class="n">ebbcharClass</span><span class="p">,</span><span class="w"> </span><span class="n">MKDEV</span><span class="p">(</span><span class="n">majorNumber</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span><span class="w">     </span><span class="c1">// remove the device</span>
+<span class="n">class_unregister</span><span class="p">(</span><span class="n">ebbcharClass</span><span class="p">);</span><span class="w">                          </span><span class="c1">// unregister the device class</span>
+<span class="n">class_destroy</span><span class="p">(</span><span class="n">ebbcharClass</span><span class="p">);</span><span class="w">                             </span><span class="c1">// remove the device class</span>
+<span class="n">unregister_chrdev</span><span class="p">(</span><span class="n">majorNumber</span><span class="p">,</span><span class="w"> </span><span class="n">DEVICE_NAME</span><span class="p">);</span><span class="w">             </span><span class="c1">// unregister the major number</span>
+<span class="n">kfree</span><span class="p">(</span><span class="n">message</span><span class="p">);</span><span class="w">                                          </span><span class="c1">// release memmory</span>
+<span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span><span class="w"> </span><span class="s">&quot;EBBChar: Goodbye from the LKM!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/** @brief The device open function that is called each time the device is opened</span>
+<span class="cm">*  This will only increment the numberOpens counter in this case.</span>
+<span class="cm">*  @param inodep A pointer to an inode object (defined in linux/fs.h)</span>
+<span class="cm">*  @param filep A pointer to a file object (defined in linux/fs.h)</span>
+<span class="cm">*/</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">dev_open</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">inode</span><span class="w"> </span><span class="o">*</span><span class="n">inodep</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="n">filep</span><span class="p">){</span>
+<span class="n">numberOpens</span><span class="o">++</span><span class="p">;</span>
+<span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span><span class="w"> </span><span class="s">&quot;EBBChar: Device has been opened %d time(s)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">numberOpens</span><span class="p">);</span>
+<span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/** @brief This function is called whenever device is being read from user space i.e. data is</span>
+<span class="cm">*  being sent from the device to the user. In this case is uses the copy_to_user() function to</span>
+<span class="cm">*  send the buffer string to the user and captures any errors.</span>
+<span class="cm">*  @param filep A pointer to a file object (defined in linux/fs.h)</span>
+<span class="cm">*  @param buffer The pointer to the buffer to which this function writes the data</span>
+<span class="cm">*  @param len The length of the b</span>
+<span class="cm">*  @param offset The offset if required</span>
+<span class="cm">*/</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">ssize_t</span><span class="w"> </span><span class="nf">dev_read</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="n">filep</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="w"> </span><span class="o">*</span><span class="n">offset</span><span class="p">){</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">error_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="c1">// copy_to_user has the format ( * to, *from, size) and returns 0 on success</span>
+<span class="n">error_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy_to_user</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">size_of_message</span><span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error_count</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span><span class="w">            </span><span class="c1">// if true then have success</span>
+<span class="w">    </span><span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span><span class="w"> </span><span class="s">&quot;EBBChar: Sent %d characters to the user</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">size_of_message</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">size_of_message</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span><span class="w">  </span><span class="c1">// clear the position to the start and return 0</span>
+<span class="p">}</span>
+<span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span><span class="w"> </span><span class="s">&quot;EBBChar: Failed to send %d characters to the user</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">error_count</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="n">EFAULT</span><span class="p">;</span><span class="w">              </span><span class="c1">// Failed -- return a bad address message (i.e. -14)</span>
+<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/** @brief This function is called whenever the device is being written to from user space i.e.</span>
+<span class="cm">*  data is sent to the device from the user. The data is copied to the message[] array in this</span>
+<span class="cm">*  LKM using the sprintf() function along with the length of the string.</span>
+<span class="cm">*  @param filep A pointer to a file object</span>
+<span class="cm">*  @param buffer The buffer to that contains the string to write to the device</span>
+<span class="cm">* aaaaaaa @param len The length of the array of data that is being passed in the const char buffer</span>
+<span class="cm">*  @param offset The offset if required</span>
+<span class="cm">*/</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">ssize_t</span><span class="w"> </span><span class="nf">dev_write</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="n">filep</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="w"> </span><span class="o">*</span><span class="n">offset</span><span class="p">){</span>
+<span class="n">copy_from_user</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+<span class="n">size_of_message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w">                 </span><span class="c1">// store the length of the stored message</span>
+<span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span><span class="w"> </span><span class="s">&quot;EBBChar: Received %zu characters from the user</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+<span class="k">return</span><span class="w"> </span><span class="n">len</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/** @brieaf The device release function that is called whenever the device is closed/released by</span>
+<span class="cm">*  the userspace program</span>
+<span class="cm">*  @param inodep A pointer to an inode object (defined in linux/fs.h)</span>
+<span class="cm">*  @param filep A pointer to a file object (defined in linux/fs.h)</span>
+<span class="cm">*/</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">dev_release</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">inode</span><span class="w"> </span><span class="o">*</span><span class="n">inodep</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="n">filep</span><span class="p">){</span>
+<span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span><span class="w"> </span><span class="s">&quot;EBBChar: Device successfully closed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/** @brief A module must use the module_init() module_exit() macros from linux/init.h, which</span>
+<span class="cm">*  identify the initialization function at insertion time and the cleanup function (as</span>
+<span class="cm">*  listed above)</span>
+<span class="cm">*/</span>
+<span class="n">module_init</span><span class="p">(</span><span class="n">ebbchar_init</span><span class="p">);</span>
+<span class="n">module_exit</span><span class="p">(</span><span class="n">ebbchar_exit</span><span class="p">);</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
+<span class="cm">* @file   testebbchar.c</span>
+<span class="cm">* @author Derek Molloy</span>
+<span class="cm">* @date   7 April 2015</span>
+<span class="cm">* @version 0.1</span>
+<span class="cm">* @brief  A Linux user space program that communicates with the ebbchar.c LKM. It passes a</span>
+<span class="cm">* string to the LKM and reads the response from the LKM. For this example to work the device</span>
+<span class="cm">* must be called /dev/ebbchar.</span>
+<span class="cm">* @see http://www.derekmolloy.ie/ for a full description and follow-up descriptions.</span>
+<span class="cm">*/</span>
+<span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="cpf">&lt;errno.h&gt;</span>
+<span class="cp">#include</span><span class="cpf">&lt;fcntl.h&gt;</span>
+<span class="cp">#include</span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="cpf">&lt;unistd.h&gt;</span>
+
+<span class="cp">#define BUFFER_LENGTH 256               </span><span class="c1">///&lt; The buffer length (crude but fine)</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">receive</span><span class="p">[</span><span class="n">BUFFER_LENGTH</span><span class="p">];</span><span class="w">     </span><span class="c1">///&lt; The receive buffer from the LKM</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="p">,</span><span class="w"> </span><span class="n">fd</span><span class="p">;</span>
+<span class="kt">char</span><span class="w"> </span><span class="n">stringToSend</span><span class="p">[</span><span class="n">BUFFER_LENGTH</span><span class="p">];</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Starting device test code example...</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="n">fd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="s">&quot;/dev/ebbchar&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">O_RDWR</span><span class="p">);</span><span class="w">             </span><span class="c1">// Open the device with read/write access</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fd</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span>
+<span class="w">    </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;Failed to open the device...&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">errno</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Type in a short string to send to the kernel module:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%[^</span><span class="se">\n</span><span class="s">]%*c&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stringToSend</span><span class="p">);</span><span class="w">                </span><span class="c1">// Read in a string (with spaces)</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Writing message to the device [%s].</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stringToSend</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">stringToSend</span><span class="p">,</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">stringToSend</span><span class="p">));</span><span class="w"> </span><span class="c1">// Send the string to the LKM</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span>
+<span class="w">        </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;Failed to write the message to the device.&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">errno</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">//printf(&quot;Press ENTER to read back from the device...\n&quot;);</span>
+<span class="w">    </span><span class="c1">//getchar();</span>
+
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Reading from the device...</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">receive</span><span class="p">,</span><span class="w"> </span><span class="n">BUFFER_LENGTH</span><span class="p">);</span><span class="w">        </span><span class="c1">// Read the response from the LKM</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span>
+<span class="w">        </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;Failed to read the message fm the device.&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">errno</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;The received message is: [%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">receive</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;End of the program</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+<span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Let's analyze some parts of this code:</p>
+<ul>
+<li><code>ebbchar_init</code>: It is called whenever the driver is inserted into the kernel (<code>insmod</code>) and registers the device module as <code>/dev/ebbchar</code>. In this step, the driver allocates memory for internal use using the <code>kmalloc</code> command.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="w">   </span><span class="c1">// allocate memory</span>
+<span class="w">   </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kmalloc</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">GFP_KERNEL</span><span class="p">);</span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IS_ERR</span><span class="p">(</span><span class="n">message</span><span class="p">)){</span>
+<span class="w">      </span><span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span><span class="w"> </span><span class="s">&quot;Failed to allocate memory</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">PTR_ERR</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+<span class="w">   </span><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>
+<p><code>ebbchar_exit</code>: It is called when the driver is removed from the kernel (<code>rmmod</code>), and it removes the device from <code>/dev/ebbchar</code> and frees the previously allocated memory using <code>kfree</code>.</p>
+</li>
+<li>
+<p>The <code>dev_open</code> function is called whenever a program opens the device as a file. Whenever this happens, a global variable (<code>numberOpens</code>) is incremented, and a <code>KERN_INFO</code> log is generated.</p>
+</li>
+<li>
+<p><code>dev_write</code>: It is called whenever a write operation occurs on the driver. When this happens, the message passed in the write command from the userspace program is copied to the <code>message</code> memory region:</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">ssize_t</span><span class="w"> </span><span class="nf">dev_write</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="n">filep</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span>
+<span class="w">                         </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="w"> </span><span class="o">*</span><span class="n">offset</span><span class="p">){</span>
+<span class="w">   </span><span class="n">copy_from_user</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+<span class="w">   </span><span class="p">...</span>
+</code></pre></div>
+<ul>
+<li><code>dev_read</code>: It is called when a read operation occurs on the driver. The module returns the message saved in the <code>message</code> buffer:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">ssize_t</span><span class="w"> </span><span class="nf">dev_read</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="n">filep</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="p">,</span>
+<span class="w">                        </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="n">loff_t</span><span class="w"> </span><span class="o">*</span><span class="n">offset</span><span class="p">){</span>
+<span class="w">   </span><span class="kt">int</span><span class="w"> </span><span class="n">error_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">   </span><span class="c1">// copy_to_user has the format ( *to, *from, size) and returns 0 on success</span>
+<span class="w">   </span><span class="n">error_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copy_to_user</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">size_of_message</span><span class="p">);</span>
+<span class="w">   </span><span class="p">...</span>
+</code></pre></div>
+<h3 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h3>
+<p>To test, simply compile the module and the test program using the <code>make</code> command. Once compiled, you should load the module (and check if it initialized correctly) and then run the test program.</p>
+<ol>
+<li>In one terminal, execute the command <code>dmesg -wH</code>.</li>
+<li>In another terminal, execute: <code>make</code>.</li>
+<li><code>sudo insmod ebbchar.ko</code>.</li>
+<li>You should see the following log in the <code>dmesg</code> terminal:
+   <div class="highlight"><pre><span></span><code>[12944.610531] EBBChar: Initializing the EBBChar LKM
+[12944.610537] EBBChar: registered correctly with major number 236
+[12944.610577] EBBChar: device class registered correctly
+[12944.613972] EBBChar: device class created correctly
+</code></pre></div></li>
+<li>Verify if the device was inserted correctly: <code>ls /dev/ebbchar</code> (you should see this file).</li>
+<li>Now let's initialize the program: <code>sudo ./test</code>.</li>
+<li>Note that <code>dmesg</code> indicates that someone has opened our driver:
+   <div class="highlight"><pre><span></span><code>[Nov 3 13:07] EBBChar: Device has been opened 1 time(s)
+</code></pre></div></li>
+<li>Now, in the terminal where you ran the test program, type something, and you will notice that the same information is printed back:
+   <div class="highlight"><pre><span></span><code>Type in a short string to send to the kernel module:
+123
+Writing message to the device [123].
+Reading from the device...
+The received message is: [123]
+</code></pre></div></li>
+<li>In <code>dmesg</code>, you can see the information about how many bytes the user entered.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<ol>
+<li>Try entering a large message in the test program's terminal. What happens?</li>
+<li>Why do you think this happens?</li>
+<li>Propose a solution!</li>
+</ol>
+</div>
+<p>There you go! We have just created our first device driver. It doesn't control any hardware yet, but we have implemented the interface with the operating system. Now comes the part we are most familiar with, controlling hardware (creating pointers, configuring, and writing).</p>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Tutorial-HPS-kernel-module/"
+               class="ah-prev"
+               title="12. Kernel Module">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">12. Kernel Module</span>
+            </a>
+          
+          
+            <a href="../Tutorial-HPS-FPGA-BlinkLED/"
+               class="ah-next"
+               title="14. Blink FPGA LED from HPS">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">14. Blink FPGA LED from HPS</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

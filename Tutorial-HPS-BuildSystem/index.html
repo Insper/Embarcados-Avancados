@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>6. Setup - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">6. Setup</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#intel-soceds">Intel SOCEDS</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#gcc-toolchain">GCC toolchain</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>HPS</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="configuring-infrastructure">Configuring Infrastructure<a class="headerlink" href="#configuring-infrastructure" title="Permanent link">&para;</a></h1>
+<p>We will install the tools (compilers) that will be used to compile the kernel and the filesystem. We will need to install <code>soceds</code> and <code>linaro-gcc</code>.</p>
+<h2 id="intel-soceds">Intel SOCEDS<a class="headerlink" href="#intel-soceds" title="Permanent link">&para;</a></h2>
+<p>For this step, we will need the <code>Intel® SoC FPGA Embedded Development Suite Standard Edition Software Version 18.1 for Linux</code>, which can be downloaded from:</p>
+<ul>
+<li><a href="https://www.intel.com/content/www/us/en/software-kit/665456/intel-soc-fpga-embedded-development-suite-standard-edition-software-version-18-1-for-linux.html">https://www.intel.com/content/www/us/en/software-kit/665456/intel-soc-fpga-embedded-development-suite-standard-edition-software-version-18-1-for-linux.html</a></li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>We will use an older version of Quartus. The latest version is 21.1, but we will work with version 18.01. The reason for this is compatibility with the examples provided by the manufacturer.</p>
+</div>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-BuildSystem/exercise_1" id="exercise_1_0">
+<p class="admonition-title">Install SOCEDS</p>
+<form class="exercise-form">
+<ol>
+<li>Download the SocEDS</li>
+<li>Install:
+    <div class="highlight"><pre><span></span><code>chmod +x SoCEDSSetup-18.1.0.625-linux.run 
+./SoCEDSSetup-18.1.0.625-linux.run
+</code></pre></div></li>
+<li>Test: 
+    <div class="highlight"><pre><span></span><code>~/intelFPGA/18.1/embedded/embedded_command_shell.sh 
+</code></pre></div></li>
+</ol>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">DS-5 install not detected...</p>
+<p>If DS-5 was not detected, you should follow the next step:</p>
+<ul>
+<li>Install DS-5 manually:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/intelFPGA/18.1/embedded/ds-5_installer/
+./install.sh
+</code></pre></div>
+<ul>
+<li>Accept the terms and also the item about the verification of requirements.</li>
+<li>When defining the installation location, you should select <code>~/intelFPGA/18.1/embedded/ds-5/</code>
+This will create the folder and install there.</li>
+<li>Proceed to the end of the installation.</li>
+</ul>
+<p>Test again:
+<div class="highlight"><pre><span></span><code>    ~/intelFPGA/18.1/embedded/embedded_command_shell.sh 
+</code></pre></div></p>
+</div>
+<p>We will need to insert into the bash path a reference for a series of softwares to be used. Modify your <code>.bashrc</code> by inserting: </p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ALTERAPATH</span><span class="o">=</span>~/intelFPGA/18.1/
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/embedded/
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/embedded/host_tools/altera/preloadergen/
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">SOCEDS_DEST_ROOT</span><span class="o">=</span><span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/embedded
+<span class="nb">export</span><span class="w"> </span><span class="nv">SOCEDS_HWLIB</span><span class="o">=</span><span class="si">${</span><span class="nv">ALTERAPATH</span><span class="si">}</span>/embedded/ip/altera/hps/altera_hps/hwlib/
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>Remember to verify if the <strong>ALTERAPATH</strong> in this example is the correct path for the Quartus installation.</li>
+<li>If you are using another bash (zsh/ fish) you will need to edit the corresponding configuration file.</li>
+</ul>
+</div>
+<h2 id="gcc-toolchain">GCC toolchain<a class="headerlink" href="#gcc-toolchain" title="Permanent link">&para;</a></h2>
+<p>We will use the GCC cross compile provided by Linaro. This same GCC will be used to compile the Kernel, generate the file system, and compile the programs that will run on Linux. </p>
+<div class="admonition note">
+<p class="admonition-title">Linaro Wikipedia</p>
+<p><em>Linaro is an engineering organization that works on free and open-source software such as the Linux kernel, the GNU Compiler Collection, power management, graphics and multimedia interfaces for the ARM family of instruction sets and implementations thereof as well as for the Heterogeneous System Architecture.</em></p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Linaro">https://en.wikipedia.org/wiki/Linaro</a></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">gcc</p>
+<p>On the Linaro website, there are several different <code>GCC</code> each with a different configuration. What we are going to use is <code>arm-linux-gnueabihf</code> which means:</p>
+<ul>
+<li><code>linux</code>: to compile programs that will run on linux (could be baremetal)</li>
+<li><code>eabi</code>: <a href="https://processors.wiki.ti.com/index.php/EABI">Embedded Application Binary Interface</a> to be used by the operating system.</li>
+<li><code>hf</code>: uses hardware floating-point multiplication</li>
+</ul>
+</div>
+<p>From the <a href="https://releases.linaro.org/components/toolchain/binaries/7.4-2019.02/arm-linux-gnueabihf/">Linaro binaries site</a> download the <code>gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz</code> version and extract it to some folder on your Linux.</p>
+<div class="admonition note">
+<p class="admonition-title">Want to download via terminal?</p>
+<p>My projects are all within the folder: <code>/home/corsi/work/</code>, so I extracted there. You can choose another location.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/work
+$<span class="w"> </span>tar<span class="w"> </span>xvf<span class="w"> </span>gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf.tar.xz
+</code></pre></div>
+</div>
+<p>Take a look at the recently extracted folder: </p>
+<div class="highlight"><pre><span></span><code>$ cd gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf 
+$ tree -L 1
+...
++ arm-linux-gnueabihf
++ bin
+ + arm-linux-gnueabihf-addr2line
+ + arm-linux-gnueabihf-ar
+ + ...
+ + arm-linux-gnueabihf-c++
+ + arm-linux-gnueabihf-g++
+ + arm-linux-gnueabihf-gcc
++ include
++ lib
++ libexec
++ share
+</code></pre></div>
+<p>We have all the necessary tools to compile and link C and C++ codes for ARM. Note that in the gcc path we have the prefix: <strong>gnueabihf</strong>. </p>
+<div class="admonition exericse short">
+<p class="admonition-title">Research</p>
+<p>What is the difference between <code>eabi</code> and <code>hf</code></p>
+</div>
+<h3 id="creating-a-shortcut-in-bash">Creating a shortcut in bash<a class="headerlink" href="#creating-a-shortcut-in-bash" title="Permanent link">&para;</a></h3>
+<p>Let's create a shortcut to this folder in bash. Edit the <code>~/.bashrc</code> file to include the <code>~/work/gcc-linaro.../bin/</code> folder in the system variable: <strong>GCC_Linaro</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="gi">+ # GCC Linaro on path</span>
+<span class="gi">+ export GCC_Linaro=/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin</span>
+<span class="gi">+ export PATH=$PATH:${GCC_Linaro}</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Edit the command to the correct folder where Linaro was extracted: <code>/home/...</code></p>
+</div>
+<p>Now we have a shortcut to the <code>gcc-arm</code>, let's test:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nv">$GCC_Linaro</span>/arm-linux-gnueabihf-gcc<span class="w"> </span>-v
+...
+Using<span class="w"> </span>built-in<span class="w"> </span>specs.
+<span class="nv">COLLECT_GCC</span><span class="o">=</span>/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc
+<span class="nv">COLLECT_LTO_WRAPPER</span><span class="o">=</span>/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin/../libexec/gcc/arm-linux-gnueabihf/7.4.1/lto-wrapper
+</code></pre></div>
+<p>And it should also be on the path, as <code>arm-linux-*</code>:</p>
+<p><a class="glightbox" href="../figs/Tutorial-HLS-BuildSystem-armgcc.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HLS-BuildSystem-armgcc.png" /></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It's possible to install <code>arm-linux</code> via <code>apt install</code>, but we won't do that because we want to have control over the version of the compiler we are using.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">bashrc at the end</p>
+<p>I don't modify my <code>bashrc</code>. What I do is use the program <a href="https://direnv.net/">direnv</a> which allows me to control my settings according to the project I am working on. This includes environment variables and Python virtual environments.</p>
+<p>To use this program, first you must install it via the package manager (<code>apt install direnv</code>) and then create a <code>.direnv</code> file in the root of the folder where you intend to work (project submissions, labs, ...) with the environment configuration:</p>
+<div class="highlight"><pre><span></span><code>echo &quot;INTEL FPGA QUARTUS 18.1&quot;
+
+export ARCH=arm
+export ALTERAPATH=/home/corsi/opt/intelFPGA/18.1
+export PATH=$PATH:${ALTERAPATH}/embedded/
+export PATH=$PATH:${ALTERAPATH}/embedded/host_tools/altera/preloadergen/
+
+
+export SOCEDS_DEST_ROOT=${ALTERAPATH}/embedded
+export SOCEDS_HWLIB=${ALTERAPATH}/embedded/ip/altera/hps/altera_hps/hwlib/
+
+export GCC_Linaro=/home/corsi/work/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin
+export PATH=$PATH:${GCC_Linaro}
+</code></pre></div>
+<p>Upon entering the repository, the configuration is automatic. A great advantage of this is that programs like VSCODE, EMACS recognize the .direnv and use the configuration automatically.</p>
+</div>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Tutorial-HPS-Running/"
+               class="ah-prev"
+               title="5. Embedded Linux">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">5. Embedded Linux</span>
+            </a>
+          
+          
+            <a href="../Tutorial-HPS-BlinkLED/"
+               class="ah-next"
+               title="7. Blink LED">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">7. Blink LED</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

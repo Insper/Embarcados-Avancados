@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Extra - Network - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Extra - Network</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#scenario-1-router">Scenario 1 - router</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#scenario-2-nic">Scenario 2 - NIC</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#automating-at-boot">Automating at boot</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#adding-script-to-boot-systemd">Adding script to boot - systemd</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#changing-the-mac">Changing the MAC</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Extra - Network</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#scenario-1-router">Scenario 1 - router</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#scenario-2-nic">Scenario 2 - NIC</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#automating-at-boot">Automating at boot</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#adding-script-to-boot-systemd">Adding script to boot - systemd</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#changing-the-mac">Changing the MAC</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Useful</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="ethernet">Ethernet<a class="headerlink" href="#ethernet" title="Permanent link">&para;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Cyclone V Hard Processor System Technical Reference Manual</p>
+<p><a href="https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_54001.pdf">https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_54001.pdf</a></p>
+</div>
+<p>There are two possible scenarios: </p>
+<ol>
+<li>Connect the DE10-Standard to a router via network cable</li>
+<li>Connect the DE10-Standard to your PC via a NIC (included with the kit)</li>
+</ol>
+<p><a class="glightbox" href="../figs/info-hps-ethernet-cenarios.svg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/info-hps-ethernet-cenarios.svg" width="600" /></a></p>
+<h2 id="scenario-1-router">Scenario 1 - router<a class="headerlink" href="#scenario-1-router" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If possible, choose this scenario.</p>
+</div>
+<p><a class="glightbox" href="../figs/info-hps-ethernet-cenarios-1.svg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/info-hps-ethernet-cenarios-1.svg" width="500" /></a></p>
+<p>Connect the board to the router and the PC to the router via wifi or cable.</p>
+<p>Follow the steps below:</p>
+<ol>
+<li>Connect the DE10-Standard via network cable to the router</li>
+<li>Connect to the board via the USB-Serial port (screen)</li>
+<li>Turn on the board (with the SDCARD)</li>
+<li>Configure the target</li>
+</ol>
+<h3 id="configuring-target">Configuring target<a class="headerlink" href="#configuring-target" title="Permanent link">&para;</a></h3>
+<p>With an ethernet cable connected to the RJ45, we need to configure Linux to use this "port". On the <code>target</code>, check if Linux detects the network card, with the command: <code>ifconfig eth0 up</code>, and then <code>ifconfig all</code>. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Later we will understand how Linux knows there is an ethernet port.</p>
+</div>
+<h3 id="requesting-ip-dhcp">Requesting IP (DHCP)<a class="headerlink" href="#requesting-ip-dhcp" title="Permanent link">&para;</a></h3>
+<p>Now we need to get an IP from the DHCP server (which is on your router), for this we will use the <code>udhcpc</code> program, with the following command:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>udhcpc<span class="w"> </span>eth0
+</code></pre></div>
+<p>To see the IP</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ifconfig
+</code></pre></div>
+<h3 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h3>
+<p>To test:21985</p>
+<ol>
+<li>Ping <mark>Host &rarr; Target</mark> / <mark>Target &rarr; Host</mark> / <mark>Target &rarr; internet</mark>.</li>
+<li>Check the IP with the <code>ifconfig</code> command and try to ping some site <code>ping google.com</code>.</li>
+</ol>
+<h2 id="scenario-2-nic">Scenario 2 - NIC<a class="headerlink" href="#scenario-2-nic" title="Permanent link">&para;</a></h2>
+<p><a class="glightbox" href="../figs/info-hps-ethernet-cenarios-2.svg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/info-hps-ethernet-cenarios-2.svg" width="500" /></a></p>
+<p>Connect the board to the computer via the NIC adapter:</p>
+<ol>
+<li>Connect the DE10-Standard to the NIC </li>
+<li>Connect the NIC to your PC's USB</li>
+<li>Connect to the board via the USB-Serial port (screen)</li>
+<li>Turn on the board (with the SDCARD)</li>
+<li>Configure your PC</li>
+<li>Configure the target</li>
+</ol>
+<h3 id="configuring-pc">Configuring PC<a class="headerlink" href="#configuring-pc" title="Permanent link">&para;</a></h3>
+<p>We will have to configure a fixed IP on the ethernet port that the NIC creates on your PC's Linux.</p>
+<p><a class="glightbox" href="../figs/info-HPS-ethernet-host.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/info-HPS-ethernet-host.png" /></a></p>
+<h3 id="configuring-target_1">Configuring Target<a class="headerlink" href="#configuring-target_1" title="Permanent link">&para;</a></h3>
+<p>Now on the target we will configure the network port to have a fixed IP:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span>up
+$<span class="w"> </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span><span class="m">169</span>.254.0.13<span class="w"> </span>netmask<span class="w"> </span><span class="m">255</span>.255.0.0<span class="w"> </span>up
+</code></pre></div>
+<h3 id="testing_1">Testing<a class="headerlink" href="#testing_1" title="Permanent link">&para;</a></h3>
+<p>To test, let's ping Host &rarr; Target and Target &rarr; Host.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It's important to validate before proceeding.</p>
+</div>
+<h2 id="automating-at-boot">Automating at boot<a class="headerlink" href="#automating-at-boot" title="Permanent link">&para;</a></h2>
+<p>These settings are not persistent, if you restart the embedded Linux you will have to do everything again. To make our life easier, we will execute this at boot.</p>
+<h3 id="rc">RC<a class="headerlink" href="#rc" title="Permanent link">&para;</a></h3>
+<p>Have you noticed the <code>/etc/rc*</code> folders in your operating system? That's where most of the scripts that are executed at boot/reboot/halt reside. Each distribution uses the scripts differently, for example, Debian uses them in the following way:</p>
+<ul>
+<li><a href="https://wiki.debian.org/BootProcess">https://wiki.debian.org/BootProcess</a></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>runlevel</th>
+<th>directory</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>N</td>
+<td>none</td>
+<td>System bootup (NONE). There is no <code>/etc/rcN.d/</code> directory.</td>
+</tr>
+<tr>
+<td>0</td>
+<td><code>/etc/rc0.d/</code></td>
+<td>Halt the system.</td>
+</tr>
+<tr>
+<td>S</td>
+<td><code>/etc/rcS.d/</code></td>
+<td>Single-user mode on boot. The lower case s can be used as alias.</td>
+</tr>
+<tr>
+<td>1</td>
+<td><code>/etc/rc1.d/</code></td>
+<td>Single-user mode switched from multi-user mode.</td>
+</tr>
+<tr>
+<td>2 .. 5</td>
+<td><code>/etc/rc{2,3,4,5}.d/</code></td>
+<td>Multi-user mode. The Debian system does not pre-assign any special meaning differences among these.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>/etc/rc6.d/</code></td>
+<td>Reboot the system.</td>
+</tr>
+<tr>
+<td>7 .. 9</td>
+<td><code>/etc/rc{7,8,9}.d/</code></td>
+<td>Valid multi-user mode but traditional Unix variants don’t use. Their <code>/etc/rc?.d/</code> directories are not populated when packages are installed.</td>
+</tr>
+</tbody>
+</table>
+<p>Inside each <code>rc.x</code> folder, the scripts have names that dictate the sequence in which the scripts in the folder will be called.</p>
+<h2 id="adding-script-to-boot-systemd">Adding script to boot - systemd<a class="headerlink" href="#adding-script-to-boot-systemd" title="Permanent link">&para;</a></h2>
+<p>Create a script named <code>S60MAC.sh</code> in the <code>/etc/init.d</code> folder and add the following code (depends on which scenario you will use):</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Scenario 1</label><label for="__tabbed_1_2">Scenario 2</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/sh</span>
+
+<span class="k">case</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="k">in</span>
+start<span class="o">)</span>
+<span class="w">        </span>start
+<span class="w">        </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span>up
+<span class="w">        </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span><span class="m">169</span>.254.0.13<span class="w"> </span>netmask<span class="w"> </span><span class="m">255</span>.255.0.0<span class="w"> </span>up
+<span class="w">        </span><span class="p">;;</span>
+stop<span class="o">)</span>
+<span class="w">        </span>stop
+<span class="w">        </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span>down
+<span class="w">        </span><span class="p">;;</span>
+restart<span class="p">|</span>reload<span class="o">)</span>
+<span class="w">        </span>restart
+<span class="w">        </span><span class="p">;;</span>
+*<span class="o">)</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Usage: </span><span class="nv">$0</span><span class="s2"> {start|stop|restart}&quot;</span>
+<span class="w">        </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">esac</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="k">case</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="k">in</span>
+start<span class="o">)</span>
+<span class="w">    </span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;Setting ip: &quot;</span>
+<span class="w">    </span>/sbin/ifconfig<span class="w"> </span>eth0<span class="w"> </span><span class="m">169</span>.254.0.13<span class="w"> </span>netmask<span class="w"> </span><span class="m">255</span>.255.0.0<span class="w"> </span>up
+<span class="w">    </span><span class="o">[</span><span class="w"> </span><span class="nv">$?</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OK&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;FAIL&quot;</span>
+<span class="w">    </span><span class="p">;;</span><span class="w"> </span>
+*<span class="o">)</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="w">    </span><span class="p">;;</span>
+<span class="k">esac</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Make the script is executable: <code>chmod +x S60MAC.sh</code>. Once the script is created, it will need to be added to the system startup,
+for this we must call (when the iso uses systemd, which is the case of Amstrong, but not buildroot):</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>S60MAC.sh
+</code></pre></div>
+<ul>
+<li>ref: <a href="https://forums.kali.org/showthread.php?21985-How-to-make-mac-address-random-at-each-boot-up">https://forums.kali.org/showthread.php?21985-How-to-make-mac-address-random-at-each-boot-up</a></li>
+</ul>
+<h2 id="changing-the-mac">Changing the MAC<a class="headerlink" href="#changing-the-mac" title="Permanent link">&para;</a></h2>
+<p>It may necessary to change the MAC address to connect to the lab's network, it will be necessary to edit the board's MAC, otherwise it will not be able to connect. To do this, execute the following commands:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span>down
+$<span class="w"> </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span>hw<span class="w"> </span>ether<span class="w"> </span><span class="m">02</span>:01:02:03:04:08
+$<span class="w"> </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span>up
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will need to edit the MAC  <code>02:01:02:03:04:08</code> to the one provided by the professor</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This MAC should only be used on the development kit and during the development of the projects. Misuse will be considered a breach of ethics.</p>
+</div>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../info-HPS-Serial/"
+               class="ah-prev"
+               title="Serial port">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">Serial port</span>
+            </a>
+          
+          
+            <a href="../info-VHDL/"
+               class="ah-next"
+               title="Refereces">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">Refereces</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

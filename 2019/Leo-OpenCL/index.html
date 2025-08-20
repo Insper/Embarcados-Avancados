@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>2019 - OpenCL - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '../..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../../termynal.css">
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../.."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">2019 - OpenCL</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#opencl_1">OpenCL</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#tutorial-opencl-de-10">Tutorial OpenCL-DE-10</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#analises-de-desempenho-cpu-vs-opencl">Análises de Desempenho CPU vs OPENCL</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Students tutorials</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="opencl">OpenCL<a class="headerlink" href="#opencl" title="Permanent link">&para;</a></h1>
+<ul>
+<li>Aluno: Leonardo Medeiros</li>
+<li>Curso: Engenharia da Computação</li>
+<li>Semestre: 9</li>
+<li>Contato: </li>
+<li>Link tutorial oficial: <a href="https://github.com/Leotayner/Tutorial-OpenCL">https://github.com/Leotayner/Tutorial-OpenCL</a></li>
+<li>Ano: 2019</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Hardware utilizado no tutorial</p>
+<ul>
+<li>DE10-Standard</li>
+</ul>
+</div>
+<h2 id="opencl_1">OpenCL<a class="headerlink" href="#opencl_1" title="Permanent link">&para;</a></h2>
+<p><a href="https://software.intel.com/en-us/opencl-sdk">OpenCL</a> (Open Computing Language) é uma API de baixo nível para programação de alto desempenho em ambientes computacionais heterogêneos compostos por CPUs, GPUs, e outros processadores paralelos como FPGA, permitindo desenvolver aplicações portáveis e eficientes.</p>
+<h3 id="arquitetura-opencl">Arquitetura OpenCL<a class="headerlink" href="#arquitetura-opencl" title="Permanent link">&para;</a></h3>
+<p>O padrão OpenCL propõe uma arquitetura em que há um host que agrega um ou mais devices, cada device possui unidades de computação que contém elementos de processamento.</p>
+<p>O host é responsável pelo reconhecimento e inicialização dos dispositivos, bem como pela transferência de dados e tarefas para execução.</p>
+<p>O device é responsável por processar todos esses dados ao executar as tarefas programadas.</p>
+<p>Na arquitetura do device, considerando o contexto de programação paralela, o equivalente a uma thread é o work-item, que representa a menor unidade de tarefa. Esses works-itens são agrupados em blocos denominados work-group, onde os works-itens de um mesmo bloco podem se comunicar e se sincronizar</p>
+<p>Os work-groups por sua vez são organizados em grids, onde deverão ter a mesma dimensão, podendo a grid ser unidimensional, bidimensional ou tridimensional.</p>
+<p><a class="glightbox" href="../imgs/Leo/grid.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/Leo/grid.png" /></a>
+<em>Figura 1 - Arquitetura OpenCL</em></p>
+<p>De forma geral essa estrutura possui três tipos de memórias:</p>
+<ul>
+<li>
+<p>Private Memory 
+   Estritamente atrelada ao seu respectivo worker, apenas seu worker pode acessa-la</p>
+</li>
+<li>
+<p>Local memory 
+   Estritamente atrelada ao seu respectivo bloco, todos os workers dentro do bloco podem acessá-la</p>
+</li>
+<li>
+<p>Global Constant Memory data Cache 
+   Cache da memoria global do device, todos os blocos podem acessa-la</p>
+</li>
+<li>
+<p>Global Constant Memory 
+   memoria global do device</p>
+</li>
+</ul>
+<p><a class="glightbox" href="../imgs/Leo/Diagrama1.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/Leo/Diagrama1.png" /></a> 
+<em>Figura 1 - Arquitetura OpenCL</em></p>
+<h3 id="fpga-vs-cpu">FPGA vs CPU<a class="headerlink" href="#fpga-vs-cpu" title="Permanent link">&para;</a></h3>
+<p>A arquitetura de funcionamento de acessos de memória e configuração do programa na estrutura OpenCL é um pouco diferente da estrutura geral apresentada anteriormente, a única diferença é que a memória do host e do device estão contidas no mesmo dispositivo, consequentemente o tempo de transferência dos dados entre Host e o device é muito menor, nessa estrutura o ARM é responsável por programar a FPGA através do barramento AxI, e transmitir dados para a memória global DDR3, da qual a FPGA faz uso para executar suas tarefas como device.</p>
+<p>Ao analisar os ganhos ao utilizar o OpenCL em FPGA, além da vantagem do baixo tempo de transferência de dados citado anteriormente, também há as vantagens características desse processador, como flexibilidade de hardware e sua quantidade massiva de cores.</p>
+<p><a class="glightbox" href="../imgs/Leo/Diagrama2.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/Leo/Diagrama2.png" /></a><br />
+<em>Figura 2 - Arquitetura OpenCL-FPGA</em> </p>
+<p>Enquanto que a estrutura em CPU, possui uma quantidade reduzida de cores com unidades aritméticas potentes para reduzir latência de operações.</p>
+<p><a class="glightbox" href="../imgs/Leo/cpu.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/Leo/cpu.png" /></a><br />
+<em>Figura 4 - Arquitetura CPU</em></p>
+<p>Logo a estrutura em FPGA apresenta maior desempenho comparada a CPU para programas paralelos, devido a seu grande número de cores e baixo tempo de transferência de dados, enquanto a CPU apresenta maior desempenho que a fpga para programas sequenciais, devido a suas unidades aritméticas potentes.</p>
+<h2 id="tutorial-opencl-de-10">Tutorial OpenCL-DE-10<a class="headerlink" href="#tutorial-opencl-de-10" title="Permanent link">&para;</a></h2>
+<h3 id="1-requerimentos-de-sistema">1. Requerimentos de Sistema<a class="headerlink" href="#1-requerimentos-de-sistema" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Placa Terasic DE10-Standard</li>
+<li>Cartão microSD com ao menos 4GB</li>
+<li>Leitor de cartão microSD</li>
+<li>Cabo USB (tipo A para mini-B)</li>
+<li>Host PC com</li>
+<li>Porta USB</li>
+<li>64-bit Windows 7 ou Linux ( este tutorial utiliza linux)</li>
+<li>32GB de memoria é recomendado</li>
+<li>PuTTY ou Minicom(Linux) utility</li>
+<li>Intel Quartus Prime v18.1 instalado com licença valida</li>
+<li>Intel OpenCL v18.1 instalado com licença valida</li>
+<li>Intel SoC EDS v18.1 instalado</li>
+</ul>
+<h3 id="2-configurando-a-infra-estrutura">2. Configurando a Infra Estrutura<a class="headerlink" href="#2-configurando-a-infra-estrutura" title="Permanent link">&para;</a></h3>
+<p>Essa etapa descreve como configurar o ambiente de desenvolvimento do OpenCL no Padrão DE10-Standard.</p>
+<h4 id="21-instalacao-de-software">2.1 Instalação de Software<a class="headerlink" href="#21-instalacao-de-software" title="Permanent link">&para;</a></h4>
+<p>É necessário instalar os seguintes softwares:</p>
+<ul>
+<li>
+<p><a href="http://dl.altera.com/opencl">Intel Quartus Standard e OpenCL SDK</a></p>
+</li>
+<li>
+<p><a href="http://dl.altera.com/soceds">Intel SoC EDS</a></p>
+</li>
+<li>
+<p><a href="http://de10-standard.terasic.com/cd">DE10-Standard OpenCL Board Support Package (BSP)</a></p>
+</li>
+</ul>
+<p>Após a instalação do Quartus Prime e do OpenCL SDK, crie uma pasta com o nome terasic, a qual deve conter a pasta DE10-Standard-Opencl. A pasta criada deve estar no diretório board:</p>
+<p><code>/intelFPGA/18.1/hld/board</code></p>
+<h4 id="22-instalacao-da-licensa-opencl">2.2 Instalação da Licensa Opencl<a class="headerlink" href="#22-instalacao-da-licensa-opencl" title="Permanent link">&para;</a></h4>
+<p>É necessária uma licença OpenCL para o Intel OpenCL SDK compilar o projeto. Em posse da licença é necessário criar uma variável de ambiente LM_LICENSE_FILE com a atribuição do diretório da licença.</p>
+<h4 id="23-configurando-variaveis-de-ambiente">2.3 Configurando variaveis de ambiente<a class="headerlink" href="#23-configurando-variaveis-de-ambiente" title="Permanent link">&para;</a></h4>
+<p>As seguintes variáveis de ambiente devem ser configuradas para o funcionamento do projeto, isso pode ser feito adicionando as variáveis a seguir ao arquivo .bash-rc (configuração permanente), ou em um <code>arquivo.sh</code> (configuração temporaria, utilizar <code>$source arquivo.sh</code> para ativar o ambiente).</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>Opencl<span class="w"> </span><span class="m">18</span>.1
+<span class="nb">export</span><span class="w"> </span><span class="nv">LOCAL</span><span class="o">=</span><span class="w"> </span>/media/leonardo
+<span class="nb">export</span><span class="w"> </span><span class="nv">QUARTUS_ROOTDIR</span><span class="o">=</span><span class="nv">$LOCAL</span>/FPGA/intelFPGA/18.1/quartus
+<span class="nb">export</span><span class="w"> </span><span class="nv">ALTERAOCLSDKROOT</span><span class="o">=</span><span class="nv">$LOCAL</span>/FPGA/intelFPGA/18.1/hld
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$QUARTUS_ROOTDIR</span>/bin:<span class="nv">$LOCAL</span>/FPGA/intelFPGA/18.1/embedded/ds-5/bin:<span class="nv">$LOCAL</span>/FPGA/intelFPGA/18.1/embedded/ds-5/sw/gcc/bin:<span class="nv">$ALTERAOCLSDKROOT</span>/bin:<span class="nv">$ALTERAOCLSDKROOT</span>/linux64/bin:
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ALTERAOCLSDKROOT</span>/linux64/lib
+<span class="nb">export</span><span class="w"> </span><span class="nv">AOCL_BOARD_PACKAGE_ROOT</span><span class="o">=</span><span class="nv">$ALTERAOCLSDKROOT</span>/board/terasic/de10_standard
+<span class="nb">export</span><span class="w"> </span><span class="nv">QUARTUS_64BIT</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LM_LICENSE_FILE</span><span class="o">=</span><span class="s2">&quot;/home/leonardo/Downloads/1-R3OQLF_License.dat&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INTELFPGAOCLSDKROOT</span><span class="o">=</span><span class="nv">$LOCAL</span>/FPGA/intelFPGA/18.1/hld
+</code></pre></div>
+<h4 id="23-verificacao-do-ambiente">2.3 Verificação do Ambiente<a class="headerlink" href="#23-verificacao-do-ambiente" title="Permanent link">&para;</a></h4>
+<p>Esta seção mostra como verificar se o ambiente OpenCL está configurado corretamente.</p>
+<ul>
+<li>Verificar Versão </li>
+</ul>
+<div class="highlight"><pre><span></span><code>  $ aocl version
+      aocl 18.1.0.625 (Intel(R) FPGA SDK for OpenCL(TM), Version 18.1.0 Build 625 Standard Edition, Copyright (C) 2018 Intel Corporation)
+</code></pre></div>
+<ul>
+<li>Verificar placa de destino 
+<div class="highlight"><pre><span></span><code>$ aoc -list-boards
+   Board list:
+      de10_standard_sharedonly```
+          Board Package: /media/leonardo/FPGA/intelFPGA/18.1/hld/board/terasic/de10_standard
+</code></pre></div></li>
+</ul>
+<h3 id="3-compilar-projeto">3. Compilar Projeto<a class="headerlink" href="#3-compilar-projeto" title="Permanent link">&para;</a></h3>
+<p>Esta seção mostra como compilar o kernel e o programa host do OpenCL, necessários para executar um programa em OpenCL.</p>
+<ul>
+<li>
+<p>Compilar Kernel</p>
+<ul>
+<li>
+<p><code>$ cd /media/leonardo/FPGA/intelFPGA/18.1/hld/board/terasic/de10_standard/test/vector_add_2</code></p>
+</li>
+<li>
+<p><code>$ aoc device/vector_add.cl -o bin/vector_add.aocx --sw-dimm-partition -board=de10_standard_sharedonly -report</code></p>
+</li>
+<li>
+<p>Um arquivo <code>.aocx</code> será gerado, este é utilizado para a configuração dos kernels programados, configurando a execução de tarefas e troca de informações entre FPGA e sistema host.</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A copilação do kernel é muito lenta, pode levar horas.</p>
+</div>
+<ul>
+<li>
+<p>Compilar Programa Host</p>
+<ul>
+<li>
+<p><code>$ cd /media/leonardo/FPGA/intelFPGA/18.1/embedded</code></p>
+</li>
+<li>
+<p><code>$ embedded_command_shell.sh</code></p>
+</li>
+<li>
+<p><code>$ cd /media/leonardo/FPGA/intelFPGA/18.1/hld/board/terasic/de10_standard/test/vector_add_2</code></p>
+</li>
+<li>
+<p><code>$ make</code></p>
+</li>
+<li>
+<p>Um arquivo host será gerado, esse arquivo é basicamente o .o usual de uma compilação do GCC, arquivo intermediário que será utilizado em estágios de execução.</p>
+</li>
+<li>
+<p>Se ao executar o comando make ocorrer erros de include na biblioteca Cl adicione o parâmetro <code>../../../../../host/include/</code> ao <code>INC_DIRS</code> no arquivo makefile</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-embarcar-kernel">4. Embarcar Kernel<a class="headerlink" href="#4-embarcar-kernel" title="Permanent link">&para;</a></h3>
+<p>Utilizaremos uma imagem <code>.iso</code> já gerada com as especificações e que já possui todo o sistema necessário para executar o linux com OpenCL.
+Através da pasta DE10_standard_opencl extraia o arquivo de10_standard_opencl.img, esse arquivo é uma cópia bit a bit do que deve ser salvo no SDCard.</p>
+<p>Quando inserirmos um disco externo no linux o mesmo o associa a um 'device' na pasta '/dev/', para sabermos qual o nome do device que foi atribuído ao SDcard, podemos usar o comando dmesg, que exibe o log do sistema operacional e nele podemos ver qual foi o último hardware detectado e qual device foi atribuído:</p>
+<div class="highlight"><pre><span></span><code>$ dmesg | tail
+  4789.207972] mmc0: new ultra high speed SDR50 SDHC card at address aaaa
+  [4789.211680] mmcblk0: mmc0:aaaa SL16G 14.8 GiB
+  [ 4789.215857]  mmcblk0: p1 p2 p3
+  [ 4988.443942]  mmcblk0: p1 p2 p3
+</code></pre></div>
+<p>Agora vamos salvar a .iso no SDcard.</p>
+<div class="highlight"><pre><span></span><code>$ sudo dd bs=1M if=de10_standard_opencl.img of=/dev/sdc conv=fsync status=progress
+$ sync
+</code></pre></div>
+<p>O sync é necessário para que o kernel faça um flush do cache escrevendo realmente no SDCard todos os dados que foram endereçados a ele.</p>
+<p>Agora devemos ter duas partições visíveis:</p>
+<ul>
+<li>
+<p>524 MiB: FAT32</p>
+</li>
+<li>
+<p>Script de configuração do uboot; Kernel comprimido; Device Tree Blob file</p>
+</li>
+<li>
+<p>u-boot.scr; zImage; socfpga.dtb</p>
+</li>
+<li>
+<p>1 GiB:
+  Filesystem (/)</p>
+</li>
+</ul>
+<p>Os arquivos obtidos na compilação do kernel e host, respectivamente <code>arquivo.ocx</code> e <code>host</code> devem ser colocados na pasta /home/root/ da partição de 1GiB, para serem executadas posteriormente na placa.</p>
+<h3 id="5-ajustar-a-placa">5. Ajustar a placa<a class="headerlink" href="#5-ajustar-a-placa" title="Permanent link">&para;</a></h3>
+<p>Verifique se o interruptor DIP (SW10) MSEL [4: 0] = 01010.</p>
+<p><a class="glightbox" href="../imgs/Leo/d10.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/Leo/d10.png" /></a></p>
+<h3 id="5-conectar-se-a-placa">5. Conectar-se a placa<a class="headerlink" href="#5-conectar-se-a-placa" title="Permanent link">&para;</a></h3>
+<p>Com a placa conectada ao USB do computador, para conectar-se ao kernel da sistema, deve-se utilizar o seguinte comando:</p>
+<div class="highlight"><pre><span></span><code>$ screen /dev/ttyUSB0 115200,cs8
+</code></pre></div>
+<h3 id="6-executar-o-projeto">6. Executar o projeto<a class="headerlink" href="#6-executar-o-projeto" title="Permanent link">&para;</a></h3>
+<p>Dentro do terminal do sistema:</p>
+<div class="highlight"><pre><span></span><code>$ source ./init_opencl.sh
+$ aocl program /dev/acl0 vector_add.aocx
+$ ./host
+</code></pre></div>
+<h2 id="analises-de-desempenho-cpu-vs-opencl">Análises de Desempenho CPU vs OPENCL<a class="headerlink" href="#analises-de-desempenho-cpu-vs-opencl" title="Permanent link">&para;</a></h2>
+<p>Ao comparar o tempo de execução do programa <code>vector_add</code>, que realiza uma simples soma de vetores, entre a CPU e a FPGA foram obtidos os seguintes resultados.</p>
+<table>
+<thead>
+<tr>
+<th>Size-Vector</th>
+<th style="text-align: center;">CPU</th>
+<th style="text-align: right;">FPGA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000000</td>
+<td style="text-align: center;">32.011</td>
+<td style="text-align: right;">6.924</td>
+</tr>
+<tr>
+<td>5000000</td>
+<td style="text-align: center;">159.805</td>
+<td style="text-align: right;">34.278</td>
+</tr>
+<tr>
+<td>10000000</td>
+<td style="text-align: center;">304.255</td>
+<td style="text-align: right;">68.462</td>
+</tr>
+<tr>
+<td>20000000</td>
+<td style="text-align: center;">617.676</td>
+<td style="text-align: right;">180.13</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" href="../imgs/Leo/CPUxFPGA.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../imgs/Leo/CPUxFPGA.png" /></a></p>
+<p>Como pode-se observar o desempenho da execução na FPGA é muito maior, embora a diferença numérica seja pequena, deve-se lembrar que o arquivo de teste realiza uma simples operação de soma de vetor, logo para programas mais complexos, o ganho de desempenho na FPGA seria mais expressivo.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>O teste da CPU é single thread</p>
+</div>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Gabriel-TensorFlow/"
+               class="ah-prev"
+               title="2019 - TensorFlow">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">2019 - TensorFlow</span>
+            </a>
+          
+          
+            <a href="../Elisa-Yocto/"
+               class="ah-next"
+               title="2019 - Yocto">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">2019 - Yocto</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>2020 - PS3 HACK - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '../..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../../termynal.css">
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../.."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">2020 - PS3 HACK</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#starting">Starting</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#motivation">Motivation</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#linux-on-the-ps3">Linux on the PS3</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#setting-up-the-ps3-and-booting-from-a-live-image">Setting Up the PS3 and Booting from a Live Image</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#using-buildroot-for-cross-compilation">Using buildroot for Cross-Compilation</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Students tutorials</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="ps3-hack">PS3 Hack<a class="headerlink" href="#ps3-hack" title="Permanent link">&para;</a></h1>
+<ul>
+<li><strong>Alunes:</strong> Gabriel Monteiro / Guilherme Leite / Hugo Carl</li>
+<li><strong>Curso:</strong> Engenharia da Computação</li>
+<li><strong>Semestre:</strong> 9</li>
+<li><strong>Contato:</strong> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#115;&#105;&#102;&#101;&#114;&#114;&#97;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#99;&#111;&#114;&#115;&#105;&#102;&#101;&#114;&#114;&#97;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>, <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#117;&#105;&#108;&#104;&#101;&#114;&#109;&#101;&#112;&#108;&#51;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#103;&#117;&#105;&#108;&#104;&#101;&#114;&#109;&#101;&#112;&#108;&#51;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
+<li><strong>Ano:</strong> 2020</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Original repo: <a href="https://github.com/guipleite/PS3-Linux-Tutorial">https://github.com/guipleite/PS3-Linux-Tutorial</a></p>
+</div>
+<h2 id="starting">Starting<a class="headerlink" href="#starting" title="Permanent link">&para;</a></h2>
+<p>To follow this tutorial you will need:</p>
+<ul>
+<li><strong>Hardware:</strong> PS3 (Jailbroken), USB Flash Drive, Keyboard, Mouse</li>
+<li><strong>Software:</strong> A Linux distribution, we will be using Ubuntu</li>
+</ul>
+<details class="info">
+<summary>Info</summary>
+<p>If you need to Jailbreak your PS3 you can follow this tutorial:</p>
+<p><a href="https://www.youtube.com/watch?v=q-06YPB18N4&amp;t=12s&amp;has_verified=1">https://www.youtube.com/watch?v=q-06YPB18N4&amp;t=12s&amp;has_verified=1</a></p>
+</details>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>Many people tend to buy new gaming consoles in their launch, meanig a large number of obsolete consoles are left unused the objective of this tutorial is to repurpose these old pieces of hardware by installing GNU/Linux enabliing them to be used for a vast number of applications.</p>
+<hr />
+<h2 id="linux-on-the-ps3">Linux on the PS3<a class="headerlink" href="#linux-on-the-ps3" title="Permanent link">&para;</a></h2>
+<p>The history of Linux in PlayStation started with researchers messing with ideas of using graphics processors to boost their computing powers for years. The main idea is that you can use the same power that is used to run heavy games to run nearly everything, including massive calculations like complicated mathematic models. The necessity of cheap hardware in a moment when supercomputers were very expensive created the plan to use PlayStations as cluster computers. This idea born in 2002 when Sony released a kit called Linux for the Playstation 2, making it easy to create applications using PS2. Things didn't go very well for the PS2 since they started to get unstable when used as clusters to process any kind of data. Only with the PS3 entering the scene in 2006 the applications started to get more interesting.  </p>
+<p>PlayStations 3 have more powerful and stable hardware in comparison to PlayStation 2, and also Sony made available a feature called OtherOS, capable of booting Linux in an easy way. With this new piece of hardware, a lot of researches tried to work with PS3 in order to build supercomputers, like Gaurav Khanna at UMass Dartmouth, that built a cluster of PS3s to make a pure period simulation work on black holes and the United States Air Force that made a project with more than 1700 PS3s to process images of surveillance drones. Things didn't go very well for the PlayStations 3 also, because in March 2010 Sony removed the OtherOS feature due to security concerns. This pretty much ended the era of PlayStation supercomputers because when Sony blocked the use of the OtherOS they also blocked the access of the RSX Nvidia GPU chip, making unable to use any kind of hardware acceleration limiting the use of Linux in PS3s as only a regular not so much powerful computer. </p>
+<p>So the idea of making a PS3 boot a Linux kernel is possible but not so powerful or interesting if you want to play with more complex applications, but for any uses in general you can turn a PS3 into a fully functional PC as shown in this tutorial. </p>
+<details class="info">
+<summary>Info</summary>
+<p>If you want to know more about the history of PlayStations as supercomputers check out the link below:</p>
+<p><a href="https://www.theverge.com/2019/12/3/20984028/playstation-supercomputer-ps3-umass-dartmouth-astrophysics-25th-anniversary">https://www.theverge.com/2019/12/3/20984028/playstation-supercomputer-ps3-umass-dartmouth-astrophysics-25th-anniversary</a></p>
+</details>
+<hr />
+<h2 id="setting-up-the-ps3-and-booting-from-a-live-image">Setting Up the PS3 and Booting from a Live Image<a class="headerlink" href="#setting-up-the-ps3-and-booting-from-a-live-image" title="Permanent link">&para;</a></h2>
+<p>To follow this part of the tutorial you will need:</p>
+<ul>
+<li><strong>Download:</strong> REBUG 4.81.2 Linux package. <a href="https://mega.nz/#!tTBl3CxA!Zr4cqwmFUsfq_oZi89JZWKmJ1pJWXCV-o7WLH2IU09k">https://mega.nz/#!tTBl3CxA!Zr4cqwmFUsfq_oZi89JZWKmJ1pJWXCV-o7WLH2IU09k</a></li>
+</ul>
+<h3 id="downgrade-ps3-version">Downgrade PS3 version<a class="headerlink" href="#downgrade-ps3-version" title="Permanent link">&para;</a></h3>
+<p>In this part of the tutorial we need to install REBUG_4.81.2.PUP in the PS3, this file should be inside the downloaded archive.</p>
+<p><a class="glightbox" href="rebug-archive.PNG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="rebug-archive.PNG" /></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In order to downgrade the firmware of the PS3 you need to have the package <code>Rebug Toolbox</code>installed in the PS3.</p>
+</div>
+<p>First of all you need to check in your device if it is possible to downgrade your firmware:</p>
+<ol>
+<li><code>Game</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Rebug Toolbox</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Utilities</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Toggle QA.Flag</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Enabled</code></li>
+<li><code>Game</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Rebug Toolbox</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>System</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Information system</code>  <ul>
+<li>Make sure the line <code>PS3 System: Firmware [version] DEX</code> contains DEX.</li>
+<li>In case the version of the firmware is CEX you will need to change the version. This following tutorial can be useful: <a href="https://www.youtube.com/watch?v=0YJBCl4PjCo&amp;t=758s">https://www.youtube.com/watch?v=0YJBCl4PjCo&amp;t=758s</a>.</li>
+</ul>
+</li>
+</ol>
+<p>After making sure your device match the downgrade requeriments you can proceed the tutorial.</p>
+<p><strong>1. In your computer:</strong></p>
+<ul>
+<li>Plug in your empty USB stick in your PC and crate the folder <code>PS3</code>. Inside of the <code>PS3</code> folder create another folder <code>UPDATE</code>.</li>
+<li>Extract the file <code>REBUG_4.81.2_D-REX_EMER_INIT_PS3UPDAT.PUP</code> into your <code>../PS3/UPDATE</code> folder.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure your USB drive is formatted to <code>FAT32</code> before extracting the file. If not you can do so by using the option format in any OS or by using a third-party format software like <code>Rufus</code>.</p>
+</div>
+<p><strong>2. In your PS3:</strong></p>
+<ul>
+<li>Plug your USB drive with the file <code>.PUP</code> file on it.</li>
+<li>Go to  <code>Settings</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>System Update</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Update via Storage Media</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>4.81.2 PS3UPDAT.PUP</code>.</li>
+</ul>
+<p>When the installation completes, check if the older version is installed correctly at: <code>Settings</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>System Settings</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>System Information</code>.</p>
+<h3 id="repartitioning-ps3-hard-drive">Repartitioning PS3 Hard Drive<a class="headerlink" href="#repartitioning-ps3-hard-drive" title="Permanent link">&para;</a></h3>
+<p>In this section of the tutorial we will format our device in order to create a second partition to hold our Linux, so make sure you make a backup of all the data inside the PS3. </p>
+<ul>
+<li>Turn Off your PS3 and boot it in the <code>Safe Mode</code>.</li>
+<li>Press the <code>PS Button</code>(controller) and then go to: <code>Restore PS3 System</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Yes</code>.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After finishing the reset you will notice a decrease in the PS3 storage space, this happens because the 4.81.2 update is a modified version of the system that creates a new partition when formated.</p>
+</div>
+<h3 id="installing-petitboot">Installing Petitboot<a class="headerlink" href="#installing-petitboot" title="Permanent link">&para;</a></h3>
+<p><strong>1. In your computer:</strong></p>
+<ul>
+<li>To install petitboot first delete the <code>../PS3</code> folder in the USB drive. </li>
+<li>In the downloaded archive you have 2 folders <code>Petitboot NOR/</code> and <code>Petitboot NAND/</code> you need to find out what architeture correspond correspond to your model of PS3 you can do so by checking your model number in this link: <a href="https://www.psdevwiki.com/ps3/SKU_Models">https://www.psdevwiki.com/ps3/SKU_Models</a> (All Slim models are NOR).</li>
+<li>With this information copy the binary file inside the corect petitboot folder to your empty <code>../USB</code> folder.</li>
+</ul>
+<p><strong>2. In your PS3:</strong></p>
+<ul>
+<li>You can now plug the USB in your PS3 but first you will need to install again the <code>Rebug Toolbox</code>, aceess: <code>Game</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Package Manager</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Install Package Files</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>PS3 System Storage</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>REBUG_TOOLBOX</code>.</li>
+<li>With Rebug Toolbox installed: <code>Game</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Rebug Toolbox</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Utilities</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Resize VFLASH/NAND Regions</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Yes</code>.</li>
+<li>Reboot the PS3. </li>
+<li><code>Game</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Rebug Toolbox</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Utilities</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Install petitboot</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Yes</code>.</li>
+<li>Reboot again. </li>
+</ul>
+<h3 id="installing-red-ribbon-linux">Installing Red Ribbon Linux<a class="headerlink" href="#installing-red-ribbon-linux" title="Permanent link">&para;</a></h3>
+<p>After installing petitboot in our PS3 we basically installed OtherOS in the system creating the possibility to boot another OS inside the created partition on the PS3 Hard Drive so now we can proceed to install our Linux version.</p>
+<p><strong>1. In your computer:</strong></p>
+<ul>
+<li>Delete again the file from the <code>../USB</code> folder and extract the contents inside the <code>red_ribbon_lxde_14.03.iso</code> from the archive to the <code>../USB</code> folder.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can use Winrar to extract the contents from the <code>.iso</code> to the desired folder.</p>
+</div>
+<ul>
+<li>Copy also the file <code>create_hdd_region.sh</code> from the archive to <code>../USB</code>.</li>
+</ul>
+<p><strong>2. In your PS3:</strong></p>
+<p>In this moment we will boot a live version of linux in the PS3 so you need to use a mouse and a keyboard in order to navigate in the Red Ribbon interface.</p>
+<ul>
+<li>Plug the USB Stick, the mouse and the keyboard into the PS3.</li>
+<li><code>Game</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Rebug Toolbox</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>System</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Boot OtherOS</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Boot (LV1 patches: Use current)</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Yes</code>.</li>
+</ul>
+<p>At this point you will be able to see the Petitboot screen with some boot options.</p>
+<p><a class="glightbox" href="petitboot-screen.PNG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="petitboot-screen.PNG" /></a></p>
+<p>Press <code>ESC</code> on the plugged keyboard, you should be able to access this Linux terminal.</p>
+<p><a class="glightbox" href="ps3-terminal.PNG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="ps3-terminal.PNG" /></a></p>
+<p>In the terminal execute:</p>
+<div class="codehilite"><pre><span></span><code>$ cd /tmp/petitboot/mnt/sda1/ (sda1 for NOR PS3 if you have a NAND PS3 replace sda1 for sdd1)
+$ ./create_hdd_region.sh
+$ exit
+$ petitboot
+</code></pre></div>
+
+<details class="info">
+<summary>Info</summary>
+<p>If you are interested in compilating your own Linux Kernel, stop right here and jump to read the section "Using buildroot for Cross-Compilation", this tutorial did not achieve complete success, but shows some possible ways to start.</p>
+</details>
+<p>Executing these commands will take you back to the Petitboot screen with the boot options, select with the keyboard the first one (Live) and press <code>Enter</code>. If everything goes right you will boot the live version of Red Ribbon Linux in the PS3.</p>
+<p><a class="glightbox" href="linux-desktop.PNG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="linux-desktop.PNG" /></a></p>
+<p>The live version of linux doesn't give full access to the system and format the system after a normal reboot so we still need to install the full version of linux into the system.</p>
+<ul>
+<li>At the Desktop click in the only icon <code>Install Red Ribbon</code>, it should open the installation screen.</li>
+</ul>
+<p><a class="glightbox" href="installation-linux.PNG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="installation-linux.PNG" /></a></p>
+<ul>
+<li><code>Select continent</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Select language</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Enter system's hostname</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Automatic partitioning</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Yes</code>.</li>
+<li>Finish the installation process and press the upper right On/Off icon in the taskbar, you will be able to see the Logout Menu.</li>
+</ul>
+<p><a class="glightbox" href="logout-linux.PNG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="logout-linux.PNG" /></a></p>
+<p>When selecting the <code>Boot GameOS</code> option you will need to remove the USB Stick from the PS3 and you won't need to use it again to boot the linux because now it is installed inside the PS3 partition. If everything goes as planned you shoud be back to the PS3 main OS screen and be able to go back to Linux easily from OtherOS.</p>
+<p><a class="glightbox" href="ps-screen.PNG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="ps-screen.PNG" /></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After finishing the installation process you can update your old PS3 firmware version installed in the process back to a newer version if you want to. This change will not affect the new installed system.</p>
+</div>
+<hr />
+<h2 id="using-buildroot-for-cross-compilation">Using buildroot for Cross-Compilation<a class="headerlink" href="#using-buildroot-for-cross-compilation" title="Permanent link">&para;</a></h2>
+<p>Buildroot is a set of Makefiles and patches that simplifies and automates the process of building a complete and bootable Linux environment for an embedded system, while using cross-compilation to allow building for multiple target platforms on a single Linux-based development system. Buildroot can automatically build the required cross-compilation toolchain, create a root file system, compile a Linux kernel image, and generate a boot loader for the targeted embedded system, or it can perform any independent combination of these steps. For example, an already installed cross-compilation toolchain can be used independently, while Buildroot only creates the root file system.</p>
+<p>This means we can create compile a Linux enviroment that will run on the PS3 from our Desktop, this is great because now we don't need to rely on whatever packages, applications and configurations the pre-compiled distribution comes with.</p>
+<p>We will be using the <a href="https://github.com/glevand/petitboot--buildroot">petitboot--buildroot</a> project wich is basically buildroot with updates to generate a bootable <em>petitboot</em> image. This is because the bootloader, wich is a progtam that loads the operating system into the working memory of a computer on start-up, is called petitboot and is not availabe on the original buildroot</p>
+<div class="codehilite"><pre><span></span><code>$ git clone https://github.com/glevand/petitboot--buildroot.git
+$ cd petitboot--buildroot
+</code></pre></div>
+
+<p>Now we can configure what we want the buildroot to include in our own linux</p>
+<div class="codehilite"><pre><span></span><code>$ make menuconfig
+</code></pre></div>
+
+<p>This command should bring up an interface like the one shown below that can be navigated using the arrow keys, Enter and Esc:</p>
+<p><a class="glightbox" href="buildroot.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="buildroot.png" /></a></p>
+<p>Under Target options we need to change the <strong>Target Architecture</strong> to the one of the PS3, wich is big endian PowerPC64.</p>
+<p><a class="glightbox" href="br-target-opt.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="br-target-opt.png" /></a></p>
+<p>After that you can press the Escape key twice to go back to the main menu and then enter the <strong>Kernel</strong> submenu. There we can select our kernel's verion or specify one to be downloaded. We will also set the Defconfig name as PS3 under the Kernel Configuration option, this will automatically set some configurations specific to the PS3. Also change the Kernel binary format to <strong>vmlinux</strong> and enable the <strong>Install kernel image to /boot in target</strong>  option.</p>
+<p><a class="glightbox" href="br-kernel.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="br-kernel.png" /></a></p>
+<p>You can also change options under <strong>System Configurations</strong> and <strong>Target packages</strong> to personalize your linux and also compile it with some additional programs such as Python or even some emulators.</p>
+<p>Finally we can compile it, fot that we will use the commands bellow, the <code>clean</code> argument is important if you've alredy tried to compile the os before since it will delete the files generated from previous attempts. The <code>-j 8</code> argument means the compiller will use 8 threads from the CPU to compile everything, you can change that value depending on your hardware, the more threads you give the compiller the faster the processing will be.</p>
+<div class="codehilite"><pre><span></span><code>$ make clean
+$ make all -j 8
+</code></pre></div>
+
+<p>The compiled Filesystem and kernel will be in <code>/output/images/</code> .Inside there, we can find this three outputs:</p>
+<ul>
+<li>
+<p>rootfs.tar: This is just our Linux Filesystem</p>
+</li>
+<li>
+<p>vmlinux: This archive can be found in the /output/images folder like the others or already inside the /rootfs/boot/. This is essentially our kernel .</p>
+</li>
+<li>
+<p>rootfs.cpio.gz: This archive relates to the initial ramdisk for our filesystem. This stands for a temporary root file system that will load in memory to help the Linux startup process.</p>
+</li>
+</ul>
+<p>Now, to finalize we need to copy all this to the PS3. First we will put everything in a pen drive and plug in. At the PS3 shell, we should find the pendrive content in the path /tmp/petitboot/mnt/sda(this name can variate)/. </p>
+<p>First we need to mount where our linux will be located.</p>
+<div class="codehilite"><pre><span></span><code>mkfs.ext4 -m 0 /dev/ps3dd2
+mkswap /dev/ps3dd1
+mkdir linux
+mount /dev/ps3dd2 /linux
+</code></pre></div>
+
+<p>Now we should tar our file system into /dev/ps3dd2 which is mounted at /linux.</p>
+<div class="codehilite"><pre><span></span><code>tar xvf /tmp/petitboot/mnt/sda/rootfs.tar -C /linux
+</code></pre></div>
+
+<p>We now have our file system properly ready to go. We are only left with the initial ramdisk image and possibly the kernel to finalize.</p>
+<div class="codehilite"><pre><span></span><code>cp /tmp/petitboot/mnt/sda/rootfs.cpio.gz /linux/boot
+</code></pre></div>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Check first if the /linux/boot doesn't already have the vmlinux(kernel) inside before executing the next command.</p>
+<p>cp /tmp/petiboot/mnt/sda/vmlinux /linux/boot</p>
+</div>
+<p>Nice, we should have all set to boot our linux right? Yeah kind of....
+If you followed our advice, you know that we didn't succeed in this last attempt and here where things went wrong. To boot our own cross-compiled kernel we needed to only execute the next line:</p>
+<div class="codehilite"><pre><span></span><code>kexec -l /linux/boot/vmlinux --initrd=/linux/boot/rootfs.cpio.gz --append=&quot;root=/dev/ps3dd2&quot;
+</code></pre></div>
+
+<p>Kexec is the bootloader which petitboot is based on. But this didn't work out for us. So now you can choose between searching on how to make it work, or install an already stable distro for the ps3 called Red Ribbon that you saw in the first part of this tutorial. If you are a thrilled to make this work, we recommend René Rebe works to follow on:</p>
+<ul>
+<li><a href="https://www.youtube.com/user/renerebe">https://www.youtube.com/user/renerebe</a></li>
+<li><a href="https://rene.rebe.de/?s=ps3">https://rene.rebe.de/?s=ps3</a></li>
+<li><a href="http://t2sde.org/hardware/console/Sony/PS3/">http://t2sde.org/hardware/console/Sony/PS3/</a></li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FgktHdfhw4g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<hr />
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../../2021/RISCV/"
+               class="ah-prev"
+               title="2021 - RISC V">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">2021 - RISC V</span>
+            </a>
+          
+          
+            <a href="../Android/"
+               class="ah-next"
+               title="2020 - Android para Raspbery Pi 3">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">2020 - Android para Raspbery Pi 3</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

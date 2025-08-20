@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>2. NIOS - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">2. NIOS</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#getting-started">Getting Started</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#soft-processor">Soft processor</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#nios_1">NIOS</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#creating-a-simple-soc">Creating a Simple SoC</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#memory-map">Memory Map</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#programming-the-nios-soft-processor">Programming the NIOS - Soft Processor</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>FPGA</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="nios">NIOS<a class="headerlink" href="#nios" title="Permanent link">&para;</a></h1>
+<p>In this tutorial, we will create and customize a soft processor with NIOS (an embedded system with a processor and peripheral), embed it in the FPGA, and write a code for it. By the end, we'll have the same LEDs as in the previous project, with a similar operation, but now they're controlled by a program rather than dedicated hardware.</p>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<p>To follow this tutorial you need:</p>
+<ul>
+<li><strong>Hardware:</strong> DE10-Standard and accessories</li>
+<li><strong>Software:</strong> Quartus 18.01</li>
+<li><strong>Documents:</strong> <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual">DE10-Standard_User_manual.pdf</a></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>No link abaixo você irá encontrar dicas para resolver possíveis problemas neste tutorial:</p>
+<p><a href="https://insper.github.io/Embarcados-Avancados/Tutorial_FPGA_NIOS_possiveis_problemas/">Possíveis Problemas na Aula: Tutorial FPGA NIOS</a></p>
+</div>
+<h2 id="soft-processor">Soft processor<a class="headerlink" href="#soft-processor" title="Permanent link">&para;</a></h2>
+<p>HDL (VHDL, Verilog, ...) projects aren't very flexible, each project modification implies hardware modifications, which isn't straightforward. Besides the difficulty of implementing changes, we also have the testing and compilation time of the project, which isn't immediate.</p>
+<p>One solution to make the project more flexible is to have the LEDs controlled not by a dedicated logic but by hardware that can execute a series of instructions: a microcontroller.</p>
+<p>Since the FPGA can implement digital logic circuits, it's possible to synthesize a microcontroller in the FPGA and make this uC control the LEDs (Yes!! the uC is hardware described in HDL). Now the change in the control logic depends on the program that will be executed on the uC, making the project much more flexible.</p>
+<div class="admonition note">
+<p>The ARM is also a hardware in HDL, but proprietary:</p>
+<ul>
+<li><a href="https://www.arm.com/about/newsroom/arm-offers-free-access-to-cortex-m0-processor-ip-to-streamline-embedded-soc-design.php">https://www.arm.com/about/newsroom/arm-offers-free-access-to-cortex-m0-processor-ip-to-streamline-embedded-soc-design.php</a></li>
+</ul>
+</div>
+<p>Processors that can be synthesized in programmable logic devices (FPGA, ...) are called <a href="https://en.wikipedia.org/wiki/Soft_microprocessor">Soft Processors</a>. Several Soft Processors are commercially available or open-source:</p>
+<ul>
+<li><a href="https://www.intel.com/content/www/us/en/programmable/products/processors/support.html">NIOS II: Intel</a></li>
+<li><a href="https://www.xilinx.com/products/design-tools/microblaze.html">MicroBlazer: Xilinx</a></li>
+<li><img alt="👉" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/1f449.svg" title=":point_right:" /> <a href="https://www.gaisler.com/index.php/products/ipcores/soclibrary">LEON: Gaisler</a> (aerospace/ SPARCV8)</li>
+<li>among others</li>
+</ul>
+<p>Adding peripherals and extra functionalities to the Soft Processor (for example, we can add a memory manager, timers, network controller, ...) causes the system to be called a <a href="https://en.wikipedia.org/wiki/System_on_a_chip">System On Chip</a> (SoC).</p>
+<h3 id="platform-designer-pd">Platform Designer (<strong>PD</strong>)<a class="headerlink" href="#platform-designer-pd" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p>The Platform Designer was called <strong>QSYS</strong>, you can still find many things with this reference</p>
+</div>
+<p>The Platform Designer is a software provided by Intel and integrated into Quartus that enables us to develop complex systems in a simple and visual way. With it, we can add and connect <strong>Intellectual property cores</strong> (IP Core) to develop an application quickly and visually.</p>
+<p>The IP cores can be from <a href="https://www.intel.com/content/www/us/en/products/programmable/intellectual-property.html">Intel</a>, third parties, or proprietary.</p>
+<div class="admonition note">
+<p class="admonition-title">Going beyond</p>
+<p>There's an online course from Intel that shows how PlatformDesign works: <a href="https://www.intel.com/content/www/us/en/programmable/support/training/course/iqsys101.html">Introduction to Platform Designer</a></p>
+</div>
+<h2 id="nios_1">NIOS<a class="headerlink" href="#nios_1" title="Permanent link">&para;</a></h2>
+<p><a href="https://en.wikipedia.org/wiki/Nios_II">NIOS</a> is the soft processor provided by Altera-Intel and integrated into the tool. NIOS is based on the architecture of MIPS with a <a href="https://www.intel.com/content/www/us/en/programmable/documentation/iga1420498949526.html#iga1409259423560">32-bit architecture</a>, exception control, communication bus, memory control, ....</p>
+<p>The following figure describes the essential components of NIOS (blue) and what is customizable (grey).</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_core.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Nios block diagram" src="../figs/Tutorial-FPGA-NIOS_core.png" /></a></p>
+<ul>
+<li>Reference: <a href="https://www.intel.com/content/www/us/en/programmable/documentation/iga1420498949526.html#iga1409259423560">Processor Architecture</a></li>
+</ul>
+<p>NIOS supports the addition of new instructions to its instruction set, these instructions are implemented in HDL and inserted into the core in a way that is transparent to the developer. There are degrees of customized instructions: combinational; multi-cycle; extended; That makes use of the original register bank or those that add new registers.</p>
+<div class="admonition note">
+<p class="admonition-title">Going beyond</p>
+<p>For more details on how to customize NIOS, refer to the document:</p>
+<ul>
+<li><a href="https://www.intel.com/content/dam/altera-www/global/en_US/pdfs/literature/ug/ug_nios2_custom_instruction.pdf">Nios II Custom Instruction User Guide</a></li>
+</ul>
+</div>
+<h2 id="creating-a-simple-soc">Creating a Simple SoC<a class="headerlink" href="#creating-a-simple-soc" title="Permanent link">&para;</a></h2>
+<div class="admonition success">
+<p>Getting started with implementation.</p>
+</div>
+<p>In this step, we will add a processor and the necessary minimum infrastructure for its operation. We will include the following in the project:</p>
+<ul>
+<li>A clock interface</li>
+<li>A memory (data and program)</li>
+<li>The processor (NIOS II)</li>
+<li>A PIO peripheral (for managing digital outputs)</li>
+<li>A JTAG-UART for supporting debug via print.</li>
+</ul>
+<p>To begin:</p>
+<ol>
+<li>Copy the <code>Lab1_FPGA_RTL/</code> folder and rename it to <code>Lab2_FPGA_NIOS/</code>.</li>
+<li>Open the project in this new folder <code>Lab1_FPGA_RTL/</code> in Quartus.</li>
+<li>Open the Platform Designer:<ul>
+<li><strong>Quartus</strong> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Tools</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Platform Designer</code></li>
+</ul>
+</li>
+<li>Add the following peripherals and their configurations:<ul>
+<li><code>On-Chip Memory (RAM or ROM Intel FPGA IP)</code><ul>
+<li>Type: <strong>RAM</strong></li>
+<li>Total Memory size: <strong>32768 bytes</strong></li>
+</ul>
+</li>
+<li><code>JTAG UART Intel FPGA IP</code><ul>
+<li><strong>Default</strong></li>
+</ul>
+</li>
+<li><code>PIO (Parallel I/O) Intel FPGA IP</code><ul>
+<li>Width: <strong>6</strong></li>
+<li>Direction: <strong>Output</strong></li>
+</ul>
+</li>
+<li><code>NIOS II Processor</code><ul>
+<li>Type: <strong>NIOS II/e</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can use the search box to find the IPs</p>
+</div>
+<p>You should obtain something similar to:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_unconnected.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Clock and Reset" src="../figs/Tutorial-FPGA-NIOS_unconnected.png" /></a></p>
+<div>
+<div class="ah-progress-container"><button class="ah-button ah-button--primary progress" id="prog-0"> Progress </button></div>
+</div>
+</section>
+<section class="progress-section">
+<h3 id="connecting-clock-and-reset">Connecting Clock and Reset<a class="headerlink" href="#connecting-clock-and-reset" title="Permanent link">&para;</a></h3>
+<p>The peripherals of the <strong>PD</strong> (Platform Designer) are like independent systems (think of each block as a chip) that need to be connected at least to a Clock and a Reset. The system can operate in different clock and reset domains, so this connection must be made by the developer.</p>
+<p>Think of this step as similar to the <code>port map</code> in VHDL, but at a higher level of abstraction. The <strong>PD</strong> will be responsible for making the signals compatible for us. Connect all the clock and reset signals to the <code>clk</code> and <code>clk_rst</code> signals of the <code>clk_0</code> peripheral, and also connect the <code>debug_reset</code> of NIOS, as shown in the following figure:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_rst.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Clock and Reset" src="../figs/Tutorial-FPGA-NIOS_rst.png" /></a></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To connect, click on the gray circle at the intersection of the buses or signals.</p>
+</div>
+<div>
+<div class="ah-progress-container"><button class="ah-button ah-button--primary progress" id="prog-1"> Progress </button></div>
+</div>
+</section>
+<section class="progress-section">
+<h3 id="connecting-the-bus">Connecting the Bus<a class="headerlink" href="#connecting-the-bus" title="Permanent link">&para;</a></h3>
+<p>Intel defines two types of data buses for the <strong>PD</strong>: Avalon and AXI (this is an inheritance from Altera). The Avalon bus is the main way to connect a peripheral to NIOS (the processor), while the AXI is the standard bus for ARM, which will be used later.</p>
+<p>The Avalon bus basically defines two types of communication: <strong>Memory Mapped (MM)</strong> and <strong>Avalon Streaming Interface (ST)</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Going further</p>
+<p>For more information, refer to the document <a href="https://www.altera.com/content/dam/altera-www/global/en_US/pdfs/literature/manual/mnl_avalon_spec.pdf">Avalon Interface Specifications</a>.</p>
+</div>
+<p>The main bus of NIOS is the <a href="https://en.wikipedia.org/wiki/Memory-mapped_I/O">memory-mapped</a> one, and every peripheral connected to the <strong>NIOS</strong> (processor) must have this bus. Altera provides converters and adapters to transform one communication form into another.</p>
+<blockquote>
+<p>In tutorial 3, we will develop a proprietary peripheral that will be connected to this bus.</p>
+</blockquote>
+<p>Note that NIOS has two <strong>MM</strong> type buses: <code>data_master</code> and <code>instruction_master</code>. Since NIOS II is a processor based on the <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.faqs/ka3839.html">Harvard architecture</a>, it has two separate paths for accessing memory: one for data and another for program (instruction).</p>
+<p>In our hardware topology, we only have a single memory (<strong>on_chip_memory</strong>) that will be initially shared between data and program (there is an efficiency loss here since the memory can only be accessed by one bus at a time). <strong>We'll improve this later!</strong></p>
+<p>We should connect all the peripherals (<strong>PIO</strong>, <strong>UART</strong>, and <strong>OnChip Memory</strong>) to the <code>data_master</code> bus, and connect <mark>only the memory</mark> (<strong>OnChip Memory</strong>) to the instruction bus (<code>instruction_master</code>), resulting in the following assembly:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_connected.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-NIOS_connected.png" /></a></p>
+<h2 id="memory-map">Memory Map<a class="headerlink" href="#memory-map" title="Permanent link">&para;</a></h2>
+<p>After making the connections, we need to specify the memory address for each peripheral. There are two ways to do this: manual or automatic.</p>
+<p>In the manual method, you can allocate the peripherals at memory addresses of your choice, taking care to avoid overlapping addresses. In the automatic method, we let the tool allocate the peripherals at the correct addresses.</p>
+<p>To perform automatic allocation: <code>System</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Assign Base Address</code>. To view the result, click on the <code>Address Map</code> tab.</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_mem-mapped.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Automatic Memory Map" src="../figs/Tutorial-FPGA-NIOS_mem-mapped.png" /></a></p>
+<h3 id="configuring-nios">Configuring NIOS<a class="headerlink" href="#configuring-nios" title="Permanent link">&para;</a></h3>
+<p>Now we need to configure NIOS to use the newly connected memory. Double-click on the NIOS to open the <strong>Parameters</strong> window.</p>
+<p>In <code>Parameters</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Vector</code>, configure:</p>
+<ul>
+<li>Reset vector memory: <strong>onchip_memory</strong></li>
+<li>Exception vector memory: <strong>onchip_memory</strong></li>
+</ul>
+<p><a class="glightbox" href="figs/Tutorial-FPGA-NIOS_vector.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="figs/Tutorial-FPGA-NIOS_vector.png" /></a></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The name <strong>onchip_memory</strong> may vary depending on your project, and the address may also vary (this depends on the order in which the components were added).</p>
+</div>
+<h3 id="export">Export<a class="headerlink" href="#export" title="Permanent link">&para;</a></h3>
+<p>The export column in <strong>Platform Designer</strong> indicates which signals will be exported from the system. Think of these signals as the ones that will have contact with the external world (they will be mapped to pins in the <code>topLevel</code>).</p>
+<p>Double-click on the export column in the row of the signal <strong>external_connection</strong> of the <strong>PIO</strong> component and name this signal as LEDs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Notice that the <code>Clock Source</code> component also has the export of signals: <code>clk</code> and <code>reset</code>. This was done automatically when creating the project.</p>
+</div>
+<h3 id="saving">Saving<a class="headerlink" href="#saving" title="Permanent link">&para;</a></h3>
+<p>At the end of everything, you should have something like the following figure:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_MM.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Final Qsys" src="../figs/Tutorial-FPGA-NIOS_MM.png" /></a></p>
+<p><mark>Save the project as <code>niosLab2.qsys</code> in the project folder, and click on <code>Generate HDL</code> for the <strong>PD</strong> to generate the project.</mark></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code>File</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Save_as</code>: <code>niosLab2.qsys</code></p>
+</div>
+<h3 id="using-the-component">Using the Component<a class="headerlink" href="#using-the-component" title="Permanent link">&para;</a></h3>
+<p>Still in the <strong>PD</strong>, click on: <code>Generate</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Show Instantiation Template</code>, select VHDL as the HDL language. You should obtain something like this:</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Save this somewhere, we will use it in the next step!</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="k">component</span><span class="w"> </span><span class="nc">niosLab2</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">clk_clk</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                    </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">-- clk</span>
+<span class="w">        </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                    </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">-- reset_n</span>
+<span class="w">        </span><span class="n">leds_export</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">         </span><span class="c1">-- export</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">niosLab2</span><span class="p">;</span>
+
+<span class="n">u0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">niosLab2</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">clk_clk</span><span class="w">       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">CONNECTED_TO_clk_clk</span><span class="p">,</span><span class="w">       </span><span class="c1">--  clk.clk</span>
+<span class="w">        </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">CONNECTED_TO_reset_reset_n</span><span class="p">,</span><span class="w"> </span><span class="c1">--  reset.reset_n</span>
+<span class="w">        </span><span class="n">leds_export</span><span class="w">   </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">CONNECTED_TO_leds_export</span><span class="w">    </span><span class="c1">--  leds.export</span>
+<span class="w">    </span><span class="p">);</span>
+</code></pre></div>
+<p>This is a shortcut for how we should use this component in our project. This code snippet indicates that the newly created project in the <strong>PD</strong> has three external interfaces: <code>clk_clk</code>, <code>reset_reset_n</code>, and <code>leds_export</code>. These signals will need to be mapped in the topLevel to their respective pins.</p>
+<div class="admonition tip">
+<p>These names may vary in your project!</p>
+</div>
+<p>The schematic (generated by <code>Platform Designer</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>View</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Schematic</code>) illustrates the newly created SoC and its interfaces:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_schematic.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Schematic" src="../figs/Tutorial-FPGA-NIOS_schematic.png" /></a></p>
+<h3 id="finishing">Finishing<a class="headerlink" href="#finishing" title="Permanent link">&para;</a></h3>
+<p>Click on finish and leave everything as default. Now Qsys will create the system and all the components configured in it. Quartus will give a warning indicating that some files need to be added to Quartus in order for it to access the newly created project in the <strong>PD</strong>:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_addQuartus.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Add files" src="../figs/Tutorial-FPGA-NIOS_addQuartus.png" /></a></p>
+<p>In Quartus: <code>Project</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Add/remove files in project</code> and add the file:</p>
+<ul>
+<li><code>niosLab2/synthesis/niosLab2.qip</code></li>
+</ul>
+<p>Resulting in:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_file.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Files" src="../figs/Tutorial-FPGA-NIOS_file.png" /></a></p>
+<h3 id="creating-the-top-level">Creating the Top-Level<a class="headerlink" href="#creating-the-top-level" title="Permanent link">&para;</a></h3>
+<p>Now we need to create a VHDL file that will be our top-level <code>LAB2_FPGA_NIOS.vhd</code> to include the newly created <code>niosLab2</code> component.</p>
+<ol>
+<li>Create a new VHDL file named: <code>LAB2_FPGA_NIOS.vhd</code></li>
+<li>Insert the following <code>VHDL</code> code:</li>
+<li>Compile the project and analyze the RTL to verify if it is as expected.</li>
+<li>Program the project onto the FPGA.</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">Top-Level</p>
+<div class="highlight"><pre><span></span><code><span class="k">library</span><span class="w"> </span><span class="nn">IEEE</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">IEEE.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">LAB2_FPGA_NIOS</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="c1">-- Globals</span>
+<span class="w">        </span><span class="n">fpga_clk_50</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span><span class="w">             </span><span class="c1">-- clock.clk</span>
+
+<span class="w">        </span><span class="c1">-- I/Os</span>
+<span class="w">        </span><span class="n">fpga_led_pio</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">LAB2_FPGA_NIOS</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">LAB2_FPGA_NIOS</span><span class="w"> </span><span class="k">is</span>
+
+<span class="k">component</span><span class="w"> </span><span class="nc">niosLab2</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">clk_clk</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                    </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">-- clk</span>
+<span class="w">  </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                    </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">-- reset_n</span>
+<span class="w">  </span><span class="n">leds_export</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">         </span><span class="c1">-- export</span>
+
+
+<span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">niosLab2</span><span class="p">;</span>
+
+<span class="k">begin</span>
+
+<span class="n">u0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">niosLab2</span><span class="w"> </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">clk_clk</span><span class="w">       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">fpga_clk_50</span><span class="p">,</span><span class="w">    </span><span class="c1">--  clk.clk</span>
+<span class="w">  </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w">            </span><span class="c1">--  reset.reset_n</span>
+<span class="w">  </span><span class="n">leds_export</span><span class="w">   </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">fpga_led_pio</span><span class="w">    </span><span class="c1">--  leds.export</span>
+<span class="p">);</span>
+
+<span class="k">end</span><span class="w"> </span><span class="nc">rtl</span><span class="p">;</span>
+</code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that we are not using the reset signal (the <code>_n</code> indicates that the reset is active-low, i.e., 0). </p>
+</div>
+<h2 id="programming-the-nios-soft-processor">Programming the NIOS - Soft Processor<a class="headerlink" href="#programming-the-nios-soft-processor" title="Permanent link">&para;</a></h2>
+<p>Now that we have the <strong>project programmed onto the FPGA</strong>, with the hardware that includes the NIOS processor, we need to generate and program a software that controls the LEDs. To do this, we will open the <strong>NIOS Software Build for Eclipse</strong> (SBT) IDE, which has all the necessary toolchain to develop firmware for NIOS.</p>
+<p>In Quartus: <code>Tools</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Nios II Software Build...</code>, and an eclipse interface will open.</p>
+<p>When developing projects for SoC systems, we have a problem: the hardware is not standardized. Since everything is customized, there is an issue that needs to be addressed, which is the interface between the created hardware and the software toolchain (compiler, linker, etc.).</p>
+<p>Altera solved this by creating a Hardware Abstraction Layer (HAL), or as Intel calls it, Board Support Package (BSP), which extracts information from the Platform Designer to be used by the compilation toolchain (GCC). When we create a project in <strong>NIOS II - Eclipse</strong>, two projects will be created: one containing the firmware to be programmed into the NIOS, and another (BSP) containing relevant information about the hardware for use in the firmware and toolchain.</p>
+<!--![SBT](https://www.altera.com/content/dam/altera-www/global/en_US/images/devices/processor/images/n2-soft-dev-tools.gif)-->
+
+<!--!!! note "For more information:"
+    - https://www.altera.com/products/processors/design-tools.html#SBT-->
+
+<h3 id="creating-the-project">Creating the Project<a class="headerlink" href="#creating-the-project" title="Permanent link">&para;</a></h3>
+<ol>
+<li>In <strong>Quartus</strong>: <code>Tools</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Nios II Software Build for Eclipse</code></li>
+<li>
+<p>In <strong>NIOS II Software Build for Eclipse</strong>: <code>File</code>  <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />  <code>New</code>  <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />  <code>NIOS II Application and BSP from template</code></p>
+</li>
+<li>
+<p><code>SOPC Information File Name</code>:</p>
+<ul>
+<li>In the project folder, search for the file: <strong>niosLab2.sopcinfo</strong><ul>
+<li>This file is created by the <strong>PD</strong> when the project is compiled and is located in the project folder.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Project name</code>: <strong>niosLab2</strong></p>
+</li>
+<li>
+<p><code>Project template</code>: <strong>Hello World</strong></p>
+</li>
+</ol>
+<details class="tip">
+<summary>Tip</summary>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_projectCreate.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-NIOS_projectCreate.png" width="500" /></a></p>
+</details>
+<ul>
+<li>After clicking Next, SBT will create two project folders:<ul>
+<li><code>niosLab2</code>: firmware to be embedded</li>
+<li><code>niosLab2_bsp</code>: Board support package for the firmware</li>
+</ul>
+</li>
+</ul>
+<p>You should obtain something like this:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_project.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-NIOS_project.png" /></a></p>
+<h3 id="analisando-e-configurando-o-bsp">Analisando e configurando o bsp<a class="headerlink" href="#analisando-e-configurando-o-bsp" title="Permanent link">&para;</a></h3>
+<p>Vamos analisar o BSP gerado:</p>
+<ul>
+<li><code>Project Explorer</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>niosLab2_bsp</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>NIOS II</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>bsp Editor</code></li>
+</ul>
+<details class="tip">
+<summary>Tip</summary>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_eclipseBSP.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-NIOS_eclipseBSP.png" width="500" /></a></p>
+</details>
+<p>Isso abrirá uma interface de configuração para o bsp. Diversas são as opções de configurações, algumas delas:</p>
+<ul>
+<li><code>sys_clk_timer</code>: periférico utilizado para bibliotecas de delay (não inserimos no Platform Designer)</li>
+<li><code>timestamp_timer</code>: periférico que seria utilizado pelo timestamp</li>
+<li><code>stdin</code>, <code>stdout</code>, <code>sterr</code>: periférico utilizado pelo <strong>stantard IO</strong> do C, no nosso caso: <code>jtat_uart_0</code> (poderia ser outro).</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note que a região de memória do stack já está configurada para a <code>onchip_memory</code>. Aqui teríamos a opção de mapear para outro local (no caso do sistema possuir outras memórias, tais como memórias DDR externas a FPGA).</p>
+</div>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_bsp.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-NIOS_bsp.png" /></a></p>
+<div>
+<div class="ah-progress-container"><button class="ah-button ah-button--primary progress" id="prog-2"> Progress </button></div>
+</div>
+</section>
+<section class="progress-section">
+<h3 id="jtag-uart-small-driver">Jtag-UART small driver<a class="headerlink" href="#jtag-uart-small-driver" title="Permanent link">&para;</a></h3>
+<p>Note que no nosso projeto no <strong>PD</strong> o periférico jtag-uart não teve seu sinal de interrupção conectado no NIOS, isso dificulta o acesso a uart, já que o firmware não será interrompido caso um novo dado chegue (gets) ou na transmissão (puts). O driver deve ficar fazendo um polling no periférico para verificar o envio e recepção dos dados. Para isso funcionar, devemos ativar uma opção no driver do jtag_avalon no bsp:</p>
+<ul>
+<li><code>BSP Editor</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Drivers</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>jtag_uart</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>enable_small_driver</code></li>
+</ul>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_smallDriver.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Jtag Small Driver" src="../figs/Tutorial-FPGA-NIOS_smallDriver.png" /></a></p>
+<div>
+<div class="ah-progress-container"><button class="ah-button ah-button--primary progress" id="prog-3"> Progress </button></div>
+</div>
+</section>
+<section class="progress-section">
+<h3 id="gerando-o-bsp">Gerando o bsp<a class="headerlink" href="#gerando-o-bsp" title="Permanent link">&para;</a></h3>
+<p>Toda vez que o bsp for editado ou o hardware alterado (<strong>Platform Designer</strong>) deve-se regenerar o bsp :</p>
+<p>De volta no eclipse, devemos gerar os arquivos bsp. Para isso clique em: <code>niosLab2_bsp</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>NIOS II</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Generate BSP</code></p>
+<h3 id="embarcando">Embarcando!<a class="headerlink" href="#embarcando" title="Permanent link">&para;</a></h3>
+<p>Com o bsp editado abra agora a pasta <code>niosLab2</code> e note que existe inicializada com um arquivo: <code>hello_world.c</code> que imprime via JTAG-UART uma string. Insira o código a seguir no eclipse:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from Nios II!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Com o <code>hello_word.c</code> aberto (é necessário para o eclipse saber qual projeto você quer embarcar), clique em: <code>Run</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Run</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>NIOS II Hardware</code>. Isso fará com que a aplicação seja descarregada na memória do Qsys que alocamos para o Nios e que o hardware seja, reiniciado para executar o firmware. Quando o firmware for executado, abra a aba do eclipse <strong>NIOS II console</strong>:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-NIOS_console.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="printf" src="../figs/Tutorial-FPGA-NIOS_console.png" width="500" /></a></p>
+<!--!!! tip "Programando"
+    <video width="660" height="360" controls>
+      <source src="http://54.162.111.146/shared/soc/SoC-Tutorial-FPGA-NIOS.mp4" type="video/mp4">
+    </video> -->
+
+<div>
+<div class="ah-progress-container"><button class="ah-button ah-button--primary progress" id="prog-4"> Progress </button></div>
+</div>
+</section>
+<section class="progress-section">
+<h3 id="blink-led">Blink LED<a class="headerlink" href="#blink-led" title="Permanent link">&para;</a></h3>
+<p>Edite main para conter o código a seguir:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;system.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;alt_types.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;io.h&gt;</span><span class="c1"> /* Leiutura e escrita no Avalon */</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">delay</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">){</span>
+<span class="w">      </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span>
+<span class="w">      </span><span class="k">while</span><span class="p">(</span><span class="n">delay</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">){</span>
+<span class="w">          </span><span class="n">delay</span><span class="o">++</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">led</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Embarcados++ </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">led</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">5</span><span class="p">){</span>
+<span class="w">          </span><span class="n">IOWR_32DIRECT</span><span class="p">(</span><span class="n">PIO_0_BASE</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">led</span><span class="o">++</span><span class="p">);</span>
+<span class="w">          </span><span class="n">usleep</span><span class="p">(</span><span class="mi">50000</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="k">else</span><span class="p">{</span>
+<span class="w">          </span><span class="n">led</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">  </span><span class="p">};</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Embarque no NIOS e veja o resultado nos LEDS!</p>
+<div>
+<div class="ah-progress-container"><button class="ah-button ah-button--primary progress" id="prog-5"> Progress </button></div>
+</div>
+</section>
+<section class="progress-section">
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Entrega-1/"
+               class="ah-prev"
+               title="🔔 Assessment">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">🔔 Assessment</span>
+            </a>
+          
+          
+            <a href="../Entrega-2/"
+               class="ah-next"
+               title="🔔 Assessment">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">🔔 Assessment</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

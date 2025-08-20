@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>9. Buildroot - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">9. Buildroot</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#getting-started">Getting Started</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#configuring">Configuring</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#saving">Saving</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#compiling">Compiling</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#testing">Testing</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#studying">Studying</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>HPS</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="buildroot">Buildroot<a class="headerlink" href="#buildroot" title="Permanent link">&para;</a></h1>
+<p>We will be using <a href="https://buildroot.org/">buildroot</a> to generate the filesystem (<code>/bin</code>, <code>/etc</code>, ...) for our embedded system. In buildroot, we have the option to configure which software we want on the device. For example, if we want to access the HPS via ssh, we will have to add an ssh server in buildroot to be compiled and added to the filesystem and executed at boot.</p>
+<div class="admonition note">
+<p class="admonition-title">Buildroot Wikipedia</p>
+<p>Buildroot is a set of Makefiles and patches that simplify and automate the process of building a complete and bootable Linux environment for an embedded system, using cross-compilation to allow building for multiple target platforms on a single Linux-based development system. Buildroot can automatically build the required cross-compilation toolchain, create a root file system, compile a Linux kernel image, and generate a boot loader for the targeted embedded system, or perform any independent combination of these steps. For example, an already installed cross-compilation toolchain can be used independently, while Buildroot only creates the root file system.</p>
+<ul>
+<li>ref: <a href="https://en.wikipedia.org/wiki/Buildroot">https://en.wikipedia.org/wiki/Buildroot</a></li>
+</ul>
+<div>
+<iframe height="500" src="https://www.youtube.com/embed/0LJHx09RF80?autoplay=0" type="text/html" width="100%"></iframe>
+</div>
+</div>
+<p>Buildroot is an alternative to another well-known project: Yocto. The following video features two developers, one from each project, comparing the two tools:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Yocto is establishing itself as the industry standard tool, taking over from buildroot. The choice for buildroot in the elective is due to the ease of creating a system; Yocto is more complex and full of terminologies. In this elective, we will work with buildroot, but for those who want to delve into/specialize in the topic, learning Yocto is a must.</p>
+<div>
+<iframe height="500" src="https://www.youtube.com/embed/wCVYQWFIvBs?autoplay=0" type="text/html" width="100%"></iframe>
+</div>
+</div>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Recommended Reading</p>
+<ul>
+<li><a href="https://buildroot.org/downloads/manual/manual.html#_getting_started">https://buildroot.org/downloads/manual/manual.html#_getting_started</a></li>
+</ul>
+</div>
+<p>Buildroot has a configuration tool similar to the Linux kernel (<code>menuconfig</code> / <code>nconfig</code>). We will use it to configure the filesystem and decide which programs will be compiled and inserted into <code>/root/</code>. Remember that we already have a toolchain (which we used to compile the kernel) configured in <code>.bashrc</code>, we will use it for the compilation of all the programs that we will load on the embedded system.</p>
+<p>Buildroot has the option to download the toolchain (it can also compile the kernel and generate uboot, it is a very comprehensive tool), but this time we will use what we already have (to maintain compatibility).</p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-Buildroot/exercise_1" id="exercise_1_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>First, we need to download <code>buildroot</code>:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/buildroot/buildroot
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>buildroot/
+</code></pre></div>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<h2 id="configuring">Configuring<a class="headerlink" href="#configuring" title="Permanent link">&para;</a></h2>
+<p>Now we need to configure the buildroot.</p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-Buildroot/exercise_2" id="exercise_2_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>In the recently cloned buildroot folder, run the following command:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>make<span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm<span class="w"> </span>menuconfig
+</code></pre></div>
+<blockquote>
+<p>If you encounter an error, you may need to install <code>libncurses-dev</code> via apt.</p>
+</blockquote>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<p>This will open a configuration screen:</p>
+<p><a class="glightbox" href="../figs/Tutorial-HPS-Buildroot-7.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HPS-Buildroot-7.png" /></a></p>
+<div class="admonition note">
+<p>To return to this screen, simply press the <code>&lt;ESC&gt;</code> key twice.</p>
+</div>
+<h3 id="1-target-options">1. Target Options<a class="headerlink" href="#1-target-options" title="Permanent link">&para;</a></h3>
+<p>The first part we are going to configure is the target for generating the filesystem (Target options). We need to inform Buildroot that it is generating files for an ARM and indicate some options for our compiler:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Config</label><label for="__tabbed_1_2">Image</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Main Menu <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> Target Options:</p>
+<ul>
+<li>Target Architecture: <strong>ARM (little endian)</strong>  <ul>
+<li>This option should already be correct since we passed it via the make call (make ARCH=ARM ...)</li>
+</ul>
+</li>
+<li>Target Architecture Variant: <mark>cortex-A9</mark></li>
+<li><strong>Enable</strong> NEON SIMD extension support</li>
+<li><strong>Enable</strong> VFP extension support</li>
+<li>Floating point strategy: <strong>NEON</strong><ul>
+<li><a href="https://developer.arm.com/technologies/neon">https://developer.arm.com/technologies/neon</a></li>
+</ul>
+</li>
+<li>Target ABI: <strong>EABIhf</strong><ul>
+<li>We indicate to Buildroot that our architecture has floating point in HW.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" href="../figs/Tutorial-HPS-Buildroot-2.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HPS-Buildroot-2.png" /></a></p>
+</div>
+</div>
+</div>
+<h3 id="2-build-options">2. Build options<a class="headerlink" href="#2-build-options" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Config</label><label for="__tabbed_2_2">Image</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Main Menu ➡️ Build options:</p>
+<ul>
+<li><mark>Leave this as the default.</mark></li>
+</ul>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" href="../figs/Tutorial-HPS-Buildroot-5.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HPS-Buildroot-5.png" /></a></p>
+</div>
+</div>
+</div>
+<h3 id="3-toolchain">3. Toolchain<a class="headerlink" href="#3-toolchain" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Config</label><label for="__tabbed_3_2">Image</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Now let's indicate to Buildroot which toolchain it should use and its configurations. </p>
+<p><mark>Pay special attention to each one of the fields</mark>, an error here will fail the build..</p>
+<p>Main Menu <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> Toolchain:</p>
+<ul>
+<li>Toolchain type: <strong>External toolchain</strong><ul>
+<li>Buildroot will use the toolchain that we specify. Note that within this option is the <em>Buildroot toolchain</em>, which if activated would cause Buildroot to automatically download the entire toolchain.</li>
+</ul>
+</li>
+<li>Toolchain: <strong>Custom toolchain</strong></li>
+<li>Toolchain path: <strong>$(ARM_GCC)</strong><ul>
+<li>Buildroot will use this system variable as the path to the toolchain. We have two options here :<ol>
+<li>We can declare this variable in bash</li>
+<li>We can edit this option with the path of our toolchain</li>
+<li>For now, let's choose option 1.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Toolchain prefix: <strong>$(ARCH)-linux-gnueabihf</strong><ul>
+<li>The prefix is how the toolchain will be called, for example to access gcc:<ul>
+<li><code>$(ARM_GCC)/bin/$(ARCH)-linux-gnueabihf-gcc</code></li>
+<li>Being :<ul>
+<li>ARM_GCC = <code>/home/corsi/work/gcc-linaro-7.2.1-2017.11-x86_64_arm-linux-gnueabihf</code></li>
+<li>ARCH = arm (passed in the make call)</li>
+</ul>
+</li>
+<li>Results in: <code>/home/corsi/work/gcc-linaro-7.1-2017.11-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Toolchain gcc version: <strong>7.x</strong></li>
+<li>Toolchain kernel headers series: <strong>4.10.x</strong></li>
+<li>External toolchain C library: <strong>glibc/eglibc</strong></li>
+<li><strong>Activate</strong>: Toolchain has SSP support</li>
+<li><strong>Activate</strong>: Toolchain has RCP support</li>
+<li><strong>Activate</strong>: Toolchain has C++ support </li>
+</ul>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" href="../figs/Tutorial-HPS-Buildroot-4.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HPS-Buildroot-4.png" /></a></p>
+</div>
+</div>
+</div>
+<h3 id="4-system-configuration">4. System Configuration<a class="headerlink" href="#4-system-configuration" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Config</label><label for="__tabbed_4_2">Image</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>In this step, we will configure information such as: hostname, user, password, and init system...</p>
+<p>Main Menu <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> System Configuration:</p>
+<ul>
+<li>System hostname: <strong>SoC-Corsi</strong> (choose whatever you prefer) </li>
+<li>System banner: <strong>Advanced Embedded Systems!! SoC Cyclone V</strong></li>
+<li>Init system:</li>
+</ul>
+<p><strong>BusyBox</strong></p>
+<ul>
+<li>systemd is an alternative, but it's more complex!</li>
+<li>Root password: <strong>1234</strong> (choose whatever you prefer)</li>
+<li>/bin/sh: <strong>busybox</strong> - The shell to be inserted into the system, we have several other options: bash, zsh. All of them will increase the size and complexity of the image. </li>
+</ul>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" href="../figs/Tutorial-HPS-Buildroot-3.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HPS-Buildroot-3.png" /></a></p>
+</div>
+</div>
+</div>
+<h3 id="5-kernel-bootloader">5. Kernel / bootloader<a class="headerlink" href="#5-kernel-bootloader" title="Permanent link">&para;</a></h3>
+<p>Busybox can download and compile the kernel and uboot for us.</p>
+<p>Main Menu <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> Kernel</p>
+<ul>
+<li><mark>We will not use this configuration. <strong>Leave unchecked!</strong></mark></li>
+</ul>
+<h3 id="6-target-packages">6. Target packages<a class="headerlink" href="#6-target-packages" title="Permanent link">&para;</a></h3>
+<p>In this menu, we have the option of which programs and systems will be inserted into the image for the target. For example, if we want to insert a webserver (apache?) into our embedded Linux, we should select it here.</p>
+<p>Let's leave it as the default for now. We will come back to this step later.</p>
+<h3 id="7-filesystem-images">7. Filesystem images<a class="headerlink" href="#7-filesystem-images" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Config</label><label for="__tabbed_5_2">Image</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Main Menu <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> Filesystem images:</p>
+<ul>
+<li>Select: <strong>tar the root filesystem</strong></li>
+</ul>
+<p>This menu describes to Busybox how the final output of the generated filesystem image should be. Busybox needs to generate a filesystem that is capable of correctly configuring file permissions (it cannot simply generate a folder with all files and programs). </p>
+</div>
+<div class="tabbed-block">
+<p><a class="glightbox" href="../figs/Tutorial-HPS-Buildroot-1.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HPS-Buildroot-1.png" /></a></p>
+</div>
+</div>
+</div>
+<h2 id="saving">Saving<a class="headerlink" href="#saving" title="Permanent link">&para;</a></h2>
+<p>Now we will save the configuration, this will create a <code>.confg</code> file on the directory, similar to the used by the Linux Kernel.</p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-Buildroot/exercise_3" id="exercise_3_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<ol>
+<li>Configure build root as shown previous.</li>
+<li>Save your configuration (ESC ESC save) and return to the terminal. We will now generate the image of our filesystem.</li>
+</ol>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<h2 id="compiling">Compiling<a class="headerlink" href="#compiling" title="Permanent link">&para;</a></h2>
+<p>At this stage, Buildroot will download all the packages and programs that were selected in the configuration menu from the web, and will compile the source code with the toolchain that we provided. <strong>This can take some time</strong> because it depends to download all sources files and build all programs.</p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-Buildroot/exercise_4" id="exercise_4_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>To compile and generate the filesystem run:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>make<span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm<span class="w"> </span>all<span class="w"> </span>-j<span class="w"> </span><span class="m">4</span>
+</code></pre></div>
+<p><mark>This can take some time.</mark></p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<h3 id="graphics">Graphics!<a class="headerlink" href="#graphics" title="Permanent link">&para;</a></h3>
+<p>Once the FS generation process is finished, we can generate some very important graphics:</p>
+<ul>
+<li>
+<p><a href="https://buildroot.org/downloads/manual/manual.html#_graphing_the_filesystem_size_contribution_of_packages">https://buildroot.org/downloads/manual/manual.html#_graphing_the_filesystem_size_contribution_of_packages</a></p>
+</li>
+<li>
+<p>Package dependencies: <code>make graph-depends</code></p>
+</li>
+<li>Compilation time: <code>make graph-build</code></li>
+<li>Contribution of each package to FS size: <code>make graph-size</code></li>
+</ul>
+<p>The graphs are saved in the folder: <code>output/graphs/</code>, you should obtain something similar tool:</p>
+<p><a class="glightbox" href="../figs/Tutorial-HPS-Buildroot-graph-size.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HPS-Buildroot-graph-size.png" /></a></p>
+<div class="admonition exercises self-progress" data-slug="Tutorial-HPS-Buildroot/exercise_5" id="exercise_5_0">
+<p class="admonition-title">Exercises</p>
+<form class="exercise-form">
+<ol>
+<li>Install the dependencies
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>graphviz<span class="w"> </span>python-matplotlib<span class="w"> </span>python-numpy
+</code></pre></div></li>
+<li>Generate the three graphs and analyze the results</li>
+</ol>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<p>There are two outputs of Buildroot in the folder: <code>buildroot/output/**</code></p>
+<ol>
+<li>The file <code>./images/rootfs.tar</code>: which contains the target fileSystem (with the correct permissions)</li>
+<li>The folder <code>./images/target/</code>: with the files contained in the <code>.tar</code> but without the correct permissions to run on the target. In fact, this folder contains a file:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>**THIS_IS_NOT_YOUR_ROOT_FILESYSTEM**
+
+Warning!
+
+This directory does *not* contain the root filesystem that you can use on your embedded system. 
+Since Buildroot does not run as root, it cannot create device files and set the permissions and
+ownership of files correctly in this directory to make it usable as a root filesystem.
+</code></pre></div>
+<h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h2>
+<p><mark>To test on our embedded systems, we need to extract the <code>rootfs.tar</code> file to our memory card.</mark> </p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-Buildroot/exercise_6" id="exercise_6_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>Follow the tutorial at <a href="/Embarcados-Avancados/info-SDcard/">SDCard - FileSystem</a> where there is explained how to extract the <code>rootfs.tar</code> to our memory card.</p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<div class="admonition exercise short tag-short-text tag-text-exercise editable" data-slug="Tutorial-HPS-Buildroot/short_1" id="short_1_0">
+<p class="admonition-title">Exercise<button class="editable-button"></button></p>
+<form class="exercise-form">
+<p>Did the boot become faster?</p>
+<div class="form-elements">
+<input type="text" value="" name="data"/>
+
+<input class="ah-button ah-button--primary" type="submit" value="Submit"/>
+</div>
+</form>
+</div>
+<h2 id="studying">Studying<a class="headerlink" href="#studying" title="Permanent link">&para;</a></h2>
+<p>Some suggestion to explore and learn more!</p>
+<ul>
+<li>Describe what is the root file system</li>
+<li>Research about initd process</li>
+<li>What is the purpose of <code>/linuxrc</code> and how does it work</li>
+<li>What is the purpose of <code>/proc</code></li>
+</ul>
+<h3 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h3>
+<ul>
+<li>dtb: <a href="https://rocketboards.org/foswiki/Documentation/HOWTOCreateADeviceTree">https://rocketboards.org/foswiki/Documentation/HOWTOCreateADeviceTree</a></li>
+<li>Generating and Compiling the Preloader: <a href="https://rocketboards.org/foswiki/Documentation/GSRD141Preloader">https://rocketboards.org/foswiki/Documentation/GSRD141Preloader</a></li>
+<li>Compiling the kernel: <a href="https://rocketboards.org/foswiki/Documentation/EmbeddedLinuxBeginnerSGuide#8">https://rocketboards.org/foswiki/Documentation/EmbeddedLinuxBeginnerSGuide#8</a></li>
+</ul>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Tutorial-HPS-Kernel/"
+               class="ah-prev"
+               title="8. Linux kernel">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">8. Linux kernel</span>
+            </a>
+          
+          
+            <a href="../info-HPS-buildroot-scripts/"
+               class="ah-next"
+               title="10. Extra - HPS-buildroot-scripts">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">10. Extra - HPS-buildroot-scripts</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

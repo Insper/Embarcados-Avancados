@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>17. Accelerating - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">17. Accelerating</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#intel">Intel</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#centos">CentOS</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#hls">HLS</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#offset">Offset</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#accelerating-on-the-fpga">Accelerating on the FPGA</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>High Level Synthesis</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="accelerating-hls">Accelerating - HLS<a class="headerlink" href="#accelerating-hls" title="Permanent link">&para;</a></h1>
+<p>HLS (High-Level Synthesis Compiler) is a compilation tool that allows us to create a component (hardware/HDL) from a high-level programming language (in this case, C++). This tool greatly facilitates development and abstracts hardware for software, but you still need hardware knowledge to use it.</p>
+<h2 id="intel">Intel<a class="headerlink" href="#intel" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>The Intel® HLS Compiler is a high-level synthesis (HLS) tool that takes in untimed C++ as input and generates production-quality register transfer level (RTL) code that is optimized for Intel® FPGAs. This tool accelerates verification time over RTL by raising the abstraction level for FPGA hardware design. Models developed in C++ are typically verified orders of magnitude faster than RTL.</p>
+</blockquote>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hEbfAU_1x8k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h2 id="centos">CentOS<a class="headerlink" href="#centos" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>I was only able to get it working on CentOS 6; my solution was to run
+a docker with CentOS and install the dependencies there. I run HLS via the
+docker CLI. </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To make things easier, we will provide a pre-configured docker image.
+Check with your instructor on how to get it.</p>
+</div>
+<h2 id="hls">HLS<a class="headerlink" href="#hls" title="Permanent link">&para;</a></h2>
+<p>We will generate a component that applies an offset (proc) to an image. For this, the
+component will have two Avalon memory access interfaces (AVALON-MM): on the
+first interface, we will access the original image, and on the other, we will write
+the processed image.</p>
+<p>Our hardware will have the following format:</p>
+<div class="highlight"><pre><span></span><code>    |-----|         AXI
+    | ARM | ===========================
+    |-----|            |             |
+                       |             |
+                   |-------|     |-------|
+                   |  Min  |     |  Mout |
+                   |-------|     |-------|
+           AVALON-MM   |             ^
+                       V             |
+                   |-------|         |
+                   |  Proc |---------- AVALON-MM
+                   | (HLS) |
+                   |-------|  
+</code></pre></div>
+<ul>
+<li>Min: FPGA memory where we will save the original image</li>
+<li>Mout: FPGA memory where we will save the processed image</li>
+<li>TH: Peripheral created by HLS</li>
+</ul>
+<p>For this, we will use a specific HLS syntax that, as in C, defines what type of interface will be used in the component (remember the Avalon interfaces, memory mapped, and streaming).</p>
+<p>HLS allows us to validate the code on two distinct layers: the first is by compiling the same code that will be synthesized for the x86 architecture, with this we can validate the algorithm much faster, the second is by generating the HDL of the component and simulating it via ModelSim, all of this is done transparently and automatically by the tool.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Simulating the hardware is costly in terms of processing time and computational power, it should be the last thing to be done before using the component on the hardware. Validate by compiling for x86 and then simulating.</p>
+</div>
+<h2 id="offset">Offset<a class="headerlink" href="#offset" title="Permanent link">&para;</a></h2>
+<p>The function to be accelerated is as follows (<code>imgOffSet</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#define OFFSET 50</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="n">ihc</span><span class="o">::</span><span class="n">mm_master</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="p">,</span><span class="w"> </span><span class="n">ihc</span><span class="o">::</span><span class="n">aspace</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">ihc</span><span class="o">::</span><span class="n">awidth</span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">ihc</span><span class="o">::</span><span class="n">dwidth</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">Master1</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">ihc</span><span class="o">::</span><span class="n">mm_master</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="p">,</span><span class="w"> </span><span class="n">ihc</span><span class="o">::</span><span class="n">aspace</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">ihc</span><span class="o">::</span><span class="n">awidth</span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">ihc</span><span class="o">::</span><span class="n">dwidth</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">Master2</span><span class="p">;</span>
+
+
+
+
+<span class="c1">// just for a NxN image</span>
+<span class="kr">inline</span><span class="w"> </span><span class="n">uint</span><span class="w"> </span><span class="nf">pxToMem</span><span class="p">(</span><span class="n">uint</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">uint</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">uint</span><span class="w"> </span><span class="n">N</span><span class="p">){</span>
+<span class="w">  </span><span class="k">return</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">N</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// px + OFFSET</span>
+<span class="n">hls_avalon_slave_component</span>
+<span class="n">component</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">imgOffSet</span><span class="p">(</span><span class="n">Master1</span><span class="o">&amp;</span><span class="w"> </span><span class="n">imgIn</span><span class="p">,</span>
+<span class="w">                         </span><span class="n">Master2</span><span class="o">&amp;</span><span class="w"> </span><span class="n">imgOut</span><span class="p">,</span>
+<span class="w">                         </span><span class="n">hls_avalon_slave_register_argument</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">offSet</span><span class="p">,</span>
+<span class="w">                         </span><span class="n">hls_avalon_slave_register_argument</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">N</span>
+<span class="w">                         </span><span class="p">){</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="o">++</span><span class="p">){</span>
+<span class="w">      </span><span class="cp">#pragma unroll 8</span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">px</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pxToMem</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">N</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">tpx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="n">imgIn</span><span class="p">[</span><span class="n">px</span><span class="p">])</span><span class="o">+</span><span class="n">offSet</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">tpx</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">255</span><span class="p">)</span>
+<span class="w">          </span><span class="n">imgOut</span><span class="p">[</span><span class="n">px</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="mi">255</span><span class="p">;</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">          </span><span class="n">imgOut</span><span class="p">[</span><span class="n">px</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="n">tpx</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Note that the <code>imgOffSet</code> function has four arguments: <code>imgIn</code>, <code>imgOut</code>, <code>offSet</code>, and <code>N</code>.
+The first two are memory pointers, which are respectively where the
+component will read the image and where it will write the
+image. The <code>offSet</code> and <code>N</code> arguments are the value to be applied as an offset to the px and the size
+of the image in pxs, these arguments are of the type <code>hls_avalon_slave_register_argument</code>, which will be
+converted to a register bank.</p>
+<p>In addition to these inputs and outputs, for each interface of the type <code>mm_master</code>, HLS will create
+one more <code>conduit</code>, which will be the address offset at which it should access
+the data (for the function, the address 0 is relative). And two more <code>conduits</code>, one to
+control the start of processing (function call/ <code>call</code>) and another to
+inform about the processing status (<code>return</code>).</p>
+<h3 id="imgin-imgout"><code>imgIn</code> , <code>imgOut</code><a class="headerlink" href="#imgin-imgout" title="Permanent link">&para;</a></h3>
+<p>The first two arguments are of the type <code>ihc::mm_master&lt; unsigned char,</code> which means they will be
+translated to a bus of the type <code>Avalon</code> and that they should be treated as
+<code>unsigned char</code>. </p>
+<ul>
+<li><code>ihc::aspace&lt;n&gt;</code>: is a unique identifier of the bus (1,2,3,4,...)</li>
+<li><code>ihc::awidth&lt;32&gt;</code>: Defines the size of the address bus, in this case, 32 bits</li>
+<li><code>ihc::dwidth&lt;8&gt;</code>: Defines the size of the data bus, in this case, 8
+  (reading 8 bits)</li>
+<li>There are other bus configurations that can be made in this
+  declaration: latency/ waitrequest/ burst/ (<code>, ihc::latency&lt;0&gt;, ihc::maxburst&lt;8&gt;, ihc::waitrequest&lt;true&gt;</code>)...</li>
+</ul>
+<h3 id="pxtomem"><code>pxToMem()</code><a class="headerlink" href="#pxtomem" title="Permanent link">&para;</a></h3>
+<p>To facilitate development, the function <code>pxToMem(x,y,N)</code> translates an access to
+px by address in the matrix to the memory address of the px.</p>
+<h4 id="printf"><code>printf()</code><a class="headerlink" href="#printf" title="Permanent link">&para;</a></h4>
+<p>This function will be removed when the function is compiled for hardware; it is only
+available for simulation and testing.</p>
+<h3 id="offset-n"><code>offSet</code>, <code>n</code><a class="headerlink" href="#offset-n" title="Permanent link">&para;</a></h3>
+<p>We need to remember that we are creating a component that will resolve a C code, and the way we can
+pass arguments to a component is by creating an internal memory, which we normally call a register bank,
+and giving functionality to them. This is how the <code>offSet</code> and <code>n</code> parameters will be created.
+When the component is generated, a memory will be initialized and addresses will be reserved for <code>offSet</code> and <code>n</code>, as
+in the following example:</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/******************************************************************************/</span>
+<span class="cm">/* Memory Map Summary                                                         */</span>
+<span class="cm">/******************************************************************************/</span>
+
+<span class="cm">/*</span>
+<span class="cm">  Register  | Access  |   Register Contents      | Description</span>
+<span class="cm">  Address   |         |      (64-bits)           | </span>
+<span class="cm">------------|---------|--------------------------|-----------------------------</span>
+<span class="cm">        0x0 |       R |         {reserved[62:0], |     Read the busy status of</span>
+<span class="cm">            |         |               busy[0:0]} |               the component</span>
+<span class="cm">            |         |                          |  0 - the component is ready</span>
+<span class="cm">            |         |                          |       to accept a new start</span>
+<span class="cm">            |         |                          |    1 - the component cannot</span>
+<span class="cm">            |         |                          |          accept a new start</span>
+<span class="cm">------------|---------|--------------------------|-----------------------------</span>
+<span class="cm">        0x8 |       W |         {reserved[62:0], |  Write 1 to signal start to</span>
+<span class="cm">            |         |              start[0:0]} |               the component</span>
+<span class="cm">------------|---------|--------------------------|-----------------------------</span>
+<span class="cm">       0x10 |     R/W |         {reserved[62:0], |      0 - Disable interrupt,</span>
+<span class="cm">            |         |   interrupt_enable[0:0]} |        1 - Enable interrupt</span>
+<span class="cm">------------|---------|--------------------------|-----------------------------</span>
+<span class="cm">       0x18 |  R/Wclr |         {reserved[61:0], | Signals component completion</span>
+<span class="cm">            |         |               done[0:0], |       done is read-only and</span>
+<span class="cm">            |         |   interrupt_status[0:0]} | interrupt_status is write 1</span>
+<span class="cm">            |         |                          |                    to clear</span>
+<span class="cm">------------|---------|--------------------------|-----------------------------</span>
+<span class="cm">       0x20 |     R/W |         {reserved[31:0], |             Argument offSet</span>
+<span class="cm">            |         |            offSet[31:0]} |                            </span>
+<span class="cm">------------|---------|--------------------------|-----------------------------</span>
+<span class="cm">       0x28 |     R/W |         {reserved[31:0], |                  Argument N</span>
+<span class="cm">            |         |                 N[31:0]} |                            </span>
+<span class="cm">*/</span>
+</code></pre></div>
+<h3 id="mainc">main.c<a class="headerlink" href="#mainc" title="Permanent link">&para;</a></h3>
+<p>In order to validate the project, we must create a main function (which will not be
+compiled for the hardware). In this function, we open an image file in the
+<code>.pgm</code> format ("in.pgm") and generate another image file with the
+original image processed ("out.pgm"). In order to validate the component to be generated (
+<code>offSetImg()</code> ) we must allocate two continuous memory regions (<code>in[M_SIZE]</code>
+and <code>out[M_SIZE)</code> that will be used as the component's input (simulating the
+AVALON bus).</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IMG_W</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">M_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="o">*</span><span class="n">N</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// create memorys</span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">in</span><span class="p">[</span><span class="n">M_SIZE</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">out</span><span class="p">[</span><span class="n">M_SIZE</span><span class="p">];</span>
+<span class="w">  </span><span class="n">memset</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">out</span><span class="p">));</span>
+
+<span class="w">  </span><span class="cm">/* -------------------------- */</span>
+<span class="w">  </span><span class="cm">/* reading img to mem */</span>
+<span class="w">  </span><span class="cm">/* -------------------------- */</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;loading img</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">readImgPgm</span><span class="p">(</span><span class="n">IMG_IN</span><span class="p">,</span><span class="w"> </span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">M_SIZE</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* -------------------------- */</span>
+<span class="w">  </span><span class="cm">/* create fake memorys components*/</span>
+<span class="w">  </span><span class="cm">/* -------------------------- */</span>
+<span class="w">  </span><span class="n">Master1</span><span class="w"> </span><span class="n">mm_in</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">M_SIZE</span><span class="p">);</span>
+<span class="w">  </span><span class="n">Master2</span><span class="w"> </span><span class="n">mm_out</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">M_SIZE</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* -------------------------- */</span>
+<span class="w">  </span><span class="cm">/* process with kernel */</span>
+<span class="w">  </span><span class="cm">/* -------------------------- */</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;kernel</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">imgOffSet</span><span class="p">(</span><span class="n">mm_in</span><span class="p">,</span><span class="w"> </span><span class="n">mm_out</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/* -------------------------- */</span>
+<span class="w">  </span><span class="cm">/* img out */</span>
+<span class="w">  </span><span class="cm">/* -------------------------- */</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;outputing </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">writeImgPgm</span><span class="p">(</span><span class="n">IMG_OUT</span><span class="p">,</span><span class="w"> </span><span class="n">out</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When we execute the <code>imgOffSet</code> function on our hardware, it will not be as simple 
+ as just a function call.</p>
+</div>
+<h3 id="testing-x86">Testing (x86)<a class="headerlink" href="#testing-x86" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Must be done on centos (docker)</p>
+</div>
+<p>To test, we will compile our project for <code>x86</code> (it will not be hardware) and validate 
+if our logic is correct. If it works, we compile for hardware.</p>
+<p>To compile, just use the <code>i++</code> compiler as in the following example:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>i++<span class="w"> </span>image.cpp<span class="w"> </span>-march<span class="o">=</span>x86-64<span class="w"> </span>-o<span class="w"> </span>image_x86
+</code></pre></div>
+<p>And test the generated program:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>./image_x86
+</code></pre></div>
+<p>The result should be the beautiful <code>img.ppm</code> photo of your instructor, processed with an offset (<code>out.ppm</code>):</p>
+<p><a class="glightbox" href="../figs/Tutorial-Acelerando-HLS%3AresultadoSW.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-Acelerando-HLS%3AresultadoSW.png" /></a></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To generate a <code>ppm</code> type image you can use Gimp</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This execution is like compiling with gcc, it only serves to validate logic</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>input</th>
+<th>output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>img.pgm</td>
+<td>image    (binary)</td>
+</tr>
+<tr>
+<td>image.cpp</td>
+<td>out.pgm</td>
+</tr>
+</tbody>
+</table>
+<h2 id="accelerating-on-the-fpga">Accelerating on the FPGA<a class="headerlink" href="#accelerating-on-the-fpga" title="Permanent link">&para;</a></h2>
+<p>To accelerate on the FPGA, we will compile the application again, but now with the <code>-march=CycloneV</code> flag 
+which represents our FPGA</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>i++<span class="w"> </span>image.cpp<span class="w"> </span>-march<span class="o">=</span>CycloneV<span class="w"> </span>-o<span class="w"> </span>image-CycloneV
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This may take a long time, what it will do is:</p>
+<ol>
+<li>Generate an HDL from your function</li>
+<li>Create a component for the Platform Designer</li>
+</ol>
+</div>
+<table>
+<thead>
+<tr>
+<th>input</th>
+<th>output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>img.pgm</td>
+<td>image-CycloneV.prj (folder)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="image-cyclonevprj-folder">image-CycloneV.prj (folder)<a class="headerlink" href="#image-cyclonevprj-folder" title="Permanent link">&para;</a></h3>
+<p>If you notice in the project folder, there should be a new folder: <strong>image-CycloneV.prj</strong>, with the following content:</p>
+<ul>
+<li><strong>components</strong>: Folder with the created component (to be used in the Platform designer)</li>
+<li><strong>quartus</strong>: Quartus project folder used to compile the component, <strong>we will not use this</strong></li>
+<li><strong>report</strong>: Folder with reports generated by the tool (html)</li>
+<li><strong>report</strong>: Folder to simulate the project</li>
+</ul>
+<h3 id="testing">testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h3>
+<p>Now we can test our application using the hardware created by HLS, for that just execute
+the new binary created when we compiled for the <code>CycloneV</code> architecture. </p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>./image-CycloneV
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This will take a long time! On the monster lab Architecture, it took over 1 hour!</p>
+</div>
+<p>This simulation is performed on ModelSim! At the hardware level. The result will be as expected when we embed
+on the FPGA. With this simulation, we can check for rounding errors, memory access, among others.</p>
+<div class="admonition tipa">
+<p class="admonition-title">Tipa</p>
+<p>The image <code>out-CycloneV.pgm</code> that is in the project folder, is the result of this simulation.</p>
+</div>
+<h3 id="report">report<a class="headerlink" href="#report" title="Permanent link">&para;</a></h3>
+<p>HLS generates a report of the hardware compilation, it can be found in: <a href="/Tutorial-Acelerando-HLS-reports/report.html"><code>reports/report.html</code></a>. An interesting report to analyze is the <strong>Loops analysis</strong>, which demonstrates the program loops:</p>
+<p><a class="glightbox" href="../figs/Tutorial-Acelerando-HLS%3Areport.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-Acelerando-HLS%3Areport.png" /></a></p>
+<h3 id="optimizing">Optimizing<a class="headerlink" href="#optimizing" title="Permanent link">&para;</a></h3>
+<p>We can apply several parallelization techniques in the software that will impact the created hardware (area and performance), in the HLS manual (<a href="https://www.intel.com/content/www/us/en/programmable/documentation/ewa1462824960255.html#ewa1462826976357">Intel High Level Synthesis Compiler: Reference Manual</a>) there is documentation that describes each of the techniques.</p>
+<p>We will use the <strong>Loop Unrolling</strong> one, which allows us to execute a loop in parallel:</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="cp">#pragma unroll &lt;N&gt;</span>
+<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">M</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="c1">// Some useful work</span>
+<span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>N</strong> is the number of loops to be executed in //.</p>
+</div>
+<p>We will parallelize the line scanning by 8 executions in parallel, for that add in the for that scans the line (x):</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="o">++</span><span class="p">){</span>
+<span class="w">      </span><span class="cp">#pragma unroll 8</span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="o">++</span><span class="p">){</span>
+</code></pre></div>
+<h3 id="creating-a-hardware">Creating a hardware<a class="headerlink" href="#creating-a-hardware" title="Permanent link">&para;</a></h3>
+<p>Now with the component created, we need to add it to the hardware, this will be done via Platform Design.
+To facilitate development, we will use the example hw project from <code>Terasic</code>: <code>DE10_Standard_FB</code> and modify
+inserting the component and two memories, as indicated below:</p>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/"
+               class="ah-prev"
+               title="16. Kernel driver">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">16. Kernel driver</span>
+            </a>
+          
+          
+            <a href="../info-FPGA-e-Softwares/"
+               class="ah-next"
+               title="Softwares">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">Softwares</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

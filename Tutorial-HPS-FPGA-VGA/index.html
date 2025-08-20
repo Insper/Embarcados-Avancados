@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>15. VGA - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">15. VGA</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#frame-buffer">Frame Buffer</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#hardware">Hardware</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#driver">Driver</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#buildroot">Buildroot</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>HPS + FPGA</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="vga">VGA<a class="headerlink" href="#vga" title="Permanent link">&para;</a></h1>
+<p>If you take a look at our hardware, you will notice that it has a VGA video output. However, the VGA signals were connected to the FPGA pins! This means we need to create hardware and connect it to the HPS in order to enable video output in our Linux system.</p>
+<p><a class="glightbox" href="../figs/DE10-Standard-blockdiagram.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/DE10-Standard-blockdiagram.jpg" /></a></p>
+<p>To achieve video output in our embedded system, we need to follow these steps:</p>
+<ol>
+<li>Configure FPGA to handle VGA, using an the <a href="https://www.intel.com.br/content/www/br/pt/programmable/products/intellectual-property/ip/dsp/m-alt-vipsuite.html">alt_vip_vga</a> IP core to generate the VGA signals. </li>
+<li>Add a device driver to the kernel to manage this hardware.</li>
+<li>Configure the kernel to add the framebuffer (FB) driver.</li>
+<li>Configure a program in Buildroot that can manipulate the FB and display an image.</li>
+</ol>
+<h2 id="frame-buffer">Frame Buffer<a class="headerlink" href="#frame-buffer" title="Permanent link">&para;</a></h2>
+<p>Before we work with the hardware, let's take a look at how Linux handles video output. Have you heard of a <a href="https://en.wikipedia.org/wiki/Framebuffer">frame buffer</a> (FB)? Check that your PC has one (Linux/Mac):</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ls<span class="w"> </span>/dev<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>fb
+</code></pre></div>
+<p>The FB is a reserved region of the RAM that contains a bitmap (if you have a graphics card, this memory may be located in it). This bitmap is converted (either by hardware or software) into the corresponding video output. The bitmap-to-video conversion depends on the video driver that was loaded to manage (and create) the FB. For Intel graphics cards, the <a href="https://www.kernel.org/doc/html/latest/fb/vesafb.html">vesa driver</a> is commonly used.</p>
+<p>However, not everything that is displayed goes directly through the FB. Some programs may require higher performance and access the display directly using <a href="https://en.wikipedia.org/wiki/Direct_Graphics_Access">Direct Graphics Access</a>, as shown in the following diagram:</p>
+<p><a class="glightbox" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Linux_graphics_drivers_Utah_GLX.svg/600px-Linux_graphics_drivers_Utah_GLX.svg.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Linux_graphics_drivers_Utah_GLX.svg/600px-Linux_graphics_drivers_Utah_GLX.svg.png" /></a></p>
+<div class="admonition note">
+<p class="admonition-title">Framebuffer Console</p>
+</div>
+<p>Linux has a driver called <code>fbcon</code> that displays a console on a framebuffer. To use it, you just need to activate it in the kernel configuration:</p>
+<ul>
+<li>
+<p>Device Drivers -&gt; Graphics Support -&gt; Frame buffer Devices -&gt; Console display driver support -&gt; Framebuffer Console Support</p>
+</li>
+<li>
+<p>For more details, refer to the <a href="https://www.kernel.org/doc/html/latest/fb/fbcon.html">Framebuffer Console documentation</a>.</p>
+</li>
+</ul>
+<h2 id="hardware">Hardware<a class="headerlink" href="#hardware" title="Permanent link">&para;</a></h2>
+<p>In order to save time, we will use a hardware design provided by Terasic that already has the FPGA part configured to work with VGA. Copy the folder <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC_FPGA/DE10_Standard_FB">DE10-Standard-v.1.3.0-SystemCD/Demonstration/SoC_FPGA/DE10_Standard_FB/</a> to your repository.</p>
+<p>Once you have copied the <code>DE10_Standard_FB</code> project, open it in Quartus and analyze the <code>soc_system.qsys</code> file in Platform Designer. You should see something like this:</p>
+<div class="admonition note">
+<p>I'm only showing the parts related to video!</p>
+</div>
+<p><a class="glightbox" href="../figs/Tutorial-HPS-FPGA-vga-qsys.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-HPS-FPGA-vga-qsys.png" /></a></p>
+<h3 id="understanding-the-hardware">Understanding the Hardware<a class="headerlink" href="#understanding-the-hardware" title="Permanent link">&para;</a></h3>
+<p>The hardware design includes two components to handle VGA: <code>alt_vip_vfr_vga</code> and <code>alt_vip_itc_0</code>. These components are part of the 'Video and Image Processing Suite Intel FPGA' IP package, which is specifically designed for video processing (supporting up to 8K and +60Hz).</p>
+<div class="admonition info">
+<p class="admonition-title">From intel website</p>
+<p>The Intel® FPGA Video and Image Processing Suite is a collection of Intel FPGA IP functions that you can use to facilitate the development of custom video and image processing (VIP) designs. These Intel FPGA IP functions are suitable for use in a wide variety of image processing and display applications, such as video surveillance, broadcast, video conferencing, and medical and military imaging.</p>
+<p>The Video and Image Processing Suite features cores that range from simple building block functions, such as color space conversion to sophisticated video scaling functions that can implement programmable polyphase scaling. </p>
+<ul>
+<li>All the VIP cores use an open, low-overhead Avalon® Streaming (Avalon-ST) interface standard so that they can be easily connected</li>
+<li>You can use VIP cores to quickly build a custom video processing signal chain using the Intel Quartus® Prime Lite or Standard Edition software and the associated Platform Designer</li>
+<li>You can mix and match VIP cores with your own proprietary intellectual property (IP)</li>
+<li>You can use the Platform Designer to automatically integrate embedded processors and peripherals and generate arbitration logic</li>
+<li>
+<p>Capable of supporting 8K video at 60fps and above</p>
+</li>
+<li>
+<p><a href="https://www.intel.com.br/content/www/br/pt/programmable/products/intellectual-property/ip/dsp/m-alt-vipsuite.html">https://www.intel.com.br/content/www/br/pt/programmable/products/intellectual-property/ip/dsp/m-alt-vipsuite.html</a></p>
+</li>
+</ul>
+<p><a class="glightbox" href="https://www.intel.com.br/content/dam/altera-www/global/en_US/images/products/ip/dsp/images/blockdiagram-dsp-fig1-vip.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://www.intel.com.br/content/dam/altera-www/global/en_US/images/products/ip/dsp/images/blockdiagram-dsp-fig1-vip.gif" /></a></p>
+</div>
+<h3 id="alt_vip_vfr_vga">alt_vip_vfr_vga<a class="headerlink" href="#alt_vip_vfr_vga" title="Permanent link">&para;</a></h3>
+<p>The <code>alt_vip_vfr_vga</code> is a peripheral of the <strong>Frame Reader</strong> type and is responsible for reading a Frame Buffer allocated in memory (<code>avalon_master</code>) and converting it into a <strong>Streaming</strong> format (<code>avalon_streaming</code>).</p>
+<p>Most VIP IP cores operate on the <code>avalon_streaming</code> data bus, so it is necessary to read the Frame Buffer (which is allocated in the DDR3 memory connected to the ARM). The data from DDR3 is transferred to the <code>alt_vip_vfr_vga</code> via DMA by the ARM/Linux, which is initialized by the device driver loaded in Linux.</p>
+<h4 id="alt_vip_itc">alt_vip_itc<a class="headerlink" href="#alt_vip_itc" title="Permanent link">&para;</a></h4>
+<p>The <code>alt_vip_itc</code> is a video peripheral that converts the pixel streaming into the desired video output format (in this case, VGA). VGA is a DIGITAL video output format that consists of 5 signals: HSYNC, VSYNC, R, G, and B.</p>
+<ul>
+<li>HSYNC: Indicates the end of a line.</li>
+<li>VSYNC: Indicates the end of the screen.</li>
+<li>R/G/B: Represent the pixel values.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The VGA signal is relatively simple, and you can even generate it using an Arduino. Here's an example: <a href="http://labdegaragem.com/profiles/blogs/gerando-sinal-vga-colorido-com-arduino-completo">Generating Color VGA Signal with Arduino</a></p>
+</div>
+<h3 id="compilation">Compilation<a class="headerlink" href="#compilation" title="Permanent link">&para;</a></h3>
+<p>Now that we have analyzed the hardware, we can compile it and use it in our SoC!</p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-FPGA-VGA/exercise_1" id="exercise_1_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<ol>
+<li>Generate the <code>soc_system.dtb</code> file for your project.<ul>
+<li>Write the new <code>soc_system.dtb</code> file to the SD Card (in the same partition as the kernel).</li>
+</ul>
+</li>
+<li>Generate the <code>soc_system.rbf</code> file for your project (COMPILE THE QUARTUS PROJECT!).<ul>
+<li>Write the new <code>rbf</code> file to the SD Card (in the same partition as the kernel).</li>
+</ul>
+</li>
+</ol>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<h2 id="driver">Driver<a class="headerlink" href="#driver" title="Permanent link">&para;</a></h2>
+<p>We need to load a device driver into the Linux kernel in order to use the newly created video output. However, the driver for the <code>alt_vip_vfr_vga</code> IP is not included in the official kernel. Therefore, we will need to add it manually!</p>
+<h3 id="device-tree-dts">Device Tree (dts)<a class="headerlink" href="#device-tree-dts" title="Permanent link">&para;</a></h3>
+<p>But how does Linux know that there is a video output? In our case, it is through the <em>device tree</em> (.dtb) that is passed by u-boot during kernel initialization. If we look at the new <code>.dts</code> file generated with the hardware that includes the video output, we can see a new component called <code>alt_vip_vfr_vga</code>, which is compatible with the <code>vip-frame-reader-9.1</code> driver:</p>
+<div class="highlight"><pre><span></span><code><span class="nl">alt_vip_vfr_vga</span><span class="p">:</span><span class="w"> </span><span class="nf">vip</span><span class="o">@</span><span class="mi">0x100031000</span><span class="cm"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kr">compatible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ALTR,vip-frame-reader-14.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ALTR,vip-frame-reader-9.1&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kr">reg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mh">0x00000001</span><span class="w"> </span><span class="mh">0x00031000</span><span class="w"> </span><span class="mh">0x00000080</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">clocks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&amp;</span><span class="na">clk_0</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">max-width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="cm">/* MAX_IMAGE_WIDTH type NUMBER */</span>
+<span class="w">    </span><span class="n">max-height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">768</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="cm">/* MAX_IMAGE_HEIGHT type NUMBER */</span>
+<span class="w">    </span><span class="n">bits-per-color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span><span class="p">;</span><span class="w">   </span><span class="cm">/* BITS_PER_PIXEL_PER_COLOR_PLANE type NUMBER */</span>
+<span class="w">    </span><span class="n">colors-per-beat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;</span><span class="p">;</span><span class="w">  </span><span class="cm">/* NUMBER_OF_CHANNELS_IN_PARALLEL type NUMBER */</span>
+<span class="w">    </span><span class="n">beats-per-pixel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span><span class="w">  </span><span class="cm">/* NUMBER_OF_CHANNELS_IN_SEQUENCE type NUMBER */</span>
+<span class="w">    </span><span class="n">mem-word-width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">128</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="cm">/* MEM_PORT_WIDTH type NUMBER */</span>
+<span class="p">};</span><span class="w"> </span><span class="c1">//end vip@0x100031000 (alt_vip_vfr_vga)</span>
+</code></pre></div>
+<h3 id="kernel">Kernel<a class="headerlink" href="#kernel" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>In this step, we will add a video driver to our Linux kernel. The driver will not be loaded as a dynamic module but will be inserted into the Linux kernel during compilation. To do this, you will need to:</p>
+<ol>
+<li>Add a driver to the Linux source code.</li>
+<li>Inform the kernel about the existence of this driver and activate it.</li>
+<li>Recompile the kernel.</li>
+</ol>
+</div>
+<p>The <code>vip-frame-reader-9.1</code> driver is not officially part of the Linux kernel, so we will need to use an implementation provided by Altera. The drivers in the Linux repository are located in the <code>linux/drivers</code> folder. For video/framebuffer drivers, they are in <code>linux/drivers/video/fbdev</code>.</p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-FPGA-VGA/exercise_2" id="exercise_2_0">
+<p class="admonition-title">Adding the altvipfb driver</p>
+<form class="exercise-form">
+<p>Follow the instructions in this guide: <a href="https://github.com/Insper/Embarcados-Avancados/blob/master/driver/altvipfb/README.md">Adding the altvipfb driver</a>, and then come back to this page!</p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial includes adding the framebuffer driver to the kernel. Another option would be to create a module that could be loaded as needed.</p>
+</div>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-FPGA-VGA/exercise_3" id="exercise_3_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<ol>
+<li>Compile the kernel.</li>
+<li>Copy the new <code>zImage</code> to the SD Card.</li>
+<li>Connect a VGA monitor.</li>
+<li>Boot up the embedded Linux.</li>
+</ol>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<p>If everything goes well, you should see two penguins in the top left corner of the monitor. Each penguin represents a system core. Since our ARM is a dual-core, we have two penguins. These penguins appear because we enabled this option in the kernel:</p>
+<div class="highlight"><pre><span></span><code>CONFIG_LOGO=y
+CONFIG_LOGO_LINUX_MONO=y
+CONFIG_LOGO_LINUX_VGA16=y
+CONFIG_LOGO_LINUX_CLUT224=y
+</code></pre></div>
+<h3 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h3>
+<p>Now, connect a monitor to our board and power on the system. The kernel log should appear on the monitor. Note that during the boot process, you will see two penguins. The number of penguins indicates the number of cores in the system.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It's possible to edit the penguin image and, for example, use your own faces! The <code>ppm</code> files are located in the <code>/drivers/video/logo/</code> folder and are compiled into the kernel during the kernel compilation process.</p>
+<p>You can use GIMP to generate this images!</p>
+</div>
+<p>Want to do something cool with the framebuffer? Try the following:</p>
+<ul>
+<li>Display a random image on the framebuffer:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cat<span class="w"> </span>/dev/urandom<span class="w"> </span>&gt;<span class="w"> </span>/dev/fb0
+</code></pre></div>
+<blockquote>
+<p>Ref: <a href="http://seenaburns.com/2018/04/04/writing-to-the-framebuffer/">Writing to the Framebuffer</a></p>
+</blockquote>
+<p>Now let's do something more useful with our video output. To do that, we need to modify Buildroot and include graphical programs.</p>
+<h2 id="buildroot">Buildroot<a class="headerlink" href="#buildroot" title="Permanent link">&para;</a></h2>
+<p>There are various solutions for developing graphical interfaces for embedded Linux, and not all of them involve a window manager. Here is a list of tools that can be used:</p>
+<ul>
+<li>GUI:<ul>
+<li>LittlevGL: <a href="https://littlevgl.com/">https://littlevgl.com/</a></li>
+<li>Qt: <a href="https://www.qt.io/">https://www.qt.io/</a></li>
+<li>emWin (commercial): <a href="https://www.segger.com/products/user-interface/emwin/">https://www.segger.com/products/user-interface/emwin/</a></li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+<p>There are other solutions available, but we will use one of them to display an image on our screen. When I was working on this guide, I wanted something simpler. During a (not very quick) search on the internet (using the keyword "linux frame buffer show image"), I found this program: <code>fbv</code>, which luckily is included in Buildroot.</p>
+<div class="admonition note">
+<p class="admonition-title">fbv</p>
+<div class="highlight"><pre><span></span><code>1. OVERVIEW
+    fbv (FrameBuffer Viewer) is a simple program to view
+    pictures on a linux framebuffer device. In 2000,
+    when fbv was created, there were no other suitable
+    programs performing the same task, so the authors
+    decided to follow the rule: 
+    &#39;If you need a tool - write it yourself!&#39; :-)
+</code></pre></div>
+<blockquote>
+<p><a href="https://github.com/smokku/fbv">https://github.com/smokku/fbv</a></p>
+</blockquote>
+</div>
+<div class="admonition exercise self-progress" data-slug="Tutorial-HPS-FPGA-VGA/exercise_4" id="exercise_4_0">
+<p class="admonition-title">Step-by-step</p>
+<form class="exercise-form">
+<p>To show a png image on the fb.</p>
+<ol>
+<li>Add the <code>fbv</code> program to Buildroot.</li>
+<li>Compile the new file system.</li>
+<li>Write it to the SD Card.</li>
+<li>Write an image (in .png format) to the SD Card.</li>
+<li>On the target system, display the image on the HDMI using <code>fbv</code>.</li>
+</ol>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Tutorial-HPS-FPGA-BlinkLED/"
+               class="ah-prev"
+               title="14. Blink FPGA LED from HPS">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">14. Blink FPGA LED from HPS</span>
+            </a>
+          
+          
+            <a href="../Entrega-6/"
+               class="ah-next"
+               title="🔔 Assessment">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">🔔 Assessment</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

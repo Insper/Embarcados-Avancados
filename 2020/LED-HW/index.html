@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>2020 - IP para fita de LED - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '../..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../../termynal.css">
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../.."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">2020 - IP para fita de LED</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#comecando">Começando</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#como-funciona-a-matriz-de-leds">Como funciona a matriz de leds</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#conectando-a-matriz-de-leds-na-fpga">Conectando a matriz de leds na FPGA</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#codigos-em-vhdl">Códigos em VHDL</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#criacao-do-pereferico-no-plataform-designer">Criação do pereférico no plataform designer</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#firmware-nios">Firmware (NIOS)</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Students tutorials</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="periferico-para-controlar-matriz-de-led-da-familia-ws281x">Periférico para controlar matriz de led da família WS281x<a class="headerlink" href="#periferico-para-controlar-matriz-de-led-da-familia-ws281x" title="Permanent link">&para;</a></h1>
+<ul>
+<li><strong>Alunos:</strong> Manoela Cirne Lima de Campos / Wesley Gabriel Albano da Silva</li>
+<li><strong>Curso:</strong> Engenharia da Computação</li>
+<li><strong>Semestre:</strong> 9</li>
+<li><strong>Contato:</strong> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#110;&#111;&#101;&#108;&#97;&#99;&#108;&#99;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#109;&#97;&#110;&#111;&#101;&#108;&#97;&#99;&#108;&#99;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a> / <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#115;&#108;&#101;&#121;&#103;&#97;&#115;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#119;&#101;&#115;&#108;&#101;&#121;&#103;&#97;&#115;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
+<li><strong>Ano:</strong> 2020</li>
+</ul>
+<h2 id="comecando">Começando<a class="headerlink" href="#comecando" title="Permanent link">&para;</a></h2>
+<p>Para seguir esse tutorial é necessário:</p>
+<ul>
+<li><strong>Hardware:</strong> DE10-Standard e matriz de leds WS2812 AdaFruit</li>
+<li><strong>Softwares:</strong> Quartus 18.01</li>
+<li><strong>Documentos:</strong> <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual">DE10-Standard_User_manual.pdf</a>
+<a href="https://cpldcpu.wordpress.com/2014/01/14/light_ws2812-library-v2-0-part-i-understanding-the-ws2812/#:~:text=The%20cycle%20time%20of%20a,ns%20(maximum%20on%20WS2812)">Funcionamento dos leds</a></li>
+</ul>
+<h2 id="como-funciona-a-matriz-de-leds">Como funciona a matriz de leds<a class="headerlink" href="#como-funciona-a-matriz-de-leds" title="Permanent link">&para;</a></h2>
+<p>A fita que foi utilizada tem 276 leds e em cada led existem 3 pixeis (RGB na orgem GBR). A intensidade com que cada pixel será acionado ditará a cor de cada led.</p>
+<p>Os leds são independentes e têm 24 bits programáveis, 8 para verde, 8 para o azul e 8 para o vermelho. Cada LED coleta os dados utilizando os primeiros 24 bits enviados ao pino DIN, os próximos bits são enviados diretamente para o DOUT, podendo ser utilizado por um outro LED e assim por diante. 
+Cada bit é representado por um sinal de aproximadamente 1300 nano segundos. Um bit 1 corresponde a um sinal com 950 nano segundos em high e 250 nano segundos em low e um bit 0 corresponde a um sinal com 333 nano segundo em high e 977 nano segundos em low.</p>
+<center style="font-size:12px;">
+![](img/waveled2.png)
+
+Figura 1 - Tempo de high e low para a escrita do bit 1
+</center>
+
+<p>Para reiniciar a escrita no led0 deve existir um espaço de tempo entre os pulsos igual ou maior que 70 micro segundos.</p>
+<center style="font-size:12px;">
+![](img/waveled1.png)
+
+figura 2 - Espaço de tempo entre dados para voltar para o led 0
+</center>
+
+<p>Para converter isso para a <spam style="color:purple"><em>FPGA</em></spam>, que tem clock de 50Mhz a informação enviada deve permanecer a mesma por alguns clocks. Para executar um bit com valor 1 é necessário descartar 40 clock depois de acionado o high e 20 clocks depois do low e para o bit 0 é preciso descartar 17 clocks depois do high e 43 depois do low. Para voltar a escrever no led0 20000 clocks são descartados.</p>
+<p>Na tabela abaixo:</p>
+<ul>
+<li><strong>T0H</strong> é tempo em high para bit 0</li>
+<li><strong>T0L</strong> é tempo em low para bit 0</li>
+<li><strong>T1H</strong> é tempo em high para bit 1</li>
+<li><strong>T1L</strong> é tempo em low para bit 1</li>
+<li><strong>RES</strong> é tempo em low para voltar ao led0</li>
+</ul>
+<center>
+
+|                 |  **Tempo (ns)** |  **Clock (u)**  |
+| --------------- | --------------- | --------------- |
+| **T0H**         | 333             | 17              |
+| **T0L**         | 937             | 43              |
+| **T1H**         | 958             | 40              |
+| **T1L**         | 252             | 20              |
+| **RES**         | 70000           | 20000           |
+
+</center>
+
+<hr />
+<h2 id="conectando-a-matriz-de-leds-na-fpga">Conectando a matriz de leds na FPGA<a class="headerlink" href="#conectando-a-matriz-de-leds-na-fpga" title="Permanent link">&para;</a></h2>
+<p>Para conectar a matriz de led na <spam style="color:purple"><em>FPGA</em></spam> o pino de data deve ser configurado no pin planer. Lembrando que a <spam style="color:purple"><em>FPGA</em></spam> já tem um pino 5V e o ground.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>Lembre-se que o ground da placa e da matriz devem estar conectados para que os pulsos sejam detectados corretamente.</li>
+</ul>
+</div>
+<center style="font-size:12px;">![](img/hardware.png)
+
+figura 4 - Conectores da matriz de led</center>
+
+<hr />
+<h2 id="codigos-em-vhdl">Códigos em VHDL<a class="headerlink" href="#codigos-em-vhdl" title="Permanent link">&para;</a></h2>
+<p>Serão necessário 4 códigos em <spam style="color:blue"><em>vhdl</em></spam>:</p>
+<ul>
+<li>Máquina de estados: Define e aplica os tempos de delay dependendo das informações contidas na memória.</li>
+<li>Driver: Conecta a memória e a máquina de estados.</li>
+<li>GlueLogic: Logica de conexão do perifério no barramento Avalon.</li>
+<li>Vram: Memória </li>
+</ul>
+<p>Para criar a RAM é necessário seguir os passos a seguir.</p>
+<p>Na janela <strong>IP Catalog</strong> à direita no quartus você encontra a RAM que deve ser configurada.</p>
+<center style="font-size:12px;">![](img/ram1.png)
+
+figura 5 - Modelo da RAM</center>
+
+<p>Na próxima etapa deve ser ecolhida uma RAM com escrita e leitura e o tipo de dado deve ser words, para organizar de maneira a facilitar a visualização dos dados.</p>
+<center style="font-size:12px;">![](img/ram2.png)
+
+figura 6 - Modelo da RAM</center>
+
+<p>Na próxima etapa deve ser escolhidos dados de 24 bits, que é a informação completa de cada led, como descrito acima.</p>
+<center style="font-size:12px;">![](img/ram3.png)
+
+figura 7 - Modelo da RAM</center>
+
+<p>Como só temos um clock na FPGA e todas, manteremos com 1 clock essa configuração.</p>
+<center style="font-size:12px;">![](img/ram4.png)
+
+figura 8 - Modelo da RAM</center>
+
+<p>A chance de acontecer uma leitura e uma escrita ao mesmo tempo é baixa e os problemas gerados caso isso aconteça não são relevantes.</p>
+<center style="font-size:12px;">![](img/ram5.png)
+
+figura 9 - Modelo da RAM</center>
+
+<p>Um arquivo <spam style="color:green">.mif</spam> deve ser criado para que o periférico seja incializado corretamente. Se esse arquivo for modificado antes da programação da placa os leds devem ficar acesos logo na inicialização.</p>
+<center style="font-size:12px;">![](img/ram6.png)
+
+figura 10 - Criar arquivo .mif</center>
+
+<center style="font-size:12px;">![](img/pontomif.png)
+
+figura 11 - Arquivo .mif criado </center>
+
+<p>A memória criada acima foi modificada para aceitar leitura e escrita simultanemante. O código pronto se encontra abaixo, junto com os outros <spam style="color:blue"><em>vhdls</em></spam> necessários para a implementação do periférico.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Código da máquina de estados</label><label for="__tabbed_1_2">Código do Driver</label><label for="__tabbed_1_3">GlueLogic</label><label for="__tabbed_1_4">VRAM</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">library</span><span class="w"> </span><span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.numeric_std.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">WS2812</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">generic</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">pixel_count</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">768</span><span class="p">;</span>
+<span class="w">        </span><span class="n">clock_frequency</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">50</span><span class="n">_000_000</span><span class="w"> </span><span class="c1">-- Hertz</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">clk</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rst</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">        </span><span class="n">data</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">-- for testbench validation only</span>
+<span class="w">        </span><span class="n">addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">serial</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">WS2812</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">arch</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">WS2812</span><span class="w"> </span><span class="k">is</span>
+
+<span class="w">    </span><span class="k">constant</span><span class="w"> </span><span class="n">T0H</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">17</span><span class="p">;</span>
+<span class="w">    </span><span class="k">constant</span><span class="w"> </span><span class="n">T0L</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">43</span><span class="p">;</span><span class="w"> </span><span class="c1">-- compensate for state changes</span>
+<span class="w">    </span><span class="k">constant</span><span class="w"> </span><span class="n">T1H</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">40</span><span class="p">;</span>
+<span class="w">    </span><span class="k">constant</span><span class="w"> </span><span class="n">T1L</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span><span class="w"> </span><span class="c1">-- compensate for state changes</span>
+<span class="w">    </span><span class="k">constant</span><span class="w"> </span><span class="n">RES</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">20000</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">--type LED_ring is array (0 to (pixel_count - 1)) of std_logic_vector(23 downto 0);</span>
+<span class="w">    </span><span class="k">type</span><span class="w"> </span><span class="n">state_machine</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="p">(</span><span class="n">load</span><span class="p">,</span><span class="w"> </span><span class="n">sending</span><span class="p">,</span><span class="w"> </span><span class="n">send_bit</span><span class="p">,</span><span class="w"> </span><span class="n">reset</span><span class="p">);</span>
+
+<span class="k">begin</span>
+<span class="w">    </span><span class="k">process</span>
+<span class="w">        </span><span class="k">variable</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">state_machine</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">reset</span><span class="p">;</span>
+<span class="w">        </span><span class="k">variable</span><span class="w"> </span><span class="n">GRB</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mh">x&quot;000000&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">variable</span><span class="w"> </span><span class="n">delay_high_counter</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">variable</span><span class="w"> </span><span class="n">delay_low_counter</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">variable</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">variable</span><span class="w"> </span><span class="n">bit_counter</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">begin</span>
+<span class="w">        </span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">);</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="k">is</span><span class="w">                       </span>
+<span class="w">            </span><span class="k">when</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="c1">-- Update GRB with data coming from RAM</span>
+<span class="w">                        </span><span class="n">GRB</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+<span class="w">                        </span><span class="n">bit_counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">24</span><span class="p">;</span>
+<span class="w">                        </span><span class="n">state</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">sending</span><span class="p">;</span>
+<span class="w">            </span><span class="k">when</span><span class="w"> </span><span class="n">sending</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bit_counter</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                        </span><span class="n">bit_counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">bit_counter</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="n">GRB</span><span class="p">(</span><span class="n">bit_counter</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                            </span><span class="n">delay_high_counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">T1H</span><span class="p">;</span>
+<span class="w">                            </span><span class="n">delay_low_counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">T1L</span><span class="p">;</span>
+<span class="w">                        </span><span class="k">else</span>
+<span class="w">                            </span><span class="n">delay_high_counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">T0H</span><span class="p">;</span>
+<span class="w">                            </span><span class="n">delay_low_counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">T0L</span><span class="p">;</span>
+<span class="w">                        </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">                        </span><span class="n">state</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">send_bit</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">else</span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">pixel_count</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                            </span><span class="n">index</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">                            </span><span class="n">addr</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="n">to_unsigned</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">addr</span><span class="na">&#39;length</span><span class="p">));</span>
+<span class="w">                            </span><span class="n">state</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">load</span><span class="p">;</span>
+<span class="w">                        </span><span class="k">else</span>
+<span class="w">                            </span><span class="n">delay_low_counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">RES</span><span class="p">;</span>
+<span class="w">                            </span><span class="n">state</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">reset</span><span class="p">;</span>
+<span class="w">                        </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">            </span><span class="k">when</span><span class="w"> </span><span class="n">send_bit</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">delay_high_counter</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                        </span><span class="n">serial</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">                        </span><span class="n">delay_high_counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">delay_high_counter</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">elsif</span><span class="w"> </span><span class="p">(</span><span class="n">delay_low_counter</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                            </span><span class="n">serial</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">                            </span><span class="n">delay_low_counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">delay_low_counter</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">else</span>
+<span class="w">                        </span><span class="n">state</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">sending</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">            </span><span class="k">when</span><span class="w"> </span><span class="n">reset</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">delay_low_counter</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                        </span><span class="n">serial</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">                        </span><span class="n">delay_low_counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">delay_low_counter</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">else</span>
+<span class="w">                        </span><span class="n">index</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">                        </span><span class="n">addr</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="n">to_unsigned</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">addr</span><span class="na">&#39;length</span><span class="p">));</span>
+<span class="w">                        </span><span class="n">state</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">load</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">            </span><span class="k">when</span><span class="w"> </span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">null</span><span class="p">;</span>
+<span class="w">        </span><span class="k">end</span><span class="w"> </span><span class="k">case</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="nc">arch</span><span class="p">;</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">library</span><span class="w"> </span><span class="nn">IEEE</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">IEEE.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">WS2812Driver</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="c1">-- Gloabals</span>
+<span class="w">        </span><span class="n">clock</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span><span class="w">  </span>
+<span class="w">        </span><span class="n">reset</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">-- I/Os</span>
+<span class="w">        </span><span class="n">led_serial_out</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">        </span><span class="n">wraddress</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">input_data</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">wren</span><span class="w">             </span><span class="o">:</span><span class="w">  </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span>
+
+<span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">WS2812Driver</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">WS2812Driver</span><span class="w"> </span><span class="k">is</span>
+
+<span class="k">signal</span><span class="w"> </span><span class="n">debug_led</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span>
+<span class="k">signal</span><span class="w"> </span><span class="n">driver_data</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">);</span>
+<span class="k">signal</span><span class="w"> </span><span class="n">raddress</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="k">component</span><span class="w"> </span><span class="nc">WS2812</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">generic</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">pixel_count</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">768</span><span class="p">;</span>
+<span class="w">        </span><span class="n">clock_frequency</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">50</span><span class="n">_000_000</span><span class="w"> </span><span class="c1">-- Hertz</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">clk</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rst</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">data</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">serial</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">WS2812</span><span class="p">;</span>
+
+<span class="k">component</span><span class="w"> </span><span class="nc">vram</span>
+<span class="w">    </span><span class="k">PORT</span>
+<span class="w">    </span><span class="p">(</span>
+<span class="w">        </span><span class="n">clock</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="kt">STD_LOGIC</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">data</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="kt">STD_LOGIC_VECTOR</span><span class="w"> </span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">DOWNTO</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">rdaddress</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="kt">STD_LOGIC_VECTOR</span><span class="w"> </span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">DOWNTO</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">wraddress</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="kt">STD_LOGIC_VECTOR</span><span class="w"> </span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">DOWNTO</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">wren</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="kt">STD_LOGIC</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">q</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">OUT</span><span class="w"> </span><span class="kt">STD_LOGIC_VECTOR</span><span class="w"> </span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">DOWNTO</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">component</span><span class="p">;</span>
+
+<span class="k">begin</span>
+
+<span class="w">    </span><span class="n">d0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">vram</span>
+<span class="w">        </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="w"> </span><span class="p">(</span>
+<span class="w">            </span><span class="n">clock</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">clock</span><span class="p">,</span>
+<span class="w">            </span><span class="n">data</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">input_data</span><span class="p">,</span>
+<span class="w">            </span><span class="n">rdaddress</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">raddress</span><span class="p">,</span>
+<span class="w">            </span><span class="n">wraddress</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">wraddress</span><span class="p">,</span>
+<span class="w">            </span><span class="n">wren</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">wren</span><span class="p">,</span>
+<span class="w">            </span><span class="n">q</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">driver_data</span>
+<span class="w">        </span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">d1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">WS2812</span><span class="w"> </span>
+<span class="w">        </span><span class="k">generic</span><span class="w"> </span><span class="k">map</span><span class="w"> </span><span class="p">(</span>
+<span class="w">            </span><span class="n">pixel_count</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">768</span><span class="p">,</span>
+<span class="w">            </span><span class="n">clock_frequency</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">50</span><span class="n">_000_000</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">        </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="w"> </span><span class="p">(</span>
+<span class="w">            </span><span class="n">clk</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">clock</span><span class="p">,</span>
+<span class="w">            </span><span class="n">rst</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">reset</span><span class="p">,</span>
+<span class="w">            </span><span class="n">data</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">driver_data</span><span class="p">,</span>
+<span class="w">            </span><span class="n">addr</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">raddress</span><span class="p">,</span>
+<span class="w">            </span><span class="n">serial</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">led_serial_out</span>
+<span class="w">        </span><span class="p">);</span>
+
+<span class="k">end</span><span class="w"> </span><span class="nc">rtl</span><span class="p">;</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="k">library</span><span class="w"> </span><span class="nn">IEEE</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">IEEE.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">ws281x_MM</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="c1">-- Globals</span>
+<span class="w">        </span><span class="n">clk</span><span class="w">                </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                     </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w">             </span>
+<span class="w">        </span><span class="n">reset</span><span class="w">              </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                     </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w">      </span>
+<span class="w">        </span><span class="n">serial_out</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">-- Avalon Memmory Mapped Slave</span>
+<span class="w">        </span><span class="n">avs_address</span><span class="w">     </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span><span class="w"> </span>
+<span class="w">        </span><span class="n">avs_read</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                     </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w">             </span>
+<span class="w">        </span><span class="n">avs_readdata</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">31</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span><span class="w"> </span>
+<span class="w">        </span><span class="n">avs_write</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                     </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w">           </span>
+<span class="w">        </span><span class="n">avs_writedata</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">31</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">ws281x_MM</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">ws281x_MM</span><span class="w"> </span><span class="k">is</span>
+
+<span class="k">component</span><span class="w"> </span><span class="nc">WS2812Driver</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="c1">-- Gloabals</span>
+<span class="w">        </span><span class="n">clock</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">        </span><span class="n">reset</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">-- I/Os</span>
+<span class="w">        </span><span class="n">led_serial_out</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">        </span><span class="n">wraddress</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">input_data</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">wren</span><span class="w">             </span><span class="o">:</span><span class="w">  </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span>
+
+<span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">WS2812Driver</span><span class="p">;</span>
+
+<span class="k">begin</span>
+<span class="w">    </span><span class="n">dd</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">WS2812Driver</span>
+<span class="w">        </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="w"> </span><span class="p">(</span>
+<span class="w">            </span><span class="n">clock</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
+<span class="w">            </span><span class="n">reset</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">reset</span><span class="p">,</span>
+<span class="w">            </span><span class="n">led_serial_out</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">serial_out</span><span class="p">,</span>
+<span class="w">            </span><span class="n">wraddress</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">avs_address</span><span class="p">,</span>
+<span class="w">            </span><span class="n">input_data</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">avs_writedata</span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<span class="w">            </span><span class="n">wren</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">avs_write</span>
+<span class="w">        </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="nc">rtl</span><span class="p">;</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="c1">-- megafunction wizard: %RAM: 2-PORT%</span>
+<span class="c1">-- GENERATION: STANDARD</span>
+<span class="c1">-- VERSION: WM1.0</span>
+<span class="c1">-- MODULE: altsyncram </span>
+
+<span class="c1">-- ============================================================</span>
+<span class="c1">-- File Name: vram.vhd</span>
+<span class="c1">-- Megafunction Name(s):</span>
+<span class="c1">--          altsyncram</span>
+<span class="c1">--</span>
+<span class="c1">-- Simulation Library Files(s):</span>
+<span class="c1">--          altera_mf</span>
+<span class="c1">-- ============================================================</span>
+<span class="c1">-- ************************************************************</span>
+<span class="c1">-- THIS IS A WIZARD-GENERATED FILE. DO NOT EDIT THIS FILE!</span>
+<span class="c1">--</span>
+<span class="c1">-- 18.1.0 Build 625 09/12/2018 SJ Standard Edition</span>
+<span class="c1">-- ************************************************************</span>
+
+
+<span class="c1">--Copyright (C) 2018  Intel Corporation. All rights reserved.</span>
+<span class="c1">--Your use of Intel Corporation&#39;s design tools, logic functions </span>
+<span class="c1">--and other software and tools, and its AMPP partner logic </span>
+<span class="c1">--functions, and any output files from any of the foregoing </span>
+<span class="c1">--(including device programming or simulation files), and any </span>
+<span class="c1">--associated documentation or information are expressly subject </span>
+<span class="c1">--to the terms and conditions of the Intel Program License </span>
+<span class="c1">--Subscription Agreement, the Intel Quartus Prime License Agreement,</span>
+<span class="c1">--the Intel FPGA IP License Agreement, or other applicable license</span>
+<span class="c1">--agreement, including, without limitation, that your use is for</span>
+<span class="c1">--the sole purpose of programming logic devices manufactured by</span>
+<span class="c1">--Intel and sold by Intel or its authorized distributors.  Please</span>
+<span class="c1">--refer to the applicable agreement for further details.</span>
+
+
+<span class="k">LIBRARY</span><span class="w"> </span><span class="nn">ieee</span><span class="p">;</span>
+<span class="k">USE</span><span class="w"> </span><span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">LIBRARY</span><span class="w"> </span><span class="nn">altera_mf</span><span class="p">;</span>
+<span class="k">USE</span><span class="w"> </span><span class="nn">altera_mf.altera_mf_components.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">ENTITY</span><span class="w"> </span><span class="nc">vram</span><span class="w"> </span><span class="k">IS</span>
+<span class="w">    </span><span class="k">PORT</span>
+<span class="w">    </span><span class="p">(</span>
+<span class="w">        </span><span class="n">clock</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="kt">STD_LOGIC</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">data</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="kt">STD_LOGIC_VECTOR</span><span class="w"> </span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">DOWNTO</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">rdaddress</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="kt">STD_LOGIC_VECTOR</span><span class="w"> </span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">DOWNTO</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">wraddress</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="kt">STD_LOGIC_VECTOR</span><span class="w"> </span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">DOWNTO</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">wren</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="kt">STD_LOGIC</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">q</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">OUT</span><span class="w"> </span><span class="kt">STD_LOGIC_VECTOR</span><span class="w"> </span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">DOWNTO</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="k">END</span><span class="w"> </span><span class="nc">vram</span><span class="p">;</span>
+
+
+<span class="k">ARCHITECTURE</span><span class="w"> </span><span class="nc">SYN</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="nc">vram</span><span class="w"> </span><span class="k">IS</span>
+
+<span class="w">    </span><span class="k">SIGNAL</span><span class="w"> </span><span class="n">sub_wire0</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="kt">STD_LOGIC_VECTOR</span><span class="w"> </span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">DOWNTO</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="k">BEGIN</span>
+<span class="w">    </span><span class="n">q</span><span class="w">    </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">sub_wire0</span><span class="p">(</span><span class="mi">23</span><span class="w"> </span><span class="k">DOWNTO</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">altsyncram_component</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">altsyncram</span>
+<span class="w">    </span><span class="k">GENERIC</span><span class="w"> </span><span class="k">MAP</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">address_aclr_b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;NONE&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">address_reg_b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;CLOCK0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">clock_enable_input_a</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;BYPASS&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">clock_enable_input_b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;BYPASS&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">clock_enable_output_b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;BYPASS&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">init_file</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;WS2812Driver.mif&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">intended_device_family</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;Cyclone V&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">lpm_type</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;altsyncram&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">numwords_a</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">768</span><span class="p">,</span>
+<span class="w">        </span><span class="n">numwords_b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">768</span><span class="p">,</span>
+<span class="w">        </span><span class="n">operation_mode</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;DUAL_PORT&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">outdata_aclr_b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;NONE&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">outdata_reg_b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;CLOCK0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">power_up_uninitialized</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;FALSE&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">read_during_write_mode_mixed_ports</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;DONT_CARE&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">widthad_a</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">        </span><span class="n">widthad_b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">        </span><span class="n">width_a</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span>
+<span class="w">        </span><span class="n">width_b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">24</span><span class="p">,</span>
+<span class="w">        </span><span class="n">width_byteena_a</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="k">PORT</span><span class="w"> </span><span class="k">MAP</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">address_a</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">wraddress</span><span class="p">,</span>
+<span class="w">        </span><span class="n">address_b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">rdaddress</span><span class="p">,</span>
+<span class="w">        </span><span class="n">clock0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">clock</span><span class="p">,</span>
+<span class="w">        </span><span class="n">data_a</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">data</span><span class="p">,</span>
+<span class="w">        </span><span class="n">wren_a</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">wren</span><span class="p">,</span>
+<span class="w">        </span><span class="n">q_b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">sub_wire0</span>
+<span class="w">    </span><span class="p">);</span>
+
+
+
+<span class="k">END</span><span class="w"> </span><span class="nc">SYN</span><span class="p">;</span>
+
+<span class="c1">-- ============================================================</span>
+<span class="c1">-- CNX file retrieval info</span>
+<span class="c1">-- ============================================================</span>
+<span class="c1">-- Retrieval info: PRIVATE: ADDRESSSTALL_A NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: ADDRESSSTALL_B NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: BYTEENA_ACLR_A NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: BYTEENA_ACLR_B NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: BYTE_ENABLE_A NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: BYTE_ENABLE_B NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: BYTE_SIZE NUMERIC &quot;8&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: BlankMemory NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: CLOCK_ENABLE_INPUT_A NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: CLOCK_ENABLE_INPUT_B NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: CLOCK_ENABLE_OUTPUT_A NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: CLOCK_ENABLE_OUTPUT_B NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: CLRdata NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: CLRq NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: CLRrdaddress NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: CLRrren NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: CLRwraddress NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: CLRwren NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: Clock NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: Clock_A NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: Clock_B NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: IMPLEMENT_IN_LES NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: INDATA_ACLR_B NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: INDATA_REG_B NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: INIT_FILE_LAYOUT STRING &quot;PORT_B&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: INIT_TO_SIM_X NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: INTENDED_DEVICE_FAMILY STRING &quot;Cyclone V&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: JTAG_ENABLED NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: JTAG_ID STRING &quot;NONE&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: MEMSIZE NUMERIC &quot;18432&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: MEM_IN_BITS NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: MIFfilename STRING &quot;WS2812Driver.mif&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: OPERATION_MODE NUMERIC &quot;2&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: OUTDATA_ACLR_B NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: OUTDATA_REG_B NUMERIC &quot;1&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: RAM_BLOCK_TYPE NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: READ_DURING_WRITE_MODE_MIXED_PORTS NUMERIC &quot;2&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: READ_DURING_WRITE_MODE_PORT_A NUMERIC &quot;3&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: READ_DURING_WRITE_MODE_PORT_B NUMERIC &quot;3&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: REGdata NUMERIC &quot;1&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: REGq NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: REGrdaddress NUMERIC &quot;1&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: REGrren NUMERIC &quot;1&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: REGwraddress NUMERIC &quot;1&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: REGwren NUMERIC &quot;1&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: SYNTH_WRAPPER_GEN_POSTFIX STRING &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: USE_DIFF_CLKEN NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: UseDPRAM NUMERIC &quot;1&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: VarWidth NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: WIDTH_READ_A NUMERIC &quot;24&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: WIDTH_READ_B NUMERIC &quot;24&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: WIDTH_WRITE_A NUMERIC &quot;24&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: WIDTH_WRITE_B NUMERIC &quot;24&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: WRADDR_ACLR_B NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: WRADDR_REG_B NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: WRCTRL_ACLR_B NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: enable NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: PRIVATE: rden NUMERIC &quot;0&quot;</span>
+<span class="c1">-- Retrieval info: LIBRARY: altera_mf altera_mf.altera_mf_components.all</span>
+<span class="c1">-- Retrieval info: CONSTANT: ADDRESS_ACLR_B STRING &quot;NONE&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: ADDRESS_REG_B STRING &quot;CLOCK0&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_A STRING &quot;BYPASS&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_B STRING &quot;BYPASS&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_B STRING &quot;BYPASS&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: INIT_FILE STRING &quot;WS2812Driver.mif&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING &quot;Cyclone V&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: LPM_TYPE STRING &quot;altsyncram&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: NUMWORDS_A NUMERIC &quot;768&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: NUMWORDS_B NUMERIC &quot;768&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: OPERATION_MODE STRING &quot;DUAL_PORT&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: OUTDATA_ACLR_B STRING &quot;NONE&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: OUTDATA_REG_B STRING &quot;CLOCK0&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: POWER_UP_UNINITIALIZED STRING &quot;FALSE&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: READ_DURING_WRITE_MODE_MIXED_PORTS STRING &quot;DONT_CARE&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: WIDTHAD_A NUMERIC &quot;10&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: WIDTHAD_B NUMERIC &quot;10&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: WIDTH_A NUMERIC &quot;24&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: WIDTH_B NUMERIC &quot;24&quot;</span>
+<span class="c1">-- Retrieval info: CONSTANT: WIDTH_BYTEENA_A NUMERIC &quot;1&quot;</span>
+<span class="c1">-- Retrieval info: USED_PORT: clock 0 0 0 0 INPUT VCC &quot;clock&quot;</span>
+<span class="c1">-- Retrieval info: USED_PORT: data 0 0 24 0 INPUT NODEFVAL &quot;data[23..0]&quot;</span>
+<span class="c1">-- Retrieval info: USED_PORT: q 0 0 24 0 OUTPUT NODEFVAL &quot;q[23..0]&quot;</span>
+<span class="c1">-- Retrieval info: USED_PORT: rdaddress 0 0 10 0 INPUT NODEFVAL &quot;rdaddress[9..0]&quot;</span>
+<span class="c1">-- Retrieval info: USED_PORT: wraddress 0 0 10 0 INPUT NODEFVAL &quot;wraddress[9..0]&quot;</span>
+<span class="c1">-- Retrieval info: USED_PORT: wren 0 0 0 0 INPUT GND &quot;wren&quot;</span>
+<span class="c1">-- Retrieval info: CONNECT: @address_a 0 0 10 0 wraddress 0 0 10 0</span>
+<span class="c1">-- Retrieval info: CONNECT: @address_b 0 0 10 0 rdaddress 0 0 10 0</span>
+<span class="c1">-- Retrieval info: CONNECT: @clock0 0 0 0 0 clock 0 0 0 0</span>
+<span class="c1">-- Retrieval info: CONNECT: @data_a 0 0 24 0 data 0 0 24 0</span>
+<span class="c1">-- Retrieval info: CONNECT: @wren_a 0 0 0 0 wren 0 0 0 0</span>
+<span class="c1">-- Retrieval info: CONNECT: q 0 0 24 0 @q_b 0 0 24 0</span>
+<span class="c1">-- Retrieval info: GEN_FILE: TYPE_NORMAL vram.vhd TRUE</span>
+<span class="c1">-- Retrieval info: GEN_FILE: TYPE_NORMAL vram.inc FALSE</span>
+<span class="c1">-- Retrieval info: GEN_FILE: TYPE_NORMAL vram.cmp TRUE</span>
+<span class="c1">-- Retrieval info: GEN_FILE: TYPE_NORMAL vram.bsf FALSE</span>
+<span class="c1">-- Retrieval info: GEN_FILE: TYPE_NORMAL vram_inst.vhd TRUE</span>
+<span class="c1">-- Retrieval info: LIB_FILE: altera_mf</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Como vamos criar o periférico no PD (Plataform Designer), vamos colocar todos esses arquivos em uma pasta chamada IP localizada na raíz do projeto, já que o PD integra IPs.</p>
+<div class="admonition example">
+<p class="admonition-title">O que temos em cada arquivo</p>
+<h3 id="maquina-de-estados">Máquina de estados:<a class="headerlink" href="#maquina-de-estados" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>pixel_count</strong>: A quantidade de pixeis que serão modificados. No nosso caso o total da matriz.</li>
+<li><strong>clock_frequency</strong>: A frequência do clock da <spam style="color:purple"><em>FPGA</em></spam> (para ser utilizado nos cálculos de espaço de tempo entre os bits 1 e 0 para representar a informação que será recebida pela matriz)</li>
+<li><strong>clk</strong>: Entrada do clock.</li>
+<li><strong>rst</strong>: É necessário para criar o periférico, mas não faz nada a princípio</li>
+<li><strong>data</strong>: Informação vinda da mamória para ser processada e enviada para a matriz de led.</li>
+<li><strong>addr</strong>: Endereço da memória que deve ser acessado.</li>
+<li><strong>serial</strong>: Saída que vai para a matriz de led com os dados já processados.</li>
+</ul>
+<h3 id="driver">Driver:<a class="headerlink" href="#driver" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>clk</strong>: Entrada do clock.</li>
+<li><strong>reset</strong>: É necessário para criar o periférico, mas não faz nada a princípio</li>
+<li><strong>led_serial_out</strong>: Saída da máquina de estados que será enviada para placa com dados processados (um bit por vez).</li>
+<li><strong>input_data</strong>: Informação que será escrita na memória.</li>
+<li><strong>raddress</strong>: Endereço de leitura da memória.</li>
+<li><strong>wraddress</strong>: Endereço da memória que deve ser acessado para escrita de informações vinda do avalon.</li>
+<li><strong>wren</strong>: Enable para escrever na mamória.</li>
+<li>Esse VHDL fará as conexões entre a memória e a máquina de estados que processa a informação para entregar os dados corretamente para a matriz de leds</li>
+</ul>
+<h3 id="glue-logic">Glue-Logic:<a class="headerlink" href="#glue-logic" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>clk</strong>: Entrada do clock.</li>
+<li><strong>rst</strong>: É necessário para criar o periférico, mas não faz nada a princípio</li>
+<li><strong>serial_out</strong>: Saída que vai para a matriz de led com um bit de cada vez processados pelo driver.</li>
+<li><strong>avs_address</strong>: Endereço que deve ser acessado na memória.</li>
+<li><strong>avs_read</strong>: Enable de leitura da memória.</li>
+<li><strong>avs_readdata</strong>: Saída da informação lida da memória que deve ser passada para o driver</li>
+<li><strong>avs_write</strong>: Enable de escrita da memória</li>
+<li><strong>avs_writedata</strong>: Informação que deve ser ecrita na memória</li>
+<li>O Glue Logic faz a abstração do acesso à memória pelo periférico. Dessa forma cada funcionalidade necessária (write, read) tem um offset na mamória para que seja utilizado.</li>
+</ul>
+</div>
+<hr />
+<h2 id="criacao-do-pereferico-no-plataform-designer">Criação do pereférico no plataform designer<a class="headerlink" href="#criacao-do-pereferico-no-plataform-designer" title="Permanent link">&para;</a></h2>
+<p>Abra o Plataform designer e adicione os seguintes componentes:</p>
+<div class="codehilite"><pre><span></span><code>* On-Chip Memory (RAM or ROM Intel FPGA IP)
+    * Type: RAM
+    * Total Memory size: 65536 bytes
+* On-Chip Memory (RAM or ROM Intel FPGA IP)
+    * Type: RAM
+    * Total Memory size: 65536 bytes
+* Jtag UART Intel FPGA IP
+    * Default
+* NIOS II Processor
+    * Type: NIOS II/e
+</code></pre></div>
+
+<p>Para inciar a criação do componente que controlará a matriz de leds será necessário "avisar" o plataform designer que a pasta IP guarda os arquivos que devem ser buscados. Para isso isso vá em <strong>tools</strong> &rarr; <strong>options</strong> &rarr; <strong>IP Search Path</strong> e adicione a pasta criada acima.</p>
+<p>Depois crie o seguinte componente:</p>
+<p>Na primeira aba nomeie o componente e preencha sua descrição.</p>
+<center style="font-size:12px;">
+![](img/plataformd1.jpeg)
+
+Figura 12 - plataform designer - parte1
+</center>
+
+<p>Na aba <strong>files</strong> &rarr; <strong>Syntesis Files</strong> &rarr; <strong>add file</strong> adicione os arquivos .vhd descritos na seção anterior. Na janela <strong>VHDL Simulation Files</strong> selecione a opção <strong>Copy From Syntesis Files</strong>.</p>
+<center style="font-size:12px;">
+![](img/plataformd2.jpeg)
+
+Figura 13 - plataform designer - parte2
+</center>
+
+<p>Na aba signals coloque <strong>conduit_end</strong> na serial_out para que esse sinal seja reconhecido como uma saída do periférico na <spam style="color:purple"><em>FPGA</em></spam>.</p>
+<center style="font-size:12px;">
+![](img/pdconduit.png)
+
+Figura 14 - plataform designer - parte3
+</center>
+
+<p>Na aba <strong>signal &amp; interfaces</strong> o reset deve ser atrelado ao avalon_slave_0.</p>
+<center style="font-size:12px;">
+![](img/pdreset.png)
+
+Figura 15 - plataform designer - parte4
+</center>
+
+<p>clique em <strong>finish</strong>.</p>
+<p>O componente aparecerá na janela <strong>IP Catalog</strong>. Um arquivo <spam style="color:green"><em>.tcl</em></spam> deve ter sdo criado na pasta raíz do projeto. Leve esse arquivo para a pasta IP e modifique-o para que o caminho até o componente esteja correto.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Antes</label><label for="__tabbed_2_2">Depois</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>add_fileset_file nomedoarquivo.vhd VHDL PATH IP/nomedoarquivo.vhd TOP_LEVEL_FILE
+...
+add_fileset_file nomedoarquivo.vhd VHDL PATH IP/nomedoarquivo.vhd
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>add_fileset_file nomedoarquivo.vhd VHDL PATH nomedoarquivo.vhd TOP_LEVEL_FILE
+...
+add_fileset_file nomedoarquivo.vhd VHDL PATH nomedoarquivo.vhd
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Adicione o periférico criado e faça as conexões com os outros periféricos como no exemplo abaixo:</p>
+<center style="font-size:12px;">
+![](img/pdconn.png)
+
+Figura 16 - plataform designer - parte5
+</center>
+
+<p>Clique em <strong>Generate HDL</strong> &rarr; <strong>Generate</strong> para gerar o componente e use a opção <strong>create simulation model</strong> com <spam style="color:blue"><em>vhdl</em></spam> para que seja criado os arquivos auxiliares configurados de acordo com o que está no platform designer.</p>
+<p>No <strong>Generate</strong> &rarr; <strong>Show Instatiation Template</strong> &rarr; <strong>VHDL</strong> o modelo de código do periférico será apresentado e deve ser copiado para o uso do periférico.
+Como esse projeto foi criado sobre um feito anteriormente o nome da entidade não o ideal. O código abaixo já foi modificado para funcionar corretamente com o NIOS.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Ao copiar o código lembre de trocar os nomes para que eles correspondam com o seu projeto.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="k">library</span><span class="w"> </span><span class="nn">IEEE</span><span class="p">;</span>
+<span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="nn">IEEE.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">entity</span><span class="w"> </span><span class="nc">LAB2_FPGA_NIOS</span><span class="w"> </span><span class="k">is</span>
+<span class="w">        </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">            </span><span class="c1">-- Gloabals</span>
+<span class="w">            </span><span class="n">fpga_clk_50</span><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span><span class="w">             </span><span class="c1">-- clock.clk</span>
+
+<span class="w">            </span><span class="c1">-- I/Os</span>
+<span class="w">            </span><span class="n">stepmotor_pio</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">LAB2_FPGA_NIOS</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">LAB2_FPGA_NIOS</span><span class="w"> </span><span class="k">is</span>
+
+
+<span class="w">    </span><span class="k">signal</span><span class="w"> </span><span class="n">led_serial</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">component</span><span class="w"> </span><span class="nc">niosLab2</span><span class="w"> </span><span class="k">is</span>
+<span class="w">        </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">                </span><span class="n">clk_clk</span><span class="w">           </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                    </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span><span class="w">             </span><span class="c1">-- clk</span>
+<span class="w">                </span><span class="n">reset_reset_n</span><span class="w">     </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="w">                    </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span><span class="w">             </span><span class="c1">-- reset_n</span>
+<span class="w">                </span><span class="n">ws_led_serial_out</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span><span class="w">                                        </span><span class="c1">-- serial_out</span>
+<span class="w">        </span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">niosLab2</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">begin</span>
+
+<span class="w">        </span><span class="n">stepmotor_pio</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">led_serial</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">u0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">niosLab2</span><span class="w"> </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">clk_clk</span><span class="w">       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">fpga_clk_50</span><span class="p">,</span><span class="w">    </span><span class="c1">--  clk.clk</span>
+<span class="w">    </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w">            </span><span class="c1">--  reset.reset_n</span>
+<span class="w">    </span><span class="n">ws_led_serial_out</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">led_serial</span><span class="w">  </span><span class="c1">-- ws_led.serial_out</span>
+<span class="w">    </span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="nc">rtl</span><span class="p">;</span>
+</code></pre></div>
+<p>Depois de criar o novo arquivo de top level compile o projeto e programe a <spam style="color:purple"><em>FPGA</em></spam>.
+O resultado do RTL deve ser semelhante à este:</p>
+<center style="font-size:12px;">
+![](img/rtlmemdriver.png)
+
+Figura 17 - RTL
+</center>
+
+<p>O componente <strong>WS2812</strong> deve ler os endereços da memória, processar a informação como descrito nos códigos em <spam style="color:blue"><em>vhdl</em></spam> e passar os dados para a matriz de led pelo serial. A NIOS deve ser capaz de modificar a ram com o wren (permitindo escrita), data (o dado a ser Escrito) e address (o endereço que deve ser moficado).</p>
+<hr />
+<h2 id="firmware-nios">Firmware (NIOS)<a class="headerlink" href="#firmware-nios" title="Permanent link">&para;</a></h2>
+<p>Abra o <strong>NIOS II Software Build</strong> para criar um código que utiliza o periférico criado.
+Um código de exemplo pode ser encontrado abaixo.</p>
+<p>hello_world.c
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;system.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;io.h&gt;</span><span class="c1"> /* Leiutura e escrita no Avalon */</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from Nios II!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">volatile</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">led_driver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">WS281X_DRIVER_0_BASE</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+<span class="w">      </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">led_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x000F0005</span><span class="p">;</span><span class="w"> </span><span class="c1">//Cor inicial</span>
+
+<span class="w">      </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">max_led</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">24</span><span class="p">;</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">max_led</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">          </span><span class="n">IOWR_32DIRECT</span><span class="p">(</span><span class="n">WS281X_DRIVER_0_BASE</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">led_data</span><span class="p">);</span>
+<span class="w">          </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;writing to LED %d!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">          </span><span class="c1">//</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="n">usleep</span><span class="p">(</span><span class="mi">1000000</span><span class="p">);</span>
+<span class="w">      </span><span class="n">led_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x0000FFFF</span><span class="p">;</span><span class="w"> </span><span class="c1">//Cor segundária</span>
+<span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">max_led</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">          </span><span class="n">IOWR_32DIRECT</span><span class="p">(</span><span class="n">WS281X_DRIVER_0_BASE</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">led_data</span><span class="p">);</span>
+<span class="w">          </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;writing to LED</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">          </span><span class="n">usleep</span><span class="p">(</span><span class="mi">500000</span><span class="p">);</span>
+<span class="w">       </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Para usar esse periférico diretamente com um driver do linux algumas modificações precisam ser feitas. Faça o download do projeto necessário <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Demonstration/SoC_FPGA/DE10_Standard_GHRD">aqui</a>. Baixe o projeto e inclua o seu periférico nele.</p>
+<p>Na imagem abaixo é possível ver como as conexões devem ser feitas. A mm_bridge_0 faz o processamento dos dados para que tudo funcione corretamente no linux.</p>
+<center style="font-size:12px;">
+![](img/pdlinux.png)
+
+Figura 18 - Plataform designer para periférico funcinando para driver do linux
+</center>
+
+<p>Para criar o driver de linux que funcione com esse periférico existe um tutorial pronto feito pelos alunos Andre Ejsenmesser e Paulo Tozzo Ponciano para a matéria de SOC e Linux Embarcado no ano de 2020.</p>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Android/"
+               class="ah-prev"
+               title="2020 - Android para Raspbery Pi 3">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">2020 - Android para Raspbery Pi 3</span>
+            </a>
+          
+          
+            <a href="../LED-Linux/"
+               class="ah-next"
+               title="2020 - Driver linux fita de LED">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">2020 - Driver linux fita de LED</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>2020 - Android para Raspbery Pi 3 - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '../..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../../termynal.css">
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../.."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">2020 - Android para Raspbery Pi 3</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#comecando">Começando</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#motivacao">Motivação</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#contexto">Contexto</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#instalacao">Instalação</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#rodando-android-na-raspberry">Rodando Android na Raspberry</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Students tutorials</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="android-para-raspbery-pi-3">Android para Raspbery Pi 3<a class="headerlink" href="#android-para-raspbery-pi-3" title="Permanent link">&para;</a></h1>
+<ul>
+<li><strong>Alunes:</strong> Emanuelle Moço / Leonardo Mendes / Lucas Leal</li>
+<li><strong>Curso:</strong> Engenharia da Computação</li>
+<li><strong>Semestre:</strong> 6</li>
+<li><strong>Contato:</strong> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#115;&#105;&#102;&#101;&#114;&#114;&#97;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#99;&#111;&#114;&#115;&#105;&#102;&#101;&#114;&#114;&#97;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>, <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#109;&#97;&#110;&#117;&#101;&#108;&#108;&#101;&#115;&#109;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#101;&#109;&#97;&#110;&#117;&#101;&#108;&#108;&#101;&#115;&#109;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a>, <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#111;&#110;&#97;&#114;&#100;&#111;&#109;&#109;&#52;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#108;&#101;&#111;&#110;&#97;&#114;&#100;&#111;&#109;&#109;&#52;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a>, <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#117;&#99;&#97;&#115;&#108;&#118;&#49;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#108;&#117;&#99;&#97;&#115;&#108;&#118;&#49;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
+<li><strong>Ano:</strong> 2020</li>
+</ul>
+<h2 id="comecando">Começando<a class="headerlink" href="#comecando" title="Permanent link">&para;</a></h2>
+<p>Para seguir esse tutorial é necessário:</p>
+<ul>
+<li><strong>Hardware</strong> <ul>
+<li>Raspberry Pi 3 </li>
+<li>Micro SD Card de 8 GB ou maior</li>
+<li>Monitor com entrada   </li>
+<li>Mouse </li>
+<li>Adaptador Micro SD para USB </li>
+<li>Cabo Micro USB</li>
+<li>Computador com pelo menos 150GB de armazenamento disponível   </li>
+</ul>
+</li>
+<li><strong>Softwares</strong> <ul>
+<li>Ubuntu 18.04</li>
+</ul>
+</li>
+<li><strong>Referências:</strong> <a href="https://github.com/android-rpi/device_brcm_rpi3">device_brcm_rpi3</a>, <a href="https://github.com/tab-pi/platform_manifest">Build Android for Raspberry Pi3</a>, <a href="https://github.com/csimmonds/a4rpi-local-manifest/">Building Android for Raspberry Pi</a></li>
+</ul>
+<h2 id="motivacao">Motivação<a class="headerlink" href="#motivacao" title="Permanent link">&para;</a></h2>
+<p>A motivação inicial era compilar Android em uma FPGA e o tema foi escolhido pois o grupo tinha o desejo de compilar um software de alto nível em uma placa de desenvolvimento. Entretanto, por dificuldades técnicas, foi decidido migrar para uma Raspberry Pi, que por ser mais barata e acessível ao público, existe uma quantidade significativa de referências, viabilizando a criação de aplicações.</p>
+<hr />
+<h2 id="contexto">Contexto<a class="headerlink" href="#contexto" title="Permanent link">&para;</a></h2>
+<p>O sistema operacional Android é extremamente popular e muito presente em dispositivos mobile, presente em cerca de 70% de celulares no mundo. Este tutorial consiste em embarcar o Android utilizando LineageOS, uma distribuição open source de Android, numa Raspberry Pi 3 B+. </p>
+<h3 id="android">Android<a class="headerlink" href="#android" title="Permanent link">&para;</a></h3>
+<p>Android é um sistema operacional baseado no kernel do linux no qual é possível compilar o seu próprio sistema para utilizar em um celular ou placas de desenvolvimento.  </p>
+<h3 id="raspberry-pi">Raspberry Pi<a class="headerlink" href="#raspberry-pi" title="Permanent link">&para;</a></h3>
+<p>Raspberry Pi é um <em>microcomputador</em> do estilo <em>System On a Chip</em> que permite fazer tudo que um computador faz com baixo custo.
+O modelo utilizado neste roteiro é o Raspberry Pi 3 B+, a qual possui um processador 64-bit quad-core de 1.4GHz, dual-band wireless e bluetooth. Ou seja, adequada para aplicações de automação e IOT.</p>
+<center>![Raspberry PI3](https://uploads.filipeflop.com/2017/07/DRA01_01.jpg){width=300}</center>
+
+<hr />
+<h2 id="instalacao">Instalação<a class="headerlink" href="#instalacao" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Alguns dos passos exigem alto poder computacional, caso você não tenha uma máquina com o armazenamento mínimo necessário ou com um bom processador, sugerimos a utilização de uma máquina na nuvem.</p>
+<div class="admonition example">
+<p class="admonition-title">Sugestão</p>
+<p>Para esse tutorial, utilizamos uma instância da AWS t2.2xlarge.</p>
+</div>
+</div>
+<h3 id="configurando-o-ambiente">Configurando o ambiente<a class="headerlink" href="#configurando-o-ambiente" title="Permanent link">&para;</a></h3>
+<p>Uma vez no Ubuntu 18.04, será necessário a instalação de alguns pacotes essênciais, para saber mais, entre na página disponibilizada pelo <a href="https://source.android.com/setup/build/initializing">Andoid</a>.
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>git-core<span class="w"> </span>gnupg<span class="w"> </span>flex<span class="w"> </span>bison<span class="w"> </span>build-essential<span class="w"> </span>zip<span class="w"> </span>curl<span class="w"> </span>zlib1g-dev<span class="w"> </span>gcc-multilib<span class="w"> </span>g++-multilib<span class="w"> </span>libc6-dev-i386<span class="w"> </span>lib32ncurses5-dev<span class="w"> </span>x11proto-core-dev<span class="w"> </span>libx11-dev<span class="w"> </span>lib32z1-dev<span class="w"> </span>libgl1-mesa-dev<span class="w"> </span>libxml2-utils<span class="w"> </span>xsltproc<span class="w"> </span>unzip<span class="w"> </span>fontconfig<span class="w"> </span>openjdk-8-jdk<span class="w"> </span>gcc-arm-linux-gnueabihf<span class="w"> </span>libssl-dev<span class="w"> </span>python-mako
+</code></pre></div>
+Instale também o <a href="https://source.android.com/setup/develop#installing-repo">repo</a> e rode o comando:
+<div class="highlight"><pre><span></span><code>$ repo init --depth=1 -u https://android.googlesource.com/platform/manifest -b android-10.0.0_r25
+</code></pre></div></p>
+<p>Clone o repositório com as configurações da Raspberry para Android:</p>
+<div class="highlight"><pre><span></span><code>$ git clone https://github.com/csimmonds/a4rpi-local-manifest .repo/local_manifests -b android10
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Para aumentar a velocidade de instalação use o argumento -c (branch atual) e -j<code>threadcount</code> </p>
+</div>
+<div class="highlight"><pre><span></span><code>$ repo sync -c j8
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Pausa para café, esta etapa demora cerca de 1-      2 horas.</p>
+</div>
+<h3 id="configurando-o-u-boot">Configurando o U-boot<a class="headerlink" href="#configurando-o-u-boot" title="Permanent link">&para;</a></h3>
+<p>U-boot é um bootloader Opens Source utilizado em sistemas de linux embarcados. Os comandos abaixo criam a nossa imagem <em>boot</em> que será utilizada para carregar o Android.
+<div class="highlight"><pre><span></span><code>$ cd $ANDROID_BUILD_TOP/u-boot
+$ PATH=$HOME/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin:$PATH
+$ export ARCH=arm
+$ export CROSS_COMPILE=arm-linux-gnueabihf-
+$ cp $ANDROID_BUILD_TOP/device/rpiorg/rpi3/u-boot/rpi_3_32b_android_defconfig configs
+$ make rpi_3_32b_android_defconfig
+$ make
+</code></pre></div></p>
+<h3 id="compilando-o-kernel">Compilando o kernel<a class="headerlink" href="#compilando-o-kernel" title="Permanent link">&para;</a></h3>
+<p>É necessário compilar o Kernel que será responsável pela criação do Android. Também é criada a partição DTBS, <em>device tree blob source</em>, que é responsável por disponibilizar a estrutura do hardware. Como Android pode ser utilizado em dispositivos diferentes, Device Tree Overlays (DTOs) são necessários para mapear o hardware para o sistema.  </p>
+<p>Rode os comandos: 
+<div class="highlight"><pre><span></span><code>$ PATH=$HOME/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf/bin:$PATH
+$ export ARCH=arm
+$ export CROSS_COMPILE=arm-linux-gnueabihf-
+$ cd $ANDROID_BUILD_TOP/kernel/rpi
+$ scripts/kconfig/merge_config.sh arch/arm/configs/bcm2709_defconfig \
+kernel/configs/android-base.config kernel/configs/android-recommended.config
+$ make -j $(nproc) zImage
+$ cp arch/arm/boot/zImage $ANDROID_BUILD_TOP/device/rpiorg/rpi3
+$ make dtbs
+$ croot
+</code></pre></div></p>
+<h3 id="compilando-o-android">Compilando o Android<a class="headerlink" href="#compilando-o-android" title="Permanent link">&para;</a></h3>
+<p>Com as imagens criadas anteriormente (zImage, boot e dtbs), agora temos tudo pronto para compilar o Android em si. Para isso, é necessário configurar as variáveis de ambiente e fazer a montagem.  </p>
+<div class="highlight"><pre><span></span><code>$ source build/envsetup.sh
+$ lunch aosp_rpi3-eng
+$ m
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Esta etapa pode demorar em torno de 2 horas.</p>
+</div>
+<p>A explicação dos comandos utilizadas pode ser encontrada <a href="https://source.android.com/setup/build/building">aqui</a>. <br />
+É criado as imagens <em>VendorImage</em>, <em>SystemImage</em> e <em>UserData</em> que posteriormente serão escritas no cartão de memória. </p>
+<h3 id="sd-card">SD Card<a class="headerlink" href="#sd-card" title="Permanent link">&para;</a></h3>
+<p>A última etapa é  criar as partições e passar as imagens criadas no passo anterior para partições no SD card, que são elas:</p>
+<ul>
+<li>Vendor:  Drivers que conectam hardware e software;</li>
+<li>System: Sistema Android;</li>
+<li>UserData: Usado para resetar as configurações;</li>
+<li>Boot: Arquivos de inicialização, como os DTOs e configurações do Uboot.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Caso você tenha feito as etapas anteriores em uma instância virtual, siga os passos abaixo, caso contrário, siga para a etapa <strong><em>Instalando Android localmente</em></strong>.</p>
+</div>
+<h3 id="instalando-android-na-nuvem">Instalando Android na nuvem<a class="headerlink" href="#instalando-android-na-nuvem" title="Permanent link">&para;</a></h3>
+<p>Como não é possível conectar um cartão SD diretamente em uma instância na nuvem, deve ser criado uma partição virtual para simular um cartão SD.   <br />
+Primeiro, é necessário criar uma imagem vazia com o tamanho disponível do seu cartão SD.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/zero<span class="w"> </span><span class="nv">of</span><span class="o">=</span>zero.img<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>4M<span class="w"> </span><span class="nv">count</span><span class="o">=</span><span class="m">1536</span>
+</code></pre></div>
+<p>Com isso, criaremos a partição virtual a partir dessa imagem:   </p>
+<p><div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>losetup<span class="w"> </span>-P<span class="w"> </span>-f<span class="w"> </span>--show<span class="w"> </span>zero.img
+</code></pre></div>
+Ao término do comando, a sua saída será o nome da sua partição virtual. No nosso caso, obtivemos <strong><em>loop6</em></strong>.  </p>
+<p>Dentro da pasta do Android, modifique o arquivo /scripts/write-sdcard-rpi3.sh, alterando <strong><em>mmcblk0</em></strong> para o nome da sua partição virtual.</p>
+<div class="highlight"><pre><span></span><code>...
+
+<span class="c1"># Unmount any partitions that have been automounted</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$DRIVE</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;loop6&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span>sudo<span class="w"> </span>umount<span class="w"> </span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span>*
+<span class="w">        </span><span class="nv">BOOT_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span>p1
+<span class="w">        </span><span class="nv">SYSTEM_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span>p3
+<span class="w">        </span><span class="nv">VENDOR_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span>p4
+<span class="w">        </span><span class="nv">USER_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span>p5
+<span class="k">else</span>
+<span class="w">        </span>sudo<span class="w"> </span>umount<span class="w"> </span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span><span class="o">[</span><span class="m">1</span>-9<span class="o">]</span>
+<span class="w">        </span><span class="nv">BOOT_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span><span class="m">1</span>
+<span class="w">        </span><span class="nv">SYSTEM_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span><span class="m">3</span>
+<span class="w">        </span><span class="nv">VENDOR_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span><span class="m">4</span>
+<span class="w">        </span><span class="nv">USER_PART</span><span class="o">=</span>/dev/<span class="si">${</span><span class="nv">DRIVE</span><span class="si">}</span><span class="m">5</span>
+<span class="k">fi</span>
+
+...
+</code></pre></div>
+<p>Faça um <em>dd</em> para transformar o Android instalado na partição virtual em uma imagem. 
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/loop6<span class="w"> </span><span class="nv">of</span><span class="o">=</span>android.img<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>4M
+</code></pre></div></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Mais uma vez, troque <strong><em>loop6</em></strong> pelo nome de sua partição virtual.</p>
+</div>
+<p>Existem várias maneiras para transferir arquivos de uma instância virtual para outra máquina, indicamos utilizar Secure Copy Protocol (SCP).<br />
+Na sua máquina, de posse da key utilizada na instância, basta rodar o comando abaixo:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>scp<span class="w"> </span>-i<span class="w"> </span>&lt;chave_de_acesso&gt;<span class="w"> </span>ubuntu@&lt;ip_maquina&gt;:/home/ubuntu/android.img<span class="w"> </span>.
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Note que <em>/home/ubuntu/android.img</em> é o nosso <em>path</em> da imagem criada pelo <em>dd</em>, mude para o seu <em>path</em> correspondente.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Essa etapa pode demorar em torno de 10 minutos dependendo da sua conexão.</p>
+</div>
+<p>O último passo é transferir o arquivo <em>android.img</em>, que foi copiado para a sua máquina, para o SD card. Para isso, insira o cartão de memória e utilize o comando <em>lsblk</em>  para saber o nome do seu dispositivo e rode:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>android.img<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/&lt;nome_SDcard&gt;<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>4M
+</code></pre></div>
+<h3 id="instalando-android-localmente">Instalando Android localmente<a class="headerlink" href="#instalando-android-localmente" title="Permanent link">&para;</a></h3>
+<div class="admonition nota">
+<p class="admonition-title">Nota</p>
+<p>Este tópico só deve ser realizado se você está fazendo localmente. </p>
+</div>
+<p>Insira o SD Card no seu computador e use comando <em>lsblk</em> para saber o nome do dispositivo. 
+No exemplo abaixo, o nome do dispositivo é <em>sdc</em>.</p>
+<center>![](https://media.discordapp.net/attachments/727592935054639194/786344627417382912/unknown.png){width=500}</center>
+
+<p>Agora, para instalar o Android no SD Card é necessário rodar o comando na pasta <em>root</em> do projeto:
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>scripts/write-sdcard-rpi3.sh<span class="w"> </span>&lt;nome_SDcard&gt;
+</code></pre></div></p>
+<hr />
+<h2 id="rodando-android-na-raspberry">Rodando Android na Raspberry<a class="headerlink" href="#rodando-android-na-raspberry" title="Permanent link">&para;</a></h2>
+<p>Ao inserir o SD Card na Raspberry e conectá-la à uma fonte de energia via cabo Micro USB, se tudo foi feito corretamente, o Android deve inicializar, podendo ser observado ao conectar uma da saída de vídeo (HDMI), como visto abaixo:</p>
+<center>![](https://media.discordapp.net/attachments/727592935054639194/786364456643985440/IMG_5310.jpg?width=625&height=469){width=600}   
+![](https://media.discordapp.net/attachments/727592935054639194/786364450633678888/IMG_5312.jpg?width=625&height=469){width=600}   
+![](https://media.discordapp.net/attachments/727592935054639194/786364441004474378/IMG_5313.jpg?width=625&height=469){width=600} </center>
+
+<p>Pronto! Você tem um Andoid rodando em uma Raspberry Pi. Para utilização completa dos recursos disponibilizados pelo Android, o usuário pode optar por utilizar um mouse com entrada USB ou até mesmo uma tela touch, ambos conectados diretamente na Raspberry. </p>
+<hr />
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../PS3-Linux-Tutorial/"
+               class="ah-prev"
+               title="2020 - PS3 HACK">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">2020 - PS3 HACK</span>
+            </a>
+          
+          
+            <a href="../LED-HW/"
+               class="ah-next"
+               title="2020 - IP para fita de LED">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">2020 - IP para fita de LED</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

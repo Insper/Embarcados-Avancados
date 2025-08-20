@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>2019 - Yocto - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '../..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../../termynal.css">
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../.."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">2019 - Yocto</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#o-que-e-o-yocto-project">O que é o Yocto Project</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#compilando-uma-iso">Compilando uma iso</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#compilando">Compilando</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#ate-onde-cheguei-com-a-cyclone5">Até onde cheguei com a cyclone5?</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Students tutorials</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="yocto">Yocto<a class="headerlink" href="#yocto" title="Permanent link">&para;</a></h1>
+<ul>
+<li>Aluna: Elisa Monteiro</li>
+<li>Curso: Engenharia da Computação</li>
+<li>Semestre: 9</li>
+<li>Contato: </li>
+<li>Link tutorial oficial: <a href="https://github.com/elisamalzoni/Embarcados-Avancados">https://github.com/elisamalzoni/Embarcados-Avancados</a></li>
+<li>Ano: 2019</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Hardware utilizado no tutorial</p>
+<ul>
+<li>DE10-Standard</li>
+<li>Raspberry 3</li>
+</ul>
+</div>
+<h2 id="o-que-e-o-yocto-project">O que é o Yocto Project<a class="headerlink" href="#o-que-e-o-yocto-project" title="Permanent link">&para;</a></h2>
+<p>Projeto open source para criação de sistemas customizados baseados em Linux, para embarcados, independentemente da arquiterura do hardware.</p>
+<h3 id="layer-model">Layer Model<a class="headerlink" href="#layer-model" title="Permanent link">&para;</a></h3>
+<p>São repositórios que contém os conjuntos de instruções que são mandadas para o OpenEmbedded build system. Você pode modificar, compartilhar e reusar as <em>layers</em>.</p>
+<p>Essas <em>layers</em> podem conter mudanças nas instruções ou configurações anteriores ou novas intruções e configurações.</p>
+<p>Separar as camadas dependendo das suas informações pode aumentar a personalizaçãoe facilitar a reutilização das camadas. ex.: camadas de BSP, GUI, configuração da distro, middleware ou até a camada da aplicação.</p>
+<p><em>Layers</em> geralmente tem nomes que começam com <code>meta-</code>.</p>
+<h3 id="bitbake">BitBake<a class="headerlink" href="#bitbake" title="Permanent link">&para;</a></h3>
+<p>Derivado do OpenEmbedded build system, é utilizado para gerar as imagens.</p>
+<h3 id="poky">Poky<a class="headerlink" href="#poky" title="Permanent link">&para;</a></h3>
+<p>É a distribuição referência do Yocto e será também utilizada na demonstração.
+Já vem com um conjunto de metadados, para começar a contrução da sua própria distro.</p>
+<p>Poky é a combinação dos repositórios do BitBake, OpenEmbedded-Core (dentro do <code>meta</code>), <code>meta-poky</code>, <code>meta-yocto-bsp</code>, também a documentação.</p>
+<p><a class="glightbox" href="../imgs/Elisa/poky-reference-distribution.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="poky-reference-distribution.png" src="../imgs/Elisa/poky-reference-distribution.png" /></a></p>
+<ul>
+<li>
+<p><strong>BitBake</strong> agenda e executa as tarefas. Principal componente do OpenEmbedded build system.</p>
+</li>
+<li>
+<p><strong><code>meta-poky</code></strong> metadados específicos do poky.</p>
+</li>
+<li>
+<p><strong><code>meta-yocto-bsp</code></strong> Board Support Packages (BSPs).</p>
+</li>
+<li>
+<p><strong>OpenEmbedded-Core (OE-Core) metadata</strong> metadados de configurações compartilhadas, definição de variáveis globais, classes compartilhadas, pacotes, e <em>recipes</em>. Classes definem o encapsulamento e as heranças da lógica de build. <em>Recipes</em> são as unidades lógicas de software e de imagens para buildar.</p>
+</li>
+<li>
+<p><strong>Documentação</strong> contém o código fonte utilizado para gerar os manuais de usuário do Yocto Project.</p>
+</li>
+</ul>
+<p>Uma <em>Recipe</em> é uma coleção de metadados não executáveis usada pelo BitBake para definir varáveis ou tarefas no tempo de build.</p>
+<p>Uma <em>Recipe</em> pode conter:</p>
+<ul>
+<li>Descrição da recipe</li>
+<li>versão</li>
+<li>licença do pacote</li>
+<li>repositório de origem </li>
+<li>indicar os processos de build</li>
+<li>adição de tarefas ou prerequisitos das tarefas </li>
+</ul>
+<h3 id="buildroot-vs-yocto">Buildroot vs Yocto<a class="headerlink" href="#buildroot-vs-yocto" title="Permanent link">&para;</a></h3>
+<p>Tanto Yocto quanto Buildroot no final terão:</p>
+<ul>
+<li>root filesystem, para seu sitema embarcado</li>
+<li>kernel</li>
+<li>bootloader</li>
+<li>e uma toolchain compatível</li>
+</ul>
+<p>O buildroot foca em simplicidade. Seu núcleo é mantido o quão simples e pequeno for possível, fazendo com que seja fácil seu uso e compreensão. Enquanto o Yocto tenta ser versátil e suporta uma grande variedade de sistemas embarcados.</p>
+<p>O Buildroot gera somente a imagem do sistema de arquivos. Assim quando um sistema precisar se atualizado a imagem inteira deve ser gerada novamente.
+Já a saída do Yocto é uma distribuição, onde pode exitir um sistema de gerenciamento de pacotes no qual pacotes podem ser atualizados individualmente, ou até mesmo serem removidas.</p>
+<p>No Yocto é mais fácil gerar alterações com mequenas mudanças e sua escalabilidade também é maior. Enquanto o Buildroot tenta se manter simples a curva de aprendizado do Yocto é um pouco mais desafiadora e sua terminologia é masi complicada.</p>
+<p>O conjunto de pacotes suportados pelo Buildroot é menor. Também não possui mecanismo para detectar mudanças entre builds.</p>
+<h2 id="compilando-uma-iso">Compilando uma iso<a class="headerlink" href="#compilando-uma-iso" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Mesmo seguindo os tutoriais do Yocto e guias da altera, não consegui compilar para a placa usada no curso, assim utilizarei um Raspberry Pi 3 Model B.</p>
+</div>
+<h3 id="links-uteis">Links uteis<a class="headerlink" href="#links-uteis" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.yoctoproject.org/docs/3.0.1/ref-manual/ref-manual.html">Reference Manual</a></p>
+<p><a href="https://www.yoctoproject.org/docs/3.0.1/overview-manual/overview-manual.html">Yocto Overview manual</a></p>
+<p><a href="https://lwn.net/Articles/682540/">Deciding between Buildroot &amp; Yocto</a> </p>
+<p><a href="https://www.embarcados.com.br/linux-para-a-raspberry-pi-3-usando-yocto/">Yocto e Raspberry Pi 3</a></p>
+<h3 id="preparacao-do-host">Preparação do host<a class="headerlink" href="#preparacao-do-host" title="Permanent link">&para;</a></h3>
+<p>Você deve ter:</p>
+<ul>
+<li>20 gbytes livres no disco</li>
+<li>Usar uma das versões recentes dos seguintes sistemas: Fedora, openSUSE, CentOS, Debian ou Ubuntu</li>
+<li>git 1.8.3.1 ou maior</li>
+<li>tar 1.27 ou maior</li>
+<li>python 3.4 ou maior</li>
+</ul>
+<p>Para instalar os pacotes essenciais no host rode o comando abaixo, se você usar uma distribuição ubuntu.
+<div class="highlight"><pre><span></span><code>$ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm
+</code></pre></div>
+Clone o Yocto
+<div class="highlight"><pre><span></span><code>$ git clone -b thud http://git.yoctoproject.org/git/poky yocto
+$ git clone -b thud git://git.openembedded.org/meta-openembedded yocto/meta-openembedded
+</code></pre></div>
+Clone a <em>layer</em> do Angstrom
+<div class="highlight"><pre><span></span><code>$ git clone -b angstrom-v2018.12-thud git://github.com/Angstrom-distribution/meta-angstrom.git yocto/meta-angstrom
+</code></pre></div>
+Clone a <em>layer</em> do Raspberry Pi
+<div class="highlight"><pre><span></span><code>$ git clone -b thud git://git.yoctoproject.org/meta-raspberrypi yocto/meta-raspberrypi
+</code></pre></div>
+Clone a <em>layer</em> do Qt 5
+<div class="highlight"><pre><span></span><code>$ git clone -b thud https://github.com/meta-qt5/meta-qt5.git yocto/meta-qt5
+</code></pre></div>
+Iniciando o sistema de desenvolvimento. Isso precisa ser feito sempre que abrir um novo terminal
+<div class="highlight"><pre><span></span><code>$ cd yocto
+$ source oe-init-build-env
+</code></pre></div>
+Precisamos agora incluir as <em>layers</em> clonadas acima. Modifique o arquivo <code>/yocto/build/conf/bblayers.conf</code> para isso:</p>
+<div class="highlight"><pre><span></span><code># POKY_BBLAYERS_CONF_VERSION is increased each time build/conf/bblayers.conf
+# changes incompatibly
+POKY_BBLAYERS_CONF_VERSION = &quot;2&quot;
+
+BBPATH = &quot;${TOPDIR}&quot;
+BBFILES ?= &quot;&quot;
+
+BBLAYERS ?= &quot; \
+  ${TOPDIR}/../meta \
+  ${TOPDIR}/../meta-angstrom \
+  ${TOPDIR}/../meta-poky \
+  ${TOPDIR}/../meta-yocto-bsp \
+  ${TOPDIR}/../meta-raspberrypi \
+  ${TOPDIR}/../meta-qt5 \
+  ${TOPDIR}/../meta-openembedded/meta-multimedia \
+  ${TOPDIR}/../meta-openembedded/meta-networking \
+  ${TOPDIR}/../meta-openembedded/meta-oe \
+  ${TOPDIR}/../meta-openembedded/meta-python \
+  ${TOPDIR}/../meta-openembedded/meta-webserver \
+  &quot;
+</code></pre></div>
+<p>No arquivo <code>yocto/build/conf/local.conf</code>
+adicione as seguintes linhas:
+<div class="highlight"><pre><span></span><code>MACHINE ??= &quot;raspberrypi3&quot;
+DISTRO ?= &quot;angstrom&quot;
+RPI_USE_U_BOOT = &quot;1&quot;
+</code></pre></div></p>
+<h2 id="compilando">Compilando<a class="headerlink" href="#compilando" title="Permanent link">&para;</a></h2>
+<p><div class="highlight"><pre><span></span><code>$ bitbake core-image-base
+</code></pre></div>
+Você deverá ter a seguinte saída:
+<div class="highlight"><pre><span></span><code>Build Configuration:
+BB_VERSION           = &quot;1.40.0&quot;
+BUILD_SYS            = &quot;x86_64-linux&quot;
+NATIVELSBSTRING      = &quot;ubuntu-18.04&quot;
+TARGET_SYS           = &quot;arm-angstrom-linux-gnueabi&quot;
+MACHINE              = &quot;raspberrypi3&quot;
+DISTRO               = &quot;angstrom&quot;
+DISTRO_VERSION       = &quot;v2018.12&quot;
+TUNE_FEATURES        = &quot;arm armv7a vfp thumb neon callconvention-hard&quot;
+TARGET_FPU           = &quot;hard&quot;
+meta                 = &quot;thud:8cd3ee6e1a50ad9f40466bcadb236c619c42ef19&quot;
+meta-angstrom        = &quot;angstrom-v2018.12-thud:fdf4ca41ba6d455a906465a4d2f0d71dbb70224c&quot;
+meta-poky            
+meta-yocto-bsp       = &quot;thud:8cd3ee6e1a50ad9f40466bcadb236c619c42ef19&quot;
+meta-raspberrypi     = &quot;thud:4e5be97d75668804694412f9b86e9291edb38b9d&quot;
+meta-qt5             = &quot;thud:1520d5b2b2beec5e1c3209d3178219e93ef08bca&quot;
+meta-multimedia      
+meta-networking      
+meta-oe              
+meta-python          
+meta-webserver       = &quot;thud:446bd615fd7cb9bc7a159fe5c2019ed08d1a7a93&quot;
+</code></pre></div></p>
+<p>Depois de compilado procure um desses arquivos e transfira a imagem para o arquivo. Eu utilizei o etcher para isso.</p>
+<div class="highlight"><pre><span></span><code>/yocto/build/tmp-glibc/deploy/images/raspberrypi3/Angstrom-core-image-base-glibc-ipk-v2018.12-raspberrypi3.rootfs.rpi-sdimg
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/yocto/deploy/images/raspberrypi3/Angstrom-core-image-base-glibc-ipk-v2018.12-raspberrypi3.rootfs.rpi-sdimg
+</code></pre></div>
+<p><a class="glightbox" href="../imgs/Elisa/booting.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="booting.png" src="../imgs/Elisa/booting.png" /></a>
+<a class="glightbox" href="../imgs/Elisa/login.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="login.png" src="../imgs/Elisa/login.png" /></a></p>
+<h2 id="ate-onde-cheguei-com-a-cyclone5">Até onde cheguei com a cyclone5?<a class="headerlink" href="#ate-onde-cheguei-com-a-cyclone5" title="Permanent link">&para;</a></h2>
+<p>Clone o repositório do Poky</p>
+<div class="highlight"><pre><span></span><code>$ git clone git://git.yoctoproject.org/poky
+</code></pre></div>
+<h3 id="criacao-da-imagem">Criação da Imagem<a class="headerlink" href="#criacao-da-imagem" title="Permanent link">&para;</a></h3>
+<p>Primeiro precisamos inicializar o ambiente de desenvolvimento:</p>
+<p><div class="highlight"><pre><span></span><code>$ cd poky
+$ source oe-init-build-env
+</code></pre></div>
+Clone a layer da altera da seguinte maneira:
+<div class="highlight"><pre><span></span><code>$ cd poky
+$ git clone https://github.com/kraj/meta-altera.git
+</code></pre></div></p>
+<p>Mude a variável <code>MACHINE</code> para "cyclone5" no arquivo de configuração <code>local.conf</code></p>
+<p>Adicione uma <em>layer</em> ao arquivo de configuração de layers:
+<div class="highlight"><pre><span></span><code>$ cd ~/poky/build
+$ bitbake-layers add-layer ../meta-altera
+</code></pre></div>
+Mas nao consegui nem compilar usando BitBake.</p>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Leo-OpenCL/"
+               class="ah-prev"
+               title="2019 - OpenCL">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">2019 - OpenCL</span>
+            </a>
+          
+          
+            <a href="../Pedro-OpenCV/"
+               class="ah-next"
+               title="2019 - OpenCV">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">2019 - OpenCV</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

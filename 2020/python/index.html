@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>2020 - Soc & Python - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '../..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../../termynal.css">
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../.."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">2020 - Soc & Python</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#comecando">Começando</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#motivacao">Motivação</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#introducao">Introdução</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#montando-um-modulo">Montando um módulo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#instalando-o-modulo">Instalando o módulo</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#rapidez-do-modulo-comparacao-entre-c-e-python">Rapidez do módulo - comparação entre C e Python</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Students tutorials</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="soc-python">Soc &amp; Python<a class="headerlink" href="#soc-python" title="Permanent link">&para;</a></h1>
+<ul>
+<li><strong>Alunos:</strong> Gustavo Braga, Henry Rocha e Thomas Queiroz</li>
+<li><strong>Curso:</strong> Engenharia da Computação</li>
+<li><strong>Semestre:</strong> 6</li>
+<li><strong>Contato:</strong> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#117;&#115;&#116;&#97;&#118;&#111;&#98;&#98;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#103;&#117;&#115;&#116;&#97;&#118;&#111;&#98;&#98;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#110;&#114;&#121;&#102;&#114;&#49;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#104;&#101;&#110;&#114;&#121;&#102;&#114;&#49;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#111;&#109;&#97;&#115;&#113;&#98;&#115;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;">&#116;&#104;&#111;&#109;&#97;&#115;&#113;&#98;&#115;&#64;&#97;&#108;&#46;&#105;&#110;&#115;&#112;&#101;&#114;&#46;&#101;&#100;&#117;&#46;&#98;&#114;</a></li>
+<li><strong>Ano:</strong> 2020</li>
+</ul>
+<h2 id="comecando">Começando<a class="headerlink" href="#comecando" title="Permanent link">&para;</a></h2>
+<p>Para seguir esse tutorial é necessário:</p>
+<ul>
+<li><strong>Hardware:</strong> Raspberry Pi</li>
+<li><strong>Softwares:</strong> Python &gt;= 3.5</li>
+</ul>
+<h2 id="motivacao">Motivação<a class="headerlink" href="#motivacao" title="Permanent link">&para;</a></h2>
+<p>Os sistemas embarcados são utilizados com muita frequência no dia a dia para tarefas diversas. Para tarefas que exigem um alto processamento e alta performance, as linguagens que geralmente são utilizadas são as de baixo nível, como por exemplo o C. Por estar mais próxima da linguagem de máquina, isso a torna muito rápida, mas também muito mais complexa de ser utilizada para desenvolvimentos grandes. Por sua vez, o Python é considerado uma das linguagens mais fáceis e intuitivas de serem aprendidas. Porém, como o seu nével é alto, sua performance é muito pior do que outras linguagens, o que a impossibilita de ser utilizada em sistemas embarcados que exigem alta performance, principalmente por conta de restrições de hardware.</p>
+<p>Dito isso, seria muito bom conseguir o melhor dos dois mundos: uma linguagem rápida e que seja fácil de escrever. Para isso, devemos montar um módulo em Python escrito em C, dessa forma podemos utilizá-lo e não perder performance ao escrever Python. Em outras palavras, podemos escrever programas complexos que irão rodar em sistemas embarcados em Python, facilitando o desenvolvimento.</p>
+<h2 id="introducao">Introdução<a class="headerlink" href="#introducao" title="Permanent link">&para;</a></h2>
+<p>Existem diversos modos de extender as funcionalidades do Python. Um desses modos é criar uma biblioteca em C. Esse método leva a aumento de performance, além de possibilitar a chamada de funções e bibliotecas C, em um nível baixo.</p>
+<p>Um módulo em Python pode ser considerado como uma biblioteca, que pode ser importada e utilizada em código por um programa. Exemplos de módulos famosos em Python são <em>math</em>, <em>OpenCV</em>, <em>Numpy</em>, entre outros. O <em>OpenCV</em> por exemplo, exige muitas operações e poder computacional, por isso é implementada em C.</p>
+<p>Nesse tutorial, vamos ver como criar um módulo em C que implementa o Bubble Sort, e, posteriormente, comparar sua performance contra o mesmo algoritmo feito em Python na Raspberry Pi. O Bubble sort foi escolhido pois sua complexidade é O(n^2) no médio e no pior caso, por isso a comparação é muito mais fácil de ser visualizada.</p>
+<h2 id="montando-um-modulo">Montando um módulo<a class="headerlink" href="#montando-um-modulo" title="Permanent link">&para;</a></h2>
+<p>De modo a suportar extensões, o Python API defines um grupo de funções, macros e variáveis que proveem acesso a várias parte do <em>run-time</em> do Python. O Python API é incorporado em um arquivo em C usando o <em>header</em> "Python.h".</p>
+<p>Vamos começar criando um novo arquivo em C.
+<div class="highlight"><pre><span></span><code>touch<span class="w"> </span>pysoc.c
+</code></pre></div></p>
+<p>Devemos então incluir as bibliotecas Python. Basta colocar essas duas linhas no começo do arquivo.
+<div class="highlight"><pre><span></span><code><span class="c1">// Configura o tamanho das variáveis para</span>
+<span class="c1">// usar &quot;Py_ssize_t&quot; ao invés de &quot;int&quot; do C.</span>
+<span class="cp">#define PY_SSIZE_T_CLEAN</span>
+<span class="c1">// Inclui a biblioteca do Python.</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Python.h&gt;</span>
+</code></pre></div></p>
+<p>Em seguida vamos definir a função responsável por realizar o Bubble Sort.
+Essa função é como qualquer outra função em C. Ela recebe um vetor (v) e o tamanho dele (n)
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">bubble_sort</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">v</span><span class="p">[],</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">ssize_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">swapped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">ssize_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kt">long</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+<span class="w">                </span><span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span>
+<span class="w">                </span><span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp</span><span class="p">;</span>
+<span class="w">                </span><span class="n">swapped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">swapped</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Agora devemos criar uma função <em>wrapper</em> para essa função. Essa será a função que pode ser chamada dentro do Python.
+Para definir tal função, é necessário o uso de objetos especias, vindos do Python API.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Dentre os objetos especiais, o mais notável é o <code>PyObject</code>.</p>
+<p>Ele é uma estrutura de objeto usada para definir os tipos de objetos para o Python. Todos os objetos Python compartilham algumas informações que são definidas por essa estrutura e todos os outros objetos são uma extensão dela.</p>
+<p>Esse objeto diz ao interpretador do Python como ele deve tratar objetos e seus ponteiros. Por exemplo, configurar o retorno de uma função como um <code>PyObject</code> possibilita que o interpretador reconheca esse retorno um tipo de variável válido de Python.</p>
+</div>
+<p>Vamos começar definindo a função.</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="nf">pysoc_bubble_sort</span><span class="p">(</span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Aqui estamos criando uma função chamada <code>pysoc_bubble_sort</code>, que retorna um <code>PyObject</code> e tem dois parâmetros, <code>self</code> e <code>args</code>, ambos <code>PyObject</code>.</p>
+<p>O argumento <code>self</code> aponta para o objeto do módulo para funções nível módulo.
+Caso essa função fosse um método de uma clase, apontaria para uma instância do objeto.</p>
+<p>Já o argumento <code>args</code> é um ponteiro para uma tupla do Python, contendo todos os argumento da função.
+Todos os items da tupla são objetos Python e para que possam ser usados em nossa função C devemos convertê-los para valores C.
+Para realizar essa conversão existe a função <code>PyArg_ParseTuple()</code>. Ela checa os tipos dos argumetos e os converte para valores C.</p>
+<p>Como a função que vamos criar é o Bubble Sort, o único argumento que vamos receber será a própria lista de valores a serem ordenados.
+Vamos então pegar o tamanho da lista passada, que é o primeiro argumento da função <code>bubble_sort</code> definida anteriormente.</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="nf">pysoc_bubble_sort</span><span class="p">(</span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Declarando a variável que guardará a lista de valores.</span>
+<span class="w">    </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">int_list</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Verificando se foi realmente passado uma lista como argumento</span>
+<span class="w">    </span><span class="c1">// caso contrário, retorne NULL.</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;O&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">int_list</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Calculando o tamanho da lista passada.</span>
+<span class="w">    </span><span class="n">Py_ssize_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyObject_Length</span><span class="p">(</span><span class="n">int_list</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Caso o tamanho seja negativo, retorne NULL.</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Como a API do Python não disponibiliza uma função que converta uma lista de Python para um vetor em C, devemos fazer tal conversão manualmente.
+O código a seguir realiza essa conversão.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Declarando o vetor em C. O tamanho foi obtido anteriormente.</span>
+<span class="kt">long</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+<span class="c1">// Loop que passa por todos os items da lista passada.</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Py_ssize_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Pegando o item &quot;i&quot; da lista.</span>
+<span class="w">    </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyList_GetItem</span><span class="p">(</span><span class="n">int_list</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Transformando esse item em um &quot;long&quot; do C.</span>
+<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">lval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyLong_AsLong</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Caso esse valor seja negativo, ocorreu um erro e devemos retornar NULL.</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lval</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Inserir o item convertido na lista.</span>
+<span class="w">    </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lval</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Agora que temos o tamanho do vetor (<code>n</code>) e o vetor em si (<code>v</code>) podemos chamar a função <code>bubble_sort</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">bubble_sort</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+</code></pre></div>
+<p>Com o término da função, teremos um vetor em C ordenado em ordem crescente.</p>
+<p>Agora devemos retornar esse vetor ordenado. Para que o valor retornado possa ser interpretado pelo Python posteriormente devemos transformar esse vetor em um PyObject, mais especificamente, uma lista.</p>
+<p>Para isso vamos criar uma nova lista com o tamanho <code>n</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">ret_list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyList_New</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</code></pre></div>
+<p>Em seguida, vamos passar por cada item do vetor em C e convertê-lo em PyObject também, mas dessa vez passando para um tipo <em>Long</em> do Python.</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Py_ssize_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Converte o valor em C para um tipo Long do Python.</span>
+<span class="w">    </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">pl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyLong_FromLong</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">    </span><span class="c1">// Caso esse valor seja NULL, ocorreu um erro</span>
+<span class="w">    </span><span class="c1">// e devemos sair da função.</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pl</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Inserindo o valor convertido na lista do Python</span>
+<span class="w">    </span><span class="c1">// e verificando se o retorno dessa função foi -1,</span>
+<span class="w">    </span><span class="c1">// indicando um erro.</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyList_SetItem</span><span class="p">(</span><span class="n">ret_list</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">pl</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Feito isso, já podemos retornar a lista ordenada.</p>
+<div class="highlight"><pre><span></span><code><span class="k">return</span><span class="w"> </span><span class="n">ret_list</span><span class="p">;</span>
+</code></pre></div>
+<p>Após declarar a função <code>pysoc_bubble_sort</code> precisamos também indicar ao Python a função de inicialização do módulo.
+Todo módulo precisa de uma função que retorna um <code>PyMODINIT_FUNC</code> e que, por convenção, vamos chamá-la de <code>PyInit_pysoc</code>.</p>
+<p>A seguir está a função mais simples que incializa um módulo. Ela apenas chama o <code>PyModule_Create</code> e retorna o resultado dessa função.</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyMODINIT_FUNC</span><span class="w"> </span><span class="nf">PyInit_pysoc</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyModule_Create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pysocmodule</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Se quisermos inicializar o módulo de uma forma que tenha um erro específico ao módulo precisamos realizar
+alumos outras etapas durante na função <code>PyInit_pysoc</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyMODINIT_FUNC</span><span class="w"> </span><span class="nf">PyInit_pysoc</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyModule_Create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pysocmodule</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">PysocError</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyErr_NewException</span><span class="p">(</span><span class="s">&quot;pysoc.PysocError&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Py_XINCREF</span><span class="p">(</span><span class="n">PysocError</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyModule_AddObject</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PysocError&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">PysocError</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Py_XDECREF</span><span class="p">(</span><span class="n">PysocError</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Py_CLEAR</span><span class="p">(</span><span class="n">PysocError</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Py_DECREF</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Nesse caso foi definido um erro chamado de PysocError. Apenas toda chamada de função devemos verificar se ela sucediu e, caso contrário, retornamos NULL.</p>
+<p>A seguir está uma função se sempre da raise no erro PysocError</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="nf">pysoc_raise_pysoc_error</span><span class="p">(</span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PysocError</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Error from C&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sempre que uma função falha/dá raise em um erro ela deve retornar NULL.</p>
+</div>
+<p>Se você parou para ler o código do PyInit_pysoc pode ter percebido que há uma coisa estranha,
+a variável <code>PysocError</code> não tem um tipo definido. Isto é porque ela está no arquivo <code>pysoc.h</code>.
+Pelo fato da variável <code>PysocError</code> indicar um erro, ela precisa ser acessada por várias funções que
+não recebem nenhuma variável extra como argumento e, por isso, é necessário que a variável seja
+global.</p>
+<p>Aqui está o início de do arquivo <code>pysoc.h</code>
+<div class="highlight"><pre><span></span><code><span class="cp">#define PY_SSIZE_T_CLEAN</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Python.h&gt;</span>
+
+<span class="k">static</span><span class="w"> </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">PysocError</span><span class="p">;</span>
+</code></pre></div></p>
+<p>Nesse arquivo também estão todas as definições (prototypes) das funções.
+Quase todas as funções retornam um <code>PyObject *</code> e recebem <code>PyObject *self</code> e <code>PyObject *args</code>
+como parâmetros.</p>
+<div class="highlight"><pre><span></span><code><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="nf">pysoc_bubble_sort</span><span class="p">(</span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">);</span>
+<span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="nf">pysoc_raise_pysoc_error</span><span class="p">(</span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">);</span>
+</code></pre></div>
+<p>Depois disso precisamos definir um array que vai indicar ao Python informações importantes sobre
+todas as funções do módulo.</p>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="n">PyMethodDef</span><span class="w"> </span><span class="n">PysocMethods</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">{</span><span class="s">&quot;bubble_sort&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pysoc_bubble_sort</span><span class="p">,</span><span class="w"> </span><span class="n">METH_VARARGS</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Bubble sort in c&quot;</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="s">&quot;raise_pysoc_error&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pysoc_raise_pysoc_error</span><span class="p">,</span><span class="w"> </span><span class="n">METH_NOARGS</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Raises PysocError&quot;</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">}</span><span class="w"> </span><span class="cm">/* Sentinel */</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>O array <code>PysocMethods</code> é composto de objetos <code>PyMethodDef</code>. Esse objeto tem como seu primeiro
+parâmetro o nome da função que vai ser utilizado dentro do Python. O segundo parâmetro é um
+ponteiro que indica onde está a função (em C isso significa apenas passar o nome da função).
+O terceiro parâmetro é o mais importante, ele define a quantidade de argumentos que a função recebe.
+No caso a função <code>pysoc_bubble_sort</code> recebe algum argumento e, então, tem o tipo <code>METH_VARARGS</code>.
+Se houvesse uma função que não recebe nenhum argumento seria <code>METH_NOARGS</code>. O quarto parâmetro é
+apenas uma string de help que indica o que a função faz.</p>
+<p>É possível fazer coisas muito mais específicas, porém não é necessário cobrir tudo para fazer um
+simples bubble sort. A documentação mais detalhada do <code>PyMethodDef</code> pode ser encontrada
+<a href="https://docs.python.org/3/c-api/structures.html?highlight=pymethoddef#c.PyMethodDef">aqui</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Se o terceiro parâmetro não for especificado corretamente, uma função que não recebe argumentos
+vai rodar apenas se um argumento (ou mais) for passado e uma função que recebe argumentos vai
+rodar apenas se não receber argumentos.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>O array de <code>PyMethodDef</code> deve sempre terminar com <code>{NULL, NULL, 0, NULL}</code>. Isso acontece porque em C quando um vetor é referenciado não é possível saber seu tamanho e, por isso, é necessário ter alguma coisa que determina o seu fim. Algo muito parecido é feito com strings em C (um vetor de chars), já que todas possuem um byte 0 ('\0') para indicar que ela acabou.</p>
+</div>
+<p>Para finilizar a declaração do módulo é necessário declarar o seguinte struct que referencia a
+variável <code>PysocMethods</code> explicada acima.</p>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">PyModuleDef</span><span class="w"> </span><span class="n">pysocmodule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">PyModuleDef_HEAD_INIT</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pysoc&quot;</span><span class="p">,</span><span class="w"> </span><span class="cm">/* name of module */</span>
+<span class="w">                                         </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="cm">/* module documentation, may be NULL */</span>
+<span class="w">                                         </span><span class="mi">-1</span><span class="p">,</span><span class="w">   </span><span class="cm">/* size of per-interpreter state of the module, or -1</span>
+<span class="cm">                                                  if the module keeps state in global variables. */</span>
+<span class="w">                                         </span><span class="n">PysocMethods</span><span class="p">};</span>
+</code></pre></div>
+<p>Mais informações a criação de um módulo podem ser achadas na
+<a href="https://docs.python.org/3/extending/extending.html?highlight=pymoduledef">documentação oficial do Python</a></p>
+<p>E com isso a parte em C do nosso módulo está completo!</p>
+<h2 id="instalando-o-modulo">Instalando o módulo<a class="headerlink" href="#instalando-o-modulo" title="Permanent link">&para;</a></h2>
+<p>Existem alguns jeitos para realizar a compilação e instalação do módulo, porém o
+melhor documentado é o <code>distutils</code>. Ele funciona a partir de um arquivo <code>setup.py</code> que especifica
+como o projeto é estruturado.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">distutils.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">Extension</span>
+
+<span class="n">module1</span> <span class="o">=</span> <span class="n">Extension</span><span class="p">(</span><span class="s2">&quot;pysoc&quot;</span><span class="p">,</span> <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pysoc.c&quot;</span><span class="p">])</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;pysoc&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Python module for SoC subject&quot;</span><span class="p">,</span> <span class="n">ext_modules</span><span class="o">=</span><span class="p">[</span><span class="n">module1</span><span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Para esse caso foi necessário apenas utilizar um módulo que constitui de apenas um arquivo, o
+<code>pysoc.c</code> (apesar de essencial o arquivo <code>pysoc.h</code> não é utilizado nessa parte). A classe
+Extension é bem versátil e nela podem ser espeficadas bibliotecas externas e flags de compilação.</p>
+<p>Para compilar e instalar é necessário rodar os seguintes comandos</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>setup.py<span class="w"> </span>build
+python3<span class="w"> </span>setup.py<span class="w"> </span>install<span class="w"> </span>--user
+</code></pre></div>
+<h2 id="rapidez-do-modulo-comparacao-entre-c-e-python">Rapidez do módulo - comparação entre C e Python<a class="headerlink" href="#rapidez-do-modulo-comparacao-entre-c-e-python" title="Permanent link">&para;</a></h2>
+<p>Para iniciar a comparação, necessitamos de uma implementação do bubble sort em Python. Ela pode ser vista a seguir:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">bubble_sort</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">swapped</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">swapped</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">swapped</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">v</span>
+</code></pre></div>
+<p>Com o bubble sort em Python e o bubble sort em C, podemos comecar a comparação. Configuracoes iniciais do arquivo:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pysoc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">bubble</span>
+</code></pre></div>
+<p>Utilizaremos agora a implementação em Python primeiro. Como pode ser visto abaixo, foi criada uma lista de 0 ate 100000 ao contrario, para podermos pegar o pior caso do algoritmo. Logo em seguida marcamos o tempo inicial e chamamos a função. Assim que ele termina, marcamos o tempo final e printamos o tempo que o codigo levou para rodar.</p>
+<div class="highlight"><pre><span></span><code><span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e5</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;== Python ==&quot;</span><span class="p">)</span>
+<span class="n">time1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">l1</span> <span class="o">=</span> <span class="n">bubble</span><span class="o">.</span><span class="n">bubble_sort</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">time0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; </span><span class="si">{</span><span class="n">time0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">time1</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Agora para nosso módulo implementado em C, faremos quase o mesmo codigo, que pode ser visto a seguir.</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e5</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;== C ==&quot;</span><span class="p">)</span>
+<span class="n">time3</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="n">pysoc</span><span class="o">.</span><span class="n">bubble_sort</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">time2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; </span><span class="si">{</span><span class="n">time2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">time3</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</code></pre></div>
+Juntando todo programa em um so:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pysoc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">bubble</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e5</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;== Python ==&quot;</span><span class="p">)</span>
+<span class="n">time1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">l1</span> <span class="o">=</span> <span class="n">bubble</span><span class="o">.</span><span class="n">bubble_sort</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">time0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; </span><span class="si">{</span><span class="n">time0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">time1</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e5</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;== C ==&quot;</span><span class="p">)</span>
+<span class="n">time3</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="n">pysoc</span><span class="o">.</span><span class="n">bubble_sort</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">time2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt; </span><span class="si">{</span><span class="n">time2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">time3</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&gt; C is </span><span class="si">{</span><span class="p">(</span><span class="n">time0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">time1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">time2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">time3</span><span class="p">)</span><span class="si">}</span><span class="s2"> times faster&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Com uma lista de tamanho 1e5 (100000) o código em Python leva aproximadamente 16 minutos
+para rodar. Para rodar apenas um simples teste considere mudar as ocorrências de 1e5 para 1e4</p>
+</div>
+<p>Se rodarmos o codigo</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>comparacao.py
+</code></pre></div>
+<p>Conseguimos observar o seguinte output:</p>
+<div class="codehilite"><pre><span></span><code>== Python ==
+&gt; 1059.0849022865295 seconds
+== C ==
+&gt; 10.741474628448486 seconds
+
+&gt; C is 98.59771948644497 times faster
+</code></pre></div>
+
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../LED-Linux/"
+               class="ah-prev"
+               title="2020 - Driver linux fita de LED">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">2020 - Driver linux fita de LED</span>
+            </a>
+          
+          
+            <a href="../metropolis/"
+               class="ah-next"
+               title="2020 - SDAccel">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">2020 - SDAccel</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

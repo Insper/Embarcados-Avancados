@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>1. RTL - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">1. RTL</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#getting-started">Getting Started</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#quartus">Quartus</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#creating-the-toplevel">Creating the topLevel</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#configuring-the-toplevel">Configuring the topLevel</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#verifying">Verifying</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#programming">Programming</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#exercises">Exercises</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>FPGA</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="rtl-vhdl">RTL / VHDL<a class="headerlink" href="#rtl-vhdl" title="Permanent link">&para;</a></h1>
+<p>This first delivery is an introduction/warm-up to VHDL and FPGA, we will create a dedicated hardware on the FPGA to control the board's LEDs based on the input signals from the buttons. The idea is to go through the entire process of developing a hardware in FPGA and with VHDL.</p>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<p>To follow this tutorial you will need:</p>
+<ul>
+<li><strong>Hardware:</strong> DE10-Standard and accessories </li>
+<li><strong>Software:</strong> Quartus 18.01</li>
+<li><strong>Documents:</strong> <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual">DE10-Standard_User_manual.pdf</a></li>
+</ul>
+<h2 id="quartus">Quartus<a class="headerlink" href="#quartus" title="Permanent link">&para;</a></h2>
+<p>First, we must create a new project in the Quartus software. </p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-FPGA-RTL/exercise_1" id="exercise_1_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>In Quartus: <code>File</code> ➡️<code>New Project Wizard</code></p>
+<ul>
+<li><strong>Directory, Name, Top-Level Entity</strong><ul>
+<li>Choose the destination as your repository. Name the project as <code>Lab1_FPGA_RTL</code></li>
+</ul>
+</li>
+<li><strong>Project Type</strong> <ul>
+<li>Empty Project</li>
+</ul>
+</li>
+<li><strong>Add Files</strong><ul>
+<li>We won't add any files for now.</li>
+</ul>
+</li>
+<li><strong>Family, Device &amp; Board Settings</strong><ul>
+<li>Look for the FPGA: <ul>
+<li>Family: <code>Cyclone V</code></li>
+<li>Name: <code>5CSXFC6D6F31C6</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>🆗 Finalize the Wizard </li>
+</ul>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-RTL_wizard.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-RTL_wizard.png" /></a></p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<div class="admonition note">
+<p class="admonition-title"><strong>Other references</strong></p>
+<p>If you need other reference material, there's a Terasic tutorial: <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual">DE10-Standard_My_First_Fpga.pdf  </a></p>
+</div>
+<h2 id="creating-the-toplevel">Creating the topLevel<a class="headerlink" href="#creating-the-toplevel" title="Permanent link">&para;</a></h2>
+<p>TopLevel is the name of the topmost module in <a href="https://www.intel.com/content/www/us/en/programmable/support/support-resources/design-examples/design-software/vhdl/v_hier.html">hierarchical</a> development where, generally, the entity signals (in/out,...) will be mapped to hardware pins (connection with the external world).</p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-FPGA-RTL/exercise_2" id="exercise_2_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>Let's add a file to the newly created project:</p>
+<ul>
+<li><code>File</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />  <code>New</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />  <code>VHDL File</code></li>
+<li><code>File</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />  <code>save as</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />   </li>
+<li>name: <code>Lab1_FPGA_RTL.vhd</code> </li>
+<li>🆗</li>
+</ul>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<div class="admonition exercise self-progress" data-slug="Tutorial-FPGA-RTL/exercise_3" id="exercise_3_0">
+<p class="admonition-title">toplevel source file</p>
+<form class="exercise-form">
+<p>Initialize the file with the following content ( this code could be more elegant, but we'll keep it simple for the sake of understanding. )</p>
+<div class="highlight"><pre><span></span><code><span class="k">library</span><span class="w"> </span><span class="nn">IEEE</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">IEEE.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">Lab1_FPGA_RTL</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="c1">-- Gloabals</span>
+<span class="w">        </span><span class="n">fpga_clk_50</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span><span class="w">        </span>
+
+<span class="w">        </span><span class="c1">-- I/Os</span>
+<span class="w">        </span><span class="n">fpga_led_pio</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">Lab1_FPGA_RTL</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">Lab1_FPGA_RTL</span><span class="w"> </span><span class="k">is</span>
+
+<span class="c1">-- signal</span>
+<span class="k">signal</span><span class="w"> </span><span class="n">blink</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="k">process</span><span class="p">(</span><span class="n">fpga_clk_50</span><span class="p">)</span><span class="w"> </span>
+<span class="w">      </span><span class="k">variable</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">25000000</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">      </span><span class="k">begin</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rising_edge</span><span class="p">(</span><span class="n">fpga_clk_50</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">counter</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10000000</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                      </span><span class="n">counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">                  </span><span class="k">else</span>
+<span class="w">                      </span><span class="n">blink</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">blink</span><span class="p">;</span>
+<span class="w">                      </span><span class="n">counter</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">                  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">        </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">fpga_led_pio</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">blink</span><span class="p">;</span>
+<span class="w">  </span><span class="n">fpga_led_pio</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">blink</span><span class="p">;</span>
+<span class="w">  </span><span class="n">fpga_led_pio</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">blink</span><span class="p">;</span>
+<span class="w">  </span><span class="n">fpga_led_pio</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">blink</span><span class="p">;</span>
+<span class="w">  </span><span class="n">fpga_led_pio</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">blink</span><span class="p">;</span>
+<span class="w">  </span><span class="n">fpga_led_pio</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">blink</span><span class="p">;</span>
+
+<span class="k">end</span><span class="w"> </span><span class="nc">rtl</span><span class="p">;</span>
+</code></pre></div>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<h2 id="configuring-the-toplevel">Configuring the topLevel<a class="headerlink" href="#configuring-the-toplevel" title="Permanent link">&para;</a></h2>
+<p>In Quartus, we need to specify which entity is the topLevel. As VHDL does not define a standard for this, any entity can be configured as the top. </p>
+<div class="admonition exercixe">
+<p class="admonition-title">Exercixe</p>
+<p>In Quartus:</p>
+</div>
+<ul>
+<li><code>Project</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />  <code>Set as Top-Level Entity</code></li>
+</ul>
+<p>This command will set the current file as the topLevel of the project. Note that Quartus assigns the entity's name as the file's name to the topLevel. If for any reason (which happens) the file's name is not the same as the entity's, this will not work.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>As we saved the file with the same name as the project and the entity has the same name as well, Quartus recognizes this entity as the TopLevel by default.</p>
+</div>
+<h2 id="verifying">Verifying<a class="headerlink" href="#verifying" title="Permanent link">&para;</a></h2>
+<p>Let's make sure everything is fine so far by doing a complete compilation of the project.</p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-FPGA-RTL/exercise_4" id="exercise_4_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>To full complile the project on quartus:10000000</p>
+<p><img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Processing</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />  <code>Start Compilation</code>.</p>
+<blockquote>
+<p>Please wait! Hardware compilations can take quite a long time.</p>
+</blockquote>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<h3 id="ios">I/Os<a class="headerlink" href="#ios" title="Permanent link">&para;</a></h3>
+<p>Remember that the topLevel is the entity that will be mapped with the external world. In this case, the signals: <code>fpga_clk_50</code>; <code>fpga_led_pio</code>; should be connected to the FPGA pins that are connected to these devices (50 MHz clock; Six LEDs).</p>
+<p>Notice the error that Quartus generated when we asked it to compile the project (<strong>"Show Critical Warnings Messages"</strong>):</p>
+<div class="admonition failure">
+<p class="admonition-title">Failure</p>
+<div class="highlight"><pre><span></span><code>Critical Warning (169085): No exact pin location assignment(s) 
+for 6 pins of 6 total pins. For the list of pins please refer 
+to the I/O Assignment Warnings table in the fitter report.
+</code></pre></div>
+<p><a class="glightbox" href="figs/Tutorial-FPGA-RTL_error.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Error" src="figs/Tutorial-FPGA-RTL_error.png" /></a></p>
+</div>
+<p><mark>This error indicates that from the topLevel 6 signals were not mapped to their corresponding pins.</mark></p>
+<h4 id="pins">Pins<a class="headerlink" href="#pins" title="Permanent link">&para;</a></h4>
+<p>We must indicate to the tool which pins and which signal standard it should use for each of the signals defined in the topLevel entity. </p>
+<h4 id="leds">LEDs<a class="headerlink" href="#leds" title="Permanent link">&para;</a></h4>
+<p>On page 22 of the board manual, we have the definitions of how the FPGA pins were used on the board:</p>
+<blockquote>
+<p>There are also ten user-controllable LEDs connected to the FPGA. Each LED is driven directly and
+individually by the Cyclone V SoC FPGA; driving its associated pin to a high logic level or low
+level to turn the LED on or off, respectively. Figure 3-17 shows the connections between LEDs and
+Cyclone V SoC FPGA. Table 3-6, Table 3-7 and Table 3-8 list the pin assignment of user
+push-buttons, switches, and LEDs.</p>
+</blockquote>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-RTL_pins.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="LEDs" src="../figs/Tutorial-FPGA-RTL_pins.png" width="500" /></a></p>
+<h4 id="clock">CLOCK<a class="headerlink" href="#clock" title="Permanent link">&para;</a></h4>
+<p>From the manual:</p>
+<blockquote>
+<p>Figure 3-13 shows the default frequency of all external clocks to the Cyclone V SoC FPGA. A
+clock generator is used to distribute clock signals with low jitter. The four 50MHz clock signals
+connected to the FPGA are used as clock sources for user logic. One 25MHz clock signal is
+connected to two HPS clock inputs, and the other one is connected to the clock input of Gigabit
+Ethernet Transceiver. Two 24MHz clock signals are connected to the clock inputs of USB
+Host/OTG PHY and USB hub controller. The associated pin assignment for clock inputs to FPGA
+I/O pins is listed in Table 3-5.</p>
+</blockquote>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-RTL_pins3.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../figs/Tutorial-FPGA-RTL_pins3.png" /></a></p>
+<h4 id="pin-assignment">Pin Assignment<a class="headerlink" href="#pin-assignment" title="Permanent link">&para;</a></h4>
+<p>We will use the <code>Pin Planner</code> to insert these pins informations.</p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-FPGA-RTL/exercise_5" id="exercise_5_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>To edit the pin assgiments:</p>
+<p><img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Assignments</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Pin Planner</code>. </p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<p>The <code>Pin Planner</code> interface displays the available FPGA pins/banks to be allocated to the TopLevel signals. Note that the <code>Fitter Location</code> column already has pins allocated to the signals, this was automatically generated by Quartus in the <code>Filter</code> step, however they do not correspond to the actual pins we want to use.</p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-FPGA-RTL/exercise_6" id="exercise_6_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>Edit the <code>Location</code> column using the previous figure that relates the LEDs on the board with the FPGA pins.</p>
+<p>Note:</p>
+<ol>
+<li>In our project, we only have 6 LEDs, out of the total 10 available.</li>
+<li>The I/O Standard does not reflect the one defined in the manual, which is <code>3.3V CMOS</code>. You should change this column from <code>2.5V CMOS (Default)</code> to <strong><code>3.3-V LVTTL</code></strong>.</li>
+</ol>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-RTL_Assigments.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Pin Planner" src="../figs/Tutorial-FPGA-RTL_Assigments.png" /></a></p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<div class="admonition info">
+<p class="admonition-title">FPGA Flexibility</p>
+<p>We normally attribute logical flexibility to the FPGA, but notice the flexibility it has in terms of defining the signal level of each pin. This gives the hardware developer countless usage options and new configurations.</p>
+</div>
+<div class="admonition exercise self-progress" data-slug="Tutorial-FPGA-RTL/exercise_7" id="exercise_7_0">
+<p class="admonition-title">Assignment Editor</p>
+<form class="exercise-form">
+<p>Close the tool and open the <code>Assignment Editor</code>:</p>
+<p><img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Assignments</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />  <code>Assignments Editor</code>. </p>
+<p>Note that the same information entered previously is in this editor. In fact, all FPGA configurations are displayed in the <code>Assignments Editor</code>, and only some in the <code>Pin Planner</code>.</p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<div class="admonition exercise self-progress" data-slug="Tutorial-FPGA-RTL/exercise_8" id="exercise_8_0">
+<p class="admonition-title">Recompile</p>
+<form class="exercise-form">
+<p>Recompile the project and note that there are no longer allocation errors.</p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<p>The error you're encountering pertains to not having indicated the operating frequency of your system to Quartus. Since the frequency isn't defined, the <code>Fitter and Assembler</code> phase can't correctly optimize the project, leading to this error. Note tha in this context, "Assembler" refers to a different process than the assembler used in a program like <strong>C</strong>. For more details, refer to this <a href="https://people.ece.cornell.edu/land/courses/ece5760/Quartus/Quartus_compile.html">resource</a>.</p>
+<h3 id="synopsys-design-constraints-file-sdc">Synopsys Design Constraints File (<code>.sdc</code>)<a class="headerlink" href="#synopsys-design-constraints-file-sdc" title="Permanent link">&para;</a></h3>
+<p>We need to add a new file to the project that outlines the boundary conditions of the project for the tool.</p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-FPGA-RTL/exercise_9" id="exercise_9_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>To do this: <code>File</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>New File</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Synopsys Design Constraints File</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Save As</code>:</p>
+<ul>
+<li><code>Lab1_FPGA_RTL.sdc</code></li>
+</ul>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<div class="admonition exercise self-progress" data-slug="Tutorial-FPGA-RTL/exercise_10" id="exercise_10_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>Add the following content to the file:</p>
+<div class="highlight"><pre><span></span><code># 50MHz board input clock
+create_clock -period 20 [get_ports fpga_clk_50]
+
+# Automatically apply a generate clock on the output of phase-locked loops (PLLs) 
+derive_pll_clocks
+</code></pre></div>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<p>These lines instruct the tool that the signal <code>fpga_clk_50</code> is a clock signal with a frequency of 50MHz (20 ns period) and to infer other automatic clocks (e.g., in case a PLL is used).</p>
+<div class="admonition success">
+<p class="admonition-title">Recompile</p>
+<p>Recompile the project and note that there are no longer any critical errors in the project.</p>
+</div>
+<h3 id="rtl-viewer">RTL Viewer<a class="headerlink" href="#rtl-viewer" title="Permanent link">&para;</a></h3>
+<p>The RTL Viewer provides a graphical way to verify if the HDL code has been correctly interpreted by the tool. It's an excellent way to check if the hardware description is correct.</p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-FPGA-RTL/exercise_11" id="exercise_11_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>To open the RTL   Viewer:</p>
+<p><img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Tools</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>NetList Viewers</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>RTL Viewer</code>.</p>
+<p>You should see a diagrama similar to this one:</p>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-RTL_rtl.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="RTL" src="../figs/Tutorial-FPGA-RTL_rtl.png" /></a></p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<h2 id="programming">Programming<a class="headerlink" href="#programming" title="Permanent link">&para;</a></h2>
+<p>Connect the FPGA to the Host via the USB Blaster connector</p>
+<p>Once the project compiles, Quartus generates a binary file in the output_files folder with the <code>*.sof</code> extension. This file will be loaded onto the FPGA to run the project. </p>
+<div class="admonition exercise self-progress" data-slug="Tutorial-FPGA-RTL/exercise_12" id="exercise_12_0">
+<p class="admonition-title">Exercise</p>
+<form class="exercise-form">
+<p>To programmer the FPGA:</p>
+<p><code>Tools</code> <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" /> <code>Programmmer</code>.</p>
+<p>At this stage, click on Auto Detect. This will read via JTAG all devices connected to the <strong>JTAG chain</strong>. You will notice that two devices appear:</p>
+<ul>
+<li><code>SOCVHPS</code>: ARM Cortex A7</li>
+<li><code>5CSXFC6D6</code>: FPGA</li>
+</ul>
+<blockquote>
+<p>You might need to configure Linux to recognize the JTAG. Follow the steps at: <a href="https://github.com/Insper/Z01.1/wiki/Infraestrutura-Detalhada#configurando-o-usb-blaster">Configuring USB Blaster Linux</a>.</p>
+</blockquote>
+<p><a class="glightbox" href="../figs/Tutorial-FPGA-RTL_programming.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Programming" src="../figs/Tutorial-FPGA-RTL_programming.png" /></a></p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Submit" value="Mark as done" />
+</div>
+</form>
+</div>
+<h2 id="exercises">Exercises<a class="headerlink" href="#exercises" title="Permanent link">&para;</a></h2>
+<p>Lets practical a little bit:</p>
+<ol>
+<li><img alt="🔰" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/1f530.svg" title=":beginner:" /> Make the LEDs blink more slowly</li>
+<li><img alt="🔰" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/1f530.svg" title=":beginner:" /> Add buttons to the project and make them control the LEDs</li>
+<li>Make switches control the frequency at which the LEDs blink</li>
+<li>Add a PWM to the LEDs to control their intensity </li>
+</ol>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href=".."
+               class="ah-prev"
+               title="Home">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">Home</span>
+            </a>
+          
+          
+            <a href="../Entrega-1/"
+               class="ah-next"
+               title="🔔 Assessment">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">🔔 Assessment</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

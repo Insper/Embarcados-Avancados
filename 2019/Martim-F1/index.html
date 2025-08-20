@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>2019 - FPGA na AWS - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '../..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../../termynal.css">
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../.."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">2019 - FPGA na AWS</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#introducao">Introdução</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#passo-a-passo">Passo a passo</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Students tutorials</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="fpga-na-aws">FPGA na AWS<a class="headerlink" href="#fpga-na-aws" title="Permanent link">&para;</a></h1>
+<ul>
+<li>Aluno: Martim Ferreira José</li>
+<li>Curso: Engenharia da Computação</li>
+<li>Semestre: 9</li>
+<li>Contato: </li>
+<li>Link tutorial oficial: </li>
+<li>Ano: 2019</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Hardware utilizado no tutorial</p>
+<ul>
+<li>Instância F1 na AWS</li>
+</ul>
+</div>
+<h2 id="introducao">Introdução<a class="headerlink" href="#introducao" title="Permanent link">&para;</a></h2>
+<p>A AWS dispõem de instâncias F1, que são máquinas de alta performance que contém uma FPGA no barramento PCI, permitindo a execução de programas acelerados por meio de hardware personalizado. Para executar um programa em uma FPGA na nuvem, é preciso primeiro desenvolver, simular, depurar e compilar o código. Tudo isso é feito em uma instância de desenvolvimento, predefinida por uma <a href="https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/AMIs.html">AMI</a> (Amazon Machine Image) fornecida pela AWS. Na instância de desenvolvedor, o programa é compilado e é gerada uma imagem para a FPGA Xilinx presente na instância F1.</p>
+<p>O programa a ser implementado na FPGA pode ser desenvolvido utilizando três ambientes de desenvolvimento diferentes, documentados a seguir:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Development Environment</th>
+<th style="text-align: center;">Description</th>
+<th style="text-align: center;">Accelerator Language</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Software Defined Accelerator Development - SDAccel</td>
+<td style="text-align: center;">Development experience leverages an optimized compiler to allow easy new accelerator development or migration of existing C/C++/openCL, Verilog/VHDL to AWS FPGA instances</td>
+<td style="text-align: center;">C/C++/OpenCL, Verilog/VHDL (RTL)</td>
+</tr>
+<tr>
+<td style="text-align: center;">Hardware Accelerator Development - HDK</td>
+<td style="text-align: center;">Fully custom hardware development experience provides hardware developers with the tools required for developing AFIs for AWS FPGA instances</td>
+<td style="text-align: center;">Verilog/VHDL</td>
+</tr>
+<tr>
+<td style="text-align: center;">IP Integrator or High Level Synthesis (HLx)</td>
+<td style="text-align: center;">Graphical interface development experience for integrating IP and high level synthesis development</td>
+<td style="text-align: center;">Verilog/VHDL/C</td>
+</tr>
+</tbody>
+</table>
+<p>Pela facilidade e maior conhecimento de C++, opta-se pela escolha do ambiente SDAccel. Portando, o programa a ser implementado é programado em sua maioria em C++ utilizando a arquitetura OpenCL, que é amplamente utilizada na programação de alto desempenho em diversas plataformas.</p>
+<p>Este tutorial faz a implementação do exemplo Hello World, que consiste na adição de dois vetores. O código deste exemplo pode ser examinado a fundo no seguinte repositório: <a href="https://github.com/Xilinx/SDAccel_Examples/tree/a41b58921188ad90ace2d34a22a2513d8f74b549/getting_started/host/helloworld_ocl">https://github.com/Xilinx/SDAccel_Examples/tree/a41b58921188ad90ace2d34a22a2513d8f74b549/getting_started/host/helloworld_ocl</a></p>
+<p>No repositório há dois arquivos na pasta <code>src</code>: <code>host.cpp</code> e <code>vector_addition.cl</code>, que correspondem ao programa da máquina e ao kernel da FPGA, respectivamente. </p>
+<p>O arquivo host consiste em um programa C++ em que:</p>
+<ul>
+<li>São definidos três vetores: A, B e results.</li>
+<li>A placa Xilinx é selecionada e adicionada para o contexto da execução. </li>
+<li>O binário do kernel é carregado e adicionado para um programa</li>
+<li>Para migrar os dados entre host e device, são criados dois buffers de leitura referenciando A e B; E um buffer de escrita referenciando result. </li>
+<li>Os dados armazenados nos buffers de leitura são transferidos da memória da máquina para memória da FPGA.</li>
+<li>O kernel é extraído do programa, os argumentos são determinados (result, A, B, tamanho) e ele é lançado.</li>
+<li>Os resultados são requisitados da FPGA e armazenados no buffer de escrita.</li>
+<li>E por fim, o resultado recebido é comparados com o resultado esperado.</li>
+</ul>
+<p>O arquivo do kernel consiste em uma função em OpenCL que:</p>
+<ul>
+<li>Recebe quatro argumentos (result, A, B, tamanho)</li>
+<li>Define os arrays A e B</li>
+<li>Percorre os arrays recebidos como argumento, populando os arrays declarados</li>
+<li>Percorre o tamanho das arrays escrevendo no buffer de escrita (result) a soma de A e B em cada índice.</li>
+</ul>
+<h3 id="aplicacoes">Aplicações<a class="headerlink" href="#aplicacoes" title="Permanent link">&para;</a></h3>
+<p>As instâncias com FPGA são amplamente utilizadas em situações em que há uma grande quantidade de dados e o processamento precisa ser feito com rapidez. O desenvolvimento de um hardware personalizado para executar um programa fornece um custo de computação 30x melhor comparado com instâncias de CPU. Entre essas aplicações pode-se citar o encoding de video em tempo real e análise de risco financeiro.</p>
+<h3 id="custos">Custos<a class="headerlink" href="#custos" title="Permanent link">&para;</a></h3>
+<p>A instância de desenvolvimento m5.xlarge custa US<span class="arithmatex">\(0.1920 por hora. E a instância f1.2xlarge custa US\)</span>1.65 por hora. A implementação deste exemplo é estimada consumir por volta de 3hrs da instância de desenvolvimento e meia hora da instância F1. Totalizando US$1.5.</p>
+<h2 id="passo-a-passo">Passo a passo<a class="headerlink" href="#passo-a-passo" title="Permanent link">&para;</a></h2>
+<h3 id="referencias">Referências<a class="headerlink" href="#referencias" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://aws.amazon.com/pt/ec2/instance-types/f1/">https://aws.amazon.com/pt/ec2/instance-types/f1/</a></li>
+<li><a href="https://github.com/aws/aws-fpga/blob/master/SDAccel/README.md#overview">https://github.com/aws/aws-fpga/blob/master/SDAccel/README.md#overview</a></li>
+<li><a href="https://github.com/Xilinx/SDAccel_Examples/tree/a41b58921188ad90ace2d34a22a2513d8f74b549/getting_started/host/helloworld_ocl/src">https://github.com/Xilinx/SDAccel_Examples/tree/a41b58921188ad90ace2d34a22a2513d8f74b549/getting_started/host/helloworld_ocl/src</a></li>
+</ul>
+<h3 id="pre-requisitos">Pré-requisitos<a class="headerlink" href="#pre-requisitos" title="Permanent link">&para;</a></h3>
+<p>Pré-requisitos: Ter uma conta na AWS com acesso ao EC2 e S3.</p>
+<h4 id="configurando-a-aws">Configurando a AWS<a class="headerlink" href="#configurando-a-aws" title="Permanent link">&para;</a></h4>
+<p>Em seu computador, baixe a CLI da AWS configure suas credenciais:</p>
+<p><code>$ aws configure</code></p>
+<h4 id="instancia-de-desenvolvedor">Instância de desenvolvedor<a class="headerlink" href="#instancia-de-desenvolvedor" title="Permanent link">&para;</a></h4>
+<p>Para criar a instância de desenvolvimento, clique em Launch Instance e:
+- Utilize a AMI chamada “FPGA Developer AMI”. 
+- Utilize o flavor m5.xlarge ou m5.2xlarge (quanto mais núcleos e memória, mais rápido será a compilacão).
+- Crie e salve sua Keypair.</p>
+<h4 id="bucket-setup">Bucket setup<a class="headerlink" href="#bucket-setup" title="Permanent link">&para;</a></h4>
+<p>Para utilizar a imagem compilada da F1, é necessário salvá-la em um bucket, permitindo o seu acesso pelo serviço EC2. O bucket e suas pastas podem ser criados manualmente pela dashboard ou pela CLI:</p>
+<div class="highlight"><pre><span></span><code>$ aws s3 mb s3://embarcados-f1-tutorial --region us-east-1
+$ touch FILES_GO_HERE.txt 
+$ aws s3 cp FILES_GO_HERE.txt s3://embarcados-f1-tutorial/files/
+$ touch LOGS_FILES_GO_HERE.txt 
+$ aws s3 cp LOGS_FILES_GO_HERE.txt s3://embarcados-f1-tutorial/logs/
+</code></pre></div>
+<h4 id="setting-up-the-dev-house">Setting up the dev house<a class="headerlink" href="#setting-up-the-dev-house" title="Permanent link">&para;</a></h4>
+<p>Acesse a instância de desenvolvimento:</p>
+<p><code>ssh -i "&lt;sua-keypair&gt;.pem" &lt;ip-da-máquina&gt;</code></p>
+<p>Dentro da instância, clone o repositório, instale os drivers e bibliotecas necessárias e determine a plataforma de desenvolvimento:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/aws/aws-fpga.git<span class="w"> </span><span class="nv">$AWS_FPGA_REPO_DIR</span>
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="nv">$AWS_FPGA_REPO_DIR</span>
+$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>sdaccel_setup.sh
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_PLATFORM</span><span class="o">=</span><span class="nv">$AWS_PLATFORM_DYNAMIC_5_0</span><span class="w"> </span>
+</code></pre></div>
+<p>Acesse a pasta do exemplo no diretório:</p>
+<p><code>$ cd $SDACCEL_DIR/examples/xilinx/getting_started/host/helloworld_ocl/</code></p>
+<div class="admonition warning">
+<p>Hora de compilar? NÃO</p>
+</div>
+<h4 id="check-up">Check up<a class="headerlink" href="#check-up" title="Permanent link">&para;</a></h4>
+<p>A compilação do programa demora 2h06min. Já imaginou desenvolver algo e cada vez que quiser testar ter que esperar 2h? E por isso que existem o emulador de software, que realiza uma rápida compilação e executa nos ciclos da CPU. E o emulador de hardware, que invoca o simulador de hardware do ambiente SDAccel e testa a funcionalidade do código a ser executado na FPGA.</p>
+<p>Para emular o software:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>make<span class="w"> </span>clean
+$<span class="w"> </span>make<span class="w"> </span>check<span class="w"> </span><span class="nv">TARGETS</span><span class="o">=</span>sw_emu<span class="w"> </span><span class="nv">DEVICES</span><span class="o">=</span><span class="nv">$AWS_PLATFORM</span><span class="w"> </span>all
+</code></pre></div>
+<p>Para emular o hardware:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>make<span class="w"> </span>clean
+$<span class="w"> </span>make<span class="w"> </span>check<span class="w"> </span><span class="nv">TARGETS</span><span class="o">=</span>hw_emu<span class="w"> </span><span class="nv">DEVICES</span><span class="o">=</span><span class="nv">$AWS_PLATFORM</span><span class="w"> </span>all<span class="w"> </span>
+</code></pre></div>
+<h3 id="compilando">Compilando!<a class="headerlink" href="#compilando" title="Permanent link">&para;</a></h3>
+<p>O ambiente SDAccel também permite que o desenvolvedor compile tanto o binário da placa FPGA, quanto a aplicação host. Isso é feito por meio do mesmo Makefile:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>make<span class="w"> </span>clean
+$<span class="w"> </span>make<span class="w"> </span><span class="nv">TARGETS</span><span class="o">=</span>hw<span class="w"> </span><span class="nv">DEVICES</span><span class="o">=</span><span class="nv">$AWS_PLATFORM</span><span class="w"> </span>all<span class="w"> </span>
+</code></pre></div>
+<p>A compilação gera o arquivo binário para a FPGA Xilinx (*.xclbin) e o executável do programa host (exe), no nosso caso: <code>helloworld</code>.</p>
+<h4 id="criacao-da-amazon-fpga-image-afi">Criação da Amazon FPGA Image (AFI)<a class="headerlink" href="#criacao-da-amazon-fpga-image-afi" title="Permanent link">&para;</a></h4>
+<p>Agora, é preciso gerar uma imagem FPGA que será inserida na placa presente na PCI da instância. O script abaixo salva o kernel da FPGA no bucket, cria a AMI no servidor da AWS e salva um arquivo de metadados com informações da imagem (<code>*.awsxclbin</code>), que também pode ser vistas no arquivo <code>*_afi_id.txt</code>.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nv">$SDACCEL_DIR</span>/tools/create_sdaccel_afi.sh<span class="w"> </span>-xclbin<span class="o">=</span><span class="w"> </span>xclbin/vector_addition.hw.xilinx_aws-vu9p-f1-04261818_dynamic_5_0.xclbin<span class="w"> </span>-o<span class="o">=</span>vector_addition.hw.xilinx_aws-vu9p-f1-04261818_dynamic_5_0<span class="w"> </span><span class="se">\ </span>-s3_bucket<span class="o">=</span>embarcados-f1-tutorial<span class="w"> </span>-s3_dcp_key<span class="o">=</span>files<span class="w"> </span>-s3_logs_key<span class="o">=</span>logs
+</code></pre></div>
+<p>A criação da imagem não é imediata, seu processo demora e pode ser acompanhado pela CLI da AWS:
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>ec2<span class="w"> </span>describe-fpga-images<span class="w"> </span>--fpga-image-ids<span class="w"> </span>&lt;AFI<span class="w"> </span>ID<span class="w"> </span><span class="o">(</span>eg:<span class="w"> </span>afi-06d0ffc989feeea2a<span class="o">)</span>&gt;
+</code></pre></div></p>
+<p>Quando a criação da imagem for concluída, o <em>output</em> deverá ser:
+<div class="highlight"><pre><span></span><code>                ...
+                &quot;State&quot;: {
+                    &quot;Code&quot;: &quot;available&quot;
+                },
+                ...
+</code></pre></div></p>
+<p>Caso o código do status retorne como "failed", procure os logs em: <code>s3://embarcados-f1-tutorial/logs/</code></p>
+<h4 id="exportando-o-programa">Exportando o programa<a class="headerlink" href="#exportando-o-programa" title="Permanent link">&para;</a></h4>
+<p>Os arquivos necessários para executar o exemplo na FPGA são:</p>
+<ul>
+<li><code>&lt;nome-do-arquivo&gt;.awsxclbin</code></li>
+<li><code>helloworld</code></li>
+</ul>
+<p>Portanto, copie-os para o bucket:</p>
+<div class="highlight"><pre><span></span><code>$ aws s3 cp &lt;nome-do-arquivo&gt;.awsxclbin s3://embarcados-f1-tutorial/files/
+$ aws s3 cp helloworld s3://embarcados-f1-tutorial/files/
+</code></pre></div>
+<h3 id="criando-a-instancia-f1">Criando a instância F1<a class="headerlink" href="#criando-a-instancia-f1" title="Permanent link">&para;</a></h3>
+<p>Para criar a instância F1, clique em Launch Instance e:</p>
+<ul>
+<li>Utilize a AMI chamada “FPGA Developer AMI”. </li>
+<li>Utilize o flavor f1.2xlarge.</li>
+<li>Crie e salve sua Keypair.</li>
+</ul>
+<h3 id="executando">Executando<a class="headerlink" href="#executando" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Acesse a instância F1</li>
+<li>Repita o passo <strong>Setting up the dev house</strong></li>
+<li>Acesse o diretório do repositório <code>cd $AWS_FPGA_REPO_DIR</code></li>
+<li>Copie os arquivos salvos no bucket:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>$ aws s3 cp s3://embarcados-f1-tutorial/files/&lt;nome-do-arquivo&gt;.awsxclbin ./
+$ aws s3 cp s3://embarcados-f1-tutorial/files/helloworld ./
+</code></pre></div>
+<ul>
+<li>Certifique-se que todos os arquivos possam ser achados na raiz do respositório</li>
+<li><code>$ sudo -E /bin/bash</code></li>
+<li><code>$ source $AWS_FPGA_REPO_DIR/sdaccel_runtime_setup.sh</code></li>
+<li><code>chmod +x helloworld</code></li>
+<li><code>./helloworld</code></li>
+</ul>
+<p>Pronto! O programa host importou a imagem da FPGA do serviço AMI da AWS, criou os buffers para fazer a transferência de dados, determinou os argumentos e inseriu todo o kernel na placa.</p>
+<div class="admonition notes">
+<p class="admonition-title">Notes</p>
+<p>Adicionar log do resultado</p>
+</div>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../Pedro-OpenCV/"
+               class="ah-prev"
+               title="2019 - OpenCV">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">2019 - OpenCV</span>
+            </a>
+          
+          
+            <a href="../Toranja-DevDriver/"
+               class="ah-next"
+               title="2019 - DeviceDriver">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">2019 - DeviceDriver</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Tutorial FPGA NIOS possiveis problemas - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Projeto-Overview/">Projeto Overview</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="possiveis-problemas-na-aula-tutorial-fpga-nios">Possíveis Problemas na Aula: Tutorial FPGA NIOS<a class="headerlink" href="#possiveis-problemas-na-aula-tutorial-fpga-nios" title="Permanent link">&para;</a></h1>
+<p>Neste tutorial, usamos o Quartus para criar um projeto contendo um processador NIOS II.</p>
+<p>Para tanto, fazermos uso de:</p>
+<ul>
+<li>Plataform Designer (antigo QSys);</li>
+<li>Para instanciar e conectar os IPs do NIOS, memória, comunicação, etc…</li>
+<li>NIOS II Software Build Tools for Eclipse;</li>
+<li>Para programar, em C, o processador e transferir o resultado para a placa FPGA.</li>
+</ul>
+<h2 id="1-plataform-designer">1. Plataform Designer<a class="headerlink" href="#1-plataform-designer" title="Permanent link">&para;</a></h2>
+<p>Para fazer as conexões entre os módulos do Plataform Designer,  deve-se clicar no circulo cinza nos cruzamentos de barramentos ou  sinais, conforme mostrado abaixo:</p>
+<p><a class="glightbox" href="\Embarcados-Avancados\figs\Plataform_Designer_02.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Plataform_Designer_02" src="\Embarcados-Avancados\figs\Plataform_Designer_02.png" /></a></p>
+<p><strong>Plataform Designer</strong></p>
+<p>A imagem acima é a conexão final utilizada no projeto.</p>
+<h2 id="2-nios-ii-software-build-tools-for-eclipse">2. NIOS II Software Build Tools for Eclipse<a class="headerlink" href="#2-nios-ii-software-build-tools-for-eclipse" title="Permanent link">&para;</a></h2>
+<h3 id="21-lentidao-no-eclipse">2.1 - Lentidão no Eclipse<a class="headerlink" href="#21-lentidao-no-eclipse" title="Permanent link">&para;</a></h3>
+<p>No Linux, o eclipse fica muito lento com a ampulheta durando vários minutos.</p>
+<p>O problema está no uso do GTK 3. A solução é a alteração para o GTK 2. Para tanto, temos que editar o <em>eclipse.ini</em> que está dentro do diretório do Quartus 18, faça a busca pelo nome do  arquivo e adicione duas linhas antes da linha que contém a opção <em>–launcher.appendVmargs</em>, conforme mostrado abaixo:</p>
+<div class="highlight"><pre><span></span><code>--launcher.GTK_version
+2
+</code></pre></div>
+<p>Ver detalhes em: <a href="https://stackoverflow.com/questions/65240134/nios-ii-ide-unsuably-slow">https://stackoverflow.com/questions/65240134/nios-ii-ide-unsuably-slow</a></p>
+<h3 id="22-nao-encontra-o-id-na-cadeia-jtag">2.2 - Não Encontra o ID na Cadeia JTAG<a class="headerlink" href="#22-nao-encontra-o-id-na-cadeia-jtag" title="Permanent link">&para;</a></h3>
+<p>Ao transferir o programa em <em>C</em> para o Kit FPGA, através da opção <strong>Run <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />  Run</strong>, pode ocorrer o seguinte erro:</p>
+<p><a class="glightbox" href="\Embarcados-Avancados\figs\Erro_System_ID.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img style="float: center;" src="\Embarcados-Avancados\figs\Erro_System_ID.png"></a>
+<strong>Erro de ID</strong></p>
+<p>Para resolver, pode-se ignorar a verificação do <em>ID</em> na configuração em <strong>Run <img alt="➡️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/27a1.svg" title=":arrow_right:" />  Run Configurations …</strong>, conforme mostrado abaixo:</p>
+<p><a class="glightbox" href="\Embarcados-Avancados\figs\Run_Configurations-02.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Tela de Configuração" src="\Embarcados-Avancados\figs\Run_Configurations-02.png" /></a>
+<strong>Tela de Configuração</strong></p>
+<p>Caso ocorra o erro de <em>Time Stamp</em>, como mostrado abaixo, basta ignorá-lo na mesma tela de configuração mostrada acima.</p>
+<p><a class="glightbox" href="\Embarcados-Avancados\figs\Erro_Time_Stamp.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img style="float: center;" src="\Embarcados-Avancados\figs\Erro_Time_Stamp.png"></a>
+<strong>Erro de Time Stamp</strong></p>
+<h3 id="23-nao-conecta-com-o-nios-para-transferir-o-programa">2.3 - Não Conecta com o NIOS para Transferir o Programa<a class="headerlink" href="#23-nao-conecta-com-o-nios-para-transferir-o-programa" title="Permanent link">&para;</a></h3>
+<p>Garanta que a sequência de trabalho seja:</p>
+<ul>
+<li>Gerar o projeto do NIOS no <em>Plataform Design</em> (antigo QSys);</li>
+<li>Compilar o projeto no Quartus e gravar no Kit FPGA;</li>
+<li>Gerar o BSP, no NIOS II Software Build Tools for Eclipse, e transferir o programa.</li>
+</ul>
+<h2 id="3-problemas-com-ram">3. Problemas com RAM<a class="headerlink" href="#3-problemas-com-ram" title="Permanent link">&para;</a></h2>
+<p>Apesar do instruction_master e data_master serem barramentos diferentes o programa pode não rodar se o barramentos s1 da OnChip Memory não estiver conectado a ambos barramentos.</p>
+<p>Ao adicionar uma segunda OnChip Memory, para separar RAM de ROM, pode ocorrer dois problemas ao tentar executar programas no Nios II:</p>
+<ol>
+<li>Erro ao baixar o ELF</li>
+<li>ELF baixado com sucesso porém o programa não faz nada</li>
+</ol>
+<h3 id="31-solucao-parte-1-platform-designer">3.1 - Solução Parte 1 (Platform Designer)<a class="headerlink" href="#31-solucao-parte-1-platform-designer" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Adicionar uma segunda OnChip Memory (RAM)</li>
+<li>Alterar a primeira OnChip Memory para tipo ROM</li>
+<li>Conectar os dois barramentos em ambas memórias</li>
+<li>Gerar novamente os endereços dos periféricos</li>
+</ol>
+<p><a class="glightbox" href="\Embarcados-Avancados\figs\erros_ELF_plataform_designer.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Plataform_Designer" src="\Embarcados-Avancados\figs\erros_ELF_plataform_designer.png" /></a></p>
+<h3 id="32-solucao-parte-2-linker">3.2 Solução Parte 2 (Linker)<a class="headerlink" href="#32-solucao-parte-2-linker" title="Permanent link">&para;</a></h3>
+<ol>
+<li>No eclipse entre em BSP Editor</li>
+<li>Abra a aba Linker Script</li>
+<li>Na seção Linker Memory Regions verifique se as memórias foram reconhecidas, caso contrario clique em restore default.</li>
+<li>Na seção Linker Sections Regions clique em restore defaults.</li>
+<li>Verifique se apenas o .text esta na memória ROM (como na imagem abaixo), caso contrario altere manualmente mantendo apenas o .text na ROM.</li>
+</ol>
+<p><a class="glightbox" href="\Embarcados-Avancados\figs\erros_ELF_bsp.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="BSP Editor" src="\Embarcados-Avancados\figs\erros_ELF_bsp.png" /></a> </p>
+<h3 id="tamanho-elf">Tamanho .elf<a class="headerlink" href="#tamanho-elf" title="Permanent link">&para;</a></h3>
+<p>Para saber o tamanho que está sendo gerado para seu arquivo .elf, acesse a pasta que contém o arquivo .elf gerado:</p>
+<div class="highlight"><pre><span></span><code>cd ~/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-pc-linux-gnu/nios2-elf/bin
+</code></pre></div>
+<p>OBS: Esse path exemplo é referente ao <em>Quartus 18.1</em>, para outras versões altere o path.</p>
+<p>Agora, considerando que o nome do arquivo seja "niosLab2.elf", utilize o seguinte comando:</p>
+<div class="highlight"><pre><span></span><code>nios2-elf-size niosLab2.elf
+</code></pre></div>
+<p><a class="glightbox" href="\Embarcados-Avancados\figs\tamanhoELF.jpeg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Tamanho ELF" src="\Embarcados-Avancados\figs\tamanhoELF.jpeg" /></a> </p>
+<h2 id="connection-error-javalangexception">Connection Error/ Java.lang.Exception<a class="headerlink" href="#connection-error-javalangexception" title="Permanent link">&para;</a></h2>
+<h3 id="solucao">Solução<a class="headerlink" href="#solucao" title="Permanent link">&para;</a></h3>
+<ol>
+<li>No eclipse clique em Run &gt; Run Configurations</li>
+<li>Va na aba Target Connection</li>
+<li>Scrolle para o lado e clique em Refresh Connections</li>
+<li>Clique em apply e depois em Run</li>
+<li>Caso não funcione feche o programador no quartus. Reinicie a placa e grave novamente. Em seguida repita os passos a partir do passo 1.</li>
+</ol>
+<p><a class="glightbox" href="\Embarcados-Avancados\figs\targetConnection.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Target Connection" src="\Embarcados-Avancados\figs\targetConnection.png" /></a> </p>
+<h2 id="set-irq">Set IRQ<a class="headerlink" href="#set-irq" title="Permanent link">&para;</a></h2>
+<p><a class="glightbox" href="\Embarcados-Avancados\figs\set_IRQ.jpeg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Set IRQ" src="\Embarcados-Avancados\figs\set_IRQ.jpeg" /></a> </p>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>

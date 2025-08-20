@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Projeto Overview - SoC and Embedded Linux</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '..';
+      
+      var telemetryEnabled = true;
+      var backendUrl = "http://localhost:8080/api/";
+      var courseSlug = "Embedded-Linux-SoC";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../termynal.css">
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href=".."
+           title="SoC and Embedded Linux"
+           class="ah-logo"
+           aria-label="SoC and Embedded Linux">
+          SoC and Embedded Linux
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+          <div id="user-menu" hx-get="http://localhost:8080/api/user-menu" hx-trigger="load"> </div>
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="..">Home</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-RTL/">1. RTL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-1/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS/">2. NIOS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-2/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-FPGA-NIOS-IP/">3. NIOS IP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-3/">🔔 Assessment</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS/">4. About</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Running/">5. Embedded Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BuildSystem/">6. Setup</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-BlinkLED/">7. Blink LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-4/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Kernel/">8. Linux kernel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-Buildroot/">9. Buildroot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-buildroot-scripts/">10. Extra - HPS-buildroot-scripts</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-5/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-DeviceDriver/">11. Device Driver</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-module/">12. Kernel Module</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-kernel-chardriver/">13. Char Device Driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">HPS + FPGA</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-BlinkLED/">14. Blink FPGA LED from HPS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-VGA/">15. VGA</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Entrega-6/">🔔 Assessment</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Tutorial-HPS-FPGA-kernel-char-led-driver/">16. Kernel driver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">High Level Synthesis</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../Tutorial-Acelerando-HLS/">17. Accelerating</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../🔔 Assessment:"Entrega-Extra-1.md"">None</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Useful</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../info-FPGA-e-Softwares/">Softwares</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-SDcard/">SD card</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-Serial/">Serial port</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-HPS-ethernet/">Extra - Network</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../info-VHDL/">Refereces</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Students tutorials</span>
+    <ul>
+      
+        
+  
+
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Projeto Overview</span>
+      <ul>
+        
+          
+            
+            
+              <li class="ah-toc-item">
+                <a href="#areas">Areas</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#previous-years">Previous Years</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#technologiestools">Technologies/Tools</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#hardware">Hardware</a>
+              </li>
+            
+              <li class="ah-toc-item">
+                <a href="#example-topicscool-ideas">Example topics/cool ideas</a>
+              </li>
+            
+        
+      </ul>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../Projeto-Rubrica/">Projeto Rubrica</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="https://github.com/Insper/Embarcados-Avancados-Template">Template markdown</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/tftp/index.md">2022 - TFTP</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/riscv/">2022 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2022/RaSpider/index.md">2022 - RaSpider</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/Chisel/">2021 - Chisel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2021/RISCV/">2021 - RISC V</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/PS3-Linux-Tutorial/">2020 - PS3 HACK</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Android/">2020 - Android para Raspbery Pi 3</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-HW/">2020 - IP para fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/LED-Linux/">2020 - Driver linux fita de LED</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/python/">2020 - Soc & Python</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/metropolis/">2020 - SDAccel</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/Audio/">2020 - Áudio na DE10</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2020/cripto/">2020 - Criptografia em Hardware</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Gabriel-TensorFlow/">2019 - TensorFlow</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Leo-OpenCL/">2019 - OpenCL</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Elisa-Yocto/">2019 - Yocto</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Pedro-OpenCV/">2019 - OpenCV</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Martim-F1/">2019 - FPGA na AWS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../2019/Toranja-DevDriver/">2019 - DeviceDriver</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Students tutorials</li>
+                  
+                
+                <li></li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>The final project for the course should be a tutorial related to at least one learning objective of the subject:</p>
+<ul>
+<li>Formulate solutions that meet hardware and software requirements for FPGA-SoC (System-on-a-chip) projects</li>
+<li>Integrate a prototype solution for an embedded system with processing and/or real-time requirements via FPGA-SoC</li>
+<li>Interface different modules in an embedded system (processors, firmware, and operating system)</li>
+</ul>
+<h2 id="areas">Areas<a class="headerlink" href="#areas" title="Permanent link">&para;</a></h2>
+<p>Some examples of areas that can be explored:</p>
+<ol>
+<li>Acceleration/implementation of some algorithm in hardware<ul>
+<li>data processing, FFT, compression, cryptography, ...</li>
+<li>HLD/HLS/OpenCL/Amazon FPGA</li>
+</ul>
+</li>
+<li>Performance comparison between different technologies  <ul>
+<li>SoC vs GPU vs FPGA vs uC</li>
+</ul>
+</li>
+<li>Operating system <ul>
+<li>Real-time scheduler, Linux kernel, Android, embedded RTOS</li>
+</ul>
+</li>
+</ol>
+<h2 id="previous-years">Previous Years<a class="headerlink" href="#previous-years" title="Permanent link">&para;</a></h2>
+<p>Take a look at what your colleagues have already done:</p>
+<ul>
+<li>PS3 Hack</li>
+<li>Android for Raspberry Pi 3</li>
+<li>Peripheral to control LED matrix</li>
+<li>Linux driver to turn on LEDs</li>
+<li>SoC and Python</li>
+<li>SDAccel / Vittis - Metropolis algorithm</li>
+<li>Audio on DE10</li>
+<li>Hardware Cryptography - FPGA</li>
+<li>TensorFlow - Jetson Nano</li>
+<li>OpenCL - FPGA</li>
+<li>Yocto </li>
+<li>Jetson Nano - GPU</li>
+<li>FPGA on AWS</li>
+<li>Linux device driver</li>
+</ul>
+<h2 id="technologiestools">Technologies/Tools<a class="headerlink" href="#technologiestools" title="Permanent link">&para;</a></h2>
+<p>Below is a list of technologies that can be studied in the tutorial: </p>
+<ul>
+<li>HDL (VHDL/Verilog)</li>
+<li><a href="https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_nios2_custom_instruction.pdf">Add a custom instruction to NIOS</a></li>
+<li>Platform Designer <ul>
+<li>Create a system to control one of the robotics robots </li>
+</ul>
+</li>
+<li>Create a peripheral to interface with the external world (read keyboard/motor/LED strip/...)</li>
+<li><a href="https://www.intel.com/content/www/us/en/software/programmable/quartus-prime/hls-compiler.html">High Level Synthesis (HLS)</a></li>
+<li>Create a peripheral that accelerates a function (<a href="https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/wp/wp-01274-intel-hls-compiler-fast-design-coding-and-hardware.pdf">example</a>)</li>
+<li><a href="https://www.intel.com/content/www/us/en/software/programmable/sdk-for-opencl/overview.html">OpenCL</a></li>
+<li>Create hardware that accelerates a function <a href="https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/blob/master/Manual/DE10_Standard_OpenCL.pdf">Terasic Manual</a> (<a href="https://www.intel.com/content/www/us/en/programmable/products/design-software/embedded-software-developers/opencl/support.html">example</a>)</li>
+<li>Linux </li>
+<li><a href="https://www.linuxfoundation.org/blog/2013/03/intro-to-real-time-linux-for-embedded-developers/">real time</a> / energy optimization / 👍 <a href="https://embexus.com/2017/05/16/embedded-linux-fast-boot-techniques/">boot time</a> / applications / 👍 <a href="https://www.youtube.com/watch?v=zHqS_yWiMNI">Android</a> / openCL ....</li>
+</ul>
+<h2 id="hardware">Hardware<a class="headerlink" href="#hardware" title="Permanent link">&para;</a></h2>
+<p>Below, I tried to summarize the hardware available at Insper and the respective technologies that can be used to develop the projects:</p>
+<table>
+<thead>
+<tr>
+<th>Kit</th>
+<th>Company</th>
+<th>Technology</th>
+<th>vhdl</th>
+<th>HLS</th>
+<th>OpenCL</th>
+<th>Linux</th>
+<th>OpenCV</th>
+<th>Cuda</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&amp;CategoryNo=216&amp;No=997">Arria 10 SoC</a></td>
+<td>Intel</td>
+<td>FPGA + ARM</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&amp;No=1081">DE10-Standard</a></td>
+<td>Intel</td>
+<td>FPGA + ARM</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&amp;No=941">DE10-nano-soc</a></td>
+<td>Intel</td>
+<td>FPGA + ARM</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&amp;CategoryNo=167&amp;No=1211">Terasic SoC SoM</a></td>
+<td>Intel</td>
+<td>FPGA + ARM</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&amp;CategoryNo=1&amp;No=1108&amp;PartNo=1">DE5a-NET-DDR4</a></td>
+<td>Intel</td>
+<td>FPGA</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td></td>
+<td>x</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://zedboard.org/product/zedboard">ZedBoard</a></td>
+<td>Xilinx</td>
+<td>FPGA + ARM</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://aws.amazon.com/ec2/instance-types/f1/">F1 instance</a></td>
+<td>AWS</td>
+<td>FPGA</td>
+<td></td>
+<td></td>
+<td>x</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://developer.nvidia.com/embedded/jetson-tx2">Jetson TK2</a></td>
+<td>NVIDIA</td>
+<td>ARM + GPU</td>
+<td></td>
+<td></td>
+<td></td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="example-topicscool-ideas">Example topics/cool ideas<a class="headerlink" href="#example-topicscool-ideas" title="Permanent link">&para;</a></h2>
+<p>legend: ‼ requires greater dedication</p>
+<ul>
+<li>Creating a SoftProcessor and API to control a Drone</li>
+<li><a href="https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841665/HLS+Video+Library">OpenCV accelerated with OpenCL - ZedBoard</a></li>
+<li>!! Create an application with HLS/OpenCL that accelerates a function on the FPGA<ul>
+<li>Image processing/data compression/cryptography/fft/...</li>
+</ul>
+</li>
+<li>‼ <a href="https://github.com/aws/aws-fpga">Create an application with OpenCL on AWS</a></li>
+<li><a href="http://wiki.ros.org/hydro/Installation/OpenEmbedded">Embedding ROS on SoC-FPGA</a> (first step to control robotics robots with FPGA)</li>
+<li>‼ Use the <a href="https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&amp;CategoryNo=68&amp;No=892">LCD LT24</a> with Linux (ARM-FPGA Communication)</li>
+<li><a href="https://www.linuxfoundation.org/blog/2013/03/intro-to-real-time-linux-for-embedded-developers/">Real Time kernel</a> is it really real time? Latency study...</li>
+<li>Optimizing <a href="https://embexus.com/2017/05/16/embedded-linux-fast-boot-techniques/">boot time</a> for Linux</li>
+<li>Running <a href="https://www.youtube.com/watch?v=zHqS_yWiMNI">Android</a> on DE10-Standard</li>
+<li>Graphical interfaces in embedded systems (e.g.: create a payment kiosk)</li>
+<li>Device driver: Create a Linux driver <a href="https://github.com/johannesthoma/linux-hc-sro4">for some distance sensor</a></li>
+<li>‼ Create a peripheral to control the RGB LED strip and create a driver for Linux to control it</li>
+<li>Benchmark between different development kits </li>
+<li>Using <a href="https://www.yoctoproject.org/">yocto</a> as an alternative to buildroot to generate Linux</li>
+</ul>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../info-VHDL/"
+               class="ah-prev"
+               title="Refereces">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">Refereces</span>
+            </a>
+          
+          
+            <a href="../Projeto-Rubrica/"
+               class="ah-next"
+               title="Projeto Rubrica">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">Projeto Rubrica</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="../termynal.js"></script>
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+</script></body>
+</html>
