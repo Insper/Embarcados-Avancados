@@ -3,8 +3,7 @@
 !!! tip "Deliver"
     What should be delivered?
     
-    - [Github Classroom]({{entrega_4_classroom}})
-    - [Google forms]({{entrega_forms}})
+    - [Github Classroom]({{entrega_2_classroom}})
 
 In this assignment, we will have the same functionality as [Assignment 1](/Entrega1/), but with the motor being controlled by the NIOS (soft processor).
 
@@ -24,9 +23,6 @@ Tips:
 - https://www.altera.com/en_US/pdfs/literature/hb/nios2/n2sw_nii52006.pdf
 
 ## Rubric
-
-??? tip "Submission - google forms"
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfH7w1wPogmTPI-Vesg1lyC1sn3i7aVDBf8w5le2mImOCjZ8A/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 
 - A 
     - Insert an RTOS in NIOS to control the application, **or**
