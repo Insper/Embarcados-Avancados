@@ -1,5 +1,8 @@
 # 🔔 Assessment 3
 
+!!! tip "Classroom"
+    - [Github Classroom]({{entrega_3_classroom}})
+
 What should be delivered?
 
 - **Folder:** `Entrega_3_FPGA_NIOS_IP`

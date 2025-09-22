@@ -1,8 +1,6 @@
 # 🔔 Assessment 2 
 
-!!! tip "Deliver"
-    What should be delivered?
-    
+!!! tip "Classroom"
     - [Github Classroom]({{entrega_2_classroom}})
 
 In this assignment, we will have the same functionality as [Assignment 1](/Entrega1/), but with the motor being controlled by the NIOS (soft processor).
