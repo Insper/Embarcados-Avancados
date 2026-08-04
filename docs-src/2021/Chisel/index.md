@@ -44,30 +44,35 @@ Antes de continuar o tutorial, pode ser interessante executar este [notebook](ht
 
 - [Instalação do Java](https://adoptopenjdk.net/).
 
-!!! info
+::: info
+:::
 A instalação do Scala e os projetos que usam o SBT assumem que o ambiente já possui um JDK instalado, por isso é preciso realizar a instalação do java.
 
 - [Instalação do Scala](https://www.scala-sbt.org/download.html).
 
-!!! info
+::: info
+:::
 O Chisel é baseado no Scala para compilar os arquivos dos seus projetos, ou seja, o Scala é uma "Domain Specific Language" - uma linguagem de programação
 específica para uma determinada aplicação.
 
 - [Instalação do Verilator](https://verilator.org/guide/latest/install.html).
 
-!!! info
+::: info
+:::
 O Verilator é utilizado na etapa de compilação do código em Scala para Verilog.
 
 ### Instalação no Windows
 
 - [Baixar arquivo do SBT](https://www.scala-sbt.org/download.html)
 
-!!! info
+::: info
+:::
 É necessário baixar o SBT pois essa é a ferramenta que permite a execução e construção de projetos em Scala e Java.
 
 - [Instalação do Chocolatey](https://community.chocolatey.org/packages/sbt)
 
-!!! info
+::: info
+:::
 Foi escolhido o Chocolatey como ferramenta para instalar o SBT, mas outras, como o scoop, podem ser utilizadas para instalar o SBT no seu computador. Para instalar a ferramenta utilize o comando abaixo:
 
 ```
@@ -91,7 +96,8 @@ Nos arquivos do projeto, ao entrar na pasta `src/main/scala`, existem dois princ
     <li>O "TopLevel.scala" é responsável por mapear os inputs e outputs para o módulo do "Blinky" e converter o clock da FPGA para 25Mhz utilizando o pll selecionado.</li>
 </ol>
 
-!!! info
+::: info
+:::
 O clock utilizado na FPGA foi o de 50Mhz, mas um dos arquivos compilados pelo projeto é responsável por converter a frequência para 25Mhz.
 
 Como o código que vamos compilar precisa de recursos específicos da placa na qual vai ser rodado, é preciso antes procurar pela placa nos arquivos do projeto. Para isso, é possível conferir as placas disponíveis na pasta `src/main/resources`, onde temos os plls que serão utilizados por cada uma.
@@ -103,33 +109,26 @@ Em seguida, podemos compilar o projeto para verilog. Como argumento do comando "
 O output dos arquivos compilados se encontra na pasta `generated`. Dos arquivos gerados, vamos precisar de apenas dois para passar para a FPGA via quartus: o "Toplevel.v" e o pll gerado "pll_de1_soc_revF.v". Com ambos os arquivos gerados:
 
 - Abra o quartus e crie um novo projeto.
-<p align="center">
-    <img src="quartus.png" width="600" height="600" />
-    <img src="quartus_tool.png" width="600" height="600" />
-</p>
+![](quartus.png){width=600}
+
+![](quartus_tool.png){width=600}
 
 - Importe os dois arquivos e configure o "Toplevel.v" como toplevel do projeto.
 
-<p align="center">
-    <img src="toplevel.png" width="600" height="600" />
-</p>
+![](toplevel.png){width=600}
 
 - Mapeie os LEDs e o clock no Pin Planner.
 
-<p align="center">
-    <img src="pin.png" width="600" height="600" />
-</p>
+![](pin.png){width=600}
 
 - Compile e passe para a FPGA.
 
-<p align="center">
-    <img src="programmer.png" width="600" height="600" />
-</p>
+![](programmer.png){width=600}
 
 ## Vídeo de resultado
 
 <figure class="video_container">
     <video controls="true" allowfullscreen="true" width="600" height="400">
-        <source src = "video_projeto.mp4" type="video/mp4">
+        <source src="./video_projeto.mp4" type="video/mp4">
     </video>
 </figure>

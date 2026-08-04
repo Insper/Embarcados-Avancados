@@ -71,14 +71,15 @@ static void bubble_sort(long v[], long n) {
 Agora devemos criar uma função _wrapper_ para essa função. Essa será a função que pode ser chamada dentro do Python.
 Para definir tal função, é necessário o uso de objetos especias, vindos do Python API.
 
-!!! note
-    Dentre os objetos especiais, o mais notável é o `PyObject`.
+::: info
+Dentre os objetos especiais, o mais notável é o `PyObject`.
 
-    Ele é uma estrutura de objeto usada para definir os tipos de objetos para o Python. Todos os objetos Python compartilham algumas informações que são definidas por essa estrutura e todos os outros objetos são uma extensão dela.
+Ele é uma estrutura de objeto usada para definir os tipos de objetos para o Python. Todos os objetos Python compartilham algumas informações que são definidas por essa estrutura e todos os outros objetos são uma extensão dela.
 
-    Esse objeto diz ao interpretador do Python como ele deve tratar objetos e seus ponteiros. Por exemplo, configurar o retorno de uma função como um `PyObject` possibilita que o interpretador reconheca esse retorno um tipo de variável válido de Python.
+Esse objeto diz ao interpretador do Python como ele deve tratar objetos e seus ponteiros. Por exemplo, configurar o retorno de uma função como um `PyObject` possibilita que o interpretador reconheca esse retorno um tipo de variável válido de Python.
 
 
+:::
 Vamos começar definindo a função.
 
 ```c
@@ -217,10 +218,11 @@ PyObject *pysoc_raise_pysoc_error(PyObject *self, PyObject *args) {
 }
 ```
 
-!!! note
-    Sempre que uma função falha/dá raise em um erro ela deve retornar NULL.
+::: info
+Sempre que uma função falha/dá raise em um erro ela deve retornar NULL.
 
 
+:::
 Se você parou para ler o código do PyInit_pysoc pode ter percebido que há uma coisa estranha,
 a variável `PysocError` não tem um tipo definido. Isto é porque ela está no arquivo `pysoc.h`.
 Pelo fato da variável `PysocError` indicar um erro, ela precisa ser acessada por várias funções que
@@ -267,15 +269,17 @@ apenas uma string de help que indica o que a função faz.
 simples bubble sort. A documentação mais detalhada do `PyMethodDef` pode ser encontrada
 [aqui](https://docs.python.org/3/c-api/structures.html?highlight=pymethoddef#c.PyMethodDef).
 
-!!! note
-    Se o terceiro parâmetro não for especificado corretamente, uma função que não recebe argumentos
-    vai rodar apenas se um argumento (ou mais) for passado e uma função que recebe argumentos vai
-    rodar apenas se não receber argumentos.
+::: info
+Se o terceiro parâmetro não for especificado corretamente, uma função que não recebe argumentos
+vai rodar apenas se um argumento (ou mais) for passado e uma função que recebe argumentos vai
+rodar apenas se não receber argumentos.
 
-!!! note
-    O array de `PyMethodDef` deve sempre terminar com `{NULL, NULL, 0, NULL}`. Isso acontece porque em C quando um vetor é referenciado não é possível saber seu tamanho e, por isso, é necessário ter alguma coisa que determina o seu fim. Algo muito parecido é feito com strings em C (um vetor de chars), já que todas possuem um byte 0 ('\0') para indicar que ela acabou.
+:::
+::: info
+O array de `PyMethodDef` deve sempre terminar com `{NULL, NULL, 0, NULL}`. Isso acontece porque em C quando um vetor é referenciado não é possível saber seu tamanho e, por isso, é necessário ter alguma coisa que determina o seu fim. Algo muito parecido é feito com strings em C (um vetor de chars), já que todas possuem um byte 0 ('\0') para indicar que ela acabou.
 
 
+:::
 Para finilizar a declaração do módulo é necessário declarar o seguinte struct que referencia a
 variável `PysocMethods` explicada acima.
 
@@ -396,10 +400,11 @@ print(f"> {time2 - time3} seconds")
 print(f"\n> C is {(time0 - time1)/(time2 - time3)} times faster")
 ```
 
-!!! note
-    Com uma lista de tamanho 1e5 (100000) o código em Python leva aproximadamente 16 minutos
-    para rodar. Para rodar apenas um simples teste considere mudar as ocorrências de 1e5 para 1e4
+::: info
+Com uma lista de tamanho 1e5 (100000) o código em Python leva aproximadamente 16 minutos
+para rodar. Para rodar apenas um simples teste considere mudar as ocorrências de 1e5 para 1e4
 
+:::
 Se rodarmos o codigo
 
 ```sh

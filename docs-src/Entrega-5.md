@@ -1,11 +1,12 @@
 # 🔔 Assessment 5
 
-!!! tip "Deliver"
-    What should be delivered?
-    
-    - [Github Classroom]({{entrega_5_classroom}})
+::: tip Deliver
+What should be delivered?
+
+- [Github Classroom](https://classroom.github.com/a/mMwG7FDS)
 
 
+:::
 You must create an embedded system that includes a web server and a webpage that allows you to monitor and control the hardware through a simple interface.
 
 The webpage should allow:

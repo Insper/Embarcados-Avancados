@@ -1,11 +1,12 @@
 # 🔔 Assessment 1
 
-!!! tip "Deliver"
-    What should be delivered?
-    
-    - **DeadLine:** {{entrega_1_deadline}}
-    - [Github Classroom]({{entrega_1_classroom}})
+::: tip Deliver
+What should be delivered?
 
+- **DeadLine:** 25/09/2025
+- [Github Classroom](https://classroom.github.com/a/LrXCFn5d)
+
+:::
 The idea of this delivery is for you to work a little more with VHDL and also to remember/learn how to develop a project hierarchically. In this delivery, you will develop an IP core (intellectual property core) dedicated to controlling a stepping motor.
 
 This component should control the four phases of a stepping motor (which you received with the kit) to rotate the motor in both directions and with some different speeds.
@@ -18,23 +19,26 @@ The pins have already been mapped and you should connect the motor as indicated 
 
 ![](figs/Entrega-1_montagem.png)
 
-!!! warning
-    Be careful to avoid burning the board.
+::: warning
+Be careful to avoid burning the board.
 
+:::
 Final assembly:
 
 ![](figs/Entrega-1_montagem2.png){width=300}
 
-!!! note "Schematic GPIO"
-    Extracted from the manual:
+::: info Schematic GPIO
+Extracted from the manual:
 
-    ![](figs/Entrega-1_gpio.png)
+![](figs/Entrega-1_gpio.png)
 
-!!! example "TODO"
-    After assembling, open the example project, compile and write to the FPGA. You should see the motor rotating.
-    
-    Play with switches 2 and 3, the motor speed should vary.
+:::
+::: info TODO
+After assembling, open the example project, compile and write to the FPGA. You should see the motor rotating.
 
+Play with switches 2 and 3, the motor speed should vary.
+
+:::
 ## Rubric
 
 - A

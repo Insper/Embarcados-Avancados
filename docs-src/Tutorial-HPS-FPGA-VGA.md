@@ -25,7 +25,8 @@ However, not everything that is displayed goes directly through the FB. Some pro
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Linux_graphics_drivers_Utah_GLX.svg/600px-Linux_graphics_drivers_Utah_GLX.svg.png)
  
-!!! note "Framebuffer Console"
+::: info Framebuffer Console
+:::
    Linux has a driver called `fbcon` that displays a console on a framebuffer. To use it, you just need to activate it in the kernel configuration:
 
    - Device Drivers -> Graphics Support -> Frame buffer Devices -> Console display driver support -> Framebuffer Console Support
@@ -38,31 +39,33 @@ In order to save time, we will use a hardware design provided by Terasic that al
 
 Once you have copied the `DE10_Standard_FB` project, open it in Quartus and analyze the `soc_system.qsys` file in Platform Designer. You should see something like this:
 
-!!! note ""
-    I'm only showing the parts related to video!
+::: info
+I'm only showing the parts related to video!
 
+:::
 ![](figs/Tutorial-HPS-FPGA-vga-qsys.png)
 
 ### Understanding the Hardware
 
 The hardware design includes two components to handle VGA: `alt_vip_vfr_vga` and `alt_vip_itc_0`. These components are part of the 'Video and Image Processing Suite Intel FPGA' IP package, which is specifically designed for video processing (supporting up to 8K and +60Hz).
 
-!!! info "From intel website" 
-    
-    The Intel® FPGA Video and Image Processing Suite is a collection of Intel FPGA IP functions that you can use to facilitate the development of custom video and image processing (VIP) designs. These Intel FPGA IP functions are suitable for use in a wide variety of image processing and display applications, such as video surveillance, broadcast, video conferencing, and medical and military imaging.
+::: info From intel website
 
-    The Video and Image Processing Suite features cores that range from simple building block functions, such as color space conversion to sophisticated video scaling functions that can implement programmable polyphase scaling. 
+The Intel® FPGA Video and Image Processing Suite is a collection of Intel FPGA IP functions that you can use to facilitate the development of custom video and image processing (VIP) designs. These Intel FPGA IP functions are suitable for use in a wide variety of image processing and display applications, such as video surveillance, broadcast, video conferencing, and medical and military imaging.
 
-    - All the VIP cores use an open, low-overhead Avalon® Streaming (Avalon-ST) interface standard so that they can be easily connected
-    - You can use VIP cores to quickly build a custom video processing signal chain using the Intel Quartus® Prime Lite or Standard Edition software and the associated Platform Designer
-    - You can mix and match VIP cores with your own proprietary intellectual property (IP)
-    - You can use the Platform Designer to automatically integrate embedded processors and peripherals and generate arbitration logic
-    - Capable of supporting 8K video at 60fps and above
+The Video and Image Processing Suite features cores that range from simple building block functions, such as color space conversion to sophisticated video scaling functions that can implement programmable polyphase scaling. 
 
-    - https://www.intel.com.br/content/www/br/pt/programmable/products/intellectual-property/ip/dsp/m-alt-vipsuite.html
+- All the VIP cores use an open, low-overhead Avalon® Streaming (Avalon-ST) interface standard so that they can be easily connected
+- You can use VIP cores to quickly build a custom video processing signal chain using the Intel Quartus® Prime Lite or Standard Edition software and the associated Platform Designer
+- You can mix and match VIP cores with your own proprietary intellectual property (IP)
+- You can use the Platform Designer to automatically integrate embedded processors and peripherals and generate arbitration logic
+- Capable of supporting 8K video at 60fps and above
 
-    ![](https://www.intel.com.br/content/dam/altera-www/global/en_US/images/products/ip/dsp/images/blockdiagram-dsp-fig1-vip.gif)
+- https://www.intel.com.br/content/www/br/pt/programmable/products/intellectual-property/ip/dsp/m-alt-vipsuite.html
 
+![](https://www.intel.com.br/content/dam/altera-www/global/en_US/images/products/ip/dsp/images/blockdiagram-dsp-fig1-vip.gif)
+
+:::
 ### alt_vip_vfr_vga
 
 The `alt_vip_vfr_vga` is a peripheral of the **Frame Reader** type and is responsible for reading a Frame Buffer allocated in memory (`avalon_master`) and converting it into a **Streaming** format (`avalon_streaming`).
@@ -77,19 +80,21 @@ The `alt_vip_itc` is a video peripheral that converts the pixel streaming into t
 - VSYNC: Indicates the end of the screen.
 - R/G/B: Represent the pixel values.
 
-!!! note
-    The VGA signal is relatively simple, and you can even generate it using an Arduino. Here's an example: [Generating Color VGA Signal with Arduino](http://labdegaragem.com/profiles/blogs/gerando-sinal-vga-colorido-com-arduino-completo)
+::: info
+The VGA signal is relatively simple, and you can even generate it using an Arduino. Here's an example: [Generating Color VGA Signal with Arduino](http://labdegaragem.com/profiles/blogs/gerando-sinal-vga-colorido-com-arduino-completo)
 
+:::
 ### Compilation
 
 Now that we have analyzed the hardware, we can compile it and use it in our SoC!
 
-!!! exercise
-    1. Generate the `soc_system.dtb` file for your project.
-        - Write the new `soc_system.dtb` file to the SD Card (in the same partition as the kernel).
-    1. Generate the `soc_system.rbf` file for your project (COMPILE THE QUARTUS PROJECT!).
-        - Write the new `rbf` file to the SD Card (in the same partition as the kernel).
+::: tip Exercise
+1. Generate the `soc_system.dtb` file for your project.
+    - Write the new `soc_system.dtb` file to the SD Card (in the same partition as the kernel).
+1. Generate the `soc_system.rbf` file for your project (COMPILE THE QUARTUS PROJECT!).
+    - Write the new `rbf` file to the SD Card (in the same partition as the kernel).
 
+:::
 ## Driver
 
 We need to load a device driver into the Linux kernel in order to use the newly created video output. However, the driver for the `alt_vip_vfr_vga` IP is not included in the official kernel. Therefore, we will need to add it manually!
@@ -114,27 +119,31 @@ alt_vip_vfr_vga: vip@0x100031000 {
 
 ### Kernel
 
-!!! info
-    In this step, we will add a video driver to our Linux kernel. The driver will not be loaded as a dynamic module but will be inserted into the Linux kernel during compilation. To do this, you will need to:
-    
-    1. Add a driver to the Linux source code.
-    2. Inform the kernel about the existence of this driver and activate it.
-    3. Recompile the kernel.
+::: info
+In this step, we will add a video driver to our Linux kernel. The driver will not be loaded as a dynamic module but will be inserted into the Linux kernel during compilation. To do this, you will need to:
 
+1. Add a driver to the Linux source code.
+2. Inform the kernel about the existence of this driver and activate it.
+3. Recompile the kernel.
+
+:::
 The `vip-frame-reader-9.1` driver is not officially part of the Linux kernel, so we will need to use an implementation provided by Altera. The drivers in the Linux repository are located in the `linux/drivers` folder. For video/framebuffer drivers, they are in `linux/drivers/video/fbdev`.
 
-!!! exercise "Adding the altvipfb driver"
-    Follow the instructions in this guide: [Adding the altvipfb driver](https://github.com/Insper/Embarcados-Avancados/blob/master/driver/altvipfb/README.md), and then come back to this page!
+::: tip Adding the altvipfb driver
+Follow the instructions in this guide: [Adding the altvipfb driver](https://github.com/Insper/Embarcados-Avancados/blob/master/driver/altvipfb/README.md), and then come back to this page!
 
-!!! note
-    This tutorial includes adding the framebuffer driver to the kernel. Another option would be to create a module that could be loaded as needed.
+:::
+::: info
+This tutorial includes adding the framebuffer driver to the kernel. Another option would be to create a module that could be loaded as needed.
 
-!!! exercise
-    1. Compile the kernel.
-    2. Copy the new `zImage` to the SD Card.
-    3. Connect a VGA monitor.
-    4. Boot up the embedded Linux.
+:::
+::: tip Exercise
+1. Compile the kernel.
+2. Copy the new `zImage` to the SD Card.
+3. Connect a VGA monitor.
+4. Boot up the embedded Linux.
 
+:::
 If everything goes well, you should see two penguins in the top left corner of the monitor. Each penguin represents a system core. Since our ARM is a dual-core, we have two penguins. These penguins appear because we enabled this option in the kernel:
 
 ```
@@ -148,11 +157,12 @@ CONFIG_LOGO_LINUX_CLUT224=y
 
 Now, connect a monitor to our board and power on the system. The kernel log should appear on the monitor. Note that during the boot process, you will see two penguins. The number of penguins indicates the number of cores in the system.
 
-!!! note
-    It's possible to edit the penguin image and, for example, use your own faces! The `ppm` files are located in the `/drivers/video/logo/` folder and are compiled into the kernel during the kernel compilation process.
-    
-    You can use GIMP to generate this images!
+::: info
+It's possible to edit the penguin image and, for example, use your own faces! The `ppm` files are located in the `/drivers/video/logo/` folder and are compiled into the kernel during the kernel compilation process.
 
+You can use GIMP to generate this images!
+
+:::
 Want to do something cool with the framebuffer? Try the following:
 
 - Display a random image on the framebuffer:
@@ -177,24 +187,26 @@ There are various solutions for developing graphical interfaces for embedded Lin
 
 There are other solutions available, but we will use one of them to display an image on our screen. When I was working on this guide, I wanted something simpler. During a (not very quick) search on the internet (using the keyword "linux frame buffer show image"), I found this program: `fbv`, which luckily is included in Buildroot.
 
-!!! note "fbv"
-    ```
-    1. OVERVIEW
-        fbv (FrameBuffer Viewer) is a simple program to view
-        pictures on a linux framebuffer device. In 2000,
-        when fbv was created, there were no other suitable
-        programs performing the same task, so the authors
-        decided to follow the rule: 
-        'If you need a tool - write it yourself!' :-)
-    ```
-    
-    > https://github.com/smokku/fbv
+::: info fbv
+```
+1. OVERVIEW
+    fbv (FrameBuffer Viewer) is a simple program to view
+    pictures on a linux framebuffer device. In 2000,
+    when fbv was created, there were no other suitable
+    programs performing the same task, so the authors
+    decided to follow the rule: 
+    'If you need a tool - write it yourself!' :-)
+```
 
-!!! exercise "Step-by-step"
-    To show a png image on the fb.
+> https://github.com/smokku/fbv
 
-    1. Add the `fbv` program to Buildroot.
-    2. Compile the new file system.
-    3. Write it to the SD Card.
-    4. Write an image (in .png format) to the SD Card.
-    5. On the target system, display the image on the HDMI using `fbv`.
+:::
+::: tip Step-by-step
+To show a png image on the fb.
+
+1. Add the `fbv` program to Buildroot.
+2. Compile the new file system.
+3. Write it to the SD Card.
+4. Write an image (in .png format) to the SD Card.
+5. On the target system, display the image on the HDMI using `fbv`.
+:::

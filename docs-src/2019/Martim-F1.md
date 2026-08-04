@@ -7,9 +7,10 @@
 - Link tutorial oficial: 
 - Ano: 2019
 
-!!! example "Hardware utilizado no tutorial"
-    - Instância F1 na AWS
+::: info Hardware utilizado no tutorial
+- Instância F1 na AWS
 
+:::
 ## Introdução
 
 A AWS dispõem de instâncias F1, que são máquinas de alta performance que contém uma FPGA no barramento PCI, permitindo a execução de programas acelerados por meio de hardware personalizado. Para executar um programa em uma FPGA na nuvem, é preciso primeiro desenvolver, simular, depurar e compilar o código. Tudo isso é feito em uma instância de desenvolvimento, predefinida por uma [AMI](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/AMIs.html) (Amazon Machine Image) fornecida pela AWS. Na instância de desenvolvedor, o programa é compilado e é gerada uma imagem para a FPGA Xilinx presente na instância F1.
@@ -110,9 +111,10 @@ Acesse a pasta do exemplo no diretório:
 
 `$ cd $SDACCEL_DIR/examples/xilinx/getting_started/host/helloworld_ocl/ `
 
-!!! warning ""
-    Hora de compilar? NÃO
+::: warning
+Hora de compilar? NÃO
 
+:::
 #### Check up
 
 A compilação do programa demora 2h06min. Já imaginou desenvolver algo e cada vez que quiser testar ter que esperar 2h? E por isso que existem o emulador de software, que realiza uma rápida compilação e executa nos ciclos da CPU. E o emulador de hardware, que invoca o simulador de hardware do ambiente SDAccel e testa a funcionalidade do código a ser executado na FPGA.
@@ -208,6 +210,7 @@ $ aws s3 cp s3://embarcados-f1-tutorial/files/helloworld ./
 
 Pronto! O programa host importou a imagem da FPGA do serviço AMI da AWS, criou os buffers para fazer a transferência de dados, determinou os argumentos e inseriu todo o kernel na placa.
 
-!!! notes
-     Adicionar log do resultado
+::: info Notes
+ Adicionar log do resultado
 
+:::

@@ -4,14 +4,15 @@ Throughout the course, we will mainly work with Intel SoC FPGAs. The main develo
 
 The development software for Intel FPGAs is called Quartus, and it has many versions and variations. Download the one indicated here to avoid having to reinstall everything.
 
-!!! note "2020-2 Online Version"
-    You will receive the following materials to work on the course from home:
-    
-    - 1x DE10-Standard FPGA
-    - 1x micro SD card
-    - 1x microSD/USB adapter
-    - 1x USB-Wifi NIC
+::: info 2020-2 Online Version
+You will receive the following materials to work on the course from home:
 
+- 1x DE10-Standard FPGA
+- 1x micro SD card
+- 1x microSD/USB adapter
+- 1x USB-Wifi NIC
+
+:::
 ## HW - DE10-Standard
 
 - [Manufacturer's website](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=205&No=1081&PartNo=2)
@@ -26,9 +27,10 @@ Due to the second part of the course, in which we will compile and work with emb
 
 ### Quartus Prime
 
-!!! info
-    We will use Quartus Prime Standard version 19.1.
+::: info
+We will use Quartus Prime Standard version 19.1.
 
+:::
 Along with Quartus installation, some other software is installed:
 
 - Quartus: FPGA project development
@@ -36,16 +38,18 @@ Along with Quartus installation, some other software is installed:
 - NIOS II EDS: Eclipse platform for NIOS uC programming
 - HLS: High-level synthesis 
 
-!!! tip "Installing"
-    Download the following parts and run the Quartus Prime binary, which will automatically install the others.
+::: tip Installing
+Download the following parts and run the Quartus Prime binary, which will automatically install the others.
 
-    - [Quartus Prime Standard](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/QuartusSetup-19.1.0.670-linux.run)
-    - [ModelSim](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/ModelSimSetup-19.1.0.670-linux.run)
-    - [Cyclone V](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/cyclonev-19.1.0.670.qdz)
+- [Quartus Prime Standard](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/QuartusSetup-19.1.0.670-linux.run)
+- [ModelSim](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/ModelSimSetup-19.1.0.670-linux.run)
+- [Cyclone V](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/cyclonev-19.1.0.670.qdz)
 
-!!! info "License"
-    We will use a version of Quartus that requires a license to work. I will send instructions by email.
+:::
+::: info License
+We will use a version of Quartus that requires a license to work. I will send instructions by email.
 
+:::
 :heavy_check_mark: Linux
 :no_entry_sign: Windows
 :no_entry_sign: MAC

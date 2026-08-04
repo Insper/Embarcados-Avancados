@@ -41,14 +41,16 @@ esac
 
 Done, now every time we generate a new buildroot it will copy the script to initialize the network.
 
-!!! tip
-    Do the same with dropbear! 
+::: tip
+Do the same with dropbear! 
 
+:::
 ## fakeroot
 
-!!! info
-    Not recommended for this case, but serves as an example
+::: info
+Not recommended for this case, but serves as an example
 
+:::
 Let's create a script that will be executed before buildroot creates the `.tar`:
 
 > Post-fakeroot scripts (BR2_ROOTFS_POST_FAKEROOT_SCRIPT)

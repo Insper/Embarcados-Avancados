@@ -2,7 +2,7 @@
 
 O HPS espera um SDCARD formatado com o esquema a seguir para que o possa carregar o boot loader e depois o kernel:
 
-![](figs/gsrd-sdcard.png)
+> SD card partition diagram unavailable in this repository.
 
 Esse roteiro não trata a fundo a criação das partições no SDCARD, que podem ser ~facilmente~ geradas com o fsdisk do Linux. Aqui iremos usar uma imagem padrão que já possui a formatação e atualizar o SDCARD com o nosso uboot / kernel e filesystem.
 
@@ -12,7 +12,7 @@ Utilizaremos uma imagem (.iso) já gerado com as especificações e que já poss
 
 O conteúdo da imagem e como a mesma foi criada é detalhado no página (acesse para fazer o download da iso): 
 
-- [SDcard img base](SDcard-img---Detalhes).
+- SDcard img base details are not available in this repository.
 
 Para usar, basta fazer o download e salvar no SDCard. Note que no comando DD deve-se substituir o `SeuDevice` pelo caminho que o seu Linux atribuiu ao dispositivo. Para saber basta verificar o dmesg:
 
@@ -61,7 +61,7 @@ Note que a partição 3 (mmcblk0p3) é do tipo *unknown* (a2) e possui 1M de esp
 
 ### Próximos passo
 
-:warning: Se é a primeira vez nesse tutorial siga direto para o [Tutorial HPS BlinkLED](Tutorial---HPS---BlinkLED) :warning:.
+:warning: Se é a primeira vez nesse tutorial siga direto para o [Tutorial HPS BlinkLED](/Tutorial-HPS-BlinkLED) :warning:.
 
 # Atualizando os arquivos
 

@@ -24,15 +24,17 @@ The Linux kernel is responsible, among other things, for:
 
 > Map of the internal architecture of the Linux kernel
 
-!!! info "Microkernel"
-    The microkernel is an alternative to the monolithic kernel. In this architecture, the kernel implements the bare minimum.
-    ![](https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/OS-structure.svg/900px-OS-structure.svg.png){width=300}
-    
-!!! info "GNU"
-    The Linux kernel uses various software created and made available by the [GNU](https://www.gnu.org) community (such as gcc, gdb, make, and [many others](https://www.gnu.org/software/software.html), so it is often known as GNU/Linux.
-    
-    ![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Gnulinux.svg/260px-Gnulinux.svg.png){width=100}
+::: info Microkernel
+The microkernel is an alternative to the monolithic kernel. In this architecture, the kernel implements the bare minimum.
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/OS-structure.svg/900px-OS-structure.svg.png){width=300}
 
+:::
+::: info GNU
+The Linux kernel uses various software created and made available by the [GNU](https://www.gnu.org) community (such as gcc, gdb, make, and [many others](https://www.gnu.org/software/software.html), so it is often known as GNU/Linux.
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Gnulinux.svg/260px-Gnulinux.svg.png){width=100}
+
+:::
 ## Userspace vs Kernel Space
 
 > Most of this section was translated from https://www.ctrlinux.com/blog/?p=40
@@ -112,12 +114,14 @@ How does the Linux kernel know what devices and drivers are associated with them
 
 The programming of the FPGA is carried out by u-boot, before the initialization of the Linux Kernel. In our case, the u-boot has been pre-configured to read the file `soc_system.rbf`. FPGA hardawre programming is performed by U-boot, before Linux Kernel initialization. In our case, U-boot was preconfigured to read the `soc_system.rbf` file located in the SDCARD partition along with the kernel (`zImage`).
 
-!!! video
+::: info Video
+:::
   ![](https://www.youtube.com/watch?v=vS7pvefsbRM)
 
 Before initializing the Linux kernel, U-boot fetches this file from the SDCARD partition, extracts it, and ["magically"](https://github.com/u-boot/u-boot/blob/94905e1db8d8d42c4f39f14dbee2f9788390db5e/drivers/fpga/socfpga.c) programs the FPGA. In this same partition, we have two more files: `u-boot.scr` and `socfpga.dtb`. The first one is a boot initialization script that U-boot reads to know which steps it should execute (whether it needs to load the fpga, where the kernel is, etc., these are the initialization steps). The `socfpga.dtb` is the **Linux device tree**, the dtb is a binary, which was created from another file, the `.dts`, and it contains information about the hardware that is passed to the kernel at startup.
 
-!!! video
+::: info Video
+:::
   ![](https://www.youtube.com/watch?v=m_NyYEBxfn8)
 
 ### `dtb` (compiled dts)

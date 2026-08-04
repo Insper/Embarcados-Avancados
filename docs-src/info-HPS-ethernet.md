@@ -1,8 +1,9 @@
 # Ethernet 
 
-!!! note "Cyclone V Hard Processor System Technical Reference Manual"
-    https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_54001.pdf
+::: info Cyclone V Hard Processor System Technical Reference Manual
+https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/cyclone-v/cv_54001.pdf
 
+:::
 There are two possible scenarios: 
 
 1. Connect the DE10-Standard to a router via network cable
@@ -12,9 +13,10 @@ There are two possible scenarios:
     
 ## Scenario 1 - router
 
-!!! tip
-    If possible, choose this scenario.
-     
+::: tip
+If possible, choose this scenario.
+ 
+:::
 ![](figs/info-hps-ethernet-cenarios-1.svg){width=500}
 
 Connect the board to the router and the PC to the router via wifi or cable.
@@ -30,9 +32,10 @@ Follow the steps below:
 
 With an ethernet cable connected to the RJ45, we need to configure Linux to use this "port". On the `target`, check if Linux detects the network card, with the command: `ifconfig eth0 up`, and then `ifconfig all`. 
 
-!!! note 
-    Later we will understand how Linux knows there is an ethernet port.
+::: info
+Later we will understand how Linux knows there is an ethernet port.
 
+:::
 ### Requesting IP (DHCP)
 
 Now we need to get an IP from the DHCP server (which is on your router), for this we will use the `udhcpc` program, with the following command:
@@ -86,9 +89,10 @@ $ ifconfig eth0 169.254.0.13 netmask 255.255.0.0 up
 
 To test, let's ping Host --> Target and Target --> Host.
 
-!!! tip
-    It's important to validate before proceeding.
+::: tip
+It's important to validate before proceeding.
 
+:::
 ## Automating at boot
 
 These settings are not persistent, if you restart the embedded Linux you will have to do everything again. To make our life easier, we will execute this at boot.
@@ -115,44 +119,44 @@ Inside each `rc.x` folder, the scripts have names that dictate the sequence in w
 
 Create a script named `S60MAC.sh` in the `/etc/init.d` folder and add the following code (depends on which scenario you will use):
 
-=== "Scenario 1"
-    ```bash
-    #!/bin/sh
+#### Scenario 1
+```bash
+#!/bin/sh
 
-    case "$1" in
-    start)
-            start
-            ifconfig eth0 up
-            ifconfig eth0 169.254.0.13 netmask 255.255.0.0 up
-            ;;
-    stop)
-            stop
-            ifconfig eth0 down
-            ;;
-    restart|reload)
-            restart
-            ;;
-    *)
-            echo "Usage: $0 {start|stop|restart}"
-            exit 1
-    esac
-    ```
-    
-=== "Scenario 2"
-    ```bash
-    #!/bin/bash
-    
-    case "$1" in
-    start)
-        printf "Setting ip: "
-        /sbin/ifconfig eth0 169.254.0.13 netmask 255.255.0.0 up
-        [ $? = 0 ] && echo "OK" || echo "FAIL"
-        ;; 
-    *)
-        exit 1
+case "$1" in
+start)
+        start
+        ifconfig eth0 up
+        ifconfig eth0 169.254.0.13 netmask 255.255.0.0 up
         ;;
-    esac
-    ```
+stop)
+        stop
+        ifconfig eth0 down
+        ;;
+restart|reload)
+        restart
+        ;;
+*)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+```
+
+#### Scenario 2
+```bash
+#!/bin/bash
+
+case "$1" in
+start)
+printf "Setting ip: "
+/sbin/ifconfig eth0 169.254.0.13 netmask 255.255.0.0 up
+[ $? = 0 ] && echo "OK" || echo "FAIL"
+;; 
+*)
+exit 1
+;;
+esac
+```
 
 Make the script is executable: `chmod +x S60MAC.sh`. Once the script is created, it will need to be added to the system startup,
 for this we must call (when the iso uses systemd, which is the case of Amstrong, but not buildroot):
@@ -173,9 +177,11 @@ $ ifconfig eth0 hw ether 02:01:02:03:04:08
 $ ifconfig eth0 up
 ```
 
-!!! note
-    You will need to edit the MAC  `02:01:02:03:04:08` to the one provided by the professor
+::: info
+You will need to edit the MAC  `02:01:02:03:04:08` to the one provided by the professor
 
-!!! warning
-    This MAC should only be used on the development kit and during the development of the projects. Misuse will be considered a breach of ethics.
+:::
+::: warning
+This MAC should only be used on the development kit and during the development of the projects. Misuse will be considered a breach of ethics.
 
+:::

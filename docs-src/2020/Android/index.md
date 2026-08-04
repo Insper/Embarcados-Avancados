@@ -43,20 +43,22 @@ Android é um sistema operacional baseado no kernel do linux no qual é possíve
 Raspberry Pi é um _microcomputador_ do estilo _System On a Chip_ que permite fazer tudo que um computador faz com baixo custo.
 O modelo utilizado neste roteiro é o Raspberry Pi 3 B+, a qual possui um processador 64-bit quad-core de 1.4GHz, dual-band wireless e bluetooth. Ou seja, adequada para aplicações de automação e IOT.
 
-<center>![Raspberry PI3](https://uploads.filipeflop.com/2017/07/DRA01_01.jpg){width=300}</center>
+![Raspberry PI3](https://uploads.filipeflop.com/2017/07/DRA01_01.jpg){width=300}
 
 
 ----------------------------------------------
 
 ## Instalação
 
-!!! warning
-    Alguns dos passos exigem alto poder computacional, caso você não tenha uma máquina com o armazenamento mínimo necessário ou com um bom processador, sugerimos a utilização de uma máquina na nuvem.
-    
-    !!! example "Sugestão"
-        Para esse tutorial, utilizamos uma instância da AWS t2.2xlarge.
+::: warning
+Alguns dos passos exigem alto poder computacional, caso você não tenha uma máquina com o armazenamento mínimo necessário ou com um bom processador, sugerimos a utilização de uma máquina na nuvem.
+
+::: info Sugestão
+Para esse tutorial, utilizamos uma instância da AWS t2.2xlarge.
 
 
+:::
+:::
 ### Configurando o ambiente
 Uma vez no Ubuntu 18.04, será necessário a instalação de alguns pacotes essênciais, para saber mais, entre na página disponibilizada pelo [Andoid](https://source.android.com/setup/build/initializing).
 ```sh
@@ -73,16 +75,18 @@ Clone o repositório com as configurações da Raspberry para Android:
 $ git clone https://github.com/csimmonds/a4rpi-local-manifest .repo/local_manifests -b android10
 ```
 
-!!! Tip
+::: tip
 
-     Para aumentar a velocidade de instalação use o argumento -c (branch atual) e -j```threadcount``` 
+ Para aumentar a velocidade de instalação use o argumento -c (branch atual) e -j```threadcount``` 
+:::
 ```
 $ repo sync -c j8
 ```
 
-!!! warning
-    Pausa para café, esta etapa demora cerca de 1-      2 horas.
+::: warning
+Pausa para café, esta etapa demora cerca de 1-      2 horas.
 
+:::
 ### Configurando o U-boot
 
 U-boot é um bootloader Opens Source utilizado em sistemas de linux embarcados. Os comandos abaixo criam a nossa imagem _boot_ que será utilizada para carregar o Android.
@@ -126,9 +130,10 @@ $ lunch aosp_rpi3-eng
 $ m
 ```
 
-!!! warning
-    Esta etapa pode demorar em torno de 2 horas.
+::: warning
+Esta etapa pode demorar em torno de 2 horas.
 
+:::
 A explicação dos comandos utilizadas pode ser encontrada [aqui](https://source.android.com/setup/build/building).   
 É criado as imagens _VendorImage_, _SystemImage_ e _UserData_ que posteriormente serão escritas no cartão de memória. 
 
@@ -144,10 +149,11 @@ A última etapa é  criar as partições e passar as imagens criadas no passo an
 
 
 
-!!! warning
-    Caso você tenha feito as etapas anteriores em uma instância virtual, siga os passos abaixo, caso contrário, siga para a etapa **_Instalando Android localmente_**.
+::: warning
+Caso você tenha feito as etapas anteriores em uma instância virtual, siga os passos abaixo, caso contrário, siga para a etapa **_Instalando Android localmente_**.
 
 
+:::
 ### Instalando Android na nuvem 
 
 Como não é possível conectar um cartão SD diretamente em uma instância na nuvem, deve ser criado uma partição virtual para simular um cartão SD.     
@@ -194,9 +200,10 @@ $ dd if=/dev/loop6 of=android.img bs=4M
 ```
 
 
-!!! Tip
-    Mais uma vez, troque **_loop6_** pelo nome de sua partição virtual.
+::: tip
+Mais uma vez, troque **_loop6_** pelo nome de sua partição virtual.
 
+:::
 Existem várias maneiras para transferir arquivos de uma instância virtual para outra máquina, indicamos utilizar Secure Copy Protocol (SCP).  
 Na sua máquina, de posse da key utilizada na instância, basta rodar o comando abaixo:
 
@@ -206,13 +213,15 @@ $ scp -i <chave_de_acesso> ubuntu@<ip_maquina>:/home/ubuntu/android.img .
 
 ```
 
-!!! Tip
-    Note que _/home/ubuntu/android.img_ é o nosso _path_ da imagem criada pelo _dd_, mude para o seu _path_ correspondente.
+::: tip
+Note que _/home/ubuntu/android.img_ é o nosso _path_ da imagem criada pelo _dd_, mude para o seu _path_ correspondente.
 
-!!! warning
-    Essa etapa pode demorar em torno de 10 minutos dependendo da sua conexão.
+:::
+::: warning
+Essa etapa pode demorar em torno de 10 minutos dependendo da sua conexão.
 
 
+:::
 O último passo é transferir o arquivo _android.img_, que foi copiado para a sua máquina, para o SD card. Para isso, insira o cartão de memória e utilize o comando _lsblk_  para saber o nome do seu dispositivo e rode:
 
 ```sh
@@ -222,13 +231,14 @@ $ dd if=android.img of=/dev/<nome_SDcard> bs=4M
 
 ### Instalando Android localmente
 
-!!! Nota
-    Este tópico só deve ser realizado se você está fazendo localmente. 
+::: info Nota
+Este tópico só deve ser realizado se você está fazendo localmente. 
 
+:::
 Insira o SD Card no seu computador e use comando _lsblk_ para saber o nome do dispositivo. 
 No exemplo abaixo, o nome do dispositivo é _sdc_.
 
-<center>![](https://media.discordapp.net/attachments/727592935054639194/786344627417382912/unknown.png){width=500}</center>
+![](https://media.discordapp.net/attachments/727592935054639194/786344627417382912/unknown.png){width=500}
 
 
 Agora, para instalar o Android no SD Card é necessário rodar o comando na pasta _root_ do projeto:
@@ -243,9 +253,9 @@ $ scripts/write-sdcard-rpi3.sh <nome_SDcard>
 Ao inserir o SD Card na Raspberry e conectá-la à uma fonte de energia via cabo Micro USB, se tudo foi feito corretamente, o Android deve inicializar, podendo ser observado ao conectar uma da saída de vídeo (HDMI), como visto abaixo:
 
 
-<center>![](https://media.discordapp.net/attachments/727592935054639194/786364456643985440/IMG_5310.jpg?width=625&height=469){width=600}   
+![](https://media.discordapp.net/attachments/727592935054639194/786364456643985440/IMG_5310.jpg?width=625&height=469){width=600}   
 ![](https://media.discordapp.net/attachments/727592935054639194/786364450633678888/IMG_5312.jpg?width=625&height=469){width=600}   
-![](https://media.discordapp.net/attachments/727592935054639194/786364441004474378/IMG_5313.jpg?width=625&height=469){width=600} </center>
+![](https://media.discordapp.net/attachments/727592935054639194/786364441004474378/IMG_5313.jpg?width=625&height=469){width=600}
 
 Pronto! Você tem um Andoid rodando em uma Raspberry Pi. Para utilização completa dos recursos disponibilizados pelo Android, o usuário pode optar por utilizar um mouse com entrada USB ou até mesmo uma tela touch, ambos conectados diretamente na Raspberry. 
 

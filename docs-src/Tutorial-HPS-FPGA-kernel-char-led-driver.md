@@ -30,12 +30,14 @@ This command will generate a file `hps_0.h` that contains the memory address inf
 
 We will work with the `ebbchar` example driver.
 
-!!! exercise
-    Make a copy of the folde `ebbchar` to `ebbchar-led`.
+::: tip Exercise
+Make a copy of the folde `ebbchar` to `ebbchar-led`.
 
-!!! exercise
-    Copy the file `hps_0.h` into the driver folder.
+:::
+::: tip Exercise
+Copy the file `hps_0.h` into the driver folder.
 
+:::
 We will need to edit the Makefile to support:
 
 1. Cross-compilation
@@ -79,11 +81,12 @@ clean:
 	rm test
 ```
 
-!!! exercise
-    1. Edite the Makefile
-    1. You should edit the variable `KERNELDIR := ` to the path of the kernel you compiled.
-    1. Edite the IP address
-    
+::: tip Exercise
+1. Edite the Makefile
+1. You should edit the variable `KERNELDIR := ` to the path of the kernel you compiled.
+1. Edite the IP address
+
+:::
 ### Understanding 
 
 In the Linux kernel, there are many functions available to manipulate hardware/physical memory addresses. We will only use the function: 
@@ -92,18 +95,20 @@ In the Linux kernel, there are many functions available to manipulate hardware/p
 void iowrite32(u32 value, void __iomem *addr);
 ```
 
-!!! info
-    - https://lwn.net/Articles/102232/
+::: info
+- https://lwn.net/Articles/102232/
 
+:::
 This function writes a `value` to a physical memory address `addr`. To make this work, we must create a pointer that points to the PIO peripheral in the FPGA:
 
 ```c
 p_led = ioremap_nocache(ALT_LWFPGASLVS_OFST + LED_PIO_BASE, LED_PIO_SPAN);
 ```
 
-!!! info
-    We are telling the kernel to create a pointer and that every access to this address must be enforced on the hardware, and cannot be cached.
+::: info
+We are telling the kernel to create a pointer and that every access to this address must be enforced on the hardware, and cannot be cached.
 
+:::
 Where `p_led` is a global and static variable of the module:
 
 ```c

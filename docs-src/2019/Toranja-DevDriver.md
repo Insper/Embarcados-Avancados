@@ -7,9 +7,10 @@
 - Link tutorial oficial: https://github.com/brunoartc/virtual_com_driver
 - Ano: 2019
 
-!!! example "Hardware utilizado no tutorial"
-    - ?
-    
+::: info Hardware utilizado no tutorial
+- ?
+
+:::
 ## Introdução
 
 Um driver de linux é um programa que facilita a comunicação dos programas com a parte fisica do nosso dispositivo 

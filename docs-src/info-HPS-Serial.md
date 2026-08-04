@@ -11,7 +11,7 @@ We have several ways to access and use this system:
 
 Linux on the HPS is usually configured (in the bootloader) to have a terminal redirected to a UART port. This UART port is available via FTDI on one of the board's USBs (the one labeled UART) and can then be accessed as a UART. For this, there is a specific USB port (UART).
 
-![](figs/tutorial-hps-running-usbuart.png)
+![](figs/Tutorial-HPS-Running-uart.png)
 
 Once the USB port is connected to the PC and the board is powered on, we can check which *device* the serial port was mapped to (on the `host`):
 

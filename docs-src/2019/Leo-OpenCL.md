@@ -7,9 +7,10 @@
 - Link tutorial oficial: https://github.com/Leotayner/Tutorial-OpenCL
 - Ano: 2019
 
-!!! example "Hardware utilizado no tutorial"
-    - DE10-Standard
-    
+::: info Hardware utilizado no tutorial
+- DE10-Standard
+
+:::
 ## OpenCL
 
 [OpenCL](https://software.intel.com/en-us/opencl-sdk) (Open Computing Language) é uma API de baixo nível para programação de alto desempenho em ambientes computacionais heterogêneos compostos por CPUs, GPUs, e outros processadores paralelos como FPGA, permitindo desenvolver aplicações portáveis e eficientes.
@@ -147,9 +148,10 @@ Esta seção mostra como compilar o kernel e o programa host do OpenCL, necessá
 
     * Um arquivo `.aocx` será gerado, este é utilizado para a configuração dos kernels programados, configurando a execução de tarefas e troca de informações entre FPGA e sistema host.
 
-!!! warning
-    A copilação do kernel é muito lenta, pode levar horas.
+::: warning
+A copilação do kernel é muito lenta, pode levar horas.
 
+:::
 * Compilar Programa Host
 
     * `$ cd /media/leonardo/FPGA/intelFPGA/18.1/embedded`
@@ -239,5 +241,6 @@ Ao comparar o tempo de execução do programa `vector_add`, que realiza uma simp
  
 Como pode-se observar o desempenho da execução na FPGA é muito maior, embora a diferença numérica seja pequena, deve-se lembrar que o arquivo de teste realiza uma simples operação de soma de vetor, logo para programas mais complexos, o ganho de desempenho na FPGA seria mais expressivo.
 
-!!! note
-    O teste da CPU é single thread
+::: info
+O teste da CPU é single thread
+:::

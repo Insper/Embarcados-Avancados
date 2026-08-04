@@ -10,15 +10,17 @@ HLS (High-Level Synthesis Compiler) is a compilation tool that allows us to crea
 
 ## CentOS
 
-!!! warning
-    I was only able to get it working on CentOS 6; my solution was to run
-    a docker with CentOS and install the dependencies there. I run HLS via the
-    docker CLI. 
-    
-!!! note
-    To make things easier, we will provide a pre-configured docker image.
-    Check with your instructor on how to get it.
+::: warning
+I was only able to get it working on CentOS 6; my solution was to run
+a docker with CentOS and install the dependencies there. I run HLS via the
+docker CLI. 
 
+:::
+::: info
+To make things easier, we will provide a pre-configured docker image.
+Check with your instructor on how to get it.
+
+:::
 ## HLS
 
 We will generate a component that applies an offset (proc) to an image. For this, the
@@ -52,9 +54,10 @@ For this, we will use a specific HLS syntax that, as in C, defines what type of 
 
 HLS allows us to validate the code on two distinct layers: the first is by compiling the same code that will be synthesized for the x86 architecture, with this we can validate the algorithm much faster, the second is by generating the HDL of the component and simulating it via ModelSim, all of this is done transparently and automatically by the tool.
 
-!!! note
-    Simulating the hardware is costly in terms of processing time and computational power, it should be the last thing to be done before using the component on the hardware. Validate by compiling for x86 and then simulating.
-    
+::: info
+Simulating the hardware is costly in terms of processing time and computational power, it should be the last thing to be done before using the component on the hardware. Validate by compiling for x86 and then simulating.
+
+:::
 ## Offset
 
 The function to be accelerated is as follows (`imgOffSet`):
@@ -228,15 +231,17 @@ int main(void) {
 }
 ```
 
-!!! note
-     When we execute the `imgOffSet` function on our hardware, it will not be as simple 
-     as just a function call.
+::: info
+ When we execute the `imgOffSet` function on our hardware, it will not be as simple 
+ as just a function call.
 
+:::
 ### Testing (x86)
 
-!!! note
-    Must be done on centos (docker)
+::: info
+Must be done on centos (docker)
 
+:::
 To test, we will compile our project for `x86` (it will not be hardware) and validate 
 if our logic is correct. If it works, we compile for hardware.
 
@@ -256,12 +261,14 @@ The result should be the beautiful `img.ppm` photo of your instructor, processed
 
 ![](figs/Tutorial-Acelerando-HLS:resultadoSW.png)
 
-!!! tip 
-    To generate a `ppm` type image you can use Gimp
+::: tip
+To generate a `ppm` type image you can use Gimp
 
-!!! note
-    This execution is like compiling with gcc, it only serves to validate logic
-    
+:::
+::: info
+This execution is like compiling with gcc, it only serves to validate logic
+
+:::
 | input     | output             |
 | -----     | ---------          |
 | img.pgm   | image    (binary) |
@@ -276,12 +283,13 @@ which represents our FPGA
 $ i++ image.cpp -march=CycloneV -o image-CycloneV
 ```
 
-!!! note
-    This may take a long time, what it will do is:
-    
-    1. Generate an HDL from your function
-    1. Create a component for the Platform Designer
-    
+::: info
+This may take a long time, what it will do is:
+
+1. Generate an HDL from your function
+1. Create a component for the Platform Designer
+
+:::
 | input   | output            |
 | -----   | ---------         |
 | img.pgm | image-CycloneV.prj (folder) |
@@ -304,15 +312,17 @@ the new binary created when we compiled for the `CycloneV` architecture.
 $ ./image-CycloneV
 ```
 
-!!! warning
-    This will take a long time! On the monster lab Architecture, it took over 1 hour!
-    
+::: warning
+This will take a long time! On the monster lab Architecture, it took over 1 hour!
+
+:::
 This simulation is performed on ModelSim! At the hardware level. The result will be as expected when we embed
 on the FPGA. With this simulation, we can check for rounding errors, memory access, among others.
 
-!!! tipa
-    The image `out-CycloneV.pgm` that is in the project folder, is the result of this simulation.
+::: tip Tipa
+The image `out-CycloneV.pgm` that is in the project folder, is the result of this simulation.
 
+:::
 ### report
 
 HLS generates a report of the hardware compilation, it can be found in: [`reports/report.html`](/Tutorial-Acelerando-HLS-reports/report.html). An interesting report to analyze is the **Loops analysis**, which demonstrates the program loops:
@@ -332,9 +342,10 @@ We will use the **Loop Unrolling** one, which allows us to execute a loop in par
  }
 ```
 
-!!! tip
-    **N** is the number of loops to be executed in //.
+::: tip
+**N** is the number of loops to be executed in //.
 
+:::
 We will parallelize the line scanning by 8 executions in parallel, for that add in the for that scans the line (x):
 
 ```c

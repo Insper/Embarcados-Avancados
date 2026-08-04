@@ -6,9 +6,10 @@ The FPGA contained in the DE10-Standard kit is a SoC chip that has two distinct 
 
 The HPS has a processing unit with one or two cores (depending on the chip, in our case it is dual core) and some peripherals connected to its bus (DMA, UART, USB, EMACS, ...). In addition to the peripherals already included in the HPS, it is possible to connect new peripherals synthesized in the FPGA via the **HPS FPGA Interfaces**.
 
-!!! exercise
-    Take a look at Intel's official document: [1 Introduction to Cyclone V Hard Processor System (HPS)](https://people.ece.cornell.edu/land/courses/ece5760/DE1_SOC/HPS_INTRO_54001.pdf)
+::: tip Exercise
+Take a look at Intel's official document: [1 Introduction to Cyclone V Hard Processor System (HPS)](https://people.ece.cornell.edu/land/courses/ece5760/DE1_SOC/HPS_INTRO_54001.pdf)
 
+:::
 ## FPGA Families
 
 Altera has four families of [FPGAs-SoC](https://www.intel.com/content/www/us/en/products/programmable/soc.html):
@@ -53,16 +54,18 @@ Note that in the previous diagram, there are some interfaces defined in the "FPG
 
 The buses are all of the type [AXI](https://en.wikipedia.org/wiki/Advanced_Microcontroller_Bus_Architecture), a standard defined by ARM and used in its microcontrollers. 
 
-!!! note "AXI - AVALON"
-    Via Platform Designer, we can connect peripherals with the Avalon (mm) bus to the ARM's AXI bus, which is possible due to a “magic” that PD performs by converting one bus to the other transparently to the user.
+::: info AXI - AVALON
+Via Platform Designer, we can connect peripherals with the Avalon (mm) bus to the ARM's AXI bus, which is possible due to a “magic” that PD performs by converting one bus to the other transparently to the user.
 
+:::
 ### SDRAM
 
 SDRAM should be used with caution, as it will be shared with Linux running on ARM. If an FPGA peripheral accesses SDRAM "randomly," it can overwrite important kernel data and cause system failures. This allocation should be made at Linux boot, where we will tell which memory region the kernel can use.
 
-!!! note 
-    This memory accessible by both Linux and FPGA is a good way of sharing data to be processed.
+::: info
+This memory accessible by both Linux and FPGA is a good way of sharing data to be processed.
 
+:::
 ## Applications
 
 Now it is possible to combine the best of both worlds: FPGA flexibility and parallelism with the best of embedded processors: ARM.

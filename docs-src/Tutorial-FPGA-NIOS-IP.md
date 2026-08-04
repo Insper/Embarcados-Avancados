@@ -38,11 +38,12 @@ Intel-FPGA defines two categories of data buses for PD: **Avalon** and **AXI**. 
 
 ### Avalon
 
-!!! info 
-    Complete documentation for the AVALON bus:
+::: info
+Complete documentation for the AVALON bus:
 
-    - https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/manual/mnl_avalon_spec.pdf
+- https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/manual/mnl_avalon_spec.pdf
 
+:::
 The Avalon bus basically defines two types of modules: **Memory Mapped (MM)** and **Avalon Streaming Interface (ST)**, as described below, extracted from the documentation:
 
 -  **Avalon Streaming Interface (Avalon-ST)** — an interface that supports the unidirectional flow of data, including multiplexed streams, packets, and DSP data.
@@ -57,14 +58,16 @@ The Avalon bus basically defines two types of modules: **Memory Mapped (MM)** an
 -  **Avalon Clock Interface*** — an interface that drives or receives clocks.
 -  **Avalon Reset Interface** — an interface that provides reset connectivity.
 
-!!! tip
-    We will work with the type: **Avalon-MM** as a way to connect the peripheral to NIOS.
+::: tip
+We will work with the type: **Avalon-MM** as a way to connect the peripheral to NIOS.
 
+:::
 ## Project 
 
-!!! note
-    Let's improve the previous project, make a copy of the project folder: `Lab2_FPGA_NIOS/` and rename it to: `Lab3_FPGA_IP/`. We will now work in this new folder.
+::: info
+Let's improve the previous project, make a copy of the project folder: `Lab2_FPGA_NIOS/` and rename it to: `Lab3_FPGA_IP/`. We will now work in this new folder.
 
+:::
 ### Creating a peripheral 
 
 Let's create a new component that will be able to control the LEDs with more autonomy. 
@@ -87,9 +90,10 @@ First, we need to define the main role of this peripheral and its data flow. Wit
 
 A peripheral can have more than one interface, for example: A peripheral that will process audio in real-time may have up to three interfaces: It will receive the audio via the **streaming** interface and return the data through another **streaming** interface, however, a third interface will be needed to control this peripheral, most likely of the **Memory Mapped** type.
 
-!!! note ""
-    It is possible to transmit command packets over the streaming interface, but this makes the project more complex.
+::: info
+It is possible to transmit command packets over the streaming interface, but this makes the project more complex.
 
+:::
 Our simple peripheral will simply receive configurations to activate the LED, without any continuous or intense data flow, being the most appropriate interface of the **memory-mapped peripheral** type. Furthermore, our exclusive peripheral for LED control is a **slave** of the system, as it must be controlled by another part of the system (in our case, the uC) to act as needed.
 
 #### Avalon Slave Memory Mapped
@@ -134,7 +138,7 @@ A write to the peripheral is done as follows:
      - The address that the master writes to the peripheral is composed of: **addr** :heavy_plus_sign:	**offset** but the slave only has access to the **offset**. 
 3. Peripheral receives: `avs_address`, `avs_write = '1'` and `avs_writedata`.
 
-![](figs/Tutorial-FPGA-IP_avalon.png)
+![](figs/Tutorial-FPGA-IP:avalon.png)
 
 A read from the peripheral is done as follows:
 
@@ -144,19 +148,20 @@ A read from the peripheral is done as follows:
 4. Peripheral updates: `avs_readdata`
 
 
-!!! question "Questions"
-    The `AVALON` bus defines other signals, answer the following about some of these signals:
+::: tip Questions
+The `AVALON` bus defines other signals, answer the following about some of these signals:
 
-    waitrequest:
+waitrequest:
 
-    - What is the role of waitrequest? 
-    - Who triggers the waitrequest (Slave or Master)?
-    
-    byteenable:
-    
-    - What is the role of byteenable? 
-    - Who triggers the byteenable (Slave or Master)?
+- What is the role of waitrequest? 
+- Who triggers the waitrequest (Slave or Master)?
 
+byteenable:
+
+- What is the role of byteenable? 
+- Who triggers the byteenable (Slave or Master)?
+
+:::
 ### Specification
 
 Our peripheral will initially be very simple, just to understand the entire process of developing a peripheral and its use. The peripheral that we will develop will be a substitute for the PIO peripheral provided by Intel-FPGA, used in the LED blink project with NIOS.
@@ -175,12 +180,14 @@ Access to our peripheral will be through a 32-bit word (to maintain a standard w
 Starting from the provided entity (`peripheral_MM`), we can create a component that partially implements the previous specification, in this implementation we do not have the two registers (`REG_CONFIG` and `REG_DATA`), we only have the functionality of the `REG_DATA`. Note that the implementation uses a generic to define the number of LEDs that this peripheral controls. This generic can be configured through the graphical interface of the Platform Designer, making it a customized component.
 
 
-!!! info
-    Create a file called: `peripheral_LED.vhd` and save it in the project folder : `Lab3_FPGA_IP/IP/`
+::: info
+Create a file called: `peripheral_LED.vhd` and save it in the project folder : `Lab3_FPGA_IP/IP/`
 
-    !!! warning ""
-        It will be necessary to create the IP folder
+::: warning
+It will be necessary to create the IP folder
 
+:::
+:::
 ```vhdl
 library IEEE;
 use IEEE.std_logic_1164.all;
@@ -228,10 +235,11 @@ begin
 end rtl;
 ```
 
-!!! note "Limitations of this implementation"
-    - Does not have a configuration register: `REG_CONFIG`
-    - It is not possible to read: `REG_DATA` via **Avalon** bus 
+::: info Limitations of this implementation
+- Does not have a configuration register: `REG_CONFIG`
+- It is not possible to read: `REG_DATA` via **Avalon** bus 
 
+:::
 We could already at this stage test the component, creating a `testbench` to excite the module and check its behavior. A large part of the development of a hardware project is spent on testing, which can be as complex as the module itself. Let's skip this step here, we will simulate at a higher level.
 
 ### Configuring path
@@ -288,11 +296,12 @@ This happened because of the names of the `peripheral_led` entity.
 
 Let's first edit the `avalon_slave_0`. Click on the interface and note that the tool indicates an error : 
 
-!!! failure
-    ```
-    Error: avalon_slave_0_1: Interface must have an associated reset
-    ```
+::: danger Failure
+```
+Error: avalon_slave_0_1: Interface must have an associated reset
+```
 
+:::
 We will have to associate a reset signal to the interface (next part of the IP), for that :
 
 - `avalon_slave_0` :arrow_right: `Associated Reset` :arrow_right: `reset` :ok:
@@ -343,13 +352,14 @@ add_fileset_file peripheral_LED.vhd VHDL PATH peripheral_LED.vhd
 
 Now add the component to the project and make the correct connections (as if it were another component), export the LED signal, the final result should be something like:
 
-![](figs/Tutorial-FPGA-IP_final.png)
+![](figs/Tutorial-FPGA-IP:final.png)
 
 Generate the component: Click on `Generate` :arrow_right: `Generate`. 
 
-!!! warning ""
-    Check the option: ✅ `Create a Simulation Model`
+::: warning
+Check the option: ✅ `Create a Simulation Model`
 
+:::
 ![](figs/Tutorial-FPGA-IP_gen.png)
 
 ### Using the component in `topLevel.vhd`
@@ -424,9 +434,10 @@ begin
 	 
 end rtl;
 ```
-!!! success "Recompile"
-    Save, compile the project and program the FPGA
+::: tip Recompile
+Save, compile the project and program the FPGA
 
+:::
 We can now analyze the RTL of the project and more specifically the component created:
 
 ![](figs/Tutorial-FPGA-IP_rtl.png)
@@ -496,9 +507,10 @@ To obtain a faster result, it is possible to activate an option in the bsp calle
 
 In addition to configuring the optimization during simulation, we will disable **stdin, stdout, stderr** so that the simulation is even faster, otherwise we will have to wait a long time to check the result of the code. Note that the simulation covers the entire HW from the processor to the bus and peripherals.
 
-!!! note
-    To simulate 1 ms of HW execution we will need much more than 1 ms of computational effort! The time can take hours!!
+::: info
+To simulate 1 ms of HW execution we will need much more than 1 ms of computational effort! The time can take hours!!
 
+:::
 ![](figs/Tutorial-FPGA-IP_sim.png)
 
 ### ModelSim

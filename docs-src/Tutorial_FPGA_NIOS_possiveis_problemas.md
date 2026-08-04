@@ -15,7 +15,7 @@ Para tanto, fazermos uso de:
 
 Para fazer as conexões entre os módulos do Plataform Designer,  deve-se clicar no circulo cinza nos cruzamentos de barramentos ou  sinais, conforme mostrado abaixo:
 
-![Plataform_Designer_02](\Embarcados-Avancados\figs\Plataform_Designer_02.png)
+![Plataform_Designer_02](figs/Plataform_Designer_02.png)
 
 **Plataform Designer**
 
@@ -44,17 +44,17 @@ Ver detalhes em: https://stackoverflow.com/questions/65240134/nios-ii-ide-unsuab
 
 Ao transferir o programa em *C* para o Kit FPGA, através da opção **Run :arrow_right:  Run**, pode ocorrer o seguinte erro:
 
-<img style="float: center;" src="\Embarcados-Avancados\figs\Erro_System_ID.png">
+![](figs/Erro_System_ID.png)
 **Erro de ID**
 
 Para resolver, pode-se ignorar a verificação do *ID* na configuração em **Run :arrow_right:  Run Configurations …**, conforme mostrado abaixo:
 
-![Tela de Configuração](\Embarcados-Avancados\figs\Run_Configurations-02.png)
+![Tela de Configuração](figs/Run_Configurations-02.png)
 **Tela de Configuração**
 
 Caso ocorra o erro de *Time Stamp*, como mostrado abaixo, basta ignorá-lo na mesma tela de configuração mostrada acima.
 
-<img style="float: center;" src="\Embarcados-Avancados\figs\Erro_Time_Stamp.png">
+![](figs/Erro_Time_Stamp.png)
 **Erro de Time Stamp**
 
 
@@ -85,7 +85,7 @@ Ao adicionar uma segunda OnChip Memory, para separar RAM de ROM, pode ocorrer do
 3. Conectar os dois barramentos em ambas memórias
 4. Gerar novamente os endereços dos periféricos
 
-![Plataform_Designer](\Embarcados-Avancados\figs\erros_ELF_plataform_designer.png)
+![Plataform_Designer](figs/erros_ELF_plataform_designer.png)
 
 ### 3.2 Solução Parte 2 (Linker)
 
@@ -95,7 +95,7 @@ Ao adicionar uma segunda OnChip Memory, para separar RAM de ROM, pode ocorrer do
 4. Na seção Linker Sections Regions clique em restore defaults.
 5. Verifique se apenas o .text esta na memória ROM (como na imagem abaixo), caso contrario altere manualmente mantendo apenas o .text na ROM.
 
-![BSP Editor](\Embarcados-Avancados\figs\erros_ELF_bsp.png) 
+![BSP Editor](figs/erros_ELF_bsp.png) 
 
 
 ### Tamanho .elf
@@ -114,7 +114,7 @@ Agora, considerando que o nome do arquivo seja "niosLab2.elf", utilize o seguint
 nios2-elf-size niosLab2.elf
 ```
 
-![Tamanho ELF](\Embarcados-Avancados\figs\tamanhoELF.jpeg) 
+![Tamanho ELF](figs/tamanhoELF.jpeg) 
 
 
 ## Connection Error/ Java.lang.Exception
@@ -127,10 +127,9 @@ nios2-elf-size niosLab2.elf
 4. Clique em apply e depois em Run
 5. Caso não funcione feche o programador no quartus. Reinicie a placa e grave novamente. Em seguida repita os passos a partir do passo 1.
 
-![Target Connection](\Embarcados-Avancados\figs\targetConnection.png) 
+![Target Connection](figs/targetConnection.png) 
 
 
 ## Set IRQ
 
-![Set IRQ](\Embarcados-Avancados\figs\set_IRQ.jpeg) 
-
+![Set IRQ](figs/set_IRQ.jpeg) 

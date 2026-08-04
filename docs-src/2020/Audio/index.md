@@ -104,102 +104,103 @@ Esse projeto faz uso do ==Avalon-MM Clock Crossing Bridge== para que os dados do
 
 Assim que for gerado o PD, volte para o **TOP-FILE** do seu projeto VHDL e coloque o seguinte código
 
-??? codigo
-    ``` vhdl
-    library IEEE;
-    use IEEE.std_logic_1164.all;
+::: details Codigo
+``` vhdl
+library IEEE;
+use IEEE.std_logic_1164.all;
 
-    entity AUDIO_LIVE is
+entity AUDIO_LIVE is
+    port (
+        fpga_clk_50			:	in		std_logic;
+        
+        AUD_XCK				:	out 	std_logic;
+        AUD_ADCDAT			:	in		std_logic;
+        AUD_ADCLRC			:	in		std_logic;
+        AUD_DACDAT			:	out	std_logic;
+        AUD_DACLRC			:	in		std_logic;
+        AUD_BCLK				:	in		std_logic;
+                
+        I2C_AUD_DATA		:	inout	std_logic;
+        I2C_AUD_CLK			:	out	std_logic;
+        
+        sdram_addr			:	out	std_logic_vector(12 downto 0);
+        sdram_ba				:	out	std_logic_vector(1 downto 0);
+        sdram_cas_n			:	out	std_logic;
+        sdram_cke			:	out	std_logic;
+        sdram_cs_n			:	out	std_logic;
+        sdram_dq				:	inout	std_logic_vector(15 downto 0) := (others => 'X');
+        sdram_dqm			:	out	std_logic_vector(1 downto 0);
+        sdram_ras_n			:	out	std_logic;
+        sdram_ew_n			:	out	std_logic;
+        
+        sdram_pll			:	out	std_logic
+        );
+
+
+end entity;
+
+architecture lv1 of AUDIO_LIVE is
+
+    component PD_AUDIO_LIVE_F is
         port (
-            fpga_clk_50			:	in		std_logic;
+            audio_if_conduit_end_XCK          : out   std_logic;                                        -- XCK
+            audio_if_conduit_end_ADCDAT       : in    std_logic                     := 'X';             -- ADCDAT
+            audio_if_conduit_end_ADCLRC       : in    std_logic                     := 'X';             -- ADCLRC
+            audio_if_conduit_end_DACDAT       : out   std_logic;                                        -- DACDAT
+            audio_if_conduit_end_DACLRC       : in    std_logic                     := 'X';             -- DACLRC
+            audio_if_conduit_end_BCLK         : in    std_logic                     := 'X';             -- BCLK
             
-            AUD_XCK				:	out 	std_logic;
-            AUD_ADCDAT			:	in		std_logic;
-            AUD_ADCLRC			:	in		std_logic;
-            AUD_DACDAT			:	out	std_logic;
-            AUD_DACLRC			:	in		std_logic;
-            AUD_BCLK				:	in		std_logic;
-                    
-            I2C_AUD_DATA		:	inout	std_logic;
-            I2C_AUD_CLK			:	out	std_logic;
+            clk_clk                             : in    std_logic                     := 'X';             -- clk
             
-            sdram_addr			:	out	std_logic_vector(12 downto 0);
-            sdram_ba				:	out	std_logic_vector(1 downto 0);
-            sdram_cas_n			:	out	std_logic;
-            sdram_cke			:	out	std_logic;
-            sdram_cs_n			:	out	std_logic;
-            sdram_dq				:	inout	std_logic_vector(15 downto 0) := (others => 'X');
-            sdram_dqm			:	out	std_logic_vector(1 downto 0);
-            sdram_ras_n			:	out	std_logic;
-            sdram_ew_n			:	out	std_logic;
+            i2c_sclk_external_connection_export : out   std_logic;                                        -- export
+            i2c_sdat_external_connection_export : inout std_logic                     := 'X';             -- export
             
-            sdram_pll			:	out	std_logic
-            );
+            sdram_controller_wire_addr    : out   std_logic_vector(12 downto 0);                    -- addr
+            sdram_controller_wire_ba      : out   std_logic_vector(1 downto 0);                     -- ba
+            sdram_controller_wire_cas_n   : out   std_logic;                                        -- cas_n
+            sdram_controller_wire_cke     : out   std_logic;                                        -- cke
+            sdram_controller_wire_cs_n    : out   std_logic;                                        -- cs_n
+            sdram_controller_wire_dq      : inout std_logic_vector(15 downto 0) := (others => 'X'); -- dq
+            sdram_controller_wire_dqm     : out   std_logic_vector(1 downto 0);                     -- dqm
+            sdram_controller_wire_ras_n   : out   std_logic;                                        -- ras_n
+            sdram_controller_wire_we_n    : out   std_logic;                                        -- we_n
+                            
+            pll_sdam_clk                        : out   std_logic;                                        -- clk
+            
+            reset_reset_n                       : in    std_logic                     := 'X'              -- reset_n
+        );
+    end component PD_AUDIO_LIVE_F;
+begin
+    u0 : component PD_AUDIO_LIVE_F
+        port map (
+            audio_if_conduit_end_XCK          => AUD_XCK,          --       audio_if_0_conduit_end.XCK
+            audio_if_conduit_end_ADCDAT       => AUD_ADCDAT,       --                             .ADCDAT
+            audio_if_conduit_end_ADCLRC       => AUD_ADCLRC,       --                             .ADCLRC
+            audio_if_conduit_end_DACDAT       => AUD_DACDAT,       --                             .DACDAT
+            audio_if_conduit_end_DACLRC       => AUD_DACLRC,       --                             .DACLRC
+            audio_if_conduit_end_BCLK         => AUD_BCLK,         --                             .BCLK
+            clk_clk                             => fpga_clk_50,                             --                          clk.clk
+            i2c_sclk_external_connection_export => I2C_AUD_CLK, -- i2c_sclk_external_connection.export
+            i2c_sdat_external_connection_export => I2C_AUD_DATA, -- i2c_sdat_external_connection.export
+            
+            sdram_controller_wire_addr    => sdram_addr,    --  new_sdram_controller_0_wire.addr
+            sdram_controller_wire_ba      => sdram_ba,      --                             .ba
+            sdram_controller_wire_cas_n   => sdram_cas_n,   --                             .cas_n
+            sdram_controller_wire_cke     => sdram_cke,     --                             .cke
+            sdram_controller_wire_cs_n    => sdram_cs_n,    --                             .cs_n
+            sdram_controller_wire_dq      => sdram_dq,      --                             .dq
+            sdram_controller_wire_dqm     => sdram_dqm,     --                             .dqm
+            sdram_controller_wire_ras_n   => sdram_ras_n,   --                             .ras_n
+            sdram_controller_wire_we_n    => sdram_ew_n,    --                             .we_n
+            
+            pll_sdam_clk                        => sdram_pll,                        --                     pll_sdam.clk
+            reset_reset_n                       => '1'                        --                        reset.reset_n
+        );
 
+end lv1;
+```
 
-    end entity;
-
-    architecture lv1 of AUDIO_LIVE is
-
-        component PD_AUDIO_LIVE_F is
-            port (
-                audio_if_conduit_end_XCK          : out   std_logic;                                        -- XCK
-                audio_if_conduit_end_ADCDAT       : in    std_logic                     := 'X';             -- ADCDAT
-                audio_if_conduit_end_ADCLRC       : in    std_logic                     := 'X';             -- ADCLRC
-                audio_if_conduit_end_DACDAT       : out   std_logic;                                        -- DACDAT
-                audio_if_conduit_end_DACLRC       : in    std_logic                     := 'X';             -- DACLRC
-                audio_if_conduit_end_BCLK         : in    std_logic                     := 'X';             -- BCLK
-                
-                clk_clk                             : in    std_logic                     := 'X';             -- clk
-                
-                i2c_sclk_external_connection_export : out   std_logic;                                        -- export
-                i2c_sdat_external_connection_export : inout std_logic                     := 'X';             -- export
-                
-                sdram_controller_wire_addr    : out   std_logic_vector(12 downto 0);                    -- addr
-                sdram_controller_wire_ba      : out   std_logic_vector(1 downto 0);                     -- ba
-                sdram_controller_wire_cas_n   : out   std_logic;                                        -- cas_n
-                sdram_controller_wire_cke     : out   std_logic;                                        -- cke
-                sdram_controller_wire_cs_n    : out   std_logic;                                        -- cs_n
-                sdram_controller_wire_dq      : inout std_logic_vector(15 downto 0) := (others => 'X'); -- dq
-                sdram_controller_wire_dqm     : out   std_logic_vector(1 downto 0);                     -- dqm
-                sdram_controller_wire_ras_n   : out   std_logic;                                        -- ras_n
-                sdram_controller_wire_we_n    : out   std_logic;                                        -- we_n
-                                
-                pll_sdam_clk                        : out   std_logic;                                        -- clk
-                
-                reset_reset_n                       : in    std_logic                     := 'X'              -- reset_n
-            );
-        end component PD_AUDIO_LIVE_F;
-    begin
-        u0 : component PD_AUDIO_LIVE_F
-            port map (
-                audio_if_conduit_end_XCK          => AUD_XCK,          --       audio_if_0_conduit_end.XCK
-                audio_if_conduit_end_ADCDAT       => AUD_ADCDAT,       --                             .ADCDAT
-                audio_if_conduit_end_ADCLRC       => AUD_ADCLRC,       --                             .ADCLRC
-                audio_if_conduit_end_DACDAT       => AUD_DACDAT,       --                             .DACDAT
-                audio_if_conduit_end_DACLRC       => AUD_DACLRC,       --                             .DACLRC
-                audio_if_conduit_end_BCLK         => AUD_BCLK,         --                             .BCLK
-                clk_clk                             => fpga_clk_50,                             --                          clk.clk
-                i2c_sclk_external_connection_export => I2C_AUD_CLK, -- i2c_sclk_external_connection.export
-                i2c_sdat_external_connection_export => I2C_AUD_DATA, -- i2c_sdat_external_connection.export
-                
-                sdram_controller_wire_addr    => sdram_addr,    --  new_sdram_controller_0_wire.addr
-                sdram_controller_wire_ba      => sdram_ba,      --                             .ba
-                sdram_controller_wire_cas_n   => sdram_cas_n,   --                             .cas_n
-                sdram_controller_wire_cke     => sdram_cke,     --                             .cke
-                sdram_controller_wire_cs_n    => sdram_cs_n,    --                             .cs_n
-                sdram_controller_wire_dq      => sdram_dq,      --                             .dq
-                sdram_controller_wire_dqm     => sdram_dqm,     --                             .dqm
-                sdram_controller_wire_ras_n   => sdram_ras_n,   --                             .ras_n
-                sdram_controller_wire_we_n    => sdram_ew_n,    --                             .we_n
-                
-                pll_sdam_clk                        => sdram_pll,                        --                     pll_sdam.clk
-                reset_reset_n                       => '1'                        --                        reset.reset_n
-            );
-
-    end lv1;
-    ```
-
+:::
 Esse código faz a ligação de todas as portas do PD que foi feito, com as saídas necessárias para funcionar o projeto. 
 
 Após isso, faça o **PIN PLANNER** da conforme a seguinte imagem:
@@ -208,9 +209,10 @@ Após isso, faça o **PIN PLANNER** da conforme a seguinte imagem:
 
 
 Compile o projeto e coloque na placa.
-!!! Nota
-    Essa parte pode demorar por volta de 10 minutos, portanto aproveite para tomar uma água.
+::: info Nota
+Essa parte pode demorar por volta de 10 minutos, portanto aproveite para tomar uma água.
 
+:::
 ## Software
 
 Abra o **NIOS II SOdtware build tools for Eclipse** e inicie um projeto novo com template de **hello_world**. Feito isso, configure o **BSP_EDITOR**. Com o BSP configurado e gerado, adicione os arquivos a seguir no projeto. 
@@ -222,10 +224,11 @@ Esse arquivos são os que interfaceiam diretamente com o hardware e é a partir 
     - O **I2C.h** e o **I2C.c** servem para fazer a configuração e interface com os componentes **I2C**. 
     - O **AUDIO.c** e o **AUDIO.h** usam as funções dos arquivos acima para facilitar e criar as funções que usaremos diretamente no nosso código. A partir deles configuraremos o hardware de audio.
 
-!!! Info
-    Talvez seja necessário verificar nos arquivos que vieram do projeto original, se os endereços de **SDRAM**, **AUDIO_IF**, e outros periféricos estão definidos corretamente, conforme apresentado no arquivo **system.h**.
+::: info
+Talvez seja necessário verificar nos arquivos que vieram do projeto original, se os endereços de **SDRAM**, **AUDIO_IF**, e outros periféricos estão definidos corretamente, conforme apresentado no arquivo **system.h**.
 
 
+:::
 Para começar, importamos tudo o que é preciso e definimos o tamnho dos blocos associados 
 ```c
     #include <stdio.h>
@@ -323,85 +326,85 @@ Assim salvamos esses dados na sdram, e podemos processar eles a parte, causando 
 Abaixo segue o código completo.
 
 
-=== "C"
+#### C
 
-    ```c
+```c
 
-    #include <stdio.h>
-    #include "terasic_includes.h"
-    #include "AUDIO.h"
-    #include <math.h>
-
-
-    #define RECORD_BLOCK_SIZE   250    // ADC FIFO: 512 byte
-    #define PLAY_BLOCK_SIZE     250    // DAC FIFO: 512 byte
+#include <stdio.h>
+#include "terasic_includes.h"
+#include "AUDIO.h"
+#include <math.h>
 
 
-
-    int main()
-    {
-    alt_u32 *pBuf, *pPlaying, *pRecording, buf_sample_size, data, RecordLen;
-    int i = 0;
-    pBuf = (alt_u32 *)NEW_SDRAM_CONTROLLER_0_BASE;
-
-    printf("Hello from THE Nios II!\n\na\n");
-    alt_u16 ch_right, ch_left;
-
-    AUDIO_Init(); // Inicializa a interface
-    AUDIO_FifoClear(); // Limpa o Buffer do FIFO
-    AUDIO_InterfaceActive(FALSE); // Desabilita a interface para poder alterar configuração
-    AUDIO_SetInputSource(SOURCE_LINEIN); // seleciona o input
-    AUDIO_DacEnableSoftMute(TRUE); // muta para não dar picos no audio
-    AUDIO_MicMute(TRUE); // Muta a entrada que não vai usar
-    AUDIO_LineInMute(FALSE); // Deixa aberta aentrada a ser usada
-    AUDIO_SetLineInVol(0x17, 0x17); // Configura o volume de saída
-    AUDIO_SetSampleRate(RATE_ADC32K_DAC32K); // Configura o Sample rate a ser usado
-    AUDIO_DacEnableZeroCross(FALSE); 
-    AUDIO_SetLineOutVol(0x64, 0x7F); // max 7F, min: 30, 0x79: 0 db
-    AUDIO_DacEnableSoftMute(FALSE); // Desabilita o mute pós configuracao
-    AUDIO_FifoClear(); // Limpa o Buffer do FIFO
-    AUDIO_InterfaceActive(TRUE); // Ativa a interface
-
-    int idx_1,idx_2 = 0; // Index dentro da memoria
-    pRecording = pBuf; // espaco de memoria a receber a gravacao
-    pPlaying = pBuf; // Espaco da memoria a ser lido
-
-    while (1)
-    {
-        if(AUDIO_AdcFifoNotEmpty()){ // verifica se tem informação de audio a ser lida
-            AUDIO_AdcFifoGetData(&ch_left, &ch_right); // le o audio
-            data = (ch_left << 16) | ch_right; // prepara para gravar
-            *pRecording++ = data; // grava e já ajusta para a proxima posição
-            idx_1++; // move o indice 1
-            if(idx_1>=RECORD_BLOCK_SIZE){ // caso termine o espaco de memoria, volte para o comeco e sobreescreve lá
-                idx_1 = 1;
-                pRecording = pBuf;
-            }
-        }
-
-
-        // Espaço de processamento do audio
+#define RECORD_BLOCK_SIZE   250    // ADC FIFO: 512 byte
+#define PLAY_BLOCK_SIZE     250    // DAC FIFO: 512 byte
 
 
 
-        if(AUDIO_DacFifoNotFull() & (idx_1 > 0 & idx_1-idx_2 != 0)) // verifica se pode escrever na entrada e se já tem o que ler na memoria
-        {
-            data = *pPlaying++; // le a memoria e prepara para proximo pedaco de memoria
+int main()
+{
+alt_u32 *pBuf, *pPlaying, *pRecording, buf_sample_size, data, RecordLen;
+int i = 0;
+pBuf = (alt_u32 *)NEW_SDRAM_CONTROLLER_0_BASE;
 
-            ch_left = data >> 16; // separa os canais
-            ch_right = data & 0xFFFF;
+printf("Hello from THE Nios II!\n\na\n");
+alt_u16 ch_right, ch_left;
 
-            AUDIO_DacFifoSetData(ch_right, ch_left); // envia o audio 
+AUDIO_Init(); // Inicializa a interface
+AUDIO_FifoClear(); // Limpa o Buffer do FIFO
+AUDIO_InterfaceActive(FALSE); // Desabilita a interface para poder alterar configuração
+AUDIO_SetInputSource(SOURCE_LINEIN); // seleciona o input
+AUDIO_DacEnableSoftMute(TRUE); // muta para não dar picos no audio
+AUDIO_MicMute(TRUE); // Muta a entrada que não vai usar
+AUDIO_LineInMute(FALSE); // Deixa aberta aentrada a ser usada
+AUDIO_SetLineInVol(0x17, 0x17); // Configura o volume de saída
+AUDIO_SetSampleRate(RATE_ADC32K_DAC32K); // Configura o Sample rate a ser usado
+AUDIO_DacEnableZeroCross(FALSE); 
+AUDIO_SetLineOutVol(0x64, 0x7F); // max 7F, min: 30, 0x79: 0 db
+AUDIO_DacEnableSoftMute(FALSE); // Desabilita o mute pós configuracao
+AUDIO_FifoClear(); // Limpa o Buffer do FIFO
+AUDIO_InterfaceActive(TRUE); // Ativa a interface
 
-            idx_2++; // atualiza o index do player
-            if(idx_2>=PLAY_BLOCK_SIZE){  // caso termine o espaco de memoria, volte para o comeco e lê de lá
-                idx_2 = 1;
-                pPlaying = pBuf;
-            }
+int idx_1,idx_2 = 0; // Index dentro da memoria
+pRecording = pBuf; // espaco de memoria a receber a gravacao
+pPlaying = pBuf; // Espaco da memoria a ser lido
+
+while (1)
+{
+    if(AUDIO_AdcFifoNotEmpty()){ // verifica se tem informação de audio a ser lida
+        AUDIO_AdcFifoGetData(&ch_left, &ch_right); // le o audio
+        data = (ch_left << 16) | ch_right; // prepara para gravar
+        *pRecording++ = data; // grava e já ajusta para a proxima posição
+        idx_1++; // move o indice 1
+        if(idx_1>=RECORD_BLOCK_SIZE){ // caso termine o espaco de memoria, volte para o comeco e sobreescreve lá
+            idx_1 = 1;
+            pRecording = pBuf;
         }
     }
 
-    return 0;
-    }
 
-    ```
+    // Espaço de processamento do audio
+
+
+
+    if(AUDIO_DacFifoNotFull() & (idx_1 > 0 & idx_1-idx_2 != 0)) // verifica se pode escrever na entrada e se já tem o que ler na memoria
+    {
+        data = *pPlaying++; // le a memoria e prepara para proximo pedaco de memoria
+
+        ch_left = data >> 16; // separa os canais
+        ch_right = data & 0xFFFF;
+
+        AUDIO_DacFifoSetData(ch_right, ch_left); // envia o audio 
+
+        idx_2++; // atualiza o index do player
+        if(idx_2>=PLAY_BLOCK_SIZE){  // caso termine o espaco de memoria, volte para o comeco e lê de lá
+            idx_2 = 1;
+            pPlaying = pBuf;
+        }
+    }
+}
+
+return 0;
+}
+
+```

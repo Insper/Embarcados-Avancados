@@ -7,10 +7,11 @@
 - Link tutorial oficial: https://github.com/pedrodelapena/TutorialEmbarcados
 - Ano: 2019
 
-!!! example "Hardware utilizado no tutorial"
-    - Jetson Nano
-    - Câmera raspberry pi
+::: info Hardware utilizado no tutorial
+- Jetson Nano
+- Câmera raspberry pi
 
+:::
 Neste projeto iremos utilizar uma placa Jetson Nano para comparar a diferença no desempenho de um código sendo executado em CPU VS GPU.
 
 ## Pré Requisitos
@@ -88,12 +89,14 @@ $ sudo sh cuda_10.2.89_440.33.01_linux.run
 
 ## Configurando o Ambiente OpenCV
 
-!!! note
-    Esse aqui demora... E MUITO! (~4 horas) 
+::: info
+Esse aqui demora... E MUITO! (~4 horas) 
 
-!!! warning
-    **IMPORTANTE!**  Conecte um cooler à placa e faça questão de utilizar a fonte de alimentação normal em relação à USB para este processo, já que ele demanda MUITA potência e a placa atingir altas temperaturas, o que pode levar ao seu superaquecimento.
+:::
+::: warning
+**IMPORTANTE!**  Conecte um cooler à placa e faça questão de utilizar a fonte de alimentação normal em relação à USB para este processo, já que ele demanda MUITA potência e a placa atingir altas temperaturas, o que pode levar ao seu superaquecimento.
 
+:::
 ![Cooler](imgs/Pedro/cooler.jpg)
 
 Com o cooler instalado, rode as seguintes linhas de comando para instalar e compilar o OpenCV. E lembrando, é uma looooooonga espera.

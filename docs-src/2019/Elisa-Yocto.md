@@ -7,10 +7,11 @@
 - Link tutorial oficial: https://github.com/elisamalzoni/Embarcados-Avancados
 - Ano: 2019
 
-!!! example "Hardware utilizado no tutorial"
-    - DE10-Standard
-    - Raspberry 3
+::: info Hardware utilizado no tutorial
+- DE10-Standard
+- Raspberry 3
 
+:::
 ## O que é o Yocto Project
 
 Projeto open source para criação de sistemas customizados baseados em Linux, para embarcados, independentemente da arquiterura do hardware.
@@ -82,9 +83,10 @@ O conjunto de pacotes suportados pelo Buildroot é menor. Também não possui me
 
 ## Compilando uma iso
 
-!!! warning 
-    Mesmo seguindo os tutoriais do Yocto e guias da altera, não consegui compilar para a placa usada no curso, assim utilizarei um Raspberry Pi 3 Model B.
+::: warning
+Mesmo seguindo os tutoriais do Yocto e guias da altera, não consegui compilar para a placa usada no curso, assim utilizarei um Raspberry Pi 3 Model B.
 
+:::
 ### Links uteis 
 
 [Reference Manual](https://www.yoctoproject.org/docs/3.0.1/ref-manual/ref-manual.html)

@@ -1,8 +1,9 @@
 # 🔔 Assessment 3
 
-!!! tip "Classroom"
-    - [Github Classroom]({{entrega_3_classroom}})
+::: tip Classroom
+- [Github Classroom](https://classroom.github.com/a/I8q9GYKe)
 
+:::
 What should be delivered?
 
 - **Folder:** `Entrega_3_FPGA_NIOS_IP`
@@ -33,9 +34,10 @@ The table above maps each address of the peripheral to a different functionality
 
 ## (rubric C) Software
 
-??? tip "Submission - google forms"
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfQisAY242qZ7YgpRIeHXcmg_bz1qhaXUZAPM-HOlPiyYbWFQ/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+::: details Submission - google forms
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfQisAY242qZ7YgpRIeHXcmg_bz1qhaXUZAPM-HOlPiyYbWFQ/viewform?embedded=true" width="700" height="300" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 
+:::
 In addition to the HW part, we will develop a C library that will abstract the interface with this peripheral. 
 The peripheral must have a driver capable of interacting with it. We will standardize some functions to define a standard interface:
 

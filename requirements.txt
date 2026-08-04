@@ -1,5 +1,0 @@
-mkdocs
-git+https://github.com/insper-education/active-handout-plugins-py.git@latest
-mkdocs-glightbox
-termynal
-pymdown-extensions

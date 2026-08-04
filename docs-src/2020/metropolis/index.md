@@ -59,32 +59,36 @@ O método consiste em:
 
 No algoritmo, o que acontece é que ao pegarmos elementos da da distribuição g, o passo 2c atua como um corretor já que g não é a distribuição alvo. Ou seja, a cada iteração se checa se o movimento é vantajoso para que a distribuição se aproxime mais de p e so se aceita o valor em caso positivo.
 
-??? info
+::: details Info
 
-    Se tiver mais curiosidades sobre o algoritmo vale a pena dar uma olhada nesse vídeo.
+Se tiver mais curiosidades sobre o algoritmo vale a pena dar uma olhada nesse vídeo.
 
-    <iframe width="1280" height="720" src="https://www.youtube.com/embed/0lpT-yveuIA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/0lpT-yveuIA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+:::
 ### Criação das instâncias
 
 Primeiramente é necessário criar na própria interface da AWS duas instâncias f1.2xlarge  (instâncias com FPGA) e duas m5.large (instâncias de desenvolvimento). Para cada tipo de instância faça uma com a AMI ```FPGA Developer AMI 1.9.1``` (Vitis) e outra com a AMI ```FPGA Developer AMI 1.7.1```(SDAccel).
 
-!!! note
+::: info
 
-    Para as instâncias de desenvolvimento, quanto mais vCPUs, mais rápido será compilado o programa. 
-    
-    ??? warning
-        - Prestar atenção nas AMIs utilizadas. Nao é possível compilar um programa em vitis na versão 1.7.1, assim como SDAccel em 1.9.1. 
-        - Utilizar no mínimo 100GB para as instâncias de desenvolvimento, pois o processo de compilação utiliza muita memoria.
+Para as instâncias de desenvolvimento, quanto mais vCPUs, mais rápido será compilado o programa. 
 
+::: details Warning
+- Prestar atenção nas AMIs utilizadas. Nao é possível compilar um programa em vitis na versão 1.7.1, assim como SDAccel em 1.9.1. 
+- Utilizar no mínimo 100GB para as instâncias de desenvolvimento, pois o processo de compilação utiliza muita memoria.
+
+:::
+:::
 Também clone o repositorio https://github.com/Veronur/TuttorialEmbarcados/blob/master/docs-src/index.md
 
 #### Na instância de desenvolvimento
 
-??? note
+::: details Note
 
-    Foi utilizado a estrutura de pastas do próprio repositório, os arquivos foram editados diretamente no ```src/``` para reaproveitar o makefile ja configurado.
+Foi utilizado a estrutura de pastas do próprio repositório, os arquivos foram editados diretamente no ```src/``` para reaproveitar o makefile ja configurado.
 
+:::
 Os passos para preparar o ambiente e rodar a simulação sao parecidos.
 
     1. git clone https://github.com/aws/aws-fpga.git $AWS_FPGA_REPO_DIR
@@ -99,20 +103,22 @@ Os passos para preparar o ambiente e rodar a simulação sao parecidos.
         1. make check TARGETS=sw_emu DEVICE=$AWS_PLATFORM all
         2. make check TARGETS=hw_emu DEVICE=$AWS_PLATFORM all
 
-!!! warning
+::: warning
 
-    Caso aconteça um erro de _DEVICE_ nao encontrado, mude o parâmetro DEVICE= para DEVICES=
+Caso aconteça um erro de _DEVICE_ nao encontrado, mude o parâmetro DEVICE= para DEVICES=
 
+:::
 Com o programa testado, esta na hora de compilar de verdade.
 
-!!! note
+::: info
 
-    A compilação pode demorar algumas horas.
+A compilação pode demorar algumas horas.
 
-     1. make clean
-     2. make TARGETS=hw DEVICES=$AWS_PLATFORM all
-     3. Va tomar um cafe
+ 1. make clean
+ 2. make TARGETS=hw DEVICES=$AWS_PLATFORM all
+ 3. Va tomar um cafe
 
+:::
 Com a compilação finalizada serão gerados dois arquivos, o executável metropolis e o binário para a FPGA .xclbin. Transfira ambos para a instância f1.
 
 #### Na instância de FPGA
@@ -123,9 +129,10 @@ Com os arquivos transferidos, execute os passos 1 - 2 da parte anterior e em seg
  2. chmod +x metropolis
  3. ./metropolis
 
-??? note
-    Pode ser necessario executar o ultimo passo como "./metropolis .xclbin"
+::: details Note
+Pode ser necessario executar o ultimo passo como "./metropolis .xclbin"
 
+:::
 ### Implementação dos Kernels
 
 Para ambas implementações existe um arquivo host em C++ que consiste em preparar o ambiente.
@@ -141,11 +148,12 @@ Para ambas implementações existe um arquivo host em C++ que consiste em prepar
 
 A diferença está no kernel que, como foi dito, enquanto em SDAccel o código eh feito em OpenCL, no vitis foi feito totalmente em C++.
 
-!!! note
-    A sintaxe de OpenCL é muito parecida a de C++.
+::: info
+A sintaxe de OpenCL é muito parecida a de C++.
 
-    Nos códigos a seguir estão apenas a parte principal do código, o resto são apenas definições de constantes.
+Nos códigos a seguir estão apenas a parte principal do código, o resto são apenas definições de constantes.
 
+:::
 ### Vitis
 
     extern "C" {

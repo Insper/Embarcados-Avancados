@@ -98,9 +98,10 @@ Imagem referente a Aba https://opencores.org/projects:
   <img width="350" height="350" src="https://i.postimg.cc/cJcNkQTG/projects.png">
 </p>
 
-!!! note 
-    Como podemos perceber existem <p style="color: green">77 cores diferentes somente na aba de Criptografia.</p>
+::: info
+Como podemos perceber existem <span style="color: green">77 cores diferentes somente na aba de Criptografia.</span>
 
+:::
 ### Utilizando um core de criptografia
 
 <div style="text-align: justify"> 
@@ -111,13 +112,14 @@ Imagem referente a Aba https://opencores.org/projects:
 
 ![](CryptoIP.PNG){width=1200}
 
-!!! example "Atencao"
-    Perceba que a quantidade de cores disponíveis diminui bruscamente.
+::: info Atencao
+Perceba que a quantidade de cores disponíveis diminui bruscamente.
 
-    <P style="color: red">Isso não significa que os outros 75 cores não possam ser uteis para você.<P> 
+<span style="color: red">Isso não significa que os outros 75 cores não possam ser uteis para você.</span>
 
-    Apenas que os mesmos ainda não foram de certa forma revisados pela OpenCores.
+Apenas que os mesmos ainda não foram de certa forma revisados pela OpenCores.
 
+:::
 ### Avalon AES ECB-Core (128,192,256 Bit)        
 &nbsp;&nbsp;&nbsp;Vamos pegar de exemplo este "Avalon AES ECB-Core (128,192,256 Bit)"
 
@@ -187,34 +189,34 @@ Imagem referente a Aba https://opencores.org/projects:
 
 &nbsp;&nbsp;&nbsp;Parte do arquivo do driver:
 
-=== "C++"
+#### C++
 
-    ``` c++
-    void avs_aes_init(avs_aes_handle* context){
-        context->key	= (unsigned int*) KEY_ADDR;
-        context->payload= (unsigned int*) DATA_ADDR;
-        context->result	= (unsigned int*) RESULT_ADDR;
-        context->control  	= (unsigned int*) AESCTRLWD;
-        *(context->control) = 0x00000000;
+``` c++
+void avs_aes_init(avs_aes_handle* context){
+    context->key	= (unsigned int*) KEY_ADDR;
+    context->payload= (unsigned int*) DATA_ADDR;
+    context->result	= (unsigned int*) RESULT_ADDR;
+    context->control  	= (unsigned int*) AESCTRLWD;
+    *(context->control) = 0x00000000;
+}
+
+
+void avs_aes_setKey(avs_aes_handle* context, unsigned int* key){
+    int i=0;
+    unsigned int* target_ptr = (unsigned int* )context->key;
+    /* Invalidate old key; */
+    *(context->control) &= (~KEY_VALID);
+    asm __volatile("sync" :::);
+    for(i=0; i<KEYWORDS; i++){
+        *(target_ptr++) = *(key++);
     }
-
-
-    void avs_aes_setKey(avs_aes_handle* context, unsigned int* key){
-        int i=0;
-        unsigned int* target_ptr = (unsigned int* )context->key;
-        /* Invalidate old key; */
-        *(context->control) &= (~KEY_VALID);
-        asm __volatile("sync" :::);
-        for(i=0; i<KEYWORDS; i++){
-            *(target_ptr++) = *(key++);
-        }
-        asm __volatile("sync" :::);
-        /* validate key */
-        *(context->control) |= KEY_VALID;
-    }
-    ```
+    asm __volatile("sync" :::);
+    /* validate key */
+    *(context->control) |= KEY_VALID;
+}
+```
 ## Final
 
 <div style="text-align: justify">
 &nbsp;&nbsp;&nbsp;Com o driver em mãos, o arquivo de Teste "AEStester.c" e o platform design corretamente conectado. Você teoricamente já tem seu componente pronta para encriptar e decriptar em FPGA.
-<div>
+</div>

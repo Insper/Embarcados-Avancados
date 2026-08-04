@@ -12,9 +12,10 @@ We would create a program that would run on the ARM HPS without any operating sy
 
 ![](figs/Tutorial-HPS-BlinkLed-baremetal.jpg)
 
-!!! note ""
-    - [Altera Bare Metal User Guide](https://www.intel.com/content/www/us/en/programmable/documentation/lro1424280108409.html)
+::: info
+- [Altera Bare Metal User Guide](https://www.intel.com/content/www/us/en/programmable/documentation/lro1424280108409.html)
 
+:::
 In this way, the application must be able to perform all the necessary HW initialization for the processor to run correctly. If the application is executed on an operating system, this entire compilation stage is the responsibility of the OS. For this, it is advisable to use the ARM IDE called [DS-5](https://developer.arm.com/tools-and-software/embedded/legacy-tools/ds-5-development-studio)
 
 ## Operating System
@@ -74,63 +75,69 @@ while(1){
 }	
 ```
 
-!!! note
-    This Makefile only works because we configured our `bashrc` with the system variables it uses.
-    For example, the line `SOCEDS_ROOT ?= $(SOCEDS_DEST_ROOT)` uses the variable `SOCEDS_DEST_ROOT` that was configured in the previous tutorial, as well as the `arm-linux-gnueabihf-`...
+::: info
+This Makefile only works because we configured our `bashrc` with the system variables it uses.
+For example, the line `SOCEDS_ROOT ?= $(SOCEDS_DEST_ROOT)` uses the variable `SOCEDS_DEST_ROOT` that was configured in the previous tutorial, as well as the `arm-linux-gnueabihf-`...
 
-!!! exercise "Task"
-    1. Clone the repository: https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD
-    1. Enter the folder `Demonstration/SoC/hps_gpio`
-    1. Execute the command `make`
-    
-    Expected result:
-    
-    ```
-    arm-linux-gnueabihf-gcc -g -Wall   -Dsoc_cv_av
-    -I/media/corsi/dados/intelFPGA/20.1/embedded/ip/altera/hps/altera_hps/hwlib/include/soc_cv_av
-    -I/media/corsi/dados/intelFPGA/20.1/embedded/ip/altera/hps/altera_hps/hwlib/include/
-    -c main.c -o main.o
-    arm-linux-gnueabihf-gcc -g -Wall    main.o -o my_first_hps 
-    ```
-    
-    If you get something like:
-    
-    ```
-    make: arm-linux-gnueabihf-gcc: Command not found
-    Makefile:19: recipe for target 'main.o' failed
-    make: *** [main.o] Error 127
-    ```
-    
-    It's because you didn't correctly configure gcc in the previous step.
+:::
+::: tip Task
+1. Clone the repository: https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD
+1. Enter the folder `Demonstration/SoC/hps_gpio`
+1. Execute the command `make`
 
+Expected result:
+
+```
+arm-linux-gnueabihf-gcc -g -Wall   -Dsoc_cv_av
+-I/media/corsi/dados/intelFPGA/20.1/embedded/ip/altera/hps/altera_hps/hwlib/include/soc_cv_av
+-I/media/corsi/dados/intelFPGA/20.1/embedded/ip/altera/hps/altera_hps/hwlib/include/
+-c main.c -o main.o
+arm-linux-gnueabihf-gcc -g -Wall    main.o -o my_first_hps 
+```
+
+If you get something like:
+
+```
+make: arm-linux-gnueabihf-gcc: Command not found
+Makefile:19: recipe for target 'main.o' failed
+make: *** [main.o] Error 127
+```
+
+It's because you didn't correctly configure gcc in the previous step.
+
+:::
 ### Running on `target`
 
 Now just copy the binary created by the compilation to the memory card and test our program on the `target` (HPS). With the memory card on the `host` (your computer), copy the binary file: `hps_gpio` to the folder: `/home/root/` on the memory card. Note that there are two partitions, you should copy to the one that has the `root`.
 
-!!! note
-    You may have to copy using sudo, in my case I run:
-    
-    ```
-    $ sudo cp hps_gpio /media/corsi/847f4797-311c-4286-8370-9d5573b201d7/home/root 
-    ```
+::: info
+You may have to copy using sudo, in my case I run:
 
-!!! note
-    Whenever you handle an external memory device, it is advisable to flush the cache to force Linux to change the external device, otherwise the change may only stay in the local memory to the PC.
+```
+$ sudo cp hps_gpio /media/corsi/847f4797-311c-4286-8370-9d5573b201d7/home/root 
+```
 
-    ```bash
-    $ sync
-    ```
-    
-    > The sync function is blocking, it will be locked while Linux flushes the data.
+:::
+::: info
+Whenever you handle an external memory device, it is advisable to flush the cache to force Linux to change the external device, otherwise the change may only stay in the local memory to the PC.
 
-!!! exercise "Task"
-    1. Put the SDCARD back in the FPGA.
-    1. Access via terminal and run the program (`/home/root/hps_gpio`) with the command `./hps_gpio`.
-    1. The `HPS User LED` of the Intel FPGA should flash twice initially, after this it will light up as the user clicks on the `HPS User Button`.
-       
-!!! exercise "Practicting"
-    Make the program read the button only twice, and after that end the application!
+```bash
+$ sync
+```
 
+> The sync function is blocking, it will be locked while Linux flushes the data.
+
+:::
+::: tip Task
+1. Put the SDCARD back in the FPGA.
+1. Access via terminal and run the program (`/home/root/hps_gpio`) with the command `./hps_gpio`.
+1. The `HPS User LED` of the Intel FPGA should flash twice initially, after this it will light up as the user clicks on the `HPS User Button`.
+   
+:::
+::: tip Practicting
+Make the program read the button only twice, and after that end the application!
+
+:::
 ### Development Flow
 
 This development flow isn't the best, right? It's good to program on the `host`, but this scheme of having to keep removing and inserting memory cards, waiting for the target's Linux to boot, logging in, and testing is not good for anyone. There are several solutions to improve this, each with its advantage/disadvantage:
