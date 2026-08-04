@@ -3,9 +3,7 @@
 !!! tip "Deliver"
     What should be delivered?
     
-    - **DeadLine:** {{entrega_3_deadline}}
-    - [Github Classroom]({{entrega_3_classroom}})
-    - [Google forms]({{entrega_forms}})
+    - [Github Classroom]({{entrega_5_classroom}})
 
 
 You must create an embedded system that includes a web server and a webpage that allows you to monitor and control the hardware through a simple interface.

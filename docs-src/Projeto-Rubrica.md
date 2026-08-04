@@ -1,5 +1,13 @@
 # Rubrica
 
+!!! tip "Deliver"
+    What should be delivered?
+    
+    - [Github Classroom]({{entrega_tutorial}})
+
+
+
+
 O tutorial deve ser de autoria do aluno e auto contido, publicado na wiki da disciplina. A rubrica é incremental, para tirar A precisa ter alcançado o B antes... **Tutoriais em inglês são acrescidos de 1/2 conceito.**
 
 - A 

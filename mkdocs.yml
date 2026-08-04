@@ -36,9 +36,11 @@ extra:
     entrega_3_deadline: TBD
     entrega_3_classroom: https://classroom.github.com/a/I8q9GYKe
 
-    entrega_4_classroom: TBD
+    entrega_4_classroom: https://classroom.github.com/a/I_3lQs3G
 
+    entrega_5_classroom: https://classroom.github.com/a/mMwG7FDS
     entrega_forms:  tbd
+    entrega_tutorial: https://classroom.github.com/a/PpQOL42r
     
 markdown_extensions:
   - markdown.extensions.attr_list

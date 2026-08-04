@@ -3,9 +3,7 @@
 !!! tip "Deliver"
     What should be delivered?
     
-    - **DeadLine:** {{entrega_2_deadline}}
-    - [Github Classroom]({{entrega_2_classroom}})
-    - [Google forms]({{entrega_2_forms}})
+    - [Github Classroom]({{entrega_4_classroom}})
 
 The objective of this delivery is to automate the compilation and deployment of new programs to the `target`. For this, we will have to create a Makefile that should be able to compile and deploy a program. For this, we have several options, some of them being:
 
