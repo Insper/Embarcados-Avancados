@@ -361,7 +361,7 @@ Start the shell provided by Altera:
 $ ./altera/25.1std/niosv/bin/niosv-shell
 ```
 
-::: note
+::: info
 The installation path may be different on your system.
 :::
 
@@ -382,7 +382,12 @@ Them click File -> New bsp an gui will open and them you shall locate the harwda
 
 - Click on OK so it will open a new window.
 
-We will not change any configurations on the BSP, we just need to generate the necessary files, on the new window click on Generate button on botton left of this window. This shall create a new folder inside the `software` folder that we just created:
+We will not change any configurations on the BSP, we just need to generate the necessary files, on the new window click on Generate button on botton left of this window.
+
+![](figs/Tutorial-FPGA-NIOS:generate.png)
+
+This shall create a new folder inside the `software` folder that we just created:
+
 
 ![](figs/Tutorial-FPGA-NIOS:bsp-folder.png)
 
@@ -402,10 +407,7 @@ Inside the `app` folder, create a file named `main.c` with the following content
 ```c
 #include <stdint.h>
 #include <stdio.h>
-
-#define PIO_0_BASE 0x11040
-
-#define PIO_0_DATA (*(volatile uint32_t *)PIO_0_BASE)
+#include "system.h"
 
 static void delay(void)
 {
@@ -430,7 +432,7 @@ int main(void)
 }
 ```
 
-::: note
+::: info
 The value of `PIO_0_BASE` depends on the address assigned to the PIO peripheral in your Platform Designer system. Verify the address in the Address Map instead of assuming that `0x11040` is correct for your project.
 :::
 
@@ -448,6 +450,20 @@ niosv-app -a=app -b=hal_bsp -s=app/main.c
 ```
 
 This command generates the files required to build the application and links it against the previously created BSP.
+
+### Modifying `CMakeLists.txt`
+
+Before building the firmware, edit `app/CMakeLists.txt` and add the BSP folder to the include paths:
+
+```diff
+target_include_directories(app2.elf
+    PRIVATE
++        ../hal_bsp
+    PUBLIC
+)
+```
+
+This lets the compiler find BSP-generated headers such as `system.h` in the hal_bsp folder.
 
 ### Compiling the Application
 
@@ -492,7 +508,7 @@ This terminal listens for output sent through the JTAG UART, including the messa
 In another `niosv-shell` terminal, navigate to the directory containing `app.elf` and run:
 
 ```bash
-niosv-download -g app.elf
+niosv-download -g -r app.elf
 ```
 
 The `niosv-download` command transfers the ELF executable to the Nios V system. The `-g` option starts program execution after the download completes.
