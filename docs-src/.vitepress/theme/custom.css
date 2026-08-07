@@ -1,0 +1,12 @@
+.VPDocAsideOutline .VPDocOutlineItem.nested {
+  padding-right: 0;
+  padding-left: 14px;
+}
+
+.VPDocAsideOutline .VPDocOutlineItem.nested .outline-link {
+  font-size: 13px;
+}
+
+.VPDocAsideOutline .VPDocOutlineItem.nested .VPDocOutlineItem.nested {
+  padding-left: 18px;
+}

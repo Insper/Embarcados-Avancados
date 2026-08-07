@@ -5,6 +5,7 @@
     "docs:preview": "vitepress preview docs-src"
   },
   "devDependencies": {
+    "@lando/vitepress-theme-default-plus": "^1.2.0",
     "markdown-it-attrs": "^4.3.1",
     "markdown-it-deflist": "^3.0.0",
     "markdown-it-footnote": "^4.0.0",

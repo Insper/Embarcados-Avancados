@@ -7,7 +7,7 @@ This first delivery is an introduction/warm-up to VHDL and FPGA, we will create 
 To follow this tutorial you will need:
 
 - **Hardware:** DE10-Standard and accessories 
-- **Software:** Quartus 18.01
+- **Software:** Quartus 25.01
 - **Documents:** [DE10-Standard_User_manual.pdf](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual)
 
 ## Quartus

@@ -1,3 +1,4 @@
 docs/
+docs-src/.vitepress/cache/
 node_modules/
 venv/

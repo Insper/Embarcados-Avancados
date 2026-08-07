@@ -1,4 +1,4 @@
-# NIOS
+# NIOS V
 
 In this tutorial, we will create and customize a soft processor with NIOS (an embedded system with a processor and peripheral), embed it in the FPGA, and write a code for it. By the end, we'll have the same LEDs as in the previous project, with a similar operation, but now they're controlled by a program rather than dedicated hardware.
 
@@ -7,16 +7,9 @@ In this tutorial, we will create and customize a soft processor with NIOS (an em
 To follow this tutorial you need:
 
 - **Hardware:** DE10-Standard and accessories
-- **Software:** Quartus 18.01
+- **Software:** Quartus 25.01, RiscFree IDE for Altera FPGAs
 - **Documents:** [DE10-Standard_User_manual.pdf](https://github.com/Insper/DE10-Standard-v.1.3.0-SystemCD/tree/master/Manual)
 
-::: warning
-No link abaixo você irá encontrar dicas para resolver possíveis problemas neste tutorial:
-
-[Possíveis Problemas na Aula: Tutorial FPGA NIOS](https://insper.github.io/Embarcados-Avancados/Tutorial_FPGA_NIOS_possiveis_problemas/)
-
-
-:::
 ## Soft processor
 
 HDL (VHDL, Verilog, ...) projects aren't very flexible, each project modification implies hardware modifications, which isn't straightforward. Besides the difficulty of implementing changes, we also have the testing and compilation time of the project, which isn't immediate.
@@ -54,30 +47,19 @@ The IP cores can be from [Intel](https://www.intel.com/content/www/us/en/product
 There's an online course from Intel that shows how PlatformDesign works: [Introduction to Platform Designer](https://www.intel.com/content/www/us/en/programmable/support/training/course/iqsys101.html)
 
 :::
-## NIOS
 
-[NIOS](https://en.wikipedia.org/wiki/Nios_II) is the soft processor provided by Altera-Intel and integrated into the tool. NIOS is based on the architecture of MIPS with a [32-bit architecture](https://www.intel.com/content/www/us/en/programmable/documentation/iga1420498949526.html#iga1409259423560), exception control, communication bus, memory control, ....
+## NIOS V - Hardware
 
-The following figure describes the essential components of NIOS (blue) and what is customizable (grey).
+[NIOS V](https://www.altera.com/products/ip/po-3098/nios-v-processors) is the soft processor provided by Altera-Intel and integrated into the tool. NIOS is based on the architecture of RISC-V (is the new generation of NIOS processor) exception control, communication bus, memory control, ... . The following figure describes the essential components of NIOS-V:
 
 ![Nios block diagram](figs/Tutorial-FPGA-NIOS_core.png)
 
-- Reference: [Processor Architecture](https://www.intel.com/content/www/us/en/programmable/documentation/iga1420498949526.html#iga1409259423560)
+- Reference: [Processor Architecture]( https://cdrdv2-public.intel.com/709273/ug20343-683632-679983.pdf)
 
-NIOS supports the addition of new instructions to its instruction set, these instructions are implemented in HDL and inserted into the core in a way that is transparent to the developer. There are degrees of customized instructions: combinational; multi-cycle; extended; That makes use of the original register bank or those that add new registers.
+<YouTube id="kceY84fx0N0"/>
 
-::: info Going beyond
-For more details on how to customize NIOS, refer to the document:
+### Creating a Simple SoC
 
-- [Nios II Custom Instruction User Guide](https://www.intel.com/content/dam/altera-www/global/en_US/pdfs/literature/ug/ug_nios2_custom_instruction.pdf)
-
-:::
-## Creating a Simple SoC
-
-::: tip Success
-Getting started with implementation.
-
-:::
 In this step, we will add a processor and the necessary minimum infrastructure for its operation. We will include the following in the project:
 
 - A clock interface
@@ -95,28 +77,28 @@ To begin:
 4. Add the following peripherals and their configurations:
     - `On-Chip Memory (RAM or ROM Intel FPGA IP)`
         - Type: **RAM**
-        - Total Memory size: **32768 bytes**
+        - Total Memory size: **256000 bytes**
     - `JTAG UART Intel FPGA IP`
         - **Default**
     - `PIO (Parallel I/O) Intel FPGA IP`
         - Width: **6**
         - Direction: **Output**
-    - `NIOS II Processor`
-        - Type: **NIOS II/e**
-        
+    - `NIOS V/g General Purpose Processor IP`
+
+::: info
+Memory RAM shall initialy have 256000 bytes of memory.
+
+![](figs/Tutorial-FPGA-NIOS:ram.png)
+:::
 
 ::: tip
 You can use the search box to find the IPs
-
 :::
+
 You should obtain something similar to:
 
 ![Clock and Reset](figs/Tutorial-FPGA-NIOS_unconnected.png)
 
-::: tip Progress
-I've reached this point!
-
-:::
 ### Connecting Clock and Reset
 
 The peripherals of the **PD** (Platform Designer) are like independent systems (think of each block as a chip) that need to be connected at least to a Clock and a Reset. The system can operate in different clock and reset domains, so this connection must be made by the developer.
@@ -127,102 +109,155 @@ Think of this step as similar to the `port map` in VHDL, but at a higher level o
 
 ::: tip
 To connect, click on the gray circle at the intersection of the buses or signals.
-
 :::
-::: tip Progress
-I've reached this point!
 
-:::
 ### Connecting the Bus
 
-Intel defines two types of data buses for the **PD**: Avalon and AXI (this is an inheritance from Altera). The Avalon bus is the main way to connect a peripheral to NIOS (the processor), while the AXI is the standard bus for ARM, which will be used later.
+Platform Designer supports two principal Intel FPGA interface families: **Avalon** and **AXI**.
 
-The Avalon bus basically defines two types of communication: **Memory Mapped (MM)** and **Avalon Streaming Interface (ST)**.
+Connect the components as follows:
 
-::: info Going further
-For more information, refer to the document [Avalon Interface Specifications](https://www.altera.com/content/dam/altera-www/global/en_US/pdfs/literature/manual/mnl_avalon_spec.pdf).
-
-:::
-The main bus of NIOS is the [memory-mapped](https://en.wikipedia.org/wiki/Memory-mapped_I/O) one, and every peripheral connected to the **NIOS** (processor) must have this bus. Altera provides converters and adapters to transform one communication form into another.
-
-> In tutorial 3, we will develop a proprietary peripheral that will be connected to this bus.
-
-Note that NIOS has two **MM** type buses: `data_master` and `instruction_master`. Since NIOS II is a processor based on the [Harvard architecture](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.faqs/ka3839.html), it has two separate paths for accessing memory: one for data and another for program (instruction).
-
-In our hardware topology, we only have a single memory (**on_chip_memory**) that will be initially shared between data and program (there is an efficiency loss here since the memory can only be accessed by one bus at a time). **We'll improve this later!**
-
-We should connect all the peripherals (**PIO**, **UART**, and **OnChip Memory**) to the `data_master` bus, and connect ==only the memory== (**OnChip Memory**) to the instruction bus (`instruction_master`), resulting in the following assembly:
+* (Green) Connect `on_chip_memory`, the PIO peripherals, and the UART peripheral to `data_manager`.
+* (Blue) Connect only `on_chip_memory` to `instruction_manager`.
 
 ![](figs/Tutorial-FPGA-NIOS_connected.png)
 
-## Memory Map
+::: tip Understaing
+Avalon is Altera’s native interface architecture for FPGA systems, while AXI is an industry-standard interface originally defined by Arm and widely used by Arm- and RISC-V-based processors.
 
-After making the connections, we need to specify the memory address for each peripheral. There are two ways to do this: manual or automatic.
+Avalon defines several interface types, of which the most common are:
 
-In the manual method, you can allocate the peripherals at memory addresses of your choice, taking care to avoid overlapping addresses. In the automatic method, we let the tool allocate the peripherals at the correct addresses.
+* **Avalon Memory-Mapped (Avalon-MM)**, used to access memories and peripheral registers through an address space.
+* **Avalon Streaming (Avalon-ST)**, used to transfer continuous streams of data between components without using addresses.
 
-To perform automatic allocation: `System` :arrow_right: `Assign Base Address`. To view the result, click on the `Address Map` tab.
+
+For additional details, refer to the [Avalon Interface Specifications](https://www.altera.com/content/dam/altera-www/global/en_US/pdfs/literature/manual/mnl_avalon_spec.pdf).
+
+Nios V uses memory-mapped interfaces for instruction fetches, memory accesses, and accesses to peripheral registers. Its processor interfaces use the **AXI protocol**, although Platform Designer can automatically insert adapters when connecting the processor to Avalon-MM memories and peripherals.
+
+As a result, a custom peripheral does not necessarily need to implement AXI directly. It can expose an Avalon-MM agent interface and be connected to the Nios V processor through the Platform Designer interconnect.
+
+> In Tutorial 3, we will develop a custom memory-mapped peripheral and connect it to the processor through this interconnect.
+
+Nios V provides two separate memory-mapped manager interfaces:
+
+* `data_manager`, used for data-memory accesses and reads and writes to memory-mapped peripherals.
+* `instruction_manager`, used to fetch program instructions.
+
+These separate interfaces reflect a Harvard-style processor organization, in which instruction and data accesses use independent paths.
+
+In our initial hardware topology, both interfaces are connected to a single memory component, `on_chip_memory`. The memory therefore stores both the program instructions and the program data.
+
+Because both interfaces share the same physical memory, simultaneous instruction and data accesses may contend for the memory port. Platform Designer handles the arbitration, but this contention can reduce performance. We will improve this architecture later.
+
+The resulting topology allows Nios V to fetch instructions from the on-chip memory while also using that memory for data storage and accessing the memory-mapped peripheral registers.
+
+Note that older Nios II systems use the interface names `data_master` and `instruction_master`. In Nios V, the corresponding interfaces are named `data_manager` and `instruction_manager`.
+:::
+
+### Address Map
+
+After making the connections, we need to assign a memory address to each peripheral. This can be done either manually or automatically.
+
+With manual assignment, you can place each peripheral at an address of your choice, provided that the assigned address ranges do not overlap. With automatic assignment, Platform Designer selects valid base addresses for the connected components.
+
+On this tutorial we will manualy deffine RAM address and let the tool to automatic place the other peripherals memorys.
+
+#### RAM
+
+On the plataform desing interface set inital RAM address to:
+
+- `0x0004_0000`
+
+![](figs/Tutorial-FPGA-NIOS:ram-placed.png)
+
+::: info lock address
+You will have to lock the RAM, so tool will not be allow to automatically change this address (🔓).
+:::
+
+#### Automatic address
+
+To assign the addresses automatically, select `System` :arrow_right: `Assign Base Addresses`. Then open the `Address Map` tab to inspect the resulting address assignments.
 
 ![Automatic Memory Map](figs/Tutorial-FPGA-NIOS_mem-mapped.png)
 
-### Configuring NIOS
+::: info
+Addresses may vary between projects, so do not assume that your setup will match the one shown in this image.
+
+An important detail is that the `data_manager` address space contains two distinct regions:
+
+* RAM region: `0x0004_0000` to `0x0007_E7FF`
+* Peripheral region: `0x0001_1000` to `0x0001_1057`
+
+This distinction will be important in the next step.
+
+Identify the address range assigned to the peripherals in your project. The peripherals must occupy a contiguous address region.
+:::
+
+### Configuring NIOS V
 
 Now we need to configure NIOS to use the newly connected memory. Double-click on the NIOS to open the **Parameters** window.
 
 In `Parameters` :arrow_right: `Vector`, configure:
 
-- Reset vector memory: **onchip_memory**
-- Exception vector memory: **onchip_memory**
-
+- Traps, Exceptions, and Interrupts:
+  - Reset Agent:  **onchip_memory2_0.s1**
+        
+Isso vai congigurar para onde o program counter (PC) deve apontar quando a CPU acordar, como nosso programa vai estar na memória RAM devemos configurar a CPU para ir buscar a instrucao nesse local, isso define o endereco do instruction fetch.
+        
+- Peripheral Region A:
+  - Size: **4k**
+  - Base Address: 0x0001_1000
+  
+Isso define onde a regiao de memória dos nosso periféricos
+  
 ![](figs/Tutorial-FPGA-NIOS:vector.png)
 
 ::: tip Tip
 The name **onchip_memory** may vary depending on your project, and the address may also vary (this depends on the order in which the components were added).
-
 :::
+
 ### Export
 
 The export column in **Platform Designer** indicates which signals will be exported from the system. Think of these signals as the ones that will have contact with the external world (they will be mapped to pins in the `topLevel`).
 
-Double-click on the export column in the row of the signal **external_connection** of the **PIO** component and name this signal as LEDs.
+Double-click on the export column in the row of the signal **external_connection** of the **PIO** component and name this signal as ==`leds`==.
 
 ::: info
 Notice that the `Clock Source` component also has the export of signals: `clk` and `reset`. This was done automatically when creating the project.
-
 :::
-### Saving
 
-At the end of everything, you should have something like the following figure:
+![](figs/Tutorial-FPGA-NIOS:export.png)
 
-![Final Qsys](figs/Tutorial-FPGA-NIOS_MM.png)
+### Generating source codes
 
-==Save the project as `niosLab2.qsys` in the project folder, and click on `Generate HDL` for the **PD** to generate the project.==
+Save the project as `niosLab2.qsys` in the project folder, and click on `Generate HDL`  for the **PD** to generate the project.
 
-::: tip
-`File` :arrow_right: `Save_as`: `niosLab2.qsys`
+![Final Qsys](figs/Tutorial-FPGA-NIOS:generating.png)
 
-:::
+This process creates all the files required to integrate the Platform Designer system into the Quartus project. 
+
 ### Using the Component
 
 Still in the **PD**, click on: `Generate` :arrow_right: `Show Instantiation Template`, select VHDL as the HDL language. You should obtain something like this:
 
 ::: tip Tip
 Save this somewhere, we will use it in the next step!
-
 :::
+
 ``` vhdl
 component niosLab2 is
     port (
         clk_clk       : in  std_logic                    := 'X'; -- clk
         reset_reset_n : in  std_logic                    := 'X'; -- reset_n
-        leds_export   : out std_logic_vector(5 downto 0)         -- export
+        leds_export   : out std_logic_vector(7 downto 0)         -- export
     );
 end component niosLab2;
 
 u0 : component niosLab2
     port map (
-        clk_clk       => CONNECTED_TO_clk_clk,       --  clk.clk
-        reset_reset_n => CONNECTED_TO_reset_reset_n, --  reset.reset_n
+        clk_clk       => CONNECTED_TO_clk_clk,       --   clk.clk
+        reset_reset_n => CONNECTED_TO_reset_reset_n, -- reset.reset_n
         leds_export   => CONNECTED_TO_leds_export    --  leds.export
     );
 ```
@@ -231,8 +266,8 @@ This is a shortcut for how we should use this component in our project. This cod
 
 ::: tip
 These names may vary in your project!
-
 :::
+
 The schematic (generated by `Platform Designer` :arrow_right: `View` :arrow_right: `Schematic`) illustrates the newly created SoC and its interfaces:
 
 ![Schematic](figs/Tutorial-FPGA-NIOS_schematic.png)
@@ -271,7 +306,7 @@ entity LAB2_FPGA_NIOS is
         fpga_clk_50        : in  std_logic;             -- clock.clk
 
         -- I/Os
-        fpga_led_pio       : out std_logic_vector(5 downto 0)
+        fpga_led_pio       : out std_logic_vector(7 downto 0)
   );
 end entity LAB2_FPGA_NIOS;
 
@@ -280,7 +315,7 @@ architecture rtl of LAB2_FPGA_NIOS is
 component niosLab2 is port (
   clk_clk       : in  std_logic                    := 'X'; -- clk
   reset_reset_n : in  std_logic                    := 'X'; -- reset_n
-  leds_export   : out std_logic_vector(5 downto 0)         -- export
+  leds_export   : out std_logic_vector(7 downto 0)         -- export
 
 
 );
@@ -302,155 +337,170 @@ end rtl;
 Note that we are not using the reset signal (the `_n` indicates that the reset is active-low, i.e., 0). 
 
 :::
+
 ## Programming the NIOS - Soft Processor
 
-Now that we have the **project programmed onto the FPGA**, with the hardware that includes the NIOS processor, we need to generate and program a software that controls the LEDs. To do this, we will open the **NIOS Software Build for Eclipse** (SBT) IDE, which has all the necessary toolchain to develop firmware for NIOS.
-
-In Quartus: `Tools` :arrow_right: `Nios II Software Build...`, and an eclipse interface will open.
+Now that we have the **project programmed onto the FPGA**, with the hardware that includes the NIOS processor, we need to generate and program a software that controls the LEDs. To do this, we will use the **RiscFree IDE for Altera FPGAs**, which has all the necessary toolchain to develop firmware for NIOS V (RISC-V).
 
 When developing projects for SoC systems, we have a problem: the hardware is not standardized. Since everything is customized, there is an issue that needs to be addressed, which is the interface between the created hardware and the software toolchain (compiler, linker, etc.).
 
-Altera solved this by creating a Hardware Abstraction Layer (HAL), or as Intel calls it, Board Support Package (BSP), which extracts information from the Platform Designer to be used by the compilation toolchain (GCC). When we create a project in **NIOS II - Eclipse**, two projects will be created: one containing the firmware to be programmed into the NIOS, and another (BSP) containing relevant information about the hardware for use in the firmware and toolchain.
+Altera solved this by creating a Hardware Abstraction Layer (HAL), or as Intel calls it, Board Support Package (BSP), which extracts information from the Platform Designer to be used by the compilation toolchain (GCC). When we create a project in **RiscFree IDE**, two projects will be created: one containing the firmware to be programmed into the NIOS V, and another (BSP) containing relevant information about the hardware for use in the firmware and toolchain.
 
-<!--![SBT](https://www.altera.com/content/dam/altera-www/global/en_US/images/devices/processor/images/n2-soft-dev-tools.gif)-->
 
-<!--!!! note "For more information:"
-    - https://www.altera.com/products/processors/design-tools.html#SBT-->
+### Creating the bsp
 
-### Creating the Project
+We will start by creating the Board Support Package (BSP).
 
-1. In **Quartus**: `Tools` :arrow_right: `Nios II Software Build for Eclipse`
-2. In **NIOS II Software Build for Eclipse**: `File`  :arrow_right:  `New`  :arrow_right:  `NIOS II Application and BSP from template`
+First, create a folder named `software` inside your Quartus project directory. This folder will contain the BSP and the application files.
 
-- `SOPC Information File Name`:
-    - In the project folder, search for the file: **niosLab2.sopcinfo**
-        - This file is created by the **PD** when the project is compiled and is located in the project folder.
-- `Project name`: **niosLab2**
+To create the BSP, launch the Nios V BSP Editor from the command line.
 
-- `Project template`: **Hello World**
+Start the shell provided by Altera:
 
-::: details Tip
-![](figs/Tutorial-FPGA-NIOS_projectCreate.png){width=500}
+```bash
+$ ./altera/25.1std/niosv/bin/niosv-shell
+```
 
+::: note
+The installation path may be different on your system.
 :::
-- After clicking Next, SBT will create two project folders:
-    - `niosLab2`: firmware to be embedded
-    - `niosLab2_bsp`: Board support package for the firmware
 
-You should obtain something like this:
+Then launch the BSP Editor:
 
-![](figs/Tutorial-FPGA-NIOS_project.png)
+```bash
+$ niosv-bsp-editor
+```
 
-### Analisando e configurando o bsp
+Them click File -> New bsp an gui will open and them you shall locate the harwdare desgin from your soft process:
 
-Vamos analisar o BSP gerado:
+- `niosLab2.sopcinfo`
 
-- `Project Explorer` :arrow_right: `niosLab2_bsp` :arrow_right: `NIOS II` :arrow_right: `bsp Editor`
+> This file contains the hardware configuration and address map required to generate the BSP.
 
-::: details Tip
-![](figs/Tutorial-FPGA-NIOS_eclipseBSP.png){width=500}
 
-:::
-Isso abrirá uma interface de configuração para o bsp. Diversas são as opções de configurações, algumas delas:
+![](figs/Tutorial-FPGA-NIOS:bsp.png)
 
-- `sys_clk_timer`: periférico utilizado para bibliotecas de delay (não inserimos no Platform Designer)
-- `timestamp_timer`: periférico que seria utilizado pelo timestamp
-- `stdin`, `stdout`, `sterr`: periférico utilizado pelo **stantard IO** do C, no nosso caso: `jtat_uart_0` (poderia ser outro).
+- Click on OK so it will open a new window.
 
-::: info
-Note que a região de memória do stack já está configurada para a `onchip_memory`. Aqui teríamos a opção de mapear para outro local (no caso do sistema possuir outras memórias, tais como memórias DDR externas a FPGA).
+We will not change any configurations on the BSP, we just need to generate the necessary files, on the new window click on Generate button on botton left of this window. This shall create a new folder inside the `software` folder that we just created:
 
-:::
-![](figs/Tutorial-FPGA-NIOS_bsp.png)
+![](figs/Tutorial-FPGA-NIOS:bsp-folder.png)
 
-::: tip Progress
-Cheguei aqui!
+Here is a polished and technically clearer version of the section:
 
-:::
-### Jtag-UART small driver
+### Creating the Application
 
-Note que no nosso projeto no **PD** o periférico jtag-uart não teve seu sinal de interrupção conectado no NIOS, isso dificulta o acesso a uart, já que o firmware não será interrompido caso um novo dado chegue (gets) ou na transmissão (puts). O driver deve ficar fazendo um polling no periférico para verificar o envio e recepção dos dados. Para isso funcionar, devemos ativar uma opção no driver do jtag_avalon no bsp:
+Now we will create the application firmware that will run on the Nios V processor and use the BSP we just generated.
 
-- `BSP Editor` :arrow_right: `Drivers` :arrow_right: `jtag_uart` :arrow_right: `enable_small_driver`
+Create a new folder named `app` inside the `software` directory. Your project structure should now contain:
 
-![Jtag Small Driver](figs/Tutorial-FPGA-NIOS_smallDriver.png)
+* `software/hal_bsp`
+* `software/app`
 
-::: tip Progress
-Cheguei aqui!
-
-:::
-### Gerando o bsp
-
-Toda vez que o bsp for editado ou o hardware alterado (**Platform Designer**) deve-se regenerar o bsp :
-
-De volta no eclipse, devemos gerar os arquivos bsp. Para isso clique em: `niosLab2_bsp` :arrow_right: `NIOS II` :arrow_right: `Generate BSP`
-
-### Embarcando!
-
-Com o bsp editado abra agora a pasta `niosLab2` e note que existe inicializada com um arquivo: `hello_world.c` que imprime via JTAG-UART uma string. Insira o código a seguir no eclipse:
+Inside the `app` folder, create a file named `main.c` with the following contents:
 
 ```c
+#include <stdint.h>
 #include <stdio.h>
 
-int main()
+#define PIO_0_BASE 0x11040
+
+#define PIO_0_DATA (*(volatile uint32_t *)PIO_0_BASE)
+
+static void delay(void)
 {
-  printf("Hello from Nios II!\n");
+    for (volatile uint32_t i = 0; i < 1000000; i++) {
+        // Busy-wait
+    }
+}
 
-  return 0;
+int main(void)
+{
+    while (1) {
+        printf("Hello from Nios V!\n");
+
+        PIO_0_DATA = 0xFFFFFFFF;  // LEDs on
+        delay();
+
+        PIO_0_DATA = 0x00000000;  // LEDs off
+        delay();
+    }
+
+    return 0;
 }
 ```
 
-Com o `hello_word.c` aberto (é necessário para o eclipse saber qual projeto você quer embarcar), clique em: `Run` :arrow_right: `Run` :arrow_right: `NIOS II Hardware`. Isso fará com que a aplicação seja descarregada na memória do Qsys que alocamos para o Nios e que o hardware seja, reiniciado para executar o firmware. Quando o firmware for executado, abra a aba do eclipse **NIOS II console**:
-
-![printf](figs/Tutorial-FPGA-NIOS_console.png){width=500}
-
-<!--!!! tip "Programando"
-    <video width="660" height="360" controls>
-      <source src="http://54.162.111.146/shared/soc/SoC-Tutorial-FPGA-NIOS.mp4" type="video/mp4">
-    </video> -->
-
-::: tip Progress
-Cheguei aqui!
-
+::: note
+The value of `PIO_0_BASE` depends on the address assigned to the PIO peripheral in your Platform Designer system. Verify the address in the Address Map instead of assuming that `0x11040` is correct for your project.
 :::
-### Blink LED
 
-Edite main para conter o código a seguir:
+This application performs two simple tasks:
 
-```c
-#include <stdio.h>
-#include "system.h"
-#include <alt_types.h>
-#include <io.h> /* Leiutura e escrita no Avalon */
+* Prints `Hello from Nios V!` through the JTAG UART.
+* Toggles the PIO output, causing the FPGA LEDs connected to that peripheral to blink.
 
-int delay(int n){
-	  unsigned int delay = 0 ;
-	  while(delay < n){
-		  delay++;
-	  }
-}
+Next, we need to create the build configuration for the application.
 
-int main(void){
-  unsigned int led = 0;
+From the `software` directory, run the following command inside `niosv-shell`:
 
-  printf("Embarcados++ \n");
-
-  while(1){
-	  if (led <= 5){
-		  IOWR_32DIRECT(PIO_0_BASE, 0, 0x01 << led++);
-		  usleep(50000);
-	  }
-	  else{
-		  led = 0;
-	  }
-  };
-
-  return 0;
-}
+```bash
+niosv-app -a=app -b=hal_bsp -s=app/main.c
 ```
 
-Embarque no NIOS e veja o resultado nos LEDS!
+This command generates the files required to build the application and links it against the previously created BSP.
 
-::: tip Progress
-Cheguei aqui!
-:::
+### Compiling the Application
+
+Create a `build` directory inside the `app` folder:
+
+```bash
+mkdir app/build
+```
+
+Then navigate to the build directory:
+
+```bash
+cd app/build
+```
+
+Configure the project with CMake:
+
+```bash
+cmake ..
+```
+
+Finally, compile the application:
+
+```bash
+make
+```
+
+After a successful build, an ELF executable named `app.elf` will be generated.
+
+The ELF file contains the compiled firmware that will be loaded into the Nios V processor.
+
+### Running the Application
+
+Open a new `niosv-shell` terminal and start the JTAG UART terminal:
+
+```bash
+juart-terminal
+```
+
+This terminal listens for output sent through the JTAG UART, including the messages produced by `printf()`.
+
+In another `niosv-shell` terminal, navigate to the directory containing `app.elf` and run:
+
+```bash
+niosv-download -g app.elf
+```
+
+The `niosv-download` command transfers the ELF executable to the Nios V system. The `-g` option starts program execution after the download completes.
+
+You should now see:
+
+```text
+Hello from Nios V!
+```
+
+repeatedly printed in the JTAG UART terminal, while the LEDs connected to the PIO peripheral blink on and off.

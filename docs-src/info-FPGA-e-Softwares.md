@@ -4,15 +4,15 @@ Throughout the course, we will mainly work with Intel SoC FPGAs. The main develo
 
 The development software for Intel FPGAs is called Quartus, and it has many versions and variations. Download the one indicated here to avoid having to reinstall everything.
 
-::: info 2020-2 Online Version
+::: info Material
 You will receive the following materials to work on the course from home:
 
 - 1x DE10-Standard FPGA
 - 1x micro SD card
 - 1x microSD/USB adapter
 - 1x USB-Wifi NIC
-
 :::
+
 ## HW - DE10-Standard
 
 - [Manufacturer's website](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=205&No=1081&PartNo=2)
@@ -23,34 +23,34 @@ It is a development kit manufactured by Terasic, costing $350, which has at its 
 
 ## Software
 
+:heavy_check_mark: Linux
+:heavy_check_mark: Windows
+:no_entry_sign: MAC
+
 Due to the second part of the course, in which we will compile and work with embedded Linux, the course should be done (and the tutorials follow this) on **Linux**. Windows works for the first part, but not after that, and MAC is not supported by Quartus.
 
-### Quartus Prime
+::: danger :no_entry_sign: MAC
+If you have a MAC we recomend you to use a virtual machine with Linux.
 
-::: info
-We will use Quartus Prime Standard version 19.1.
+- [Tutorial](https://www.linkedin.com/posts/raphael-geraldine_fpga-intelquartus-applesilicon-share-7488652134545174528-bn6I?utm_source=social_share_send&utm_medium=android_app&rcm=ACoAABzd5HwBoWQpEPjHUJwmtzAkRHApY9MlySc&utm_campaign=whatsapp)
 
 :::
-Along with Quartus installation, some other software is installed:
 
-- Quartus: FPGA project development
-- Modelsim: HDL project simulator (VHDL/Verilog)
-- NIOS II EDS: Eclipse platform for NIOS uC programming
-- HLS: High-level synthesis 
+### Quartus Prime Light
+
+We will use Quartus Prime Standard version 25.1:
+
+- Quartus Prime ==Light== FPGA project development
+- Questa HDL project simulator (VHDL/Verilog)
+- RiscFree™ IDE for Altera FPGAs
 
 ::: tip Installing
-Download the following parts and run the Quartus Prime binary, which will automatically install the others.
+Download the following parts and run the Quartus Prime ==Light== binary, which will automatically install the others.
 
-- [Quartus Prime Standard](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/QuartusSetup-19.1.0.670-linux.run)
-- [ModelSim](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/ModelSimSetup-19.1.0.670-linux.run)
-- [Cyclone V](https://download.altera.com/akdlm/software/acdsinst/19.1std/670/ib_installers/cyclonev-19.1.0.670.qdz)
+- [Quartus Prime Light](https://www.altera.com/downloads/fpga-development-tools/quartus-prime-lite-edition-design-software-version-25-1-linux)
 
 :::
 ::: info License
 We will use a version of Quartus that requires a license to work. I will send instructions by email.
 
 :::
-:heavy_check_mark: Linux
-:no_entry_sign: Windows
-:no_entry_sign: MAC
-:no_entry_sign: MAC

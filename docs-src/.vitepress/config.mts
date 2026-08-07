@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from '@lando/vitepress-theme-default-plus/config'
 import attrs from 'markdown-it-attrs'
 import deflist from 'markdown-it-deflist'
 import footnote from 'markdown-it-footnote'
@@ -36,6 +36,9 @@ export default defineConfig({
       message: 'Released under the project license.',
       copyright: 'Copyright (c) 2019 / Prof. Rafael Corsi / rafael.corsi@insper.edu.br'
     },
+    outline: {
+      level: 'deep'
+    },
     nav: [
       { text: 'Home', link: '/' },
       { text: 'FPGA', link: '/Tutorial-FPGA-RTL' },
@@ -52,7 +55,7 @@ export default defineConfig({
         items: [
           { text: '1. RTL', link: '/Tutorial-FPGA-RTL' },
           { text: 'Assessment', link: '/Entrega-1' },
-          { text: '2. NIOS', link: '/Tutorial-FPGA-NIOS' },
+          { text: '2. NIOS V', link: '/Tutorial-FPGA-NIOS' },
           { text: 'Assessment', link: '/Entrega-2' },
           { text: '3. NIOS IP', link: '/Tutorial-FPGA-NIOS-IP' },
           { text: 'Assessment', link: '/Entrega-3' }

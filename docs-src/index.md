@@ -9,8 +9,6 @@
 
 **© All rights reserved**
 
----
-
 ## Course objectives
 
 1. Formulate solutions that meet hardware and software requirements for projects with FPGA-SoC (System-on-a-chip)
@@ -64,14 +62,3 @@ Complementary:
   - [SIMPSON, 2015] Simpson, Philip Andrew; FPGA Design: Best Practices for Team-based Reuse 2nd ed. Springer, 2015 Edition.
   - [KOOPMAN, 2010] Koopman, Philip. Better Embedded System Software. Drumnadrochit Education, 2010.
   - [VENKATESWARAN, 2008] Venkateswaran, Sreekrishnan. Essential Linux device drivers. Prentice Hall Press, 2008.
-
-## To get started
-
-1. Have a Linux machine (can be VM)
-1. Create a repository on Github [by clicking here](https://classroom.github.com/a/fGUME066)
-1. Think a little about a theme to delve into (for tutorial)
-    - :point_right: [Tips](Projeto-Overview)
-    - Take a look at past tutorials:
-1. Recommended reading:
-    - https://www.intel.com/content/www/us/en/products/programmable/fpga/new-to-fpgas/resource-center/overview.html
-    - Available in the lab: [CHU, 2011, cap. 1], [KOOPMAN, 2010, cap. 2]# SoC and Embedded Linux
