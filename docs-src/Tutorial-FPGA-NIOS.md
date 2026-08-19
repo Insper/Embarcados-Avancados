@@ -408,6 +408,7 @@ Inside the `app` folder, create a file named `main.c` with the following content
 #include <stdint.h>
 #include <stdio.h>
 #include "system.h"
+#include "altera_avalon_pio_regs.h"
 
 static void delay(void)
 {
@@ -416,19 +417,20 @@ static void delay(void)
     }
 }
 
-int main(void)
-{
-    while (1) {
-        printf("Hello from Nios V!\n");
+int main(void){
+  uint32_t count = 0;
 
-        PIO_0_DATA = 0xFFFFFFFF;  // LEDs on
-        delay();
+  while (1) {
+      if ((count++ % 1000) == 0) {
+          printf("Still running\n");
+      }
 
-        PIO_0_DATA = 0x00000000;  // LEDs off
-        delay();
+      IOWR_ALTERA_AVALON_PIO_DATA(PIO_0_BASE, 0xff);
+      delay();
+
+      IOWR_ALTERA_AVALON_PIO_DATA(PIO_0_BASE, 0x00);
+      delay();
     }
-
-    return 0;
 }
 ```
 
