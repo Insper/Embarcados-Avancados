@@ -12,26 +12,18 @@ For this, it will be necessary to modify the project created in the tutorial to 
 - PIO peripheral that handles the button must generate an interrupt
 - Program memory separated from data memory
 
-Once the JTAG starts generating interrupts, it will no longer be necessary to use the JTAG *small driver*. Remember to change this in the **bsp**.
-
 Start by reading the buttons without interruption. Once it is working, use the following sites as a reference to implement interruption in NIOS:
-
-Tips:
-
-- http://www.johnloomis.org/NiosII/interrupts/interrupt/interrupt.html
-- https://www.altera.com/en_US/pdfs/literature/hb/nios2/n2sw_nii52006.pdf
 
 ## Rubric
 
 - A 
-    - Insert an RTOS in NIOS to control the application, **or**
-    - Acceleration curve in the motor
+    - Insert an RTOS in NIOS to control the application
 - B
     - Implement `VEL` in SWx
     - Interrupt in button reading
+    - Acceleration curve in the motor
 - C
     - Data memory separated from program memory
-    - JTAG generating interrupt
     - PIO dedicated to reading buttons (SWx) and controlling `EN` and `DIR`
 - D 
     - Delivered only the tutorial
