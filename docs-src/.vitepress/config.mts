@@ -45,7 +45,8 @@ export default defineConfig({
       { text: 'HPS', link: '/Tutorial-HPS' },
       { text: 'HPS + FPGA', link: '/Tutorial-HPS-FPGA-BlinkLED' },
       { text: 'HLS', link: '/Tutorial-Acelerando-HLS' },
-      { text: 'Useful', link: '/info-FPGA-e-Softwares' }
+      { text: 'Useful', link: '/info-FPGA-e-Softwares' },
+      { text: 'PrairieLearn', link: 'https://us.prairielearn.com/pl/course_instance/227951' }
     ],
     sidebar: [
       { text: 'Home', link: '/' },
