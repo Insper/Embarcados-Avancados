@@ -513,6 +513,9 @@ To simulate 1 ms of HW execution we will need much more than 1 ms of computation
 :::
 ![](figs/Tutorial-FPGA-IP_sim.png)
 
+
+<!-- 
+
 ### ModelSim
 
 In **Eclipse**, after compiling the project:
@@ -551,3 +554,5 @@ Proceed to the third delivery:
 Siga para a terceira entrega:
 
 - [Entega 3](/Entrega-3)
+
+-->
