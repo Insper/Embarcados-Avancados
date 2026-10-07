@@ -119,7 +119,6 @@ Inside each `rc.x` folder, the scripts have names that dictate the sequence in w
 
 Create a script named `S60MAC.sh` in the `/etc/init.d` folder and add the following code (depends on which scenario you will use):
 
-#### Scenario 1
 ```bash
 #!/bin/sh
 
@@ -139,22 +138,6 @@ restart|reload)
 *)
         echo "Usage: $0 {start|stop|restart}"
         exit 1
-esac
-```
-
-#### Scenario 2
-```bash
-#!/bin/bash
-
-case "$1" in
-start)
-printf "Setting ip: "
-/sbin/ifconfig eth0 169.254.0.13 netmask 255.255.0.0 up
-[ $? = 0 ] && echo "OK" || echo "FAIL"
-;; 
-*)
-exit 1
-;;
 esac
 ```
 
