@@ -8,13 +8,19 @@ In this tutorial, we will compile the Linux kernel for our SoC's ARM using the t
 <iframe width="560" height="315" src="https://www.youtube.com/embed/FEfSlk1EHNI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-## Kernel 4.4
+## Linux kernel
+
+The altera-fpga/linux-socfpga repository is a fork of the Linux kernel maintained by Altera, specifically targeting SoC FPGA platforms such as Cyclone V, Arria V, Arria 10, and Agilex.
+
+The main difference is that it combines the upstream Linux kernel with SoC FPGA-specific modifications, patches, and configurations used in Altera's reference designs.
+
+However, it is important to note that the official Linux kernel (mainline) already includes support for many Cyclone V peripherals and drivers. Therefore, using Altera's fork is not strictly required to run Linux on the Hard Processor System (HPS).
 
 Clone the Linux kernel:
 
 ``` bash
-$ git clone https://github.com/torvalds/linux 
-$ cd linux
+$ git clone https://github.com/altera-fpga/linux-socfpga
+$ cd linux-socfpga
 ```
 
 > This might take a while, the kernel is a large project.
@@ -23,7 +29,6 @@ $ cd linux
 The official repository of the Linus kernel is: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git however cloning from it is usually much slower than from GitHub (which is just a mirror of the official repository).
 
 :::
-We will work with version `4.4` of the kernel which is a version with: `Long Time Support` (LTS), i.e., it will be maintained for much longer than other versions. Version 4.4 was released on January 10 and will be officially maintained until 2021, it is also a version called Super LTS, with extended support until 2036. Think that a developer of an embedded system, who is going to create a whole dedicated infrastructure, doesn't want to have to adjust and validate everything again just to have the newest version of the kernel. The idea of using a version with more support is to minimize efforts with new resources.
 
 The kernel uses the `tag` system of git:
 
@@ -56,13 +61,14 @@ Note that odd revisions are for Kernel in development stage, and even numbers fo
 Let's createa branch of version v4.4, for this execute the following command:
 
 ``` bash
-$ git checkout -b 4.4-SoC v4.4
+$ git checkout -b cyclonev-6.12 \
+    QPDS25.1STD_REL_GSRD_PR
 ```
 
 :::
 ## Configuring the Kernel 
 
-Once in the `4.4-SoC` branch we need to configure the kernel for our processor (ARM) and make the necessary configurations in the kernel. First, we will generate a standard configuration file `.config` for Altera ARM SoCs.
+Once in the `cyclonev-6.12` branch we need to configure the kernel for our processor (ARM) and make the necessary configurations in the kernel. First, we will generate a standard configuration file `.config` for Altera ARM SoCs.
 
 ::: tip Exercise
 ``` bash
